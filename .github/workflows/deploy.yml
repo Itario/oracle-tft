@@ -49,14 +49,18 @@ jobs:
           fi
           echo "Aucune clé trouvée."
 
-      # enablement: true active Pages et bascule sa source sur « GitHub Actions »
-      # depuis le workflow lui-même. Sans ce réglage, le premier déploiement
-      # échoue sur un dépôt neuf tant que personne n'a cliqué dans Settings.
-      # Le faire ici plutôt qu'à la main : c'est reproductible, et ça survit à
-      # un dépôt recréé de zéro.
+      # NE PAS remettre `enablement: true` ici.
+      # Essayé le 02/11 pour que le workflow active Pages lui-même sur un dépôt
+      # neuf. Échec : « Create Pages site failed — Resource not accessible by
+      # integration ». Le GITHUB_TOKEN d'un workflow ne peut pas créer le site,
+      # même avec `pages: write` — cette création demande des droits d'admin
+      # sur le dépôt.
+      #
+      # Sur un dépôt recréé de zéro, il faut donc UNE action manuelle, une fois :
+      #     Settings -> Pages -> Source : GitHub Actions
+      # Sans elle, tous les déploiements échouent. C'est consigné ici plutôt
+      # que dans un README parce que c'est ici qu'on reviendra chercher.
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
