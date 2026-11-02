@@ -1,165 +1,335 @@
+<!doctype html>
+<html lang="fr">
+<head>
 <meta charset="utf-8">
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Oracle TFT</title>
 <style>
-/* Mise en page : barre d'onglets fixe, une vue à la fois, contenu injecté depuis data/.
-   Palette : vert de forêt (Enchanted Wilds), or pour ce qui monte, rouille pour ce qui
-   tombe, cyan pour ce qui est mesuré. Identité partagée avec les récaps. */
+/* ============================================================
+   ORACLE TFT — identité visuelle
+   ------------------------------------------------------------
+   TFT est un auto-chess, mais son plateau est HEXAGONAL. Le damier
+   est la blague du nom « lolchess » ; l'hexagone est la vraie forme
+   du jeu. C'est lui qui porte l'identité, et il ne sert que là où
+   une unité se pose — jamais en décor.
+
+   Palette : celle du client League. Nuit bleue, or, turquoise
+   hextech. Angles vifs partout : l'interface de League ne connaît
+   pas l'arrondi, elle coupe ses coins.
+   ============================================================ */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
+
 :root{
-  --fond:#0b1512; --fond2:#0f1d19; --fond3:#132621; --trait:#1e3a31;
-  --texte:#e8f0ec; --doux:#8fa89d; --faible:#64796f;
-  --or:#e4b25a; --rouille:#c4664a; --cyan:#5fd4c4;
-  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --titre:"Bebas Neue",Impact,"Arial Narrow Bold",sans-serif;
-  --corps:"Inter",system-ui,-apple-system,sans-serif;
+  --nuit:#091428;      /* fond, le bleu du client League */
+  --abysse:#0C1C32;    /* panneaux */
+  --pierre:#11263F;    /* panneaux en relief, tuiles */
+  --trait:#1F4766;     /* hairline hextech */
+  --trait-or:#5A4A2A;  /* hairline dorée, discrète */
+
+  --texte:#F0E6D2;     /* le parchemin de League */
+  --doux:#A5B6C6;
+  --faible:#6E8399;
+
+  --or:#C8AA6E;        /* l'or de League */
+  --or-vif:#E8D5A3;
+  --hextech:#0AC8B9;   /* le turquoise */
+  --sang:#C4414E;      /* ce qui tombe */
+
+  --titre:"Cinzel",Georgia,serif;
+  --corps:"Barlow",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
   color-scheme:dark;
 }
+
 *{box-sizing:border-box}
-body{background:var(--fond);color:var(--texte);font-family:var(--corps);
-  margin:0;line-height:1.55;-webkit-text-size-adjust:100%}
-body::before{content:"";position:fixed;inset:0 0 auto;
-  height:env(safe-area-inset-top,0px);background:var(--fond2);z-index:20}
 
-/* ---- en-tête + onglets ---- */
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:19;
-  background:var(--fond2);border-bottom:1px solid var(--trait)}
-.hwrap{max-width:1100px;margin:0 auto;
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:.7rem .1rem}
-.marque{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
-.marque b{font-family:var(--titre);font-size:1.6rem;letter-spacing:.03em;font-weight:400}
-.marque .pt{color:var(--cyan)}
-.marque .sub{font-family:var(--mono);font-size:.7rem;color:var(--faible);
-  letter-spacing:.1em;text-transform:uppercase}
-nav{display:flex;gap:.2rem;overflow-x:auto;margin-top:.5rem;
-  scrollbar-width:none}
+body{
+  background:var(--nuit);
+  color:var(--texte);
+  font-family:var(--corps);
+  margin:0;line-height:1.6;
+  -webkit-text-size-adjust:100%;
+  /* Le plateau, en filigrane. Hexagones à sommet plat — la forme réelle des
+     cases de TFT — sur une tuile qui se répète sans couture (3s par √3·s).
+     Assez basse pour ne jamais concurrencer le texte. */
+  background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='45' height='25.98' viewBox='0 0 45 25.98'><path d='M15 0L7.5 12.99L-7.5 12.99L-15 0L-7.5 -12.99L7.5 -12.99ZM60 0L52.5 12.99L37.5 12.99L30 0L37.5 -12.99L52.5 -12.99ZM15 25.98L7.5 38.97L-7.5 38.97L-15 25.98L-7.5 12.99L7.5 12.99ZM60 25.98L52.5 38.97L37.5 38.97L30 25.98L37.5 12.99L52.5 12.99ZM37.5 12.99L30 25.98L15 25.98L7.5 12.99L15 0L30 0Z' fill='none' stroke='%231F4766' stroke-opacity='.3' stroke-width='1'/></svg>");
+  background-size:78px 45.03px;
+  background-attachment:fixed;
+}
+
+/* ---------------------------------------------- en-tête + onglets */
+header{
+  position:sticky;top:0;z-index:19;
+  background:linear-gradient(180deg,#0B1A2E 0%,#091428 100%);
+  border-bottom:1px solid var(--trait);
+  box-shadow:0 1px 0 rgba(200,170,110,.18);
+}
+.hwrap{max-width:1120px;margin:0 auto;padding:.85rem 20px .15rem}
+
+.marque{display:flex;align-items:baseline;gap:.75rem;flex-wrap:wrap}
+.marque b{
+  font-family:var(--titre);font-weight:700;font-size:1.5rem;
+  letter-spacing:.12em;color:var(--or-vif);
+}
+.marque .pt{color:var(--hextech)}
+.marque .sub{
+  font-size:.82rem;color:var(--faible);font-weight:500;
+  font-variant-numeric:tabular-nums;
+}
+
+nav{display:flex;gap:.35rem;overflow-x:auto;margin-top:.6rem;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
-nav button{font-family:var(--corps);font-size:.92rem;font-weight:550;
-  background:none;border:0;border-bottom:2px solid transparent;color:var(--doux);
-  padding:.55rem .85rem;cursor:pointer;white-space:nowrap}
+nav button{
+  font-family:var(--corps);font-size:.95rem;font-weight:600;
+  background:none;border:0;color:var(--doux);
+  padding:.5rem .95rem .55rem;cursor:pointer;white-space:nowrap;
+  position:relative;transition:color .12s;
+}
 nav button:hover{color:var(--texte)}
-nav button[aria-selected="true"]{color:var(--cyan);border-bottom-color:var(--cyan)}
-nav button:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px;border-radius:4px}
+/* L'onglet actif est une tuile aux coins coupés, pas un soulignement. */
+nav button[aria-selected="true"]{
+  color:var(--nuit);font-weight:700;background:var(--or);
+  clip-path:polygon(7px 0,100% 0,calc(100% - 7px) 100%,0 100%);
+}
+nav button:focus-visible{outline:2px solid var(--hextech);outline-offset:-2px}
 
-main{max-width:1100px;margin:0 auto;
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:1.6rem 4rem}
+main{max-width:1120px;margin:0 auto;padding:2rem 20px 4.5rem}
 .vue[hidden]{display:none!important}
 
-/* ---- typographie ---- */
-h1{font-family:var(--titre);font-size:clamp(2.1rem,5.5vw,3.4rem);line-height:1;
-  margin:0 0 .5rem;font-weight:400;letter-spacing:.01em;text-wrap:balance}
-h2{font-family:var(--titre);font-size:clamp(1.4rem,3.2vw,2rem);line-height:1.05;
-  margin:2.4rem 0 .9rem;font-weight:400;letter-spacing:.01em;text-wrap:balance}
-h3{font-size:1.02rem;margin:0 0 .5rem;font-weight:650}
-p{margin:0 0 .9rem;max-width:68ch}
-.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--cyan);margin-bottom:.5rem}
-.doux{color:var(--doux)} .faible{color:var(--faible);font-size:.88rem}
-a{color:var(--cyan)}
-code{font-family:var(--mono);font-size:.88em;background:var(--fond3);
-  padding:.12em .42em;border-radius:4px;border:1px solid var(--trait)}
-pre{font-family:var(--mono);font-size:.82rem;background:var(--fond3);
-  border:1px solid var(--trait);border-radius:8px;padding:.85rem 1rem;
-  overflow-x:auto;margin:0 0 1rem}
-pre code{background:none;border:0;padding:0}
+/* ---------------------------------------------- typographie */
+h1{
+  font-family:var(--titre);font-weight:700;
+  font-size:clamp(2rem,5vw,3.1rem);line-height:1.08;
+  margin:0 0 .6rem;letter-spacing:.015em;color:var(--texte);
+  text-wrap:balance;
+}
+h2{
+  font-family:var(--titre);font-weight:700;
+  font-size:clamp(1.3rem,2.9vw,1.75rem);line-height:1.15;
+  margin:3rem 0 1rem;letter-spacing:.03em;color:var(--or-vif);
+  text-wrap:balance;
+  display:flex;align-items:center;gap:.8rem;
+}
+/* Le filet doré qui prolonge chaque titre : séparateur, pas ornement. */
+h2::after{content:"";flex:1;height:1px;
+  background:linear-gradient(90deg,var(--trait-or),transparent)}
+h3{font-size:1.05rem;margin:0 0 .45rem;font-weight:700;color:var(--or-vif);
+  font-family:var(--corps);letter-spacing:.01em}
 
-/* ---- blocs ---- */
-.carte{background:var(--fond2);border:1px solid var(--trait);border-radius:11px;
-  padding:1.1rem 1.2rem;margin-bottom:1rem}
-.grille{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(248px,1fr))}
-.chiffre{font-family:var(--titre);font-size:clamp(2.6rem,7vw,4.4rem);line-height:.9;
-  color:var(--or);font-variant-numeric:tabular-nums;font-weight:400}
-.chiffre.sm{font-size:clamp(1.8rem,4vw,2.6rem)}
-.unite{font-family:var(--mono);font-size:.74rem;color:var(--doux);
-  letter-spacing:.08em;text-transform:uppercase;margin-top:.35rem}
-.note{border-left:3px solid var(--cyan);background:rgba(95,212,196,.07);
-  padding:.7rem .95rem;border-radius:0 7px 7px 0;margin:0 0 1rem;font-size:.94rem}
-.note.warn{border-left-color:var(--or);background:rgba(228,178,90,.08)}
-.note b{color:var(--texte)}
+p{margin:0 0 .95rem;max-width:70ch}
+.doux{color:var(--doux);font-size:1.02rem}
+.faible{color:var(--faible);font-size:.9rem}
+a{color:var(--hextech);text-underline-offset:3px}
+a:hover{color:var(--or)}
 
-/* ---- mouvements ---- */
+code{font-family:var(--mono);font-size:.86em;background:#0A1B2E;
+  padding:.14em .45em;border:1px solid var(--trait);color:var(--or-vif)}
+pre{font-family:var(--mono);font-size:.82rem;background:#0A1B2E;
+  border:1px solid var(--trait);border-left:2px solid var(--or);
+  padding:.9rem 1.05rem;overflow-x:auto;margin:0 0 1.1rem;line-height:1.5}
+pre code{background:none;border:0;padding:0;color:var(--doux)}
+
+/* ---------------------------------------------- panneaux */
+/* Angles vifs, filet fin, et une arête dorée en haut quand le bloc
+   compte plus que les autres. L'arête encode, elle ne décore pas. */
+.carte{
+  background:linear-gradient(180deg,var(--pierre) 0%,var(--abysse) 100%);
+  border:1px solid var(--trait);
+  padding:1.2rem 1.3rem;margin-bottom:1rem;position:relative;
+}
+.grille{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+
+.chiffre{
+  font-family:var(--titre);font-weight:700;
+  font-size:clamp(2.7rem,7vw,4.2rem);line-height:.95;
+  color:var(--or);font-variant-numeric:tabular-nums;
+}
+.chiffre.sm{font-size:clamp(1.9rem,4vw,2.5rem)}
+.unite{font-size:.86rem;color:var(--doux);margin-top:.4rem;font-weight:500}
+
+.note{
+  border-left:2px solid var(--hextech);
+  background:linear-gradient(90deg,rgba(10,200,185,.09),rgba(10,200,185,.01));
+  padding:.8rem 1.05rem;margin:0 0 1.1rem;font-size:.96rem;
+}
+.note.warn{border-left-color:var(--or);
+  background:linear-gradient(90deg,rgba(200,170,110,.11),rgba(200,170,110,.01))}
+.note b{color:var(--or-vif)}
+
+/* ---------------------------------------------- la ruche */
+/* Les huit unités qui ne quittent jamais la tête, posées comme sur
+   le plateau : hexagones à sommet plat, rangée décalée. Chaque hexagone
+   porte le rang courant de l'unité — de l'information, pas un médaillon. */
+/* Une rangée droite, comme une ligne du plateau. Pas de décalage alterné :
+   sur une seule rangée il produit un zigzag, pas un damier. */
+.ruche{display:flex;flex-wrap:wrap;gap:.45rem;margin:1.3rem 0 .4rem;
+  justify-content:flex-start}
+.hex{
+  width:108px;aspect-ratio:1.1547/1;flex:0 0 auto;
+  clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);
+  background:linear-gradient(165deg,#1B3A5C,#102338);
+  border:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:.3rem .5rem;gap:.05rem;
+}
+.hex .r{font-family:var(--titre);font-weight:700;font-size:1.5rem;
+  color:var(--or);line-height:1;font-variant-numeric:tabular-nums}
+.hex .u{font-size:.72rem;font-weight:600;color:var(--texte);line-height:1.15;
+  overflow-wrap:anywhere;hyphens:auto}
+.hex .a{font-size:.63rem;color:var(--faible);font-variant-numeric:tabular-nums}
+@media (max-width:420px){
+  .hex{width:88px}
+  .hex .r{font-size:1.15rem}
+}
+/* Le seul moment de mouvement de la page : la ruche se pose à l'arrivée. */
+@media (prefers-reduced-motion:no-preference){
+  .hex{animation:pose .5s cubic-bezier(.2,.7,.3,1) backwards}
+  .hex:nth-child(1){animation-delay:.02s} .hex:nth-child(2){animation-delay:.07s}
+  .hex:nth-child(3){animation-delay:.12s} .hex:nth-child(4){animation-delay:.17s}
+  .hex:nth-child(5){animation-delay:.22s} .hex:nth-child(6){animation-delay:.27s}
+  .hex:nth-child(7){animation-delay:.32s} .hex:nth-child(8){animation-delay:.37s}
+}
+@keyframes pose{from{opacity:0;transform:translateY(-9px) scale(.94)}
+                to{opacity:1;transform:none}}
+
+/* ---------------------------------------------- mouvements */
 .mv{display:grid;grid-template-columns:1fr auto auto;gap:.3rem .9rem;
-  align-items:baseline;padding:.5rem 0;border-bottom:1px solid var(--trait)}
+  align-items:baseline;padding:.55rem 0;border-bottom:1px solid rgba(31,71,102,.5)}
 .mv:last-child{border-bottom:0}
 .mv .nom{font-weight:600;min-width:0}
-.mv .rg{font-family:var(--mono);font-size:.84rem;color:var(--doux);
+.mv .rg{font-size:.85rem;color:var(--faible);
   font-variant-numeric:tabular-nums;white-space:nowrap}
-.mv .d{font-family:var(--mono);font-weight:700;font-variant-numeric:tabular-nums;
-  white-space:nowrap}
-.up .d{color:var(--or)} .dn .d{color:var(--rouille)}
-.mv .bar{grid-column:1/-1;height:3px;background:var(--trait);border-radius:2px}
-.mv .bar i{display:block;height:100%;border-radius:2px}
-.up .bar i{background:var(--or)} .dn .bar i{background:var(--rouille)}
+.mv .d{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;
+  font-family:var(--titre);font-size:1.02rem}
+.up .d{color:var(--or)} .dn .d{color:var(--sang)}
+.mv .bar{grid-column:1/-1;height:2px;margin-top:.3rem;background:rgba(31,71,102,.6)}
+.mv .bar i{display:block;height:100%}
+.up .bar i{background:linear-gradient(90deg,var(--or),var(--or-vif))}
+.dn .bar i{background:linear-gradient(90deg,var(--sang),#8E2B36)}
 
-/* ---- puces ---- */
-.puces{display:flex;flex-wrap:wrap;gap:.42rem;margin:.6rem 0 0;padding:0;list-style:none}
-.ros{display:flex;flex-wrap:wrap;gap:.42rem;margin:.1rem 0}
-.puces li,.puce{font-family:var(--mono);font-size:.82rem;padding:.3rem .66rem;
-  border:1px solid var(--trait);border-radius:999px;background:var(--fond3);color:var(--doux)}
-.puce.carry{border-color:var(--or);color:var(--or);font-weight:700}
-.puce.miss{opacity:.42;border-style:dashed}
+/* ---------------------------------------------- jetons d'unité */
+/* Coins coupés : la forme des cartouches du client League. Les noms
+   d'unités sont trop longs pour tenir dans un hexagone lisible. */
+.puces{display:flex;flex-wrap:wrap;gap:.4rem;margin:.65rem 0 0;padding:0;list-style:none}
+.ros{display:flex;flex-wrap:wrap;gap:.4rem;margin:.15rem 0}
+.puces li,.puce{
+  font-size:.84rem;font-weight:500;padding:.26rem .62rem;
+  background:#122A44;color:var(--doux);
+  border:1px solid var(--trait);
+  clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px);
+}
+.puce.carry{background:rgba(200,170,110,.14);border-color:var(--or);
+  color:var(--or-vif);font-weight:700}
+.puce.miss{opacity:.4}
 
-/* ---- segmenté ---- */
-.seg{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:1.1rem}
-.seg button{font-family:var(--corps);font-size:.9rem;background:var(--fond2);
-  color:var(--doux);border:1px solid var(--trait);border-radius:999px;
-  padding:.42rem .95rem;cursor:pointer}
-.seg button:hover{border-color:var(--cyan)}
-.seg button[aria-pressed="true"]{background:var(--fond3);border-color:var(--or);
-  color:var(--or);font-weight:650}
+/* ---------------------------------------------- sélecteur de mode */
+.seg{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.seg button{
+  font-family:var(--corps);font-size:.92rem;font-weight:600;
+  background:var(--abysse);color:var(--doux);
+  border:1px solid var(--trait);padding:.45rem 1rem;cursor:pointer;
+  clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);
+}
+.seg button:hover{color:var(--texte);border-color:var(--or-vif)}
+.seg button[aria-pressed="true"]{background:var(--or);color:var(--nuit);
+  border-color:var(--or);font-weight:700}
 
-/* ---- compos ---- */
-.compo{background:var(--fond2);border:1px solid var(--trait);border-radius:11px;
-  padding:1rem 1.1rem;margin-bottom:.85rem}
-.compo.top{border-color:var(--or)}
-.compo .ligne1{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;margin-bottom:.55rem}
-.compo .n{font-size:1.14rem;font-weight:650}
-.compo .val{font-family:var(--mono);font-weight:700;color:var(--or);
-  font-variant-numeric:tabular-nums;font-size:1.05rem}
-.compo .lvl{font-family:var(--mono);font-size:.76rem;color:var(--faible)}
-.compo .stats{font-family:var(--mono);font-size:.82rem;color:var(--doux);
-  margin-top:.55rem;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.compo .stats u{color:var(--texte);text-decoration-color:var(--or)}
-.compo .txt{font-size:.92rem;color:var(--doux);margin-top:.5rem}
+/* ---------------------------------------------- compos */
+.compo{
+  background:linear-gradient(180deg,var(--pierre),var(--abysse));
+  border:1px solid var(--trait);padding:1.05rem 1.15rem;margin-bottom:.9rem;
+}
+.compo.top{border-color:var(--trait-or);box-shadow:inset 0 2px 0 var(--or)}
+.compo .ligne1{display:flex;align-items:baseline;gap:.75rem;flex-wrap:wrap;
+  margin-bottom:.6rem}
+.compo .n{font-size:1.16rem;font-weight:700;font-family:var(--titre);
+  letter-spacing:.01em}
+.compo .val{font-family:var(--titre);font-weight:700;color:var(--or);
+  font-variant-numeric:tabular-nums;font-size:1.25rem}
+.compo .lvl{font-size:.82rem;color:var(--faible)}
+.compo .stats{font-size:.86rem;color:var(--doux);margin-top:.6rem;
+  font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.compo .stats b{color:var(--texte)}
+.compo .stats u{color:var(--or-vif);text-decoration-color:var(--or)}
+.compo .txt{font-size:.93rem;color:var(--doux);margin-top:.55rem}
 
-/* ---- recherche pivot ---- */
-.rech{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
-.rech input{flex:1;min-width:200px;font-family:var(--corps);font-size:1rem;
-  background:var(--fond2);border:1px solid var(--trait);border-radius:9px;
-  color:var(--texte);padding:.6rem .85rem}
-.rech input:focus{outline:none;border-color:var(--cyan)}
+/* ---------------------------------------------- recherche */
+.rech{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.rech input{
+  flex:1;min-width:210px;font-family:var(--corps);font-size:1rem;
+  background:#0A1B2E;border:1px solid var(--trait);color:var(--texte);
+  padding:.65rem .9rem;
+}
+.rech input::placeholder{color:var(--faible)}
+.rech input:focus{outline:none;border-color:var(--hextech);
+  box-shadow:0 0 0 1px var(--hextech)}
 
-/* ---- tableau ---- */
-.tbl{overflow-x:auto;border:1px solid var(--trait);border-radius:10px}
-table{border-collapse:collapse;width:100%;font-size:.9rem}
-th,td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--trait);
-  white-space:nowrap}
-th{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--faible);background:var(--fond2)}
+/* ---------------------------------------------- tableau */
+.tbl{overflow-x:auto;border:1px solid var(--trait)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:.55rem .8rem;
+  border-bottom:1px solid rgba(31,71,102,.45);white-space:nowrap}
+th{font-size:.78rem;letter-spacing:.04em;color:var(--or);
+  background:#0A1B2E;font-weight:700;border-bottom-color:var(--trait-or)}
 tr:last-child td{border-bottom:0}
-td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
-.rang{color:var(--faible);font-family:var(--mono)}
+tbody tr:nth-child(odd){background:rgba(17,38,63,.45)}
+td.num{font-variant-numeric:tabular-nums;text-align:right}
+.rang{color:var(--or);font-family:var(--titre);font-weight:700}
 
-/* ---- calendrier ---- */
-.cal{display:grid;gap:.5rem}
+/* ---------------------------------------------- calendrier */
+.cal{display:grid;gap:.45rem}
 .evt{display:grid;grid-template-columns:auto 1fr auto;gap:.9rem;align-items:center;
-  padding:.65rem .9rem;background:var(--fond2);border:1px solid var(--trait);border-radius:9px}
-.evt.passe{opacity:.5}
-.evt.prochain{border-color:var(--cyan)}
-.evt .dt{font-family:var(--mono);font-size:.84rem;color:var(--doux);white-space:nowrap}
-.evt .nm{font-weight:600;min-width:0}
-.evt .tag{font-family:var(--mono);font-size:.7rem;padding:.2rem .55rem;border-radius:999px;
-  border:1px solid var(--trait);color:var(--faible);white-space:nowrap}
-.evt .tag.ok{border-color:var(--cyan);color:var(--cyan)}
+  padding:.65rem .95rem;background:var(--abysse);border:1px solid var(--trait)}
+.evt.passe{opacity:.45}
+.evt.prochain{border-color:var(--trait-or);box-shadow:inset 2px 0 0 var(--or)}
+.evt .dt{font-size:.86rem;color:var(--doux);white-space:nowrap;
+  font-variant-numeric:tabular-nums;font-weight:600}
+.evt .nm{font-weight:500;min-width:0}
+.evt .tag{font-size:.74rem;padding:.18rem .55rem;border:1px solid var(--trait);
+  color:var(--faible);white-space:nowrap;font-weight:600}
+.evt .tag.ok{border-color:var(--or);color:var(--or)}
 
-footer{border-top:1px solid var(--trait);margin-top:3rem;padding-top:1.2rem;
-  font-size:.82rem;color:var(--faible)}
-.vide{color:var(--faible);font-style:italic;padding:1.5rem 0}
+/* ---------------------------------------------- distribution */
+.dist{display:grid;gap:.4rem}
+.dl{display:grid;grid-template-columns:2.2rem 1fr 2.2rem 3.2rem;
+  gap:.6rem;align-items:center}
+.dl .p{font-family:var(--titre);font-weight:700;color:var(--or);font-size:.98rem}
+.dl .b{position:relative;height:16px;background:rgba(31,71,102,.38)}
+.dl .b i{display:block;height:100%}
+.dl .b i.pl{background:linear-gradient(90deg,#0AC8B9,#14E0CF)}
+.dl .b i.mo{background:linear-gradient(90deg,#5A3F46,#8E5560)}
+/* le repère du hasard */
+.dl .b u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--or);
+  opacity:.85;transform:translateX(-1px)}
+.dl .v{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.dl .e{font-size:.82rem;font-variant-numeric:tabular-nums;text-align:right;
+  font-weight:600}
+.dl .e.pl{color:var(--hextech)} .dl .e.mo{color:var(--sang)}
+
+.ecarts{list-style:none;padding:0;margin:1.2rem 0 0;display:grid;gap:.4rem;
+  font-size:.9rem;color:var(--doux)}
+.ecarts li{padding-left:1rem;position:relative}
+.ecarts li::before{content:"";position:absolute;left:0;top:.52em;width:6px;height:6px;
+  background:var(--or);transform:rotate(45deg)}
+.ecarts b{color:var(--texte);font-weight:700}
+
+details.pourquoi{border:1px solid var(--trait);background:var(--abysse);
+  padding:.75rem 1.1rem;margin-bottom:1rem}
+details.pourquoi summary{cursor:pointer;font-weight:700;color:var(--or);
+  font-size:.93rem;list-style:none}
+details.pourquoi summary::-webkit-details-marker{display:none}
+details.pourquoi summary::before{content:"▸ ";color:var(--or)}
+details.pourquoi[open] summary::before{content:"▾ "}
+details.pourquoi p{margin:.8rem 0 0}
+
+footer{border-top:1px solid var(--trait);margin-top:3.5rem;padding-top:1.3rem;
+  font-size:.84rem;color:var(--faible)}
+.vide{color:var(--faible);font-style:italic;padding:1.4rem 0}
+
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+</head>
+<body>
 
 <header>
   <div class="hwrap">
@@ -298,6 +468,10 @@ function vueRecap(){
     <h2>Ce qui tombe</h2>
     <div class="carte">${d.chutes.map(x => ligneMouvement(x, "dn")).join("")}</div>` : "";
 
+  // Chaque unité de la tête est rejointe à son rang courant : l'hexagone
+  // porte une mesure, pas un médaillon décoratif.
+  const parNom = Object.fromEntries((m.unites || []).map(u => [u.nom, u]));
+
   const tete = t && t.unites.length ? `
     <h2>Ce qui ne bouge jamais</h2>
     <div class="carte">
@@ -305,14 +479,24 @@ function vueRecap(){
       dans les ${t.n_releves} relevés depuis le ${fdate(t.depuis)}, malgré les patchs
       et un changement de tranche d'elo. Seul leur ordre interne change.
       ${t.premiere_chaque_fois ? `<b>${esc(t.premiere_chaque_fois)} est première à chaque fois.</b>` : ""}</p>
-      <ul class="puces">${t.unites.map(u => `<li>${esc(u)}</li>`).join("")}</ul>
+      <div class="ruche">${[...t.unites]
+        .sort((a,b) => (parNom[a]?.rang ?? 99) - (parNom[b]?.rang ?? 99))
+        .map(nom => {
+        const u = parNom[nom];
+        return `<div class="hex">
+          <span class="r">${u ? u.rang : "—"}</span>
+          <span class="u">${esc(nom)}</span>
+          <span class="a">${u ? u.avg.toFixed(2) : ""}</span>
+        </div>`;
+      }).join("")}</div>
+      <p class="faible" style="margin:1.5rem 0 .9rem">Chaque hexagone porte le rang de
+      l'unité dans le relevé courant, et son placement moyen.</p>
       <p class="faible" style="margin-top:.9rem">La tête du classement est structurelle —
       elle suit le coût des unités, pas l'équilibrage. Le ventre, lui, bouge à chaque patch :
       c'est là que se trouve l'avantage.</p>
     </div>` : "";
 
-  return `<div class="eyebrow">Patch ${esc(m.releve.patch)} · relevé du ${fdate(m.releve.date)}</div>
-    <h1>Ce qui a vraiment bougé</h1>
+  return `<h1>Ce qui a vraiment bougé</h1>
     <p class="doux">${nb(m.releve.n_parties)} parties en ${esc(m.releve.rang)},
       comparées au relevé précédent. Pas une tier list : une mesure de l'écart entre deux patchs.</p>
     ${bloc}${tete}
@@ -335,8 +519,7 @@ function vuePreparer(){
   if(!m) return `<div class="note warn">Données indisponibles.</div>`;
   const M = m.modes[MODE];
   const libelle = {ladder:"Ladder", cumule:"Points cumulés", checkmate:"Checkmate"};
-  return `<div class="eyebrow">Patch ${esc(m.releve.patch)} · ${esc(m.releve.rang)}</div>
-    <h1>Préparer ses games</h1>
+  return `<h1>Préparer ses games</h1>
     <p class="doux">La même question a trois réponses. Ce que tu dois jouer dépend de
       l'enjeu, pas seulement du patch.</p>
 
@@ -402,8 +585,7 @@ function pivot(saisie){
 /* -------------------------------------------------- vue : Oracle */
 function vueOracle(){
   const m = D.meta;
-  return `<div class="eyebrow">L'outil</div>
-    <h1>L'Oracle</h1>
+  return `<h1>L'Oracle</h1>
     <p class="doux">Trois outils qui se complètent. Le site les présente ; ils tournent
       sur ta machine, avec tes données.</p>
 
@@ -470,6 +652,46 @@ python miroir.py        # produit l'analyse + miroir_resume.json</code></pre>
 }
 
 /* -------------------------------------------------- vue : profil */
+/* La distribution tranche ce qu'une moyenne ne peut pas : huit 4es et
+   quatre 1res suivies de quatre 8es donnent le même 4.50. Le trait vertical
+   marque la référence du hasard, sans laquelle un écart ne veut rien dire. */
+function blocDistribution(me){
+  const di = me.distribution;
+  if(!di) return "";
+  const vals = Object.values(di);
+  const tot = vals.reduce((a,b) => a + b, 0);
+  if(!tot) return "";
+  const att = tot / 8, max = Math.max(...vals, 1);
+
+  const barres = [1,2,3,4,5,6,7,8].map(k => {
+    const v = di[k] ?? di[String(k)] ?? 0;
+    const ec = v - att;
+    const sens = ec >= 0 ? "pl" : "mo";
+    return `<div class="dl">
+      <span class="p">${k}<sup>e</sup></span>
+      <span class="b"><i class="${sens}" style="width:${v / max * 100}%"></i>
+        <u style="left:${att / max * 100}%"></u></span>
+      <span class="v">${v}</span>
+      <span class="e ${sens}">${ec >= 0 ? "+" : "−"}${Math.abs(ec).toFixed(1)}</span>
+    </div>`;
+  }).join("");
+
+  const lib = {top2:"Top 2", bas2:"7<sup>e</sup> et 8<sup>e</sup>",
+               top4:"Top 4", "8e":"8<sup>e</sup> place"};
+  const es = me.ecarts_solides || {};
+  const lignes = Object.entries(es).filter(([k]) => k !== "note")
+    .map(([k,v]) => `<li><b>${lib[k] || esc(k)}</b> ${esc(v)}</li>`).join("");
+
+  return `<div class="carte">
+    <h3>Distribution des placements</h3>
+    <p class="faible" style="margin-bottom:1rem">Le trait vertical marque ce que
+      donnerait le hasard : ${att.toFixed(1)} parties par place.</p>
+    <div class="dist">${barres}</div>
+    ${lignes ? `<ul class="ecarts">${lignes}</ul>` : ""}
+    ${es.note ? `<p class="faible" style="margin:.9rem 0 0">${esc(es.note)}</p>` : ""}
+  </div>`;
+}
+
 function vueProfil(){
   const p = D.profil?.joueurs?.[0];
   const c = D.calendrier;
@@ -483,30 +705,28 @@ function vueProfil(){
   evts.sort((a,b) => a.date.localeCompare(b.date));
   const prochain = evts.find(e => e.date > auj);
 
-  return `<div class="eyebrow">${esc(p.riot_id)} · ${esc(p.region.toUpperCase())}</div>
-    <h1>${esc(p.rang.tier)}, ${p.rang.lp} LP</h1>
-    <p class="doux">Objectif : <b>${esc(p.objectif)}</b>.
-      Rang atteint le ${fdate(p.rang.date)}.</p>
+  return `<h1>${esc(p.rang.tier)}, ${p.rang.lp} LP</h1>
+    <p class="doux">${esc(p.riot_id)}, ${esc(p.region.toUpperCase())}.
+      Rang atteint le ${fdate(p.rang.date)}. Objectif : <b>${esc(p.objectif)}</b>.</p>
 
     <h2>Profil mesuré</h2>
-    <div class="note warn"><b>Mesuré à ${esc(me.rang_alors)}, sur ${me.parties} parties.</b>
-      ${esc(me.note)}</div>
+    <p class="doux">${me.parties} parties retenues${me.parties_lachees_retirees
+      ? `, ${me.parties_lachees_retirees} parties lâchées écartées` : ""}. Mesuré à
+      ${esc(me.rang_alors)}.</p>
     <div class="grille">
       <div class="carte"><div class="chiffre sm">${me.placement_moyen}</div>
-        <div class="unite">placement moyen</div></div>
+        <div class="unite">placement moyen — le hasard donne 4,50</div></div>
       <div class="carte"><div class="chiffre sm">${me.top4_pct} %</div>
-        <div class="unite">top 4 · ${esc(me.centile_top4)}</div></div>
+        <div class="unite">top 4 — le hasard donne 50 %</div></div>
       <div class="carte"><div class="chiffre sm">${me.victoires_pct} %</div>
-        <div class="unite">victoires · ${esc(me.centile_victoires)}</div></div>
+        <div class="unite">1<sup>res</sup> places — le hasard donne 12,5 %</div></div>
     </div>
-    <div class="carte">
-      <h3>Profil ${esc(me.profil)}</h3>
-      <p class="faible" style="margin-bottom:0">Les victoires sont dans le centile 4,6 %,
-      le top 4 dans le centile 25,7 % : il gagne bien mieux qu'il ne se place.
-      Au ladder, à moyenne égale, la variance est à peu près neutre — c'est le placement
-      moyen qui gouverne le LP. En tournoi, elle décide de tout, et dans les deux sens
-      selon le format.</p>
-    </div>
+    ${blocDistribution(me)}
+    ${me.note ? `<details class="pourquoi"><summary>Pourquoi ces chiffres</summary>
+      <p class="faible">${esc(me.note)}</p>
+      ${me.retracte ? `<p class="faible"><b>Rétracté :</b> ${esc(me.retracte)}</p>` : ""}
+      ${me.a_refaire ? `<p class="faible"><b>À refaire :</b> ${esc(me.a_refaire)}</p>` : ""}
+    </details>` : ""}
 
     <h2>Calendrier</h2>
     <div class="cal">${evts.map(e => {
@@ -556,10 +776,6 @@ function aller(v){
 document.querySelectorAll("nav button").forEach(b =>
   b.addEventListener("click", () => aller(b.dataset.vue)));
 
-/* Le squelette d'artefact écrit la balise <html> : on pose la langue ici,
-   pour les lecteurs d'écran et la césure typographique. */
-document.documentElement.lang = "fr";
-
 charger().then(() => {
   const m = D.meta;
   $("#hsub").textContent = m
@@ -573,3 +789,5 @@ charger().then(() => {
   aller(VUES[h] ? h : "recap");
 });
 </script>
+</body>
+</html>
