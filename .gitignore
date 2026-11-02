@@ -1,0 +1,30 @@
+# Jamais dans le dépôt
+cle.txt
+*/cle.txt
+**/cle.txt
+cle.txt.txt
+
+# Les fichiers de parties contiennent le puuid des SEPT ADVERSAIRES de chaque
+# lobby — donnée personnelle de tiers. Ils ne quittent jamais la machine.
+# Motifs larges volontairement : le dossier de travail de Clément est sur son
+# Bureau, pas dans l'arborescence du dépôt, et le jour où il l'y déplacera le
+# filet doit déjà être tendu.
+parties/
+**/parties/
+*.csv
+collecte.log
+**/collecte.log
+miroir_resume.json
+miroir_set18.json
+diag_resultat.json
+**/miroir_*.json
+**/diag_*.json
+__pycache__/
+*.pyc
+.DS_Store
+
+# Généré par le workflow de déploiement et par build_site.py.
+# La source est data/ ; versionner la copie créerait une péremption
+# silencieuse en local.
+site/data/
+site/oracle.html

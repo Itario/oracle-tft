@@ -1,0 +1,57 @@
+# Publie site/ sur GitHub Pages à chaque poussée sur main.
+# Le site est entièrement statique : ni build, ni dépendance.
+name: Déployer le site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # bouton « Run workflow » dans l'onglet Actions
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deployer:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # site/data/ et site/oracle.html ne sont pas versionnés : ils descendent
+      # de data/releves/, seule source de vérité. On les régénère ici, ce qui
+      # garantit que le site publié ne peut pas diverger des relevés.
+      - name: Régénérer le site depuis les relevés
+        run: |
+          python3 tools/build/build_site.py
+          python3 tools/build/build_oracle.py 18
+          echo "Fichiers produits :"
+          find site -type f | sort
+
+      - name: Vérifier que le site ne contient pas de clé API
+        run: |
+          # on cherche le FORMAT d'une clé, pas la chaîne "RGAPI-" :
+          # sinon le garde-fou se déclencherait sur sa propre documentation.
+          if grep -rInE "RGAPI-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" site/ data/ 2>/dev/null; then
+            echo "::error::Une clé API Riot a été trouvée dans les fichiers publiés."
+            exit 1
+          fi
+          echo "Aucune clé trouvée."
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: pages
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,577 @@
+{
+ "schema_version": 1,
+ "date": "2026-10-23",
+ "patch": "18.5b",
+ "rang": "Master+",
+ "source": "metatft.com/units + /comps",
+ "n_parties": 56816,
+ "fenetre": "3 jours",
+ "set": 18,
+ "note": "Premier relevé à MÊME TRANCHE que le précédent (Master+) : la rotation devient mesurable. Volume plus faible car 18.5b est récent.",
+ "unites": {
+  "Lux": {
+   "avg": 3.58,
+   "wr": 25.3,
+   "n": 6437
+  },
+  "Gnar": {
+   "avg": 3.7,
+   "wr": 21.0,
+   "n": 11558
+  },
+  "Alune": {
+   "avg": 3.83,
+   "wr": 18.8,
+   "n": 7425
+  },
+  "Taric": {
+   "avg": 3.9,
+   "wr": 20.8,
+   "n": 16125
+  },
+  "Elder Dragon": {
+   "avg": 3.91,
+   "wr": 20.4,
+   "n": 10068
+  },
+  "Ivern": {
+   "avg": 3.96,
+   "wr": 22.9,
+   "n": 10385
+  },
+  "Ashe": {
+   "avg": 3.98,
+   "wr": 17.5,
+   "n": 4084
+  },
+  "Kennen": {
+   "avg": 4.05,
+   "wr": 20.2,
+   "n": 10322
+  },
+  "Maokai": {
+   "avg": 4.18,
+   "wr": 20.5,
+   "n": 9608
+  },
+  "Draven": {
+   "avg": 4.23,
+   "wr": 22.5,
+   "n": 6409
+  },
+  "Kayle": {
+   "avg": 4.24,
+   "wr": 13.5,
+   "n": 5429
+  },
+  "Brambleback": {
+   "avg": 4.26,
+   "wr": 12.4,
+   "n": 9575
+  },
+  "Murkwolf": {
+   "avg": 4.28,
+   "wr": 12.7,
+   "n": 8159
+  },
+  "Azir": {
+   "avg": 4.33,
+   "wr": 12.5,
+   "n": 6264
+  },
+  "Soraka": {
+   "avg": 4.34,
+   "wr": 12.7,
+   "n": 7762
+  },
+  "Ezreal": {
+   "avg": 4.35,
+   "wr": 15.4,
+   "n": 8717
+  },
+  "Ancient Sentinel": {
+   "avg": 4.37,
+   "wr": 13.0,
+   "n": 25305
+  },
+  "Pebbles": {
+   "avg": 4.37,
+   "wr": 11.8,
+   "n": 11162
+  },
+  "Krug": {
+   "avg": 4.4,
+   "wr": 11.4,
+   "n": 14876
+  },
+  "Alistar": {
+   "avg": 4.42,
+   "wr": 14.5,
+   "n": 9651
+  },
+  "Ornn": {
+   "avg": 4.43,
+   "wr": 13.1,
+   "n": 10496
+  },
+  "LeBlanc": {
+   "avg": 4.43,
+   "wr": 13.9,
+   "n": 8921
+  },
+  "Aphelios": {
+   "avg": 4.43,
+   "wr": 9.3,
+   "n": 7748
+  },
+  "Amumu": {
+   "avg": 4.43,
+   "wr": 13.8,
+   "n": 16231
+  },
+  "Rek'Sai": {
+   "avg": 4.44,
+   "wr": 12.5,
+   "n": 4664
+  },
+  "Kha'Zix": {
+   "avg": 4.45,
+   "wr": 11.8,
+   "n": 2589
+  },
+  "Leona": {
+   "avg": 4.45,
+   "wr": 12.3,
+   "n": 6430
+  },
+  "Master Yi": {
+   "avg": 4.46,
+   "wr": 12.4,
+   "n": 2436
+  },
+  "Veigar": {
+   "avg": 4.46,
+   "wr": 12.2,
+   "n": 5948
+  },
+  "Kog'Maw": {
+   "avg": 4.46,
+   "wr": 7.9,
+   "n": 6921
+  },
+  "Nidalee": {
+   "avg": 4.46,
+   "wr": 8.0,
+   "n": 6588
+  },
+  "Ahri": {
+   "avg": 4.46,
+   "wr": 10.9,
+   "n": 7547
+  },
+  "Sett": {
+   "avg": 4.48,
+   "wr": 10.3,
+   "n": 10026
+  },
+  "Fiddlesticks": {
+   "avg": 4.49,
+   "wr": 12.3,
+   "n": 13363
+  },
+  "Sejuani": {
+   "avg": 4.49,
+   "wr": 12.2,
+   "n": 7275
+  },
+  "Zyra": {
+   "avg": 4.5,
+   "wr": 10.6,
+   "n": 6119
+  },
+  "Rengar": {
+   "avg": 4.52,
+   "wr": 12.8,
+   "n": 3023
+  },
+  "Sivir": {
+   "avg": 4.53,
+   "wr": 12.5,
+   "n": 4812
+  },
+  "Lillia": {
+   "avg": 4.53,
+   "wr": 13.2,
+   "n": 6602
+  },
+  "Yorick": {
+   "avg": 4.55,
+   "wr": 11.6,
+   "n": 10454
+  },
+  "Morgana": {
+   "avg": 4.55,
+   "wr": 11.5,
+   "n": 8218
+  },
+  "Diana": {
+   "avg": 4.58,
+   "wr": 10.2,
+   "n": 12509
+  },
+  "Teemo": {
+   "avg": 4.59,
+   "wr": 8.7,
+   "n": 2568
+  },
+  "Yunara": {
+   "avg": 4.59,
+   "wr": 12.8,
+   "n": 4894
+  },
+  "Karma": {
+   "avg": 4.61,
+   "wr": 11.3,
+   "n": 7512
+  },
+  "Hecarim": {
+   "avg": 4.62,
+   "wr": 11.5,
+   "n": 9709
+  },
+  "Vi": {
+   "avg": 4.63,
+   "wr": 9.7,
+   "n": 10711
+  },
+  "Varus": {
+   "avg": 4.63,
+   "wr": 6.4,
+   "n": 5241
+  },
+  "Gromp": {
+   "avg": 4.63,
+   "wr": 11.0,
+   "n": 2266
+  },
+  "Malphite": {
+   "avg": 4.64,
+   "wr": 8.7,
+   "n": 3623
+  },
+  "Rammus": {
+   "avg": 4.64,
+   "wr": 11.6,
+   "n": 4542
+  },
+  "Cassiopeia": {
+   "avg": 4.64,
+   "wr": 12.2,
+   "n": 4886
+  },
+  "Shen": {
+   "avg": 4.67,
+   "wr": 10.5,
+   "n": 2840
+  },
+  "Akali": {
+   "avg": 4.68,
+   "wr": 9.0,
+   "n": 1840
+  },
+  "Xayah": {
+   "avg": 4.69,
+   "wr": 11.6,
+   "n": 3948
+  },
+  "Kobuko": {
+   "avg": 4.71,
+   "wr": 9.2,
+   "n": 1881
+  },
+  "Scuttlecrab": {
+   "avg": 4.73,
+   "wr": 9.4,
+   "n": 7631
+  },
+  "Tristana": {
+   "avg": 4.74,
+   "wr": 12.7,
+   "n": 2258
+  },
+  "Warwick": {
+   "avg": 4.75,
+   "wr": 8.0,
+   "n": 901
+  },
+  "Rakan": {
+   "avg": 4.79,
+   "wr": 10.7,
+   "n": 7054
+  },
+  "Mama Beak": {
+   "avg": 4.83,
+   "wr": 7.9,
+   "n": 2985
+  },
+  "Cinderling": {
+   "avg": 4.85,
+   "wr": 8.8,
+   "n": 3414
+  },
+  "Camille": {
+   "avg": 5.04,
+   "wr": 7.7,
+   "n": 1736
+  },
+  "Elise": {
+   "avg": 5.33,
+   "wr": 9.9,
+   "n": 2679
+  },
+  "Caitlyn": {
+   "avg": 5.4,
+   "wr": 6.4,
+   "n": 1029
+  }
+ },
+ "compos": [
+  {
+   "n": "Riftbeast Krug",
+   "carry": "Krug",
+   "lvl": "niveau 7 · facile",
+   "roster": [
+    "Krug*",
+    "Brambleback",
+    "Elder Dragon",
+    "Pebbles",
+    "Gnar",
+    "Taric",
+    "Ancient Sentinel",
+    "Murkwolf"
+   ],
+   "avg": 4.19,
+   "pr": 1.01,
+   "wr": 14.0,
+   "t4": 56.0,
+   "note": "Meilleur placement ET meilleur top 4 du patch, classée FACILE. Mais pick rate 1.01 — plus d'un joueur par lobby en moyenne. C'est la ligne que tout le monde joue : ne la force jamais sans scouting."
+  },
+  {
+   "n": "Executioner Kha'Zix",
+   "carry": "Kha'Zix",
+   "lvl": "niveau 7 · moyenne",
+   "roster": [
+    "Kha'Zix*",
+    "Hecarim",
+    "Ezreal",
+    "Diana",
+    "Soraka",
+    "Fiddlesticks",
+    "Ornn"
+   ],
+   "avg": 4.24,
+   "pr": 0.25,
+   "wr": 14.1,
+   "t4": 54.5,
+   "note": "Placement quasi identique à la Krug pour un quart de sa contestation. Le meilleur compromis force/tranquillité du patch."
+  },
+  {
+   "n": "Spellweaver Veigar",
+   "carry": "Veigar",
+   "lvl": "niveau 5 · difficile",
+   "roster": [
+    "Veigar*",
+    "Ornn",
+    "Alistar",
+    "LeBlanc",
+    "Cassiopeia",
+    "Fiddlesticks",
+    "Rek'Sai"
+   ],
+   "avg": 4.25,
+   "pr": 0.41,
+   "wr": 15.4,
+   "t4": 54.0,
+   "note": "Reroll niveau 5. Bon équilibre entre top 4 et victoires, mais assez jouée."
+  },
+  {
+   "n": "Vanguard Alune",
+   "carry": "Alune",
+   "lvl": "Fast 9 · difficile",
+   "roster": [
+    "Alune*",
+    "Morgana",
+    "Ancient Sentinel",
+    "Taric",
+    "Ivern",
+    "Lillia",
+    "Diana",
+    "Hecarim",
+    "Fiddlesticks"
+   ],
+   "avg": 4.33,
+   "pr": 0.17,
+   "wr": 17.7,
+   "t4": 51.1,
+   "note": "Profil de pointe net : 17.7 % de victoires pour seulement 51.1 % de top 4. Des 1res et des 7es."
+  },
+  {
+   "n": "Elderwood Draven",
+   "carry": "Draven",
+   "lvl": "Fast 9 · difficile",
+   "roster": [
+    "Draven*",
+    "Ezreal",
+    "Maokai",
+    "Kennen",
+    "Gnar",
+    "Ivern",
+    "Taric",
+    "Amumu",
+    "Alistar"
+   ],
+   "avg": 4.34,
+   "pr": 0.33,
+   "wr": 20.5,
+   "t4": 51.2,
+   "note": "LE MEILLEUR TAUX DE VICTOIRE DU PATCH (20.5 %) pour un placement moyen médiocre. C'est la définition d'une ligne de tournoi checkmate : elle gagne ou elle s'effondre."
+  },
+  {
+   "n": "Ravager Warwick",
+   "carry": "Warwick",
+   "lvl": "niveau 6 · moyenne",
+   "roster": [
+    "Warwick*",
+    "Malphite",
+    "Murkwolf",
+    "Brambleback",
+    "Azir",
+    "Diana",
+    "Krug",
+    "Rek'Sai"
+   ],
+   "avg": 4.36,
+   "pr": 0.05,
+   "wr": 8.2,
+   "t4": 53.0,
+   "note": "La moins jouée de tout le classement (0.05). Top 4 correct mais 8.2 % de victoires seulement : elle sécurise sans jamais gagner."
+  },
+  {
+   "n": "Adaptor Master Yi Rengar",
+   "carry": "Master Yi",
+   "lvl": "niveau 7 · moyenne",
+   "roster": [
+    "Master Yi*",
+    "Rengar*",
+    "Vi",
+    "Nidalee",
+    "Sett",
+    "Krug",
+    "Yorick"
+   ],
+   "avg": 4.43,
+   "pr": 0.21,
+   "wr": 11.1,
+   "t4": 51.3,
+   "note": "Deux carries à monter. Peu contestée."
+  },
+  {
+   "n": "Inferno Akali",
+   "carry": "Akali",
+   "lvl": "niveau 5 · difficile",
+   "roster": [
+    "Akali*",
+    "Camille",
+    "Ornn",
+    "Varus",
+    "Kayle",
+    "Sejuani",
+    "Leona"
+   ],
+   "avg": 4.43,
+   "pr": 0.17,
+   "wr": 9.1,
+   "t4": 52.5,
+   "note": "Reroll. Camille y apparaît en pièce d'early — rappel que sa moyenne de 5.04 en unité isolée est un artefact."
+  },
+  {
+   "n": "Rapidfire Kayle",
+   "carry": "Kayle",
+   "lvl": "niveau 6 · facile",
+   "roster": [
+    "Kayle*",
+    "Sejuani",
+    "Varus",
+    "Aphelios",
+    "Amumu",
+    "Diana",
+    "Shen",
+    "Leona"
+   ],
+   "avg": 4.43,
+   "pr": 0.07,
+   "wr": 11.4,
+   "t4": 52.1,
+   "note": "Classée FACILE et quasi jamais jouée (0.07). Bonne porte d'entrée quand le lobby est encombré."
+  },
+  {
+   "n": "Juggernaut Zyra",
+   "carry": "Zyra",
+   "lvl": "Fast 8 · moyenne",
+   "roster": [
+    "Zyra*",
+    "Nidalee",
+    "Amumu",
+    "Vi",
+    "Sejuani",
+    "Scuttlecrab",
+    "Rakan",
+    "Yorick"
+   ],
+   "avg": 4.46,
+   "pr": 0.09,
+   "wr": 10.5,
+   "t4": 50.4,
+   "note": "Peu jouée, performances moyennes partout."
+  },
+  {
+   "n": "Blossom Karma",
+   "carry": "Karma",
+   "lvl": "niveau 5 · difficile",
+   "roster": [
+    "Karma*",
+    "Sejuani",
+    "Yunara",
+    "Yorick",
+    "Kayle",
+    "LeBlanc",
+    "Leona"
+   ],
+   "avg": 4.47,
+   "pr": 0.46,
+   "wr": 14.7,
+   "t4": 51.0,
+   "note": "Très jouée (0.46) pour un placement faible. Blossom garde des adeptes malgré ses nerfs répétés."
+  },
+  {
+   "n": "Inferno Elder Dragon",
+   "carry": "Elder Dragon",
+   "lvl": "Fast 9 · difficile",
+   "roster": [
+    "Elder Dragon*",
+    "Draven",
+    "Maokai",
+    "Kennen",
+    "Ivern",
+    "Taric",
+    "Amumu",
+    "Ancient Sentinel"
+   ],
+   "avg": 4.49,
+   "pr": 0.72,
+   "wr": 20.2,
+   "t4": 48.6,
+   "note": "20.2 % de victoires mais le PIRE top 4 du classement (48.6 %) et très contestée (0.72). Tout-ou-rien extrême : excellente en checkmate, dangereuse au ladder."
+  }
+ ]
+}

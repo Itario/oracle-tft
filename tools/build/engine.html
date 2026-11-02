@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORACLE · TFT Set 18</title>
+<style>
+  :root{
+    --bg:#0e1512; --panel:#152019; --panel2:#1a2820; --line:#26382d;
+    --ink:#e6efe6; --dim:#8fa696; --faint:#5c7365;
+    --wisp:#5fd4c4; --wisp-glow:rgba(95,212,196,.25);
+    --gold:#e8b34b; --mou:#a8c46a; --eco:#d9a0e0; --flex:#5fd4c4;
+    --tS:#ffb347; --tA:#9fd0ff; --tB:#b9c4bd; --tC:#7a8a80;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{background:var(--bg); color:var(--ink);
+    font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:860px; margin:0 auto; padding:22px 16px 80px}
+
+  header{display:flex; align-items:baseline; gap:14px; margin-bottom:18px}
+  h1{font-family:"Palatino Linotype",Palatino,Georgia,serif;
+    font-size:30px; font-weight:600; letter-spacing:.24em; color:var(--ink)}
+  h1 .dot{color:var(--wisp); text-shadow:0 0 14px var(--wisp-glow)}
+  .sub{color:var(--faint); font-size:12px; letter-spacing:.08em; text-transform:uppercase}
+
+  .searchbox{position:relative; margin-bottom:14px}
+  #q{width:100%; padding:15px 18px; font-size:19px; color:var(--ink);
+    background:var(--panel); border:1px solid var(--line); border-radius:12px; outline:none;
+    transition:border-color .15s, box-shadow .15s}
+  #q:focus{border-color:var(--wisp); box-shadow:0 0 0 3px var(--wisp-glow)}
+  #q::placeholder{color:var(--faint)}
+
+  .chips{display:flex; flex-wrap:wrap; gap:7px; margin-bottom:20px}
+  .chip{padding:5px 12px; font-size:12.5px; color:var(--dim); background:var(--panel);
+    border:1px solid var(--line); border-radius:999px; cursor:pointer; user-select:none}
+  .chip:hover{color:var(--ink); border-color:var(--wisp)}
+  .chip.code{font-family:ui-monospace,Menlo,Consolas,monospace; letter-spacing:.05em}
+
+  .grouplabel{font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--faint); margin:22px 2px 8px}
+
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:15px 16px; margin-bottom:10px}
+  .card.hit{border-color:#3a5648}
+  .card.best{border-color:var(--wisp); box-shadow:0 0 0 1px var(--wisp), 0 4px 24px rgba(95,212,196,.12)}
+  .bestlabel{font-size:11px; letter-spacing:.16em; color:var(--wisp); font-weight:700; margin-bottom:6px}
+  .varlabel{font-size:10.5px; letter-spacing:.16em; color:var(--faint); margin-bottom:6px}
+
+  /* ---- PLATEAU ---- */
+  .board{margin:12px 0 4px; padding:14px 10px 10px;
+    background:linear-gradient(180deg,#111a15,#0d1410);
+    border:1px solid var(--line); border-radius:10px; overflow-x:auto}
+  .brow{display:flex; justify-content:center; gap:4px; margin-bottom:4px}
+  .brow.off{margin-left:32px}
+  .hex{width:64px; height:70px; flex:0 0 64px;
+    clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    background:#182219; display:flex; align-items:center; justify-content:center;
+    padding:2px 3px; text-align:center; font-size:8.5px; line-height:1.1;
+    letter-spacing:-.2px; color:var(--dim); overflow:hidden;
+    hyphens:auto; word-break:break-word; overflow-wrap:anywhere}
+  .hex.empty{background:#131b16}
+  .hex.tank{background:#243527; color:#cfe0d2}
+  .hex.bruiser{background:#2b3524; color:#d7e0c7}
+  .hex.support{background:#1f2c33; color:#c6d8e0}
+  .hex.carry{background:#43331a; color:var(--gold); font-weight:700;
+    box-shadow:inset 0 0 0 2px var(--gold)}
+  .blegend{display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+    font-size:10.5px; color:var(--faint); margin-top:8px; letter-spacing:.04em}
+  .blegend b{font-weight:600}
+  .barrow{text-align:center; font-size:10px; letter-spacing:.18em;
+    color:var(--faint); text-transform:uppercase; margin-top:6px}
+  .itemchip{display:inline-block; padding:3px 9px; margin:2px 4px 2px 0;
+    font-size:12px; background:#1d2b22; border:1px solid #2f4638;
+    border-radius:6px; color:var(--gold)}
+
+  .row1{display:flex; flex-wrap:wrap; align-items:center; gap:9px; margin-bottom:6px}
+  .name{font-size:17.5px; font-weight:700}
+  .tier{font-family:ui-monospace,Menlo,Consolas,monospace; font-weight:700; font-size:13px;
+    padding:2px 9px; border-radius:6px; background:var(--panel2)}
+  .tS{color:var(--tS)} .tA{color:var(--tA)} .tB{color:var(--tB)} .tC{color:var(--tC)}
+  .verdict{font-size:13px; font-weight:600; padding:3px 10px; border-radius:6px; background:var(--panel2)}
+  .vfort{color:var(--gold)} .vmou{color:var(--mou)} .veco{color:var(--eco)} .vflex{color:var(--flex)}
+  .codebadge{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12.5px; font-weight:700;
+    color:var(--bg); background:var(--wisp); padding:3px 9px; border-radius:6px; cursor:pointer;
+    box-shadow:0 0 12px var(--wisp-glow)}
+  .kind{margin-left:auto; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint)}
+
+  .effect{color:var(--dim); font-size:13.5px; margin-bottom:8px}
+  .kv{display:grid; grid-template-columns:130px 1fr; gap:3px 12px; font-size:14px}
+  .kv .k{color:var(--faint); font-size:12px; letter-spacing:.06em; text-transform:uppercase; padding-top:2px}
+  .kv .v b{color:var(--wisp); font-weight:600}
+  .kv .v .warn{color:var(--gold)}
+  .items{font-weight:600}
+  .roster span{white-space:nowrap}
+  .roster .carry{color:var(--gold); font-weight:600}
+
+  .planbox{background:var(--panel2); border-radius:9px; padding:10px 13px; margin-top:9px; font-size:13.5px}
+  .planbox .ptitle{font-family:ui-monospace,Menlo,Consolas,monospace; color:var(--wisp);
+    font-size:12px; font-weight:700; letter-spacing:.08em; margin-bottom:3px}
+  .planbox .err{color:var(--gold)}
+
+  .empty{color:var(--faint); text-align:center; padding:40px 0 10px; font-size:14px}
+  footer{margin-top:34px; color:var(--faint); font-size:11.5px; line-height:1.7}
+  footer b{color:var(--dim)}
+  @media (max-width:560px){ .kv{grid-template-columns:1fr} .kv .k{padding-top:6px} h1{font-size:24px} }
+
+.statv{font-variant-numeric:tabular-nums;line-height:1.7}
+.idxwrap{display:block;margin-top:4px;opacity:.85;font-size:.92em}
+.idx{display:inline-block;min-width:2.1em;text-align:center;padding:1px 5px;border-radius:5px;
+     background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);font-weight:600}
+.idx.hot{color:var(--gold);border-color:var(--gold)}
+.idx.cold{opacity:.55}
+.muted{opacity:.6;font-style:italic}
+.profil{margin-top:6px;padding:5px 9px;border-radius:6px;font-size:.94em;
+        border-left:3px solid var(--wisp);background:rgba(255,255,255,.05)}
+.profil.psafe{border-left-color:var(--wisp)}
+.profil.prisk{border-left-color:var(--gold)}
+.profil.pbal{border-left-color:rgba(255,255,255,.35)}
+.rline{display:flex;align-items:baseline;gap:8px;padding:3px 0;
+       border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap}
+.rline:last-child{border-bottom:0}
+.rrang{display:inline-block;min-width:24px;text-align:center;font-weight:700;
+       font-size:.85em;padding:1px 4px;border-radius:5px;
+       background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+.rrang.hot{color:var(--gold);border-color:var(--gold)}
+.rrang.cold{color:var(--wisp);border-color:var(--wisp)}
+.rv{font-weight:700;color:var(--gold)}
+.chip.carry{border-color:var(--gold);color:var(--gold);font-weight:700}
+.chip.miss{opacity:.45;border-style:dashed}
+.vieux{margin:6px 0 2px;padding:5px 9px;border-radius:6px;font-size:.88em;
+  border-left:3px solid #b07a2a;background:rgba(176,122,42,.12);opacity:.92}
+.btn-log{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);
+  color:inherit;font:inherit;font-size:.9em;padding:5px 11px;border-radius:7px;
+  cursor:pointer;margin:2px 6px 2px 0}
+.btn-log:hover{border-color:var(--wisp);color:var(--wisp)}
+.modebar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:10px 0 4px}
+.modebtn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);
+  color:inherit;font:inherit;font-size:.92em;padding:5px 13px;border-radius:999px;cursor:pointer}
+.modebtn:hover{border-color:var(--wisp)}
+.modebtn.on{background:rgba(255,255,255,.12);border-color:var(--gold);color:var(--gold);font-weight:700}
+.modenote{opacity:.6;font-size:.86em;margin-left:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>ORACLE<span class="dot">·</span>18</h1>
+    <div class="sub">Enchanted Wilds · LIVE · méta du 28/08 · patch 18.1</div>
+  </header>
+
+  <div class="searchbox">
+    <input id="q" type="text" autocomplete="off" spellcheck="false"
+      placeholder="Tape un augment, un champion ou une compo… (ex : flame, kennen, sprykin)">
+  </div>
+  <div class="chips" id="chips"></div>
+  <div id="results"></div>
+
+  <footer>
+    <b>Lecture en 3 temps :</b> verdict (à quel point l'augment t'engage) → code (le plan d'exécution) → compo cible (croisée avec le tier du jour).
+    Méta et classement des unités : relevé LIVE du <b>28/08</b> (Platine+) (MetaTFT, PBE 18.1). Les fiches augments/BiS datent encore du 31/07. Après un patch, demande le refresh à Claude.
+    L'augment n'est qu'un signal sur quatre : croise toujours avec tes items, ce que tu hit, et ce que le lobby conteste.
+  </footer>
+</div>
+
+<script>
+/* ============ DONNÉES (générées le 31/07/2026 — source Mobalytics + jugement coach) ============ */
+
+/*__DATA:PLANS__*/
+
+/*__DATA:COMPS__*/
+
+/*__DATA:TRAITS__*/
+
+/*__DATA:BIS__*/
+
+/* ---- STATS BRUTES + INDICES — base zéro 31/07/2026, source lolchess ---- */
+/* pv/ad = valeur 1 étoile. Indices 0-100 relatifs à la MÉDIANE DU PALIER. */
+/*__DATA:STATS__*/
+
+/* Verdicts DÉRIVÉS des chiffres ci-dessus. Aucun n'est une opinion. */
+/*__DATA:VERDICT__*/
+
+
+/*__DATA:AUG__*/
+
+/* ============ MOTEUR ============ */
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+  .replace(/[''\u2019.\-]/g,"");   /* apostrophes, points, tirets : Kha'Zix -> khazix, Kog'Maw -> kogmaw */
+const vclass = v => v.includes("FORT")?"vfort":v.includes("MOU")?"vmou":v.includes("ÉCO")?"veco":"vflex";
+const tclass = t => "t"+t;
+
+
+/* ---- INDEX DE RECHERCHE PAR INTENTION ----
+   TAGS : ad/ap/tank/peba/quatrecost sont CALCULÉS (rôle + coût des carries marqués *).
+   Les autres sont dérivés de lvl/code/note. Aucun jugement ajouté à la main. */
+/*__DATA:TAGS__*/
+/*__DATA:LEX__*/
+
+const STOP = new Set(["une","un","des","les","le","la","de","du","pour","avec","qui","que",
+ "compo","compos","composition","game","games","partie","parties","je","tu","il","on","est",
+ "et","ou","a","au","aux","en","dans","sur","mon","ma","mes","cette","ce","quoi","comment"]);
+
+/* requête libre -> tags canoniques reconnus */
+function tagsFromQuery(q){
+  const mots = norm(q).split(/[^a-z0-9]+/).filter(w=>w && !STOP.has(w));
+  const compact = mots.join("");
+  const out = new Set();
+  for(const [tag, syns] of Object.entries(LEX)){
+    for(const s of syns){
+      if(mots.includes(s) || (s.length>=5 && compact.includes(s))){ out.add(tag); break; }
+    }
+  }
+  return [...out];
+}
+
+/* compos triées par nombre de tags satisfaits, puis par tier */
+function compsByIntent(tags){
+  if(!tags.length) return [];
+  return COMPS.map(c=>{
+      const t = TAGS[c.n] || [];
+      return {c, score: tags.filter(x=>t.includes(x)).length, tot:t.length};
+    })
+    .filter(x=>x.score>0)
+    .sort((a,b)=> b.score-a.score || TIERV[b.c.tier]-TIERV[a.c.tier] || a.tot-b.tot);
+}
+
+function intentHTML(tags, hits){
+  const lbl = tags.map(t=>`<span class="chip" onclick="go('${t}')">${t}</span>`).join(" ");
+  return `<div class="grouplabel">Par intention — ${lbl}</div>`
+    + hits.slice(0,5).map(h=>{
+        const t = (TAGS[h.c.n]||[]).map(x=> tags.includes(x)
+            ? `<b style="color:var(--wisp)">${x}</b>` : x).join(" · ");
+        return compCard(h.c).replace("</div>\n", "</div>\n")
+             + `<div class="empty" style="padding:2px 10px 10px;font-size:11px">${t}</div>`;
+      }).join("");
+}
+
+function compsOf(champ){
+  const c = norm(champ);
+  return COMPS.filter(x=>x.roster.some(r=>norm(r).includes(c)));
+}
+function rosterHTML(comp){
+  return comp.roster.map(r=>{
+    const carry = r.endsWith("*");
+    const nm = carry? r.slice(0,-1): r;
+    return `<span class="${carry?'carry':''}">${nm}</span>`;
+  }).join(" · ");
+}
+function planHTML(code){
+  const p = PLANS[code]; if(!p) return "";
+  return `<div class="planbox"><div class="ptitle">${p.t}</div>${p.p} <span class="err">${p.e}</span></div>`;
+}
+function augCard(a){
+  const [n,t,v,c,eff,dir,note]=a;
+  return `${VIEUX}<div class="card hit">
+    <div class="row1"><span class="name">${n}</span>
+      <span class="tier ${tclass(t)}">${t}</span>
+      <span class="verdict ${vclass(v)}">${v}</span>
+      <span class="codebadge" onclick="go('${c}')">${c}</span>
+      <span class="kind">augment</span></div>
+    <div class="effect">${eff}</div>
+    <div class="kv">
+      <div class="k">À ne pas louper</div><div class="v"><b>${dir}</b></div>
+      <div class="k">Note top 4</div><div class="v">${note.replace(/⚠[^.]*\./g, m=>`<span class="warn">${m}</span>`)}</div>
+    </div>
+    ${planHTML(c)}
+  </div>`;
+}
+
+/* ===================== COUCHE STATS LIVE — PRÉ-CÂBLÉE, VIDE =====================
+   Se remplit au 26/08/2026. Une entrée par compo, clé = nom exact de COMPS :
+     "Eldritch": {avg:4.12, top4:54.3, top1:13.1, n:1840, elo:"Chall", patch:"18.2"}
+   avg  = placement moyen (plus bas = mieux)     top4 = % de top 4
+   top1 = % de victoires                          n   = nombre de parties
+   Le jour où on verse les nombres, tout le reste s'active sans autre modification.
+   ============================================================================== */
+
+/* ============================================================================
+   COUCHE MÉTA VIVANTE — relevé du 28/08/2026 — PREMIER RELEVE LIVE (patch 18.1, Platine+)
+   Sources : metatft.com/units + /comps, filtre Ranked 18.1 Platine+
+   Ces deux flux sont LA base de l'Oracle. Tout le reste est descriptif.
+   Pour rafraîchir : demander à Claude, il relit les deux pages et régénère.
+   ============================================================================ */
+/*__DATA:META__*/
+
+/* nom -> [placement moyen, winrate %, nb de parties] */
+/*__DATA:UNITS__*/
+
+/* Les compos réellement jouées, classées par placement moyen. */
+/*__DATA:METACOMPS__*/
+
+/* ---- RADAR : la règle établie le 05/08, vérifiée le 11/08 (pari Lux gagné).
+   Riot équilibre sur le placement moyen observé. Tête = nerfs. Queue = buffs.
+   L'amplitude du buff suit la profondeur du rang. ---- */
+function unitsRanked(){
+  return Object.entries(UNITS).filter(([k,v])=>v[2]>=NMIN_UNIT)
+    .sort((a,b)=>a[1][0]-b[1][0]);
+}
+function unitRank(name){
+  const r = unitsRanked(); const i = r.findIndex(([k])=>k===name);
+  return i<0 ? null : {rang:i+1, total:r.length, d:UNITS[name]};
+}
+/* ---------------------------------------------------------------
+   FRAÎCHEUR — l'Oracle doit savoir qu'il est périmé.
+   C'est exactement ce qui a manqué entre le 28/08 et le 19/10 :
+   l'outil affichait des chiffres de six semaines sans le dire.
+   PATCHS est à tenir à jour ; au Set 19, le remplacer.
+   --------------------------------------------------------------- */
+const PATCHS = [
+  ["2026-10-21","18.5"], ["2026-11-04","18.6"], ["2026-11-11","18.6B"],
+  ["2026-12-01","19.1 — Set 19"], ["2026-12-15","19.2"]
+];
+/* Les blocs COMPS / BIS / AUG / VERDICT / TRAITS datent du relevé PBE du
+   31/07/2026. Ils sont conservés (ils décrivent des mécaniques qui n'ont pas
+   toutes bougé) mais ne doivent JAMAIS être lus comme la méta du jour.
+   Au Set 19 ils seront remplacés, pas réparés. */
+const DATE_ANCIEN = "31/07/2026";
+const VIEUX = `<div class="vieux">Fiche du <b>${DATE_ANCIEN}</b> — relevé PBE, trois mois avant le patch actuel. `
+            + `Conservée pour la mécanique, <b>pas pour la méta</b>. Les compos et objets d'aujourd'hui sont sous « meta ».</div>`;
+
+function fraicheurHTML(){
+  const m = String(META_DATE).match(/(\d{2})\/(\d{2})\/(\d{4})/);
+  if(!m) return "";
+  const iso = `${m[3]}-${m[2]}-${m[1]}`;
+  const auj = new Date().toISOString().slice(0,10);
+  const depuis = PATCHS.filter(([d])=> d > iso && d <= auj);
+  const jours = Math.round((Date.parse(auj) - Date.parse(iso))/86400000);
+  const suiv  = PATCHS.find(([d])=> d > auj);
+  if(depuis.length){
+    return `<div class="profil prisk"><b>Relevé périmé</b> — ${depuis.length} patch(s)
+      depuis le ${META_DATE} : ${depuis.map(x=>x[1]).join(", ")}.
+      Les chiffres ci-dessous datent d'avant. Demande un rafraîchissement à Claude
+      avant de t'y fier.</div>`;
+  }
+  return `<div class="profil psafe"><b>Relevé à jour</b> — ${jours} jour(s), aucun patch depuis.
+    ${suiv?`Prochain : ${suiv[1]} le ${suiv[0].split("-").reverse().join("/")}.`:""}</div>`;
+}
+
+function radarHTML(){
+  const r = unitsRanked(), N = r.length;
+  const li = (arr,off,cls) => arr.map(([k,v],i)=>
+    `<div class="rline"><span class="rrang ${cls}">${off+i+1}</span>
+       <b>${k}</b> <span class="rv">${v[0].toFixed(2)}</span>
+       <span class="idxwrap">win ${v[1]}% · ${v[2].toLocaleString('fr')} parties</span></div>`).join("");
+  return `<div class="card hit">
+    <div class="row1"><span class="name">Radar d'équilibrage</span>
+      <span class="kind">relevé du ${META_DATE}</span></div>
+    <div class="kv">
+      <div class="k">Fraîcheur</div><div class="v">${fraicheurHTML()}</div>
+      <div class="k">La règle</div><div class="v">Riot équilibre en gros sur le <b>placement moyen observé</b> :
+        vérifié quatre fois en PBE (Lux, Elise, puis Yunara/Nidalee/Warwick nerfés depuis la tête).
+        <b>Mais elle a ÉCHOUÉ au patch de lancement</b> : Lux, 1re, a été BUFFÉE ; Caitlyn,
+        avant-dernière, a été NERFÉE. Correctif : Riot regarde la <b>distribution</b>, pas la moyenne —
+        une unité au plafond abusif se fait nerfer même avec une moyenne catastrophique.
+        Traite ce tableau comme un indicateur, pas comme un oracle.</div>
+      <div class="k">Placements les plus forts</div><div class="v statv">${li(r.slice(0,8),0,"hot")}</div>
+      <div class="k">Placements les plus faibles</div><div class="v statv">${li(r.slice(-8),N-8,"cold")}
+        <div class="profil prisk"><b>Camille est un cas à part</b> — 6.32 de moyenne, l'écart le plus large du set,
+          et Riot ne l'a jamais touchée en huit patchs. Ne la joue pas tant que ça n'a pas bougé.</div></div>
+      ${typeof JOUEUR!=="undefined" ? `<div class="k">Ton profil</div><div class="v"><div class="profil prisk">
+        <b>${JOUEUR.rang} · ${JOUEUR.n} parties · placement moyen ${JOUEUR.avg}</b><br>
+        Top 4 : ${JOUEUR.t4} % (centile ${JOUEUR.pct_t4}) · Victoires : ${JOUEUR.wr} % (centile ${JOUEUR.pct_wr}).<br>
+        ${JOUEUR.lecture}</div></div>` : ""}
+      <div class="k">Base</div><div class="v muted">${META_PATCH} · ${META_N} · unités sous ${NMIN_UNIT.toLocaleString('fr')} parties non classées</div>
+    </div></div>`;
+}
+/* ===================================================================
+   MODE DE JEU — ladder, checkmate, points cumulés
+   Le critère optimal CHANGE selon l'enjeu. Au ladder c'est le
+   placement moyen qui gouverne le LP. En checkmate seule la 1re
+   place compte : une ligne qui fait des 1ers et des 7es devient
+   le meilleur choix. En points cumulés, le top 4 prime.
+   Logique sans donnée de set : ne pas toucher au Set 19.
+   =================================================================== */
+const MODES = {
+  ladder: {
+    nom:"Ladder",
+    quoi:"Monter du LP",
+    critere:"placement moyen",
+    tri:(a,b)=>a.avg-b.avg,
+    valeur:c=>c.avg.toFixed(2),
+    explique:"Le LP suit le <b>placement moyen</b> : à partir de la 4e on ne perd plus, "
+            +"à partir de la 5e on ne gagne plus. À moyenne égale, la variance est "
+            +"à peu près neutre — inutile de chercher la régularité pour elle-même."
+  },
+  checkmate: {
+    nom:"Checkmate",
+    quoi:"Gagner, ou rien",
+    critere:"taux de 1re place",
+    tri:(a,b)=>(b.wr||0)-(a.wr||0),
+    valeur:c=>(c.wr!=null? c.wr.toFixed(1)+" %" : "—"),
+    explique:"Seule la 1re place qualifie. Une 7e ne coûte rien de plus qu'une 5e, "
+            +"donc le placement moyen ne veut plus rien dire. <b>On joue le taux de "
+            +"victoire</b>, et les lignes de pointe deviennent les meilleures."
+  },
+  cumule: {
+    nom:"Points cumulés",
+    quoi:"Tenir sur N parties",
+    critere:"taux de top 4",
+    /* Sans taux de top 4 relevé, on trie par placement moyen — il en est le
+       meilleur indicateur disponible — et on AFFICHE le manque plutôt que
+       d'inventer un pourcentage. À combler au prochain relevé. */
+    tri:(a,b)=>(b.t4!=null&&a.t4!=null) ? b.t4-a.t4 : a.avg-b.avg,
+    valeur:c=>(c.t4!=null? c.t4.toFixed(1)+" %" : "top 4 non relevé"),
+    explique:"Chaque bas de tableau coûte directement des points sur le cumul. "
+            +"<b>La régularité prime</b> : on cherche le top 4 fiable, pas le coup d'éclat. "
+            +"<i>Le taux de top 4 n'est pas encore relevé pour ce patch — le classement "
+            +"ci-dessous se rabat sur le placement moyen, qui en est le meilleur indicateur.</i>"
+  }
+};
+let MODE = "ladder";
+function setModeJeu(m){
+  MODE = m;
+  LOG.push("mode", {m});
+  if(typeof rerender === "function") rerender();
+}
+function modeBarreHTML(){
+  return `<div class="modebar">` + Object.entries(MODES).map(([k,v])=>
+    `<button class="modebtn${k===MODE?' on':''}" onclick="setModeJeu('${k}')">${v.nom}</button>`
+  ).join("") + `<span class="modenote">${MODES[MODE].quoi} · classé par ${MODES[MODE].critere}</span></div>`;
+}
+
+/* ---------------------------------------------------------------
+   PROFIL D'UNE LIGNE — pointe contre régularité.
+   Référence neutre : 12.5 % de victoires, 4.50 de placement moyen.
+   pointe     = excès de premières places par rapport à la référence
+   régularité = gain de placement moyen par rapport à la référence
+   Une ligne qui gagne beaucoup SANS bien se placer est une ligne
+   tout-ou-rien ; l'inverse est une ligne de consolidation.
+   Logique indépendante du set : ne pas toucher au Set 19.
+   --------------------------------------------------------------- */
+const REF_WR = 12.5, REF_AVG = 4.50;
+function profilLigne(c){
+  if(c.wr==null || c.avg==null) return null;
+  const pointe = (c.wr - REF_WR) / REF_WR;
+  const regul  = (REF_AVG - c.avg) / REF_AVG;
+  const r = regul > 0.005 ? pointe / regul : (pointe > 0 ? 99 : 0);
+  let t, lab, exp;
+  if(r >= 2.5){ t="pointe"; lab="Ligne de pointe";
+    exp="Gagne beaucoup plus souvent qu'elle ne se place. Tu feras des 1ers et des 7es. À prendre quand tu peux encaisser la variance."; }
+  else if(r <= 1.2){ t="regul"; lab="Ligne de régularité";
+    exp="Se place mieux qu'elle ne gagne. Peu de 1ers, peu de 8es. C'est la ligne qui monte du LP sans à-coups."; }
+  else { t="mixte"; lab="Ligne équilibrée";
+    exp="Pointe et régularité à peu près au même niveau."; }
+  return {t, lab, exp, pointe, regul, r};
+}
+function profilHTML(c){
+  const p = profilLigne(c); if(!p) return "";
+  const cls = p.t==="pointe" ? "prisk" : (p.t==="regul" ? "psafe" : "pbal");
+  return `<div class="k">Profil</div><div class="v"><div class="profil ${cls}">
+    <b>${p.lab}</b> — ${p.exp}
+    <span class="idxwrap">pointe ${(p.pointe*100).toFixed(0)} % · régularité ${(p.regul*100).toFixed(0)} % · rapport ${p.r>=99?"∞":p.r.toFixed(1)}</span>
+  </div></div>`;
+}
+/* ===================================================================
+   JOURNAL D'UTILISATION
+   Enregistre ce que l'outil fait, en local, dans le navigateur.
+   Sert à une seule chose : savoir ce qui est VRAIMENT consulté en
+   partie, pour couper ce qui ne sert pas et renforcer ce qui sert.
+   Rien ne part nulle part : l'export est un fichier que tu envoies
+   si tu veux. Tape "journal" dans la recherche pour le voir.
+   =================================================================== */
+const LOG = {
+  cle: "oracle_journal_v1",
+  max: 3000,
+  lire(){ try { return JSON.parse(localStorage.getItem(this.cle) || "[]"); }
+          catch(e){ return []; } },
+  ecrire(a){ try { localStorage.setItem(this.cle, JSON.stringify(a.slice(-this.max))); }
+             catch(e){ /* navigation privée, stockage plein : on continue sans journal */ } },
+  push(type, detail){
+    try {
+      const a = this.lire();
+      a.push({ t: Date.now(), type, d: detail, v: (typeof META_DATE!=="undefined"?META_DATE:"?") });
+      this.ecrire(a);
+    } catch(e){}
+  },
+  vider(){ try { localStorage.removeItem(this.cle); } catch(e){} },
+  stats(){
+    const a = this.lire();
+    if(!a.length) return null;
+    const par = {}, req = {}, jours = {};
+    let t0 = a[0].t, t1 = a[a.length-1].t;
+    a.forEach(e=>{
+      par[e.type] = (par[e.type]||0)+1;
+      if(e.type==="recherche" && e.d && e.d.q) req[e.d.q] = (req[e.d.q]||0)+1;
+      jours[new Date(e.t).toISOString().slice(0,10)] = 1;
+    });
+    const top = Object.entries(req).sort((x,y)=>y[1]-x[1]).slice(0,15);
+    /* écarts entre consultations : approxime la durée d'une session */
+    let sessions = 1;
+    for(let i=1;i<a.length;i++) if(a[i].t - a[i-1].t > 30*60*1000) sessions++;
+    return { n:a.length, t0, t1, par, top, jours:Object.keys(jours).length, sessions };
+  },
+  exporter(){
+    const blob = new Blob([JSON.stringify({
+      outil:"oracle", version:(typeof META_DATE!=="undefined"?META_DATE:"?"),
+      exporte: new Date().toISOString(), entrees: this.lire()
+    }, null, 1)], {type:"application/json"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "oracle_journal_" + new Date().toISOString().slice(0,10) + ".json";
+    document.body.appendChild(a); a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+  }
+};
+
+function journalHTML(){
+  const s = LOG.stats();
+  if(!s) return `<div class="card hit"><div class="row1"><span class="name">Journal</span></div>
+    <div class="kv"><div class="k">État</div><div class="v">Vide pour l'instant. Il se remplit à chaque recherche.
+    <span class="idxwrap">Si tu es en navigation privée ou que le stockage du navigateur est bloqué, il restera vide — l'Oracle fonctionne quand même.</span></div></div></div>`;
+  const d = (t)=>new Date(t).toLocaleString('fr-FR');
+  const types = Object.entries(s.par).sort((a,b)=>b[1]-a[1])
+      .map(([k,v])=>`<div class="rline"><span class="rrang">${v}</span> <b>${k}</b></div>`).join("");
+  const top = s.top.map(([q,n],i)=>`<div class="rline"><span class="rrang ${i<3?'hot':''}">${n}</span> <b>${q||"(accueil)"}</b></div>`).join("");
+  return `<div class="card hit">
+    <div class="row1"><span class="name">Journal d'utilisation</span>
+      <span class="kind">${s.n} entrées</span></div>
+    <div class="kv">
+      <div class="k">Période</div><div class="v statv">${d(s.t0)} → ${d(s.t1)}
+        <span class="idxwrap">${s.jours} jour(s) · ~${s.sessions} session(s)</span></div>
+      <div class="k">Actions</div><div class="v statv">${types}</div>
+      <div class="k">Le plus cherché</div><div class="v statv">${top}</div>
+      <div class="k">Envoyer</div><div class="v">
+        <button class="btn-log" onclick="LOG.exporter()">Exporter le journal</button>
+        <button class="btn-log" onclick="if(confirm('Vider le journal ?')){LOG.vider();rerender();}">Vider</button>
+        <span class="idxwrap">L'export produit un fichier JSON. Envoie-le à Claude : il dit ce que tu consultes vraiment en partie, donc ce qu'il faut garder, couper ou mettre en avant.</span></div>
+    </div></div>`;
+}
+
+/* ===================================================================
+   MOTEUR DE PIVOT — « j'ai ça, où je peux aller ? »
+   Entrée : les unités actuellement sur le board / au banc.
+   Sortie : les compos classées par ce qu'il reste à trouver.
+   Ne calcule AUCUNE décision : il remonte de la référence publique,
+   filtrée par ce que le joueur a déjà. Logique sans donnée de set.
+   =================================================================== */
+function nomsRoster(c){ return c.roster.map(r=>r.replace(/\*$/,"")); }
+
+function pivots(unites){
+  const u = unites.map(norm).filter(Boolean);
+  return METACOMPS.map(c=>{
+    const roster = nomsRoster(c);
+    const ont      = roster.filter(r=>u.includes(norm(r)));
+    const manquent = roster.filter(r=>!u.includes(norm(r)));
+    const aCarry   = u.includes(norm(c.carry));
+    const couv     = ont.length / roster.length;
+    /* le carry pèse : une compo dont on tient déjà le carry est bien
+       plus proche qu'une compo dont on tient trois pièces de façade */
+    return {c, ont, manquent, aCarry, couv, score: couv + (aCarry?0.35:0)};
+  }).sort((a,b)=>b.score-a.score);
+}
+
+function pivotCard(p){
+  const c=p.c, pr=profilLigne(c);
+  const ont = p.ont.map(x=>`<span class="chip ${norm(x)===norm(c.carry)?'carry':''}">${x}</span>`).join("");
+  const man = p.manquent.map(x=>`<span class="chip miss">${x}</span>`).join("");
+  const n=p.ont.length, tot=p.ont.length+p.manquent.length;
+  const verdict = p.aCarry
+      ? `<b>Tu tiens le carry.</b> C'est le pivot le moins cher.`
+      : (p.couv>=0.5 ? `Moitié du board en place, mais <b>pas le carry</b> — c'est lui qui décide, pas le nombre.`
+                     : `Pivot lointain : il manque l'essentiel.`);
+  return `<div class="card ${p.aCarry?'hit':''}">
+    <div class="row1"><span class="name">${c.n}</span>
+      <span class="tier tS">${c.avg.toFixed(2)}</span>
+      <span class="kind">${n}/${tot} en main</span></div>
+    <div class="kv">
+      <div class="k">Tu as</div><div class="v">${ont||'<span class="muted">rien de cette ligne</span>'}</div>
+      <div class="k">Il manque</div><div class="v">${man||'<span class="muted">rien</span>'}</div>
+      <div class="k">Lecture</div><div class="v">${verdict}</div>
+      ${pr?`<div class="k">Profil</div><div class="v"><div class="profil ${pr.t==="pointe"?"prisk":(pr.t==="regul"?"psafe":"pbal")}"><b>${pr.lab}</b> — ${pr.exp}</div></div>`:""}
+      <div class="k">Chiffres</div><div class="v statv">placement <b>${c.avg.toFixed(2)}</b> · win <b>${c.wr}%</b>
+        <span class="idxwrap">pick rate ${c.pr}${c.pr>=0.45?" — très contestée":""}</span></div>
+    </div></div>`;
+}
+
+function pivotHTML(unites){
+  const ps = pivots(unites).filter(p=>p.ont.length>0);
+  if(!ps.length) return `<div class="empty">Aucune de ces unités n'apparaît dans les compos du patch.
+    Tape les noms séparés par des espaces, par exemple : <i>ivern taric soraka</i></div>`;
+  LOG.push("pivot", {u:unites, top:ps[0].c.n});
+  return `<div class="empty">Pivots possibles avec <b>${unites.join(" · ")}</b> —
+    classés par proximité, le carry compte double.</div>` + ps.map(pivotCard).join("");
+}
+
+function metaCompCard(c,badge){
+  const ros = c.roster.map(x=>x.endsWith("*")
+    ? `<span class="chip carry">${x.slice(0,-1)}</span>` : `<span class="chip">${x}</span>`).join("");
+  return `<div class="card ${badge==='best'?'hit':''}">
+    <div class="row1"><span class="name">${c.n}</span>
+      <span class="tier tS" title="${MODES[MODE].critere}">${MODES[MODE].valeur(c)}</span><span class="kind">${c.lvl}</span></div>
+    <div class="kv">
+      <div class="k">Board</div><div class="v">${ros}</div>
+      <div class="k">Chiffres</div><div class="v statv">${MODE==="ladder"?"<u>":""}placement <b>${c.avg.toFixed(2)}</b>${MODE==="ladder"?"</u>":""} · ${c.t4?`${MODE==="cumule"?"<u>":""}top 4 <b>${c.t4}%</b>${MODE==="cumule"?"</u>":""} · `:""}${MODE==="checkmate"?"<u>":""}win <b>${c.wr}%</b>${MODE==="checkmate"?"</u>":""}
+        <span class="idxwrap">pick rate ${c.pr} ${c.pr>=0.28?"— très jouée, souvent contestée":(c.pr<=0.10?"— peu jouée, peu contestée":"")}</span></div>
+      ${profilHTML(c)}
+      <div class="k">Lecture</div><div class="v">${c.note}</div>
+      ${c.plan?`
+      <div class="k">Early</div><div class="v">${c.plan.early}</div>
+      <div class="k">Paliers</div><div class="v">${c.plan.lvl}</div>
+      <div class="k">Objets</div><div class="v">${c.plan.items}</div>
+      <div class="k">Le seuil</div><div class="v"><div class="profil prisk">${c.plan.star}</div></div>
+      <div class="k">Placement</div><div class="v">${c.plan.pos}</div>`:""}
+    </div></div>`;
+}
+function metaHTML(){
+  const M = MODES[MODE];
+  const tri = METACOMPS.slice().sort(M.tri);
+  LOG.push("meta", {mode:MODE, top:tri[0]?tri[0].n:null});
+  return modeBarreHTML()
+    + `<div class="empty"><b>${M.nom}</b> — ${M.explique}</div>`
+    + tri.map((c,i)=>metaCompCard(c,i===0?'best':'var')).join("");
+}
+/* Ligne live insérée dans chaque fiche champion. */
+function unitLine(name){
+  const u = unitRank(name);
+  if(!u){ const d=UNITS[name];
+    return d ? `<div class="k">Méta ${META_DATE}</div><div class="v muted">${d[0].toFixed(2)} de moyenne sur ${d[2].toLocaleString('fr')} parties — volume trop faible pour classer.</div>` : ""; }
+  const {rang,total,d} = u;
+  const EXPL = {
+   "Caitlyn":"Sa moyenne est trompeuse : c'est une unité d'<b>early game</b> (elle tient le board niveau 4-5 de la Spellweaver Ahri puis se vend). Une moyenne basse ne veut pas dire faible — elle veut dire qu'on finit rarement la partie avec. Riot l'a d'ailleurs NERFÉE au lancement.",
+   "Camille":"Même cas que Caitlyn : unité d'early game de la Spellweaver Ahri. 6.32 est l'écart le plus large du set, mais c'est un artefact — on ne finit jamais une partie avec elle. Ne la juge pas sur ce chiffre.",
+   "Elise":"Unité d'early game (board niveau 4 de la Spellweaver Ahri) ET pièce de la compo finale. Sa moyenne mélange les deux usages."
+  };
+  const haut = rang<=8, bas = rang>total-8;
+  const av = haut ? `<div class="profil prisk"><b>Placement de tête</b> — dans les 8 meilleurs. Fort maintenant, candidat au nerf.</div>`
+           : bas  ? `<div class="profil psafe"><b>Placement de queue</b> — dans les 8 derniers. À éviter tant que Riot ne l'a pas relevé.</div>` : "";
+  const ex = EXPL[name] ? `<div class="profil">${EXPL[name]}</div>` : "";
+  return `<div class="k">Méta ${META_DATE}</div><div class="v statv">
+      placement <b>${d[0].toFixed(2)}</b> · win <b>${d[1]}%</b> ·
+      <b>${rang}<sup>e</sup></b> sur ${total}
+      <span class="idxwrap">${d[2].toLocaleString('fr')} parties · ${META_PATCH}</span>${ex}${av}</div>`;
+}
+
+const LIVE = {};
+
+const LIVE_CFG = {
+  mode: "top4",                       // "top4" = objectif par défaut | "top1" = chasse au 1er
+  eloCompos:   "Challenger — top 300 par serveur",
+  eloAugments: "Master+ — les augments ont besoin de volume, pas de pureté",
+  nMin: {compo:200, augment:400},     // sous ce seuil : on affiche, on n'ordonne pas
+  attenteApresPatch: 48,              // heures de tâtonnement à ne pas lire
+  seuils: null,                       // À CALIBRER sur la distribution réelle. Pas inventé.
+  serveurRef: "EUW",                  // si l'EUW diverge du global : compo surjouée = contestée
+  note: "26/08 : ladder remis à zéro. Démarrer en Master+, resserrer sur le top 300 "
+      + "après 2 à 3 semaines, quand le classement s'est décanté."
+};
+
+/* Une compo n'est ordonnée que si son échantillon est suffisant. */
+function liveData(n){
+  const d = LIVE[n];
+  return (d && d.n >= LIVE_CFG.nMin.compo) ? d : null;
+}
+
+/* Profil issu de l'ÉCART entre top 4 et top 1. Un seul mot, une seule lecture. */
+function profilCompo(n){
+  const d = liveData(n), s = LIVE_CFG.seuils;
+  if(!d || !s) return null;                       // seuils non calibrés -> on se tait
+  const t4 = d.top4 >= s.top4Haut, t1 = d.top1 >= s.top1Haut;
+  if(t4 && !t1) return {l:"SÉCURISÉE", c:"psafe",
+    d:"Te met dans le top presque à chaque fois, gagne rarement. À jouer en bonne santé."};
+  if(t1 && !t4) return {l:"TOUT-OU-RIEN", c:"prisk",
+    d:"Gagne ou finit huitième. À jouer bas en PV, quand le top 4 propre est déjà perdu."};
+  return {l:"ÉQUILIBRÉE", c:"pbal", d:"Bon taux de top 4 et vrai plafond."};
+}
+
+function liveHTML(n, badge){
+  const d = liveData(n);
+  if(!d) return badge==='best'
+    ? `<div class="k">Stats live</div><div class="v muted">Pas encore de données — bascule au 26/08 (${LIVE_CFG.eloCompos}).</div>`
+    : "";
+  const p = profilCompo(n);
+  return `<div class="k">Stats live</div><div class="v statv">
+      placement moyen <b>${d.avg}</b> · top 4 <b>${d.top4}%</b> · top 1 <b>${d.top1}%</b>
+      <span class="idxwrap">${d.n} parties · ${d.elo} · patch ${d.patch}</span>
+      ${p?`<div class="profil ${p.c}"><b>${p.l}</b> — ${p.d}</div>`:""}
+    </div>`;
+}
+
+/* Bascule top 4 / top 1. Le bouton n'apparaît que le jour où il y a des données. */
+function setMode(m){ LIVE_CFG.mode = m; if(typeof rerender==="function") rerender(); }
+
+const TIERV = {S:3, A:2, B:1, C:0};
+function rankedCompsOf(name){
+  const n = norm(name);
+  const comps = compsOf(name);
+  // priorité : le champion y est CARRY (*) > tier S > A > B
+  return comps.sort((a,b)=>{
+    const ca = a.roster.some(r=>r.endsWith("*") && norm(r).includes(n)) ? 1:0;
+    const cb = b.roster.some(r=>r.endsWith("*") && norm(r).includes(n)) ? 1:0;
+    if(ca!==cb) return cb-ca;
+    // La stat live prime sur le tier dès qu'elle existe des deux côtés.
+    const da = liveData(a.n), db = liveData(b.n);
+    if(da && db) return LIVE_CFG.mode==="top1" ? (db.top1-da.top1) : (da.avg-db.avg);
+    if(da && !db) return -1;
+    if(db && !da) return 1;
+    return (TIERV[b.tier]||0)-(TIERV[a.tier]||0);
+  });
+}
+
+/* Ligne de stats compacte + verdict dérivé, pour la fiche champion. */
+function statLine(name){
+  const s = STATS[name];
+  if(!s) return "";
+  const bar = v => v==null ? "—" :
+    `<span class="idx ${v>=75?"hot":(v<=35?"cold":"")}">${v}</span>`;
+  return `<div class="k">Stats (1★)</div><div class="v statv">
+      ${s.c}⛁ · ${s.pv} PV · ${s.ad} AD · ${s.as_} AS · ${s.ar} AR/RM · ${s.mana} mana
+      <span class="idxwrap">survie ${bar(s.sur)} · auto ${bar(s.auto)} · cadence ${bar(s.cad)}</span>
+    </div>`;
+}
+function verdictLine(name){
+  const v = VERDICT[name];
+  return v ? `<div class="k">Ce que disent les chiffres</div><div class="v">${v}</div>` : "";
+}
+
+function champCard(name){
+  LOG.push("champion", {name});
+  const b = BIS[name];
+  const comps = rankedCompsOf(name);
+  const tiers = b? b.tier : (comps[0]? comps[0].tier : "?");
+  const best = comps[0];
+  const isCarry = best && best.roster.some(r=>r.endsWith("*") && norm(r).includes(norm(name)));
+  let advice = "";
+  if(best){
+    advice = isCarry
+      ? `Tu pars sur <b>${best.n}</b> (${best.tier}) : ${name} y est le carry items. `
+      : `⚠ ${name} n'est carry items dans aucune compo S — il joue un rôle de support/tank. `;
+    if(comps.length>1) advice += `Si tu es contesté ou que tu ne hit pas, bascule vers ${comps.slice(1,3).map(c=>`<b>${c.n}</b> (${c.tier})`).join(" ou ")}.`;
+    else advice += `Pas de ligne alternative classée au 31/07 : si contesté, reste FLEX jusqu'au rolldown 4-1.`;
+  }
+  let head = `<div class="card hit">
+    <div class="row1"><span class="name">${name}</span>
+      <span class="tier ${tclass(tiers)}">${tiers}</span>
+      <span class="kind">champion</span></div>
+    <div class="kv">
+      ${unitLine(name)}
+      ${statLine(name)}
+      ${verdictLine(name)}
+      ${b?`<div class="k">BiS (31/07)</div><div class="v">${chips(b.items)}</div>
+      <div class="k">Carrousel</div><div class="v">${b.comp}</div>`:""}
+      ${advice?`<div class="k">Le conseil</div><div class="v">${advice}</div>`:""}
+    </div>
+  </div>`;
+  if(!comps.length) return head + `<div class="empty">Aucune compo classée avec ${name} au relevé du 31/07.</div>`;
+  return head
+    + compCard(best,'best')
+    + comps.slice(1).map(c=>compCard(c,'var')).join("");
+}
+/* ROLES — sert au positionnement par défaut. Heuristique, pas relevé méta. */
+/*__DATA:ROLE__*/
+const ROLELABEL = {tank:"Ligne de front", bruiser:"2e ligne", support:"Soutien", carry:"Backline"};
+
+function boardHTML(c){
+  const units = c.roster
+    .map(r=>({raw:r, nm:r.replace(/\*$| \(TG\)$/g,""), carry:r.endsWith("*")}))
+    .filter(u=>!/^(flex|cap|puis )/i.test(u.nm));
+  if(units.length<4) return "";
+  const rows = [[],[],[],[]];  // 0 = front … 3 = back
+  units.forEach(u=>{
+    const role = u.carry ? "carry" : (ROLE[u.nm] || "support");
+    u.role = role;
+    if(role==="tank") rows[0].push(u);
+    else if(role==="bruiser") rows[1].push(u);
+    else if(role==="support") rows[2].push(u);
+    else rows[3].push(u);
+  });
+  // les carries vont aux coins de la dernière ligne
+  const back = rows[3];
+  if(back.length>1){ const mid=back.splice(1,back.length-2); back.splice(1,0,...mid); }
+  const W=7;
+  const html = rows.map((row,i)=>{
+    const cells = new Array(W).fill(null);
+    if(row.length){
+      if(i===3 && row.length>=2){ cells[0]=row[0]; cells[W-1]=row[1];
+        row.slice(2).forEach((u,k)=>cells[2+k]=u); }
+      else { const start = Math.floor((W-row.length)/2);
+        row.forEach((u,k)=>cells[start+k]=u); }
+    }
+    return `<div class="brow${i%2?" off":""}">`+cells.map(u=>
+      u? `<div class="hex ${u.role}">${u.nm}</div>` : `<div class="hex empty"></div>`
+    ).join("")+`</div>`;
+  }).join("");
+  return `<div class="board">${html}
+    <div class="barrow">▲ ennemi en haut · toi en bas</div>
+    <div class="blegend">
+      <span><b style="color:#cfe0d2">■</b> tank</span>
+      <span><b style="color:#d7e0c7">■</b> bruiser</span>
+      <span><b style="color:#c6d8e0">■</b> soutien</span>
+      <span><b style="color:var(--gold)">■</b> carry items</span>
+    </div></div>
+    <div class="empty" style="padding:4px 2px;font-size:11.5px">⚠ Positionnement <b>par rôle</b>, pas relevé sur les guides. À corriger avec tes games.</div>`;
+}
+function chips(str){
+  return str.split(/ · |·/).map(s=>s.trim()).filter(Boolean)
+    .map(s=>`<span class="itemchip">${s}</span>`).join("");
+}
+
+function carriesOf(c){
+  return c.roster.filter(r=>r.endsWith("*")).map(r=>r.slice(0,-1));
+}
+function itemsHTML(c){
+  return carriesOf(c).map(nm=>{
+    const b = BIS[nm]; if(!b) return "";
+    return `<div class="k">⚔ ${nm}</div><div class="v">${chips(b.items)}</div>`;
+  }).join("");
+}
+function compCard(c, badge){
+  return `${VIEUX}<div class="card hit ${badge==='best'?'best':''}">
+    ${badge==='best'?`<div class="bestlabel">★ LA PLUS FORTE AVEC CE CHAMPION</div>`:""}
+    ${badge==='var'?`<div class="varlabel">VARIANTE</div>`:""}
+    <div class="row1"><span class="name">${c.n}</span>
+      <span class="tier ${tclass(c.tier)}">${c.tier}</span>
+      <span class="verdict vflex">${c.lvl}</span>
+      <span class="codebadge" onclick="go('${c.code}')">${c.code}</span>
+      <span class="kind">compo</span></div>
+    ${boardHTML(c)}
+    <div class="kv">
+      ${itemsHTML(c)}
+      ${liveHTML(c.n, badge)}
+      <div class="k">Ouverture</div><div class="v"><b>${c.open}</b></div>
+      <div class="k">Note</div><div class="v">${c.note}</div>
+    </div>
+    ${planHTML(c.code)}
+  </div>`;
+}
+
+const champNames = [...new Set([...Object.keys(BIS), ...Object.keys(UNITS),
+  ...METACOMPS.flatMap(c=>c.roster.map(r=>r.replace(/\*$/,""))),
+  ...COMPS.flatMap(c=>c.roster.map(r=>r.replace(/\*$| \(TG\)/g,"")))])]
+  .filter(n=>!/^(flex|cap|puis |colle )/i.test(n) && !n.includes("Eldritch"))
+  .sort();
+
+function traitCard(tname){
+  const t = TRAITS[tname] || {note:""};
+  const comps = COMPS.filter(c=>(c.traits||[]).includes(tname))
+                     .sort((a,b)=>(TIERV[b.tier]||0)-(TIERV[a.tier]||0));
+  let head = `<div class="card hit">
+    <div class="row1"><span class="name">${tname}</span>
+      ${comps[0]?`<span class="tier ${tclass(comps[0].tier)}">${comps[0].tier}</span>`:""}
+      <span class="kind">trait</span></div>
+    <div class="kv"><div class="k">En bref</div><div class="v">${t.note}</div>
+    <div class="k">Compos</div><div class="v">${comps.length} ligne(s) classée(s) au 31/07</div></div>
+  </div>`;
+  if(!comps.length) return head + `<div class="empty">Aucune compo classée sur ${tname} au 31/07 — trait secondaire ou hors relevé.</div>`;
+  return head + compCard(comps[0],'best') + comps.slice(1).map(c=>compCard(c,'var')).join("");
+}
+
+function render(q){
+  const R = document.getElementById("results");
+  q = norm(q.trim());
+  LOG.push("recherche", {q});
+
+  /* --- journal --- */
+  if(["journal","log","logs","historique","debug"].includes(q)){
+    R.innerHTML = journalHTML(); return;
+  }
+
+  /* --- pivot : plusieurs unités reconnues dans la requête --- */
+  {
+    const mots = q.replace(/^pivot\s+/,"").split(/[\s,;]+/).filter(Boolean);
+    const connus = mots.map(m => champNames.find(n=>norm(n)===m)).filter(Boolean);
+    const forcePivot = /^pivot\b/.test(q);
+    if(connus.length>=2 || (forcePivot && connus.length>=1)){
+      R.innerHTML = pivotHTML(connus); return;
+    }
+  }
+
+  if(!q){
+    R.innerHTML = radarHTML() + `<div class="grouplabel">Méta du jour</div>` + metaHTML()
+      + `<div class="empty">Tape un nom, ou clique un code ci-dessus. Exemples : <i>ezreal</i> · <i>elderwood</i> · <b>une intention</b> : <i>carry ad fast 9</i> · <i>reroll facile</i> · <i>peba</i>. Tape <b>meta</b> pour revenir ici, <b>journal</b> pour voir l'usage. Et pour un <b>pivot</b> : tape plusieurs unités, par exemple <i>ivern taric soraka</i>.</div>`;
+    return;
+  }
+  // code exact ?
+  if(PLANS[q.toUpperCase()]){
+    const code = q.toUpperCase();
+    const augs = AUG.filter(a=>a[3]===code);
+    const comps = COMPS.filter(c=>c.code===code);
+    R.innerHTML = `<div class="card hit">${planHTML(code)}</div>`
+      + (comps.length? `<div class="grouplabel">Compos sur ce plan</div>`+comps.map(compCard).join(""):"")
+      + (augs.length? `<div class="grouplabel">Augments qui envoient ici</div>`+augs.map(augCard).join(""):"");
+    return;
+  }
+  if(["meta","radar","tier","tierlist","tier list","classement","top","compos","comps"].includes(q)){
+    R.innerHTML = radarHTML() + `<div class="grouplabel">Méta du jour</div>` + metaHTML(); return;
+  }
+  const mcomps = METACOMPS.filter(c=>norm(c.n).includes(q) || norm(c.carry).includes(q));
+  const augs = AUG.filter(a=>norm(a[0]).includes(q));
+  const traits = Object.keys(TRAITS).filter(t=>norm(t).includes(q));
+  const champs = champNames.filter(n=>norm(n).includes(q));
+  const comps = traits.length? [] : COMPS.filter(c=>norm(c.n).includes(q));
+  let html = "";
+  if(mcomps.length) html += `<div class="grouplabel">Compo réelle — ${META_DATE}</div>`
+    + mcomps.map((c,i)=>metaCompCard(c,i===0?'best':'var')).join("");
+  if(traits.length) html += `<div class="grouplabel">Trait</div>`+traits.slice(0,2).map(traitCard).join("");
+  if(augs.length)   html += `<div class="grouplabel">Augments</div>`+augs.map(augCard).join("");
+  if(champs.length){
+    html += `<div class="grouplabel">Champion</div>`+champCard(champs[0]);
+    if(champs.length>1) html += `<div class="empty" style="padding:8px 4px">Autres matchs : ${champs.slice(1,8).map(n=>`<span class="chip" onclick="go('${n.replace(/'/g,"\\'")}')">${n}</span>`).join(" ")}</div>`;
+  }
+  if(comps.length)  html += `<div class="grouplabel">Compos</div>`+comps.map(compCard).join("");
+  const itags = tagsFromQuery(q);
+  const ihits = compsByIntent(itags);
+  if(ihits.length && (!html || itags.length)) html += intentHTML(itags, ihits);
+  R.innerHTML = html || `<div class="empty">Rien trouvé pour « ${q} ». Vérifie l'orthographe, ou c'est peut-être hors du relevé du 31/07 — demande à Claude de rafraîchir.</div>`;
+}
+
+function go(code){
+  const inp = document.getElementById("q");
+  inp.value = code; render(code); inp.focus();
+}
+
+/* chips */
+const chipdefs = [["🔒 codes :",""],["R1","code"],["R23","code"],["F8","code"],["F9","code"],["VERT","code"],["PIVOT","code"],["FLEX","code"],
+  ["· parcourir :",""],["augments S","browse-augS"],["compos S","browse-compS"]];
+const chipsEl = document.getElementById("chips");
+chipdefs.forEach(([label,kind])=>{
+  if(!kind){ const s=document.createElement("span"); s.style.cssText="color:var(--faint);font-size:12px;align-self:center"; s.textContent=label; chipsEl.appendChild(s); return;}
+  const el=document.createElement("span"); el.className="chip "+(kind==="code"?"code":""); el.textContent=label;
+  el.onclick=()=>{
+    if(kind==="code") go(label);
+    else if(kind==="browse-augS"){document.getElementById("q").value="";
+      document.getElementById("results").innerHTML = `<div class="grouplabel">Augments Tier S (jugement provisoire du 31/07)</div>`+AUG.filter(a=>a[1]==="S").map(augCard).join("");}
+    else {document.getElementById("q").value="";
+      document.getElementById("results").innerHTML = `<div class="grouplabel">Compos S du relevé 31/07</div>`+COMPS.filter(c=>c.tier==="S").map(compCard).join("");}
+  };
+  chipsEl.appendChild(el);
+});
+
+const input = document.getElementById("q");
+input.addEventListener("input", e=>render(e.target.value));
+render("");
+input.focus();
+</script>
+</body>
+</html>

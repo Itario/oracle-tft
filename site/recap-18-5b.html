@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Récap 18.5b</title>
+<style>
+/* Mise en page : séquence plein écran, une scène visible à la fois, défilement piloté.
+   Palette tirée du relevé lui-même — vert de forêt sombre (Enchanted Wilds),
+   or pour ce qui monte, rouille pour ce qui tombe, cyan pour la mesure. */
+:root{
+  --fond:#0b1512; --fond2:#0f1d19; --trait:#1e3a31;
+  --texte:#e8f0ec; --doux:#8fa89d;
+  --or:#e4b25a; --rouille:#c4664a; --cyan:#5fd4c4;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --titre:"Bebas Neue",Impact,"Arial Narrow Bold",sans-serif;
+  --corps:"Inter",system-ui,-apple-system,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  background:var(--fond); color:var(--texte); font-family:var(--corps);
+  display:flex; align-items:center; justify-content:center;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  overflow:hidden;
+}
+#scene{width:100%;max-width:1180px;position:relative}
+
+.s{display:none;animation:entre .55s cubic-bezier(.2,.7,.3,1) both}
+.s.on{display:block}
+@keyframes entre{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .s{animation:none} *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--cyan);margin-bottom:.9rem}
+h1{font-family:var(--titre);font-size:clamp(2.8rem,8vw,6rem);line-height:.92;
+  margin:0 0 1rem;letter-spacing:.01em;text-wrap:balance}
+h2{font-family:var(--titre);font-size:clamp(1.9rem,4.6vw,3.2rem);line-height:1;
+  margin:0 0 1.4rem;letter-spacing:.01em;text-wrap:balance}
+p.lead{font-size:clamp(1rem,2vw,1.28rem);line-height:1.55;max-width:60ch;
+  color:var(--doux);margin:0}
+p.lead b{color:var(--texte);font-weight:600}
+.gros{font-family:var(--titre);font-size:clamp(4rem,14vw,10rem);line-height:.85;
+  color:var(--or);font-variant-numeric:tabular-nums}
+.sous{font-family:var(--mono);font-size:.82rem;color:var(--doux);margin-top:.5rem}
+
+/* lignes de mouvement */
+.mv{display:grid;grid-template-columns:1fr auto auto;gap:.7rem 1rem;align-items:baseline;
+  padding:.62rem 0;border-bottom:1px solid var(--trait)}
+.mv:last-child{border-bottom:0}
+.mv .nom{font-size:clamp(1rem,2.4vw,1.45rem);font-weight:600;min-width:0}
+.mv .rg{font-family:var(--mono);font-size:.92rem;color:var(--doux);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.mv .d{font-family:var(--mono);font-weight:700;font-size:1.02rem;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.up .d{color:var(--or)} .dn .d{color:var(--rouille)}
+.mv .bar{grid-column:1/-1;height:3px;background:var(--trait);border-radius:2px;overflow:hidden}
+.mv .bar i{display:block;height:100%;border-radius:2px;
+  animation:pousse .7s cubic-bezier(.2,.8,.3,1) both}
+.up .bar i{background:var(--or)} .dn .bar i{background:var(--rouille)}
+@keyframes pousse{from{width:0}}
+
+/* grille de modes */
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:1rem}
+.mode{background:var(--fond2);border:1px solid var(--trait);border-radius:10px;padding:1.1rem}
+.mode h3{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
+  margin:0 0 .75rem;color:var(--cyan)}
+.mode .q{font-size:1.28rem;font-weight:650;line-height:1.25;margin-bottom:.35rem}
+.mode .v{font-family:var(--mono);font-size:1.6rem;color:var(--or);font-variant-numeric:tabular-nums}
+.mode .n{font-size:.88rem;color:var(--doux);margin-top:.6rem;line-height:1.45}
+
+.top8{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.top8 span{font-family:var(--mono);font-size:.88rem;padding:.34rem .7rem;
+  border:1px solid var(--trait);border-radius:999px;background:var(--fond2)}
+
+/* barre de progression + contrôles */
+#prog{position:fixed;left:0;right:0;top:0;height:3px;background:var(--trait);z-index:12}
+#prog i{display:block;height:100%;width:0;background:var(--cyan);transition:width .25s linear}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);
+  background:var(--fond);z-index:11}
+#ctl{position:fixed;z-index:12;
+  bottom:calc(14px + env(safe-area-inset-bottom,0px));
+  right:calc(14px + env(safe-area-inset-right,0px));
+  display:flex;gap:.45rem}
+#ctl button{font-family:var(--mono);font-size:.78rem;background:var(--fond2);
+  color:var(--doux);border:1px solid var(--trait);border-radius:7px;
+  padding:.42rem .8rem;cursor:pointer}
+#ctl button:hover,#ctl button:focus-visible{color:var(--cyan);border-color:var(--cyan)}
+.src{position:fixed;z-index:12;font-family:var(--mono);font-size:.68rem;color:var(--doux);
+  bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  left:calc(16px + env(safe-area-inset-left,0px));opacity:.65}
+</style>
+</head>
+<body>
+
+
+<div id="prog"><i></i></div>
+
+<div id="scene">
+
+  <section class="s on" data-t="3600">
+    <div class="eyebrow">Patch 18.5b · relevé du 23 octobre</div>
+    <h1>Ce qui a<br>vraiment bougé</h1>
+    <p class="lead">56 816 parties en Master+, comparées au relevé du 19 octobre.
+      Pas une tier list : <b>une mesure de l'écart entre deux patchs</b>.</p>
+  </section>
+
+  <section class="s" data-t="4800">
+    <div class="eyebrow">La mesure</div>
+    <div class="gros">0.846</div>
+    <div class="sous">corrélation de rang entre les deux relevés</div>
+    <p class="lead" style="margin-top:1.4rem">Un patch déplace chaque unité de
+      <b>6 rangs en médiane</b>. Et le mouvement est réel : si rien n'avait changé,
+      le hasard d'échantillonnage donnerait <b>0.982</b>.
+      <b>88 % de l'écart est du vrai mouvement.</b></p>
+  </section>
+
+  <section class="s" data-t="5200">
+    <div class="eyebrow">Ce qui monte</div>
+    <h2>Cinq unités relevées</h2>
+    <div id="up"></div>
+  </section>
+
+  <section class="s" data-t="5200">
+    <div class="eyebrow">Ce qui tombe</div>
+    <h2>Cinq unités enfoncées</h2>
+    <div id="dn"></div>
+  </section>
+
+  <section class="s" data-t="5600">
+    <div class="eyebrow">Ce qui ne bouge jamais</div>
+    <h2>Le top 8 est figé</h2>
+    <p class="lead">Les <b>mêmes huit unités</b>, nommément, dans les trois relevés
+      depuis le 28 août — malgré un changement de tranche d'elo, 56 jours et cinq patchs.
+      Seul leur ordre interne change. <b>Lux est première aux trois.</b></p>
+    <div class="top8" id="t8"></div>
+  </section>
+
+  <section class="s" data-t="6800">
+    <div class="eyebrow">Et la question qui change tout</div>
+    <h2>Quelle compo ? Ça dépend de ce que tu joues</h2>
+    <div class="modes">
+      <div class="mode">
+        <h3>Ladder</h3>
+        <div class="q">Riftbeast Krug</div>
+        <div class="v">4.19</div>
+        <div class="n">Meilleur placement moyen — mais pick rate 1.01,
+          plus d'un joueur par lobby. Ne la force jamais sans scouting.</div>
+      </div>
+      <div class="mode">
+        <h3>Points cumulés</h3>
+        <div class="q">Riftbeast Krug</div>
+        <div class="v">56.0 %</div>
+        <div class="n">Meilleur taux de top 4 du patch. En tournoi à points,
+          chaque bas de tableau coûte directement.</div>
+      </div>
+      <div class="mode">
+        <h3>Checkmate</h3>
+        <div class="q">Elderwood Draven</div>
+        <div class="v">20.5 %</div>
+        <div class="n">Meilleur taux de victoire du patch pour un placement
+          médiocre (4.34). Elle gagne ou elle s'effondre — exactement ce qu'il
+          faut quand seule la 1re place qualifie.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" data-t="6000">
+    <div class="eyebrow">À retenir</div>
+    <h2>Trois lignes</h2>
+    <p class="lead">
+      <b>1.</b> Le haut du classement est structurel : ne cherche pas le changement là.<br>
+      <b>2.</b> Le ventre bouge de 6 rangs par patch — c'est là que se trouve l'avantage.<br>
+      <b>3.</b> Ta meilleure compo dépend du format, pas du patch.
+    </p>
+    <p class="lead" style="margin-top:1.5rem;font-size:.95rem">
+      Prochain relevé : patch 18.6, le 4 novembre.</p>
+  </section>
+
+</div>
+
+<div class="src">Données : MetaTFT · Master+ · 56 816 parties</div>
+<div id="ctl">
+  <button id="pp" aria-label="Lecture ou pause">⏸ Pause</button>
+  <button id="rs" aria-label="Recommencer">↻ Reprendre</button>
+</div>
+
+<script>
+const MONTEES = [
+ {n:"Sivir",      de:58, a:38},
+ {n:"Master Yi",  de:44, a:28},
+ {n:"Alistar",    de:35, a:20},
+ {n:"Sejuani",    de:49, a:35},
+ {n:"Yorick",     de:54, a:40}
+];
+const CHUTES = [
+ {n:"Gromp",      de:17, a:49},
+ {n:"Rammus",     de:28, a:51},
+ {n:"Teemo",      de:22, a:43},
+ {n:"Mama Beak",  de:41, a:58},
+ {n:"Cinderling", de:42, a:59}
+];
+const TOP8 = ["Lux","Alune","Gnar","Ivern","Taric","Kennen","Elder Dragon","Ashe"];
+
+function ligne(m, sens){
+  const d = Math.abs(m.a - m.de);
+  const pct = Math.min(100, d / 40 * 100);
+  const signe = sens === "up" ? "−" : "+";
+  return `<div class="mv ${sens}">
+    <span class="nom">${m.n}</span>
+    <span class="rg">${m.de}<sup>e</sup> → ${m.a}<sup>e</sup></span>
+    <span class="d">${signe}${d}</span>
+    <span class="bar"><i style="width:${pct}%"></i></span>
+  </div>`;
+}
+document.getElementById("up").innerHTML = MONTEES.map(m => ligne(m,"up")).join("");
+document.getElementById("dn").innerHTML = CHUTES.map(m => ligne(m,"dn")).join("");
+document.getElementById("t8").innerHTML = TOP8.map(n => `<span>${n}</span>`).join("");
+
+const scenes = [...document.querySelectorAll(".s")];
+const barre  = document.querySelector("#prog i");
+let i = 0, t0 = 0, raf = 0, enPause = false, restant = 0;
+
+function montre(k){
+  scenes.forEach((s,j) => s.classList.toggle("on", j === k));
+  // relance les animations de barres de la scène affichée
+  scenes[k].querySelectorAll(".bar i").forEach(el => {
+    el.style.animation = "none"; void el.offsetWidth; el.style.animation = "";
+  });
+}
+function duree(k){ return +scenes[k].dataset.t || 4000; }
+
+function tick(ts){
+  if(!t0) t0 = ts;
+  const d = duree(i);
+  const ecoule = ts - t0;
+  const total = scenes.reduce((a,_,j) => a + duree(j), 0);
+  const avant  = scenes.slice(0,i).reduce((a,_,j) => a + duree(j), 0);
+  barre.style.width = Math.min(100, (avant + ecoule) / total * 100) + "%";
+  if(ecoule >= d){
+    if(i < scenes.length - 1){ i++; t0 = ts; montre(i); }
+    else { arrete(); barre.style.width = "100%"; return; }
+  }
+  raf = requestAnimationFrame(tick);
+}
+function lance(){ enPause = false; t0 = 0; raf = requestAnimationFrame(tick); maj(); }
+function arrete(){ cancelAnimationFrame(raf); raf = 0; enPause = true; maj(); }
+function maj(){ document.getElementById("pp").textContent = enPause ? "▶ Lecture" : "⏸ Pause"; }
+
+document.getElementById("pp").addEventListener("click", () => {
+  if(raf) arrete(); else lance();
+});
+document.getElementById("rs").addEventListener("click", () => {
+  cancelAnimationFrame(raf); i = 0; montre(0); barre.style.width = "0%"; lance();
+});
+document.addEventListener("keydown", e => {
+  if(e.key === " "){ e.preventDefault(); if(raf) arrete(); else lance(); }
+  if(e.key === "ArrowRight" && i < scenes.length-1){ cancelAnimationFrame(raf); i++; montre(i); lance(); }
+  if(e.key === "ArrowLeft"  && i > 0){ cancelAnimationFrame(raf); i--; montre(i); lance(); }
+});
+montre(0);
+lance();
+</script>
+
+</body>
+</html>

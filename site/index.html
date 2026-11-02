@@ -1,0 +1,575 @@
+<meta charset="utf-8">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Oracle TFT</title>
+<style>
+/* Mise en page : barre d'onglets fixe, une vue à la fois, contenu injecté depuis data/.
+   Palette : vert de forêt (Enchanted Wilds), or pour ce qui monte, rouille pour ce qui
+   tombe, cyan pour ce qui est mesuré. Identité partagée avec les récaps. */
+:root{
+  --fond:#0b1512; --fond2:#0f1d19; --fond3:#132621; --trait:#1e3a31;
+  --texte:#e8f0ec; --doux:#8fa89d; --faible:#64796f;
+  --or:#e4b25a; --rouille:#c4664a; --cyan:#5fd4c4;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --titre:"Bebas Neue",Impact,"Arial Narrow Bold",sans-serif;
+  --corps:"Inter",system-ui,-apple-system,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--fond);color:var(--texte);font-family:var(--corps);
+  margin:0;line-height:1.55;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;
+  height:env(safe-area-inset-top,0px);background:var(--fond2);z-index:20}
+
+/* ---- en-tête + onglets ---- */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:19;
+  background:var(--fond2);border-bottom:1px solid var(--trait)}
+.hwrap{max-width:1100px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:.7rem .1rem}
+.marque{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.marque b{font-family:var(--titre);font-size:1.6rem;letter-spacing:.03em;font-weight:400}
+.marque .pt{color:var(--cyan)}
+.marque .sub{font-family:var(--mono);font-size:.7rem;color:var(--faible);
+  letter-spacing:.1em;text-transform:uppercase}
+nav{display:flex;gap:.2rem;overflow-x:auto;margin-top:.5rem;
+  scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{font-family:var(--corps);font-size:.92rem;font-weight:550;
+  background:none;border:0;border-bottom:2px solid transparent;color:var(--doux);
+  padding:.55rem .85rem;cursor:pointer;white-space:nowrap}
+nav button:hover{color:var(--texte)}
+nav button[aria-selected="true"]{color:var(--cyan);border-bottom-color:var(--cyan)}
+nav button:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px;border-radius:4px}
+
+main{max-width:1100px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:1.6rem 4rem}
+.vue[hidden]{display:none!important}
+
+/* ---- typographie ---- */
+h1{font-family:var(--titre);font-size:clamp(2.1rem,5.5vw,3.4rem);line-height:1;
+  margin:0 0 .5rem;font-weight:400;letter-spacing:.01em;text-wrap:balance}
+h2{font-family:var(--titre);font-size:clamp(1.4rem,3.2vw,2rem);line-height:1.05;
+  margin:2.4rem 0 .9rem;font-weight:400;letter-spacing:.01em;text-wrap:balance}
+h3{font-size:1.02rem;margin:0 0 .5rem;font-weight:650}
+p{margin:0 0 .9rem;max-width:68ch}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--cyan);margin-bottom:.5rem}
+.doux{color:var(--doux)} .faible{color:var(--faible);font-size:.88rem}
+a{color:var(--cyan)}
+code{font-family:var(--mono);font-size:.88em;background:var(--fond3);
+  padding:.12em .42em;border-radius:4px;border:1px solid var(--trait)}
+pre{font-family:var(--mono);font-size:.82rem;background:var(--fond3);
+  border:1px solid var(--trait);border-radius:8px;padding:.85rem 1rem;
+  overflow-x:auto;margin:0 0 1rem}
+pre code{background:none;border:0;padding:0}
+
+/* ---- blocs ---- */
+.carte{background:var(--fond2);border:1px solid var(--trait);border-radius:11px;
+  padding:1.1rem 1.2rem;margin-bottom:1rem}
+.grille{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(248px,1fr))}
+.chiffre{font-family:var(--titre);font-size:clamp(2.6rem,7vw,4.4rem);line-height:.9;
+  color:var(--or);font-variant-numeric:tabular-nums;font-weight:400}
+.chiffre.sm{font-size:clamp(1.8rem,4vw,2.6rem)}
+.unite{font-family:var(--mono);font-size:.74rem;color:var(--doux);
+  letter-spacing:.08em;text-transform:uppercase;margin-top:.35rem}
+.note{border-left:3px solid var(--cyan);background:rgba(95,212,196,.07);
+  padding:.7rem .95rem;border-radius:0 7px 7px 0;margin:0 0 1rem;font-size:.94rem}
+.note.warn{border-left-color:var(--or);background:rgba(228,178,90,.08)}
+.note b{color:var(--texte)}
+
+/* ---- mouvements ---- */
+.mv{display:grid;grid-template-columns:1fr auto auto;gap:.3rem .9rem;
+  align-items:baseline;padding:.5rem 0;border-bottom:1px solid var(--trait)}
+.mv:last-child{border-bottom:0}
+.mv .nom{font-weight:600;min-width:0}
+.mv .rg{font-family:var(--mono);font-size:.84rem;color:var(--doux);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.mv .d{font-family:var(--mono);font-weight:700;font-variant-numeric:tabular-nums;
+  white-space:nowrap}
+.up .d{color:var(--or)} .dn .d{color:var(--rouille)}
+.mv .bar{grid-column:1/-1;height:3px;background:var(--trait);border-radius:2px}
+.mv .bar i{display:block;height:100%;border-radius:2px}
+.up .bar i{background:var(--or)} .dn .bar i{background:var(--rouille)}
+
+/* ---- puces ---- */
+.puces{display:flex;flex-wrap:wrap;gap:.42rem;margin:.6rem 0 0;padding:0;list-style:none}
+.ros{display:flex;flex-wrap:wrap;gap:.42rem;margin:.1rem 0}
+.puces li,.puce{font-family:var(--mono);font-size:.82rem;padding:.3rem .66rem;
+  border:1px solid var(--trait);border-radius:999px;background:var(--fond3);color:var(--doux)}
+.puce.carry{border-color:var(--or);color:var(--or);font-weight:700}
+.puce.miss{opacity:.42;border-style:dashed}
+
+/* ---- segmenté ---- */
+.seg{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.seg button{font-family:var(--corps);font-size:.9rem;background:var(--fond2);
+  color:var(--doux);border:1px solid var(--trait);border-radius:999px;
+  padding:.42rem .95rem;cursor:pointer}
+.seg button:hover{border-color:var(--cyan)}
+.seg button[aria-pressed="true"]{background:var(--fond3);border-color:var(--or);
+  color:var(--or);font-weight:650}
+
+/* ---- compos ---- */
+.compo{background:var(--fond2);border:1px solid var(--trait);border-radius:11px;
+  padding:1rem 1.1rem;margin-bottom:.85rem}
+.compo.top{border-color:var(--or)}
+.compo .ligne1{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;margin-bottom:.55rem}
+.compo .n{font-size:1.14rem;font-weight:650}
+.compo .val{font-family:var(--mono);font-weight:700;color:var(--or);
+  font-variant-numeric:tabular-nums;font-size:1.05rem}
+.compo .lvl{font-family:var(--mono);font-size:.76rem;color:var(--faible)}
+.compo .stats{font-family:var(--mono);font-size:.82rem;color:var(--doux);
+  margin-top:.55rem;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.compo .stats u{color:var(--texte);text-decoration-color:var(--or)}
+.compo .txt{font-size:.92rem;color:var(--doux);margin-top:.5rem}
+
+/* ---- recherche pivot ---- */
+.rech{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.rech input{flex:1;min-width:200px;font-family:var(--corps);font-size:1rem;
+  background:var(--fond2);border:1px solid var(--trait);border-radius:9px;
+  color:var(--texte);padding:.6rem .85rem}
+.rech input:focus{outline:none;border-color:var(--cyan)}
+
+/* ---- tableau ---- */
+.tbl{overflow-x:auto;border:1px solid var(--trait);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--trait);
+  white-space:nowrap}
+th{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--faible);background:var(--fond2)}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.rang{color:var(--faible);font-family:var(--mono)}
+
+/* ---- calendrier ---- */
+.cal{display:grid;gap:.5rem}
+.evt{display:grid;grid-template-columns:auto 1fr auto;gap:.9rem;align-items:center;
+  padding:.65rem .9rem;background:var(--fond2);border:1px solid var(--trait);border-radius:9px}
+.evt.passe{opacity:.5}
+.evt.prochain{border-color:var(--cyan)}
+.evt .dt{font-family:var(--mono);font-size:.84rem;color:var(--doux);white-space:nowrap}
+.evt .nm{font-weight:600;min-width:0}
+.evt .tag{font-family:var(--mono);font-size:.7rem;padding:.2rem .55rem;border-radius:999px;
+  border:1px solid var(--trait);color:var(--faible);white-space:nowrap}
+.evt .tag.ok{border-color:var(--cyan);color:var(--cyan)}
+
+footer{border-top:1px solid var(--trait);margin-top:3rem;padding-top:1.2rem;
+  font-size:.82rem;color:var(--faible)}
+.vide{color:var(--faible);font-style:italic;padding:1.5rem 0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<header>
+  <div class="hwrap">
+    <div class="marque">
+      <b>ORACLE<span class="pt">·</span>TFT</b>
+      <span class="sub" id="hsub">chargement…</span>
+    </div>
+    <nav role="tablist" aria-label="Sections">
+      <button role="tab" data-vue="recap"   aria-selected="true">Récap méta</button>
+      <button role="tab" data-vue="preparer" aria-selected="false">Préparer ses games</button>
+      <button role="tab" data-vue="oracle"  aria-selected="false">L'Oracle</button>
+      <button role="tab" data-vue="profil"  aria-selected="false">Profil</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="vue" id="v-recap"></section>
+  <section class="vue" id="v-preparer" hidden></section>
+  <section class="vue" id="v-oracle" hidden></section>
+  <section class="vue" id="v-profil" hidden></section>
+  <footer>
+    <p class="faible" id="pied">Données : MetaTFT. Projet personnel, sans lien avec Riot Games.</p>
+  </footer>
+</main>
+
+<script>
+/* ===================================================================
+   Le site ne contient AUCUNE donnée de jeu. Tout vient de data/.
+   C'est le point de couture : en v2, ces trois URL deviendront des
+   routes d'API et rien d'autre ne changera.
+   =================================================================== */
+const SOURCES = {
+  meta:       "data/meta/courant.json",
+  profil:     "data/profil.json",
+  calendrier: "data/calendrier.json"
+};
+const D = {};              // données chargées
+const $  = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const nb = n => (n ?? 0).toLocaleString("fr-FR").replace(/ | /g, " ");
+const fdate = iso => { if(!iso) return "—";
+  const [a,m,j] = iso.split("-"); return `${j}/${m}/${a}`; };
+
+/* -------------------------------------------------- chargement */
+async function charger(){
+  const res = {};
+  for(const [cle, url] of Object.entries(SOURCES)){
+    try {
+      const r = await fetch(url, {cache: "no-store"});
+      if(!r.ok) throw new Error(`HTTP ${r.status}`);
+      res[cle] = await r.json();
+    } catch(e){
+      res[cle] = null;
+      console.warn(`${cle} illisible :`, e.message);
+    }
+  }
+  Object.assign(D, res);
+}
+
+/* -------------------------------------------------- utilitaires */
+function ligneMouvement(m, sens){
+  const d = Math.abs(m.delta);
+  const pct = Math.min(100, d / 40 * 100);
+  return `<div class="mv ${sens}">
+    <span class="nom">${esc(m.nom)}</span>
+    <span class="rg">${m.rang_avant}<sup>e</sup> → ${m.rang_apres}<sup>e</sup>
+      · ${m.avg_avant.toFixed(2)} → ${m.avg_apres.toFixed(2)}</span>
+    <span class="d">${sens === "up" ? "−" : "+"}${d}</span>
+    <span class="bar"><i style="width:${pct}%"></i></span></div>`;
+}
+
+function carteCompo(c, mode, premier){
+  const M = D.meta.modes[mode];
+  const val = c[M.cle];
+  const ros = (c.roster || []).map(x =>
+    x.endsWith("*") ? `<span class="puce carry">${esc(x.slice(0,-1))}</span>`
+                    : `<span class="puce">${esc(x)}</span>`).join("");
+  const conteste = c.pr >= 0.45
+    ? ` <span style="color:var(--rouille)">— très contestée</span>`
+    : (c.pr <= 0.12 ? ` <span style="color:var(--cyan)">— peu contestée</span>` : "");
+  const sv = (k, t) => k === M.cle ? `<u>${t}</u>` : t;
+  return `<article class="compo${premier ? " top" : ""}">
+    <div class="ligne1">
+      <span class="n">${esc(c.n)}</span>
+      <span class="val">${val == null ? "—" : val.toFixed(val < 10 ? 2 : 1)}${M.unite}</span>
+      <span class="lvl">${esc(c.lvl || "")}</span>
+    </div>
+    <div class="ros">${ros}</div>
+    <div class="stats">
+      ${sv("avg", `placement <b>${c.avg.toFixed(2)}</b>`)} ·
+      ${c.t4 != null ? sv("t4", `top 4 <b>${c.t4.toFixed(1)} %</b>`) + " · " : ""}
+      ${sv("wr", `victoires <b>${c.wr.toFixed(1)} %</b>`)} ·
+      pick ${c.pr}${conteste}
+    </div>
+    ${c.note ? `<div class="txt">${esc(c.note)}</div>` : ""}
+  </article>`;
+}
+
+/* -------------------------------------------------- vue : récap */
+function vueRecap(){
+  const m = D.meta;
+  if(!m) return `<div class="note warn"><b>Données indisponibles.</b>
+    Le fichier <code>${SOURCES.meta}</code> n'a pas pu être lu.
+    Relance <code>python3 tools/build/build_site.py</code>.</div>`;
+  const d = m.diff, t = m.tete_stable;
+
+  const bloc = d ? `
+    <div class="grille">
+      <div class="carte">
+        <div class="chiffre">${d.spearman}</div>
+        <div class="unite">corrélation de rang</div>
+        <p class="faible" style="margin:.8rem 0 0">Entre le relevé ${fdate(d.de.date)}
+          (${esc(d.de.patch)}) et celui du ${fdate(d.a.date)} (${esc(d.a.patch)}).</p>
+      </div>
+      <div class="carte">
+        <div class="chiffre sm">${d.deplacement_median} rangs</div>
+        <div class="unite">déplacement médian par unité</div>
+        <p class="faible" style="margin:.8rem 0 0">Maximum observé :
+          ${d.deplacement_max} rangs, sur ${d.n_comparables} unités comparables.</p>
+      </div>
+      <div class="carte">
+        <div class="chiffre sm">${d.part_reelle_pct} %</div>
+        <div class="unite">du mouvement est réel</div>
+        <p class="faible" style="margin:.8rem 0 0">Si rien n'avait changé, le seul hasard
+          d'échantillonnage donnerait ${d.plancher_bruit}. Le reste est du vrai mouvement.</p>
+      </div>
+    </div>
+
+    ${!d.meme_elo ? `<div class="note warn"><b>Tranches d'elo différentes</b>
+      (${esc(d.de.rang)} puis ${esc(d.a.rang)}) : une part du mouvement vient du
+      changement de population, pas des patchs.</div>` : ""}
+
+    <h2>Ce qui monte</h2>
+    <div class="carte">${d.montees.map(x => ligneMouvement(x, "up")).join("")}</div>
+    <h2>Ce qui tombe</h2>
+    <div class="carte">${d.chutes.map(x => ligneMouvement(x, "dn")).join("")}</div>` : "";
+
+  const tete = t && t.unites.length ? `
+    <h2>Ce qui ne bouge jamais</h2>
+    <div class="carte">
+      <p>Les <b>mêmes ${t.unites.length} unités</b> occupent la tête du classement
+      dans les ${t.n_releves} relevés depuis le ${fdate(t.depuis)}, malgré les patchs
+      et un changement de tranche d'elo. Seul leur ordre interne change.
+      ${t.premiere_chaque_fois ? `<b>${esc(t.premiere_chaque_fois)} est première à chaque fois.</b>` : ""}</p>
+      <ul class="puces">${t.unites.map(u => `<li>${esc(u)}</li>`).join("")}</ul>
+      <p class="faible" style="margin-top:.9rem">La tête du classement est structurelle —
+      elle suit le coût des unités, pas l'équilibrage. Le ventre, lui, bouge à chaque patch :
+      c'est là que se trouve l'avantage.</p>
+    </div>` : "";
+
+  return `<div class="eyebrow">Patch ${esc(m.releve.patch)} · relevé du ${fdate(m.releve.date)}</div>
+    <h1>Ce qui a vraiment bougé</h1>
+    <p class="doux">${nb(m.releve.n_parties)} parties en ${esc(m.releve.rang)},
+      comparées au relevé précédent. Pas une tier list : une mesure de l'écart entre deux patchs.</p>
+    ${bloc}${tete}
+    <h2>Le classement complet</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>#</th><th>Unité</th><th class="num">Placement</th>
+        <th class="num">Victoires</th><th class="num">Parties</th></tr></thead>
+      <tbody>${m.unites.map(u => `<tr>
+        <td class="rang">${u.rang}</td><td>${esc(u.nom)}</td>
+        <td class="num">${u.avg.toFixed(2)}</td>
+        <td class="num">${u.wr.toFixed(1)} %</td>
+        <td class="num">${nb(u.n)}</td></tr>`).join("")}</tbody>
+    </table></div>`;
+}
+
+/* -------------------------------------------------- vue : préparer */
+let MODE = "ladder";
+function vuePreparer(){
+  const m = D.meta;
+  if(!m) return `<div class="note warn">Données indisponibles.</div>`;
+  const M = m.modes[MODE];
+  const libelle = {ladder:"Ladder", cumule:"Points cumulés", checkmate:"Checkmate"};
+  return `<div class="eyebrow">Patch ${esc(m.releve.patch)} · ${esc(m.releve.rang)}</div>
+    <h1>Préparer ses games</h1>
+    <p class="doux">La même question a trois réponses. Ce que tu dois jouer dépend de
+      l'enjeu, pas seulement du patch.</p>
+
+    <div class="seg" role="group" aria-label="Mode de jeu">
+      ${Object.keys(m.modes).map(k => `<button data-mode="${k}"
+        aria-pressed="${k === MODE}">${libelle[k]}</button>`).join("")}
+    </div>
+    <div class="note"><b>${libelle[MODE]}</b> — classé par ${esc(M.critere)}. ${esc(M.pourquoi)}</div>
+    ${M.classement.length
+      ? M.classement.map((c,i) => carteCompo(c, MODE, i === 0)).join("")
+      : `<div class="vide">Aucune compo ne porte cette mesure dans le relevé courant.</div>`}
+
+    <h2>Où je peux aller ?</h2>
+    <p class="doux">Tape les unités que tu as en main. Le classement se fait par proximité,
+      et le carry compte double — tenir trois pièces de façade ne vaut pas tenir le carry.</p>
+    <div class="rech">
+      <input id="pivot" type="text" autocomplete="off" spellcheck="false"
+        placeholder="ex : krug brambleback pebbles">
+    </div>
+    <div id="pivot-res"></div>`;
+}
+
+function norm(s){
+  return String(s).toLowerCase().normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"").replace(/['’.\-\s]/g,"");
+}
+function pivot(saisie){
+  const m = D.meta;
+  const mots = saisie.split(/[\s,;]+/).filter(Boolean).map(norm);
+  if(!mots.length) return "";
+  const noms = new Set();
+  m.compos.forEach(c => (c.roster||[]).forEach(r => noms.add(r.replace(/\*$/,""))));
+  const connus = [...noms].filter(n => mots.includes(norm(n)));
+  if(!connus.length) return `<div class="vide">Aucune de ces unités n'apparaît dans
+    les compos du relevé. Toutes ne définissent pas une ligne : certaines sont des
+    pièces d'appoint, d'autres des unités flexibles.</div>`;
+
+  const res = m.compos.map(c => {
+    const ros = (c.roster||[]).map(r => r.replace(/\*$/,""));
+    const ont = ros.filter(r => connus.some(k => norm(k) === norm(r)));
+    const manq = ros.filter(r => !ont.includes(r));
+    const aCarry = ont.some(r => norm(r) === norm(c.carry));
+    return {c, ont, manq, aCarry, score: ont.length/ros.length + (aCarry ? .35 : 0)};
+  }).filter(p => p.ont.length).sort((a,b) => b.score - a.score);
+
+  return `<p class="faible">Avec <b>${connus.map(esc).join(" · ")}</b> —
+    ${res.length} ligne(s) accessible(s).</p>` + res.map(p => `
+    <article class="compo${p.aCarry ? " top" : ""}">
+      <div class="ligne1"><span class="n">${esc(p.c.n)}</span>
+        <span class="val">${p.ont.length}/${p.ont.length + p.manq.length}</span>
+        <span class="lvl">${esc(p.c.lvl || "")}</span></div>
+      <div class="ros">${p.ont.map(x => `<span class="puce${norm(x) === norm(p.c.carry) ? " carry" : ""}">${esc(x)}</span>`).join("")}${p.manq.map(x => `<span class="puce miss">${esc(x)}</span>`).join("")}</div>
+      <div class="txt">${p.aCarry
+        ? "<b>Tu tiens le carry.</b> C'est le pivot le moins cher."
+        : (p.ont.length/(p.ont.length+p.manq.length) >= .5
+            ? "Moitié du board en place, mais <b>pas le carry</b> — c'est lui qui décide."
+            : "Pivot lointain : il manque l'essentiel.")}</div>
+      <div class="stats">placement <b>${p.c.avg.toFixed(2)}</b> ·
+        victoires <b>${p.c.wr.toFixed(1)} %</b> · pick ${p.c.pr}</div>
+    </article>`).join("");
+}
+
+/* -------------------------------------------------- vue : Oracle */
+function vueOracle(){
+  const m = D.meta;
+  return `<div class="eyebrow">L'outil</div>
+    <h1>L'Oracle</h1>
+    <p class="doux">Trois outils qui se complètent. Le site les présente ; ils tournent
+      sur ta machine, avec tes données.</p>
+
+    <div class="grille">
+      <div class="carte">
+        <h3>L'Oracle</h3>
+        <p class="faible">Référence consultable en partie : radar d'équilibrage, méta du
+          jour, moteur de pivot, trois modes de jeu. Un fichier HTML autonome, hors ligne.</p>
+        <p><a href="oracle.html">Ouvrir l'Oracle →</a></p>
+      </div>
+      <div class="carte">
+        <h3>Le Carnet</h3>
+        <p class="faible">Garde la série des relevés, mesure la rotation d'un patch à
+          l'autre, et vérifie si un mouvement est réel ou du bruit.</p>
+        <p><code>carnet.py lister · comparer · rotation · bruit</code></p>
+      </div>
+      <div class="carte">
+        <h3>Le Miroir</h3>
+        <p class="faible">Analyse tes propres parties. Le lobby sert de groupe de contrôle :
+          il te classe parmi tes sept adversaires et compare ce rang à ton placement réel.</p>
+        <p><code>collecte.py → inspecter.py → miroir.py</code></p>
+      </div>
+    </div>
+
+    <h2>Mettre le Miroir en route</h2>
+    <div class="note"><b>Une clé API Riot est nécessaire.</b> Une clé de développement
+      expire en 24 h — suffisant pour une première récolte, les fichiers obtenus restant
+      ensuite acquis. Une clé personnelle n'expire pas et demande environ deux semaines.</div>
+    <pre><code>python collecte.py      # récolte tes parties (~4 min pour 200)
+python inspecter.py     # dit ce que les données contiennent vraiment
+python miroir.py        # produit l'analyse + miroir_resume.json</code></pre>
+    <p class="faible">Mets ta clé dans un fichier <code>cle.txt</code> à côté des scripts.
+      Ne la colle jamais dans une conversation : seul <code>miroir_resume.json</code>
+      a besoin d'être partagé.</p>
+
+    <h2>Ce que le Miroir mesure</h2>
+    <div class="carte">
+      <p><b>2<sup>e</sup> du lobby en niveau mais 5<sup>e</sup> au classement</b> → tu obtiens
+        les ressources sans les convertir. Le travail est sur le board : positionnement,
+        objets, composition.</p>
+      <p><b>6<sup>e</sup> en niveau mais 3<sup>e</sup> au classement</b> → tu joues au-dessus de
+        tes ressources. Le travail est sur l'économie et le tempo.</p>
+      <p class="faible" style="margin-bottom:0">Il produit aussi ta distribution de
+        placements, de la 1<sup>re</sup> à la 8<sup>e</sup> — la mesure sans laquelle le débat
+        pointe contre régularité ne peut pas se trancher.</p>
+    </div>
+
+    <h2>Où va le projet</h2>
+    <div class="cal">
+      <div class="evt prochain"><span class="dt">v1</span>
+        <span class="nm">Ce site, les trois outils, les relevés à chaque patch</span>
+        <span class="tag ok">en cours</span></div>
+      <div class="evt"><span class="dt">v2</span>
+        <span class="nm">Comptes, profils TFT liés, analyse automatique pour un groupe</span>
+        <span class="tag">Set 19</span></div>
+      <div class="evt"><span class="dt">v3</span>
+        <span class="nm">Récaps générés et publiés sans intervention</span>
+        <span class="tag">après</span></div>
+    </div>
+    <p class="faible" style="margin-top:1rem">La v2 demande un serveur : dès qu'il y a
+      des comptes, la clé Riot ne peut plus vivre côté joueur, sinon chacun la verrait.
+      C'est le serveur qui interroge Riot pour tout le monde.</p>
+    ${m ? `<p class="faible">Données du site générées le ${fdate(m.genere_le)}.</p>` : ""}`;
+}
+
+/* -------------------------------------------------- vue : profil */
+function vueProfil(){
+  const p = D.profil?.joueurs?.[0];
+  const c = D.calendrier;
+  if(!p) return `<div class="note warn">Profil indisponible.</div>`;
+  const me = p.mesure;
+  const auj = new Date().toISOString().slice(0,10);
+
+  const evts = [];
+  (c?.patchs || []).forEach(x => evts.push({...x, type:"patch"}));
+  (c?.jalons || []).forEach(x => evts.push({...x, type:"jalon"}));
+  evts.sort((a,b) => a.date.localeCompare(b.date));
+  const prochain = evts.find(e => e.date > auj);
+
+  return `<div class="eyebrow">${esc(p.riot_id)} · ${esc(p.region.toUpperCase())}</div>
+    <h1>${esc(p.rang.tier)}, ${p.rang.lp} LP</h1>
+    <p class="doux">Objectif : <b>${esc(p.objectif)}</b>.
+      Rang atteint le ${fdate(p.rang.date)}.</p>
+
+    <h2>Profil mesuré</h2>
+    <div class="note warn"><b>Mesuré à ${esc(me.rang_alors)}, sur ${me.parties} parties.</b>
+      ${esc(me.note)}</div>
+    <div class="grille">
+      <div class="carte"><div class="chiffre sm">${me.placement_moyen}</div>
+        <div class="unite">placement moyen</div></div>
+      <div class="carte"><div class="chiffre sm">${me.top4_pct} %</div>
+        <div class="unite">top 4 · ${esc(me.centile_top4)}</div></div>
+      <div class="carte"><div class="chiffre sm">${me.victoires_pct} %</div>
+        <div class="unite">victoires · ${esc(me.centile_victoires)}</div></div>
+    </div>
+    <div class="carte">
+      <h3>Profil ${esc(me.profil)}</h3>
+      <p class="faible" style="margin-bottom:0">Les victoires sont dans le centile 4,6 %,
+      le top 4 dans le centile 25,7 % : il gagne bien mieux qu'il ne se place.
+      Au ladder, à moyenne égale, la variance est à peu près neutre — c'est le placement
+      moyen qui gouverne le LP. En tournoi, elle décide de tout, et dans les deux sens
+      selon le format.</p>
+    </div>
+
+    <h2>Calendrier</h2>
+    <div class="cal">${evts.map(e => {
+      const passe = e.date <= auj;
+      const est = e === prochain;
+      return `<div class="evt${passe ? " passe" : ""}${est ? " prochain" : ""}">
+        <span class="dt">${fdate(e.date)}</span>
+        <span class="nm">${esc(e.nom)}${e.note ? ` <span class="faible">— ${esc(e.note)}</span>` : ""}</span>
+        <span class="tag${e.releve ? " ok" : ""}">${
+          e.type === "jalon" ? (e.certain === false ? "estimé" : "jalon")
+          : (e.releve ? "relevé" : (passe ? "non relevé" : "à venir"))}</span></div>`;
+    }).join("")}</div>
+    ${prochain ? `<p class="faible" style="margin-top:1rem">Prochaine échéance :
+      <b>${esc(prochain.nom)}</b>, dans
+      ${Math.round((Date.parse(prochain.date) - Date.parse(auj)) / 864e5)} jours.</p>` : ""}
+
+    <h2>Décroissance</h2>
+    <div class="note warn">À partir de Master : 14 parties en banque, une retirée par jour,
+      puis <b>−50 LP par jour</b> d'inactivité. À ${p.rang.lp} LP, une semaine d'absence
+      coûte le rang.</div>`;
+}
+
+/* -------------------------------------------------- rendu */
+const VUES = {recap: vueRecap, preparer: vuePreparer, oracle: vueOracle, profil: vueProfil};
+let vueActive = "recap";
+
+function rendre(){
+  $("#v-" + vueActive).innerHTML = VUES[vueActive]();
+  if(vueActive === "preparer") brancherPreparer();
+}
+function brancherPreparer(){
+  document.querySelectorAll("[data-mode]").forEach(b =>
+    b.addEventListener("click", () => { MODE = b.dataset.mode; rendre(); }));
+  const inp = $("#pivot");
+  if(inp) inp.addEventListener("input", () => {
+    $("#pivot-res").innerHTML = inp.value.trim() ? pivot(inp.value) : "";
+  });
+}
+function aller(v){
+  vueActive = v;
+  document.querySelectorAll("nav button").forEach(b =>
+    b.setAttribute("aria-selected", String(b.dataset.vue === v)));
+  document.querySelectorAll(".vue").forEach(s => s.hidden = (s.id !== "v-" + v));
+  rendre();
+  try { history.replaceState(null, "", "#" + v); } catch(e){}
+}
+document.querySelectorAll("nav button").forEach(b =>
+  b.addEventListener("click", () => aller(b.dataset.vue)));
+
+/* Le squelette d'artefact écrit la balise <html> : on pose la langue ici,
+   pour les lecteurs d'écran et la césure typographique. */
+document.documentElement.lang = "fr";
+
+charger().then(() => {
+  const m = D.meta;
+  $("#hsub").textContent = m
+    ? `patch ${m.releve.patch} · ${m.releve.rang} · ${fdate(m.releve.date)}`
+    : "données indisponibles";
+  if(m) $("#pied").innerHTML =
+    `Données : ${esc(m.releve.source || "MetaTFT")} — ${nb(m.releve.n_parties)} parties,
+     ${esc(m.releve.fenetre || "")}. Généré le ${fdate(m.genere_le)}.
+     Projet personnel, sans lien avec Riot Games.`;
+  const h = (location.hash || "").replace("#", "");
+  aller(VUES[h] ? h : "recap");
+});
+</script>

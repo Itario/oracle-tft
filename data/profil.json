@@ -1,0 +1,60 @@
+{
+ "schema_version": 1,
+ "joueurs": [
+  {
+   "id": "itario",
+   "riot_id": "Itario#EUW",
+   "region": "euw",
+   "routing": "europe",
+   "rang": {
+    "tier": "Master",
+    "lp": 55,
+    "date": "2026-10-22"
+   },
+   "objectif": "Challenger",
+   "mesure": {
+    "date": "2026-11-02",
+    "source": "API Riot — 120 parties Set 18, via le Miroir",
+    "rang_alors": "Diamant II -> Master (le passage a eu lieu dans la fenêtre)",
+    "fenetre": "2026-08-26 au 2026-10-29",
+    "parties": 114,
+    "parties_collectees": 120,
+    "parties_lachees_retirees": 6,
+    "placement_moyen": 3.737,
+    "top4_pct": 59.6,
+    "victoires_pct": 18.4,
+    "distribution": {"1": 21, "2": 20, "3": 16, "4": 11,
+                     "5": 17, "6": 17, "7": 10, "8": 2},
+    "ecarts_solides": {
+     "top2": "+2.70 ecarts-types — SOLIDE",
+     "bas2": "-3.57 ecarts-types — SOLIDE",
+     "top4": "dans le bruit, même après nettoyage",
+     "note": "Mesurés APRÈS retrait des 6 parties lâchées. Le nettoyage renforce les deux écarts (ils étaient à +2.32 et -2.74 sur les 120 brutes)."
+    },
+    "avant_nettoyage": {
+     "parties": 120, "placement_moyen": 3.925,
+     "top4_pct": 56.7, "victoires_pct": 17.5,
+     "pourquoi_ecarte": "Contient 6 parties que Clément a quittées en cours (enfants). Une partie lâchée n'est pas une partie mal jouée."
+    },
+    "rang_niveau_moyen": 4.117,
+    "or_restant_median": 2,
+    "centile_top4": "top 25.7 %",
+    "centile_victoires": "top 4.6 %",
+    "centiles_provenance": "Calculés le 19/10 contre la population du ladder. Conservés parce que les taux sous-jacents n'ont bougé que de +0.5 et +0.4 point. À recalculer à la prochaine collecte.",
+    "profil": "sommet lourd et plancher très protégé",
+    "note": "Remplace la mesure du 19/10 (105 parties grattées sur lolchess : 3.95 / 56.2 / 17.1), qui concordait à trois décimales avec le brut de l'API — l'ancienne méthode était bonne. L'étiquette 'tout-ou-rien' est ABANDONNÉE : elle supposait un excès de 8es, or après nettoyage il ne reste que 2 huitièmes sur 114 parties. Il bat le lobby aux deux extrémités et reste neutre au milieu : son taux de top 4 n'est pas significativement au-dessus du hasard, alors que son top 2 et son évitement du bas le sont.",
+    "non_mesurable": {
+     "degats": "total_damage_to_players vide sur 120/120 parties Set 18 — le rang de dégâts est sans valeur, ne pas l'afficher",
+     "augments": "champ absent de 200/200 parties — la revue des augments choisis et refusés n'est pas constructible sur l'API en l'état"
+    },
+    "retracte": "L'or restant élevé n'est PAS un défaut d'économie. Les 12 parties finies à 20 or ou plus semblaient coûter 1.19 place ; c'était la signature des parties lâchées, pas une erreur de jeu. Ne pas réintroduire ce conseil.",
+    "a_refaire": "Seules 10 des 120 parties sont postérieures au passage Master (22/10). Le profil Master reste NON mesuré. Recollecter vers le 25/11, avant la fin du Set 18 le 1er décembre."
+   },
+   "formats": [
+    "ladder",
+    "cumule",
+    "checkmate"
+   ]
+  }
+ ]
+}
