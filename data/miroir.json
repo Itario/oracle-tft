@@ -67,6 +67,823 @@
   }
  ],
  "zone_grise": 3,
+ "rythme": {
+  "jours_actifs": 46,
+  "etendue_jours": 65,
+  "jours_sans_jouer": 19,
+  "parties_par_jour_actif": 2.48,
+  "parties_par_jour_calendaire": 1.75
+ },
+ "sessions": [
+  {
+   "date": "2026-10-29",
+   "n": 1,
+   "placement_moyen": 6.0,
+   "meilleur": 6,
+   "pire": 6,
+   "top4": 0,
+   "conversion_moyenne": 2.0
+  },
+  {
+   "date": "2026-10-28",
+   "n": 1,
+   "placement_moyen": 6.0,
+   "meilleur": 6,
+   "pire": 6,
+   "top4": 0,
+   "conversion_moyenne": 0.0
+  },
+  {
+   "date": "2026-10-27",
+   "n": 2,
+   "placement_moyen": 6.0,
+   "meilleur": 5,
+   "pire": 7,
+   "top4": 0,
+   "conversion_moyenne": 0.0
+  },
+  {
+   "date": "2026-10-26",
+   "n": 1,
+   "placement_moyen": 1.0,
+   "meilleur": 1,
+   "pire": 1,
+   "top4": 1,
+   "conversion_moyenne": 0.0
+  },
+  {
+   "date": "2026-10-25",
+   "n": 1,
+   "placement_moyen": 3.0,
+   "meilleur": 3,
+   "pire": 3,
+   "top4": 1,
+   "conversion_moyenne": 0.0
+  },
+  {
+   "date": "2026-10-22",
+   "n": 4,
+   "placement_moyen": 2.5,
+   "meilleur": 1,
+   "pire": 4,
+   "top4": 4,
+   "conversion_moyenne": 0.0
+  },
+  {
+   "date": "2026-10-21",
+   "n": 2,
+   "placement_moyen": 5.0,
+   "meilleur": 3,
+   "pire": 7,
+   "top4": 1,
+   "conversion_moyenne": 0.0
+  },
+  {
+   "date": "2026-10-20",
+   "n": 2,
+   "placement_moyen": 3.5,
+   "meilleur": 2,
+   "pire": 5,
+   "top4": 1,
+   "conversion_moyenne": -0.5
+  },
+  {
+   "date": "2026-10-19",
+   "n": 1,
+   "placement_moyen": 1.0,
+   "meilleur": 1,
+   "pire": 1,
+   "top4": 1,
+   "conversion_moyenne": 0.0
+  },
+  {
+   "date": "2026-10-17",
+   "n": 2,
+   "placement_moyen": 4.0,
+   "meilleur": 3,
+   "pire": 5,
+   "top4": 1,
+   "conversion_moyenne": 0.0
+  },
+  {
+   "date": "2026-10-16",
+   "n": 7,
+   "placement_moyen": 4.14,
+   "meilleur": 1,
+   "pire": 8,
+   "top4": 4,
+   "conversion_moyenne": 1.0
+  },
+  {
+   "date": "2026-10-15",
+   "n": 6,
+   "placement_moyen": 3.17,
+   "meilleur": 1,
+   "pire": 6,
+   "top4": 4,
+   "conversion_moyenne": 0.33
+  }
+ ],
+ "parties": [
+  {
+   "date": "2026-10-29",
+   "placement": 6,
+   "niveau": 6,
+   "rang_niveau": 8,
+   "conversion": 2.0,
+   "or_restant": 5,
+   "dernier_tour": 26,
+   "pieces": [
+    "Rammus",
+    "Azir",
+    "Fiddlesticks18"
+   ]
+  },
+  {
+   "date": "2026-10-28",
+   "placement": 6,
+   "niveau": 8,
+   "rang_niveau": 6,
+   "conversion": 0.0,
+   "or_restant": 0,
+   "dernier_tour": 28,
+   "pieces": [
+    "Zyra",
+    "Ahri",
+    "Lillia"
+   ]
+  },
+  {
+   "date": "2026-10-27",
+   "placement": 5,
+   "niveau": 9,
+   "rang_niveau": 4,
+   "conversion": -1.0,
+   "or_restant": 0,
+   "dernier_tour": 31,
+   "pieces": [
+    "Ezreal",
+    "Kennen",
+    "Draven18"
+   ]
+  },
+  {
+   "date": "2026-10-27",
+   "placement": 7,
+   "niveau": 8,
+   "rang_niveau": 8,
+   "conversion": 1.0,
+   "or_restant": 0,
+   "dernier_tour": 28,
+   "pieces": [
+    "AP",
+    "Aphelios",
+    "Sentinel18"
+   ]
+  },
+  {
+   "date": "2026-10-26",
+   "placement": 1,
+   "niveau": 10,
+   "rang_niveau": 1,
+   "conversion": 0.0,
+   "or_restant": 14,
+   "dernier_tour": 38,
+   "pieces": [
+    "Ornn",
+    "Ezreal",
+    "Lillia"
+   ]
+  },
+  {
+   "date": "2026-10-25",
+   "placement": 3,
+   "niveau": 9,
+   "rang_niveau": 3,
+   "conversion": 0.0,
+   "or_restant": 1,
+   "dernier_tour": 38,
+   "pieces": [
+    "AD",
+    "Camille",
+    "Ornn"
+   ]
+  },
+  {
+   "date": "2026-10-22",
+   "placement": 4,
+   "niveau": 9,
+   "rang_niveau": 3,
+   "conversion": -1.0,
+   "or_restant": 4,
+   "dernier_tour": 31,
+   "pieces": [
+    "Ezreal",
+    "Amumu18",
+    "Draven18"
+   ]
+  },
+  {
+   "date": "2026-10-22",
+   "placement": 3,
+   "niveau": 8,
+   "rang_niveau": 4,
+   "conversion": 1.0,
+   "or_restant": 1,
+   "dernier_tour": 34,
+   "pieces": [
+    "Cassiopeia",
+    "Rammus",
+    "Fiddlesticks18"
+   ]
+  },
+  {
+   "date": "2026-10-22",
+   "placement": 1,
+   "niveau": 9,
+   "rang_niveau": 1,
+   "conversion": 0.0,
+   "or_restant": 6,
+   "dernier_tour": 37,
+   "pieces": [
+    "Ezreal",
+    "Maokai",
+    "Kennen"
+   ]
+  },
+  {
+   "date": "2026-10-22",
+   "placement": 2,
+   "niveau": 9,
+   "rang_niveau": 2,
+   "conversion": 0.0,
+   "or_restant": 7,
+   "dernier_tour": 34,
+   "pieces": [
+    "Ezreal",
+    "Amumu18",
+    "Kennen"
+   ]
+  },
+  {
+   "date": "2026-10-21",
+   "placement": 3,
+   "niveau": 8,
+   "rang_niveau": 3,
+   "conversion": 0.0,
+   "or_restant": 0,
+   "dernier_tour": 37,
+   "pieces": [
+    "Fiddlesticks18",
+    "Cassiopeia",
+    "Shen"
+   ]
+  },
+  {
+   "date": "2026-10-21",
+   "placement": 7,
+   "niveau": 8,
+   "rang_niveau": 7,
+   "conversion": 0.0,
+   "or_restant": 0,
+   "dernier_tour": 26,
+   "pieces": [
+    "Azir",
+    "Malphite",
+    "Kennen"
+   ]
+  },
+  {
+   "date": "2026-10-20",
+   "placement": 2,
+   "niveau": 9,
+   "rang_niveau": 2,
+   "conversion": 0.0,
+   "or_restant": 1,
+   "dernier_tour": 35,
+   "pieces": [
+    "Brambleback18",
+    "Sentinel18",
+    "Zyra"
+   ]
+  },
+  {
+   "date": "2026-10-20",
+   "placement": 5,
+   "niveau": 9,
+   "rang_niveau": 4,
+   "conversion": -1.0,
+   "or_restant": 13,
+   "dernier_tour": 28,
+   "pieces": [
+    "Shen",
+    "Draven18",
+    "Ezreal"
+   ]
+  },
+  {
+   "date": "2026-10-19",
+   "placement": 1,
+   "niveau": 9,
+   "rang_niveau": 1,
+   "conversion": 0.0,
+   "or_restant": 3,
+   "dernier_tour": 38,
+   "pieces": [
+    "Ezreal",
+    "Amumu18",
+    "GnarSmall"
+   ]
+  },
+  {
+   "date": "2026-10-17",
+   "placement": 5,
+   "niveau": 9,
+   "rang_niveau": 4,
+   "conversion": -1.0,
+   "or_restant": 0,
+   "dernier_tour": 31,
+   "pieces": [
+    "Ezreal",
+    "Amumu18",
+    "Kennen"
+   ]
+  },
+  {
+   "date": "2026-10-17",
+   "placement": 3,
+   "niveau": 8,
+   "rang_niveau": 4,
+   "conversion": 1.0,
+   "or_restant": 13,
+   "dernier_tour": 35,
+   "pieces": [
+    "Rengar",
+    "Hecarim",
+    "CrimsonRaptor18"
+   ]
+  },
+  {
+   "date": "2026-10-16",
+   "placement": 6,
+   "niveau": 8,
+   "rang_niveau": 6,
+   "conversion": 0.0,
+   "or_restant": 0,
+   "dernier_tour": 27,
+   "pieces": [
+    "Ashe",
+    "Amumu18",
+    "Sivir"
+   ]
+  },
+  {
+   "date": "2026-10-16",
+   "placement": 1,
+   "niveau": 9,
+   "rang_niveau": 1,
+   "conversion": 0.0,
+   "or_restant": 1,
+   "dernier_tour": 37,
+   "pieces": [
+    "Maokai",
+    "Ezreal",
+    "Draven18"
+   ]
+  },
+  {
+   "date": "2026-10-16",
+   "placement": 2,
+   "niveau": 7,
+   "rang_niveau": 6,
+   "conversion": 4.0,
+   "or_restant": 1,
+   "dernier_tour": 37,
+   "pieces": [
+    "Veigar",
+    "RekSai",
+    "Ornn"
+   ]
+  },
+  {
+   "date": "2026-10-16",
+   "placement": 7,
+   "niveau": 9,
+   "rang_niveau": 5,
+   "conversion": -2.0,
+   "or_restant": 1,
+   "dernier_tour": 30,
+   "pieces": [
+    "Base",
+    "Maokai",
+    "Ezreal"
+   ]
+  },
+  {
+   "date": "2026-10-16",
+   "placement": 4,
+   "niveau": 8,
+   "rang_niveau": 5,
+   "conversion": 1.0,
+   "or_restant": 6,
+   "dernier_tour": 33,
+   "pieces": [
+    "Veigar",
+    "LeBlanc",
+    "Alistar"
+   ]
+  },
+  {
+   "date": "2026-10-16",
+   "placement": 1,
+   "niveau": 8,
+   "rang_niveau": 5,
+   "conversion": 4.0,
+   "or_restant": 1,
+   "dernier_tour": 38,
+   "pieces": [
+    "Azir",
+    "Fiddlesticks18",
+    "Rammus"
+   ]
+  },
+  {
+   "date": "2026-10-16",
+   "placement": 8,
+   "niveau": 7,
+   "rang_niveau": 8,
+   "conversion": 0.0,
+   "or_restant": 0,
+   "dernier_tour": 27,
+   "pieces": [
+    "KhaZix",
+    "Diana",
+    "Hecarim"
+   ]
+  },
+  {
+   "date": "2026-10-15",
+   "placement": 4,
+   "niveau": 9,
+   "rang_niveau": 3,
+   "conversion": -1.0,
+   "or_restant": 0,
+   "dernier_tour": 33,
+   "pieces": [
+    "Ezreal",
+    "GnarSmall",
+    "Amumu18"
+   ]
+  },
+  {
+   "date": "2026-10-15",
+   "placement": 6,
+   "niveau": 7,
+   "rang_niveau": 7,
+   "conversion": 1.0,
+   "or_restant": 5,
+   "dernier_tour": 30,
+   "pieces": [
+    "KhaZix",
+    "Fiddlesticks18",
+    "Alune"
+   ]
+  },
+  {
+   "date": "2026-10-15",
+   "placement": 5,
+   "niveau": 8,
+   "rang_niveau": 6,
+   "conversion": 1.0,
+   "or_restant": 3,
+   "dernier_tour": 30,
+   "pieces": [
+    "Brambleback18",
+    "Krug18",
+    "Diana"
+   ]
+  },
+  {
+   "date": "2026-10-15",
+   "placement": 1,
+   "niveau": 8,
+   "rang_niveau": 2,
+   "conversion": 1.0,
+   "or_restant": 5,
+   "dernier_tour": 38,
+   "pieces": [
+    "Rengar",
+    "KhaZix",
+    "Diana"
+   ]
+  },
+  {
+   "date": "2026-10-15",
+   "placement": 1,
+   "niveau": 8,
+   "rang_niveau": 2,
+   "conversion": 1.0,
+   "or_restant": 14,
+   "dernier_tour": 37,
+   "pieces": [
+    "Azir",
+    "Zyra",
+    "Rammus"
+   ]
+  },
+  {
+   "date": "2026-10-15",
+   "placement": 2,
+   "niveau": 9,
+   "rang_niveau": 1,
+   "conversion": -1.0,
+   "or_restant": 0,
+   "dernier_tour": 35,
+   "pieces": [
+    "Alune"
+   ]
+  },
+  {
+   "date": "2026-10-14",
+   "placement": 1,
+   "niveau": 8,
+   "rang_niveau": 3,
+   "conversion": 2.0,
+   "or_restant": 2,
+   "dernier_tour": 35,
+   "pieces": [
+    "Shen",
+    "Varus",
+    "Kayle"
+   ]
+  },
+  {
+   "date": "2026-10-14",
+   "placement": 5,
+   "niveau": 7,
+   "rang_niveau": 7,
+   "conversion": 2.0,
+   "or_restant": 1,
+   "dernier_tour": 30,
+   "pieces": [
+    "Azir",
+    "Fiddlesticks18",
+    "Rammus"
+   ]
+  },
+  {
+   "date": "2026-10-14",
+   "placement": 7,
+   "niveau": 7,
+   "rang_niveau": 7,
+   "conversion": 0.0,
+   "or_restant": 3,
+   "dernier_tour": 28,
+   "pieces": [
+    "KhaZix",
+    "Hecarim",
+    "Diana"
+   ]
+  },
+  {
+   "date": "2026-10-14",
+   "placement": 4,
+   "niveau": 9,
+   "rang_niveau": 3,
+   "conversion": -1.0,
+   "or_restant": 2,
+   "dernier_tour": 33,
+   "pieces": [
+    "Amumu18",
+    "Ezreal",
+    "Draven18"
+   ]
+  },
+  {
+   "date": "2026-10-14",
+   "placement": 6,
+   "niveau": 8,
+   "rang_niveau": 5,
+   "conversion": -1.0,
+   "or_restant": 2,
+   "dernier_tour": 26,
+   "pieces": [
+    "Veigar",
+    "Ornn",
+    "RekSai"
+   ]
+  },
+  {
+   "date": "2026-10-14",
+   "placement": 3,
+   "niveau": 9,
+   "rang_niveau": 2,
+   "conversion": -1.0,
+   "or_restant": 3,
+   "dernier_tour": 38,
+   "pieces": [
+    "CrimsonRaptor18",
+    "Aphelios",
+    "Diana"
+   ]
+  },
+  {
+   "date": "2026-10-14",
+   "placement": 5,
+   "niveau": 7,
+   "rang_niveau": 6,
+   "conversion": 1.0,
+   "or_restant": 0,
+   "dernier_tour": 31,
+   "pieces": [
+    "Rengar",
+    "KhaZix",
+    "Diana"
+   ]
+  },
+  {
+   "date": "2026-10-14",
+   "placement": 1,
+   "niveau": 8,
+   "rang_niveau": 4,
+   "conversion": 3.0,
+   "or_restant": 10,
+   "dernier_tour": 37,
+   "pieces": [
+    "Cinderling18",
+    "Murkwolf18",
+    "Sentry"
+   ]
+  },
+  {
+   "date": "2026-10-14",
+   "placement": 6,
+   "niveau": 7,
+   "rang_niveau": 8,
+   "conversion": 2.0,
+   "or_restant": 4,
+   "dernier_tour": 26,
+   "pieces": [
+    "Elise",
+    "Caitlyn",
+    "Vi18"
+   ]
+  },
+  {
+   "date": "2026-10-14",
+   "placement": 6,
+   "niveau": 9,
+   "rang_niveau": 6,
+   "conversion": 0.0,
+   "or_restant": 3,
+   "dernier_tour": 28,
+   "pieces": [
+    "Veigar",
+    "RekSai",
+    "LeBlanc"
+   ]
+  },
+  {
+   "date": "2026-10-14",
+   "placement": 2,
+   "niveau": 9,
+   "rang_niveau": 2,
+   "conversion": 0.0,
+   "or_restant": 1,
+   "dernier_tour": 37,
+   "pieces": [
+    "KhaZix",
+    "Aphelios",
+    "Hecarim"
+   ]
+  },
+  {
+   "date": "2026-10-13",
+   "placement": 2,
+   "niveau": 9,
+   "rang_niveau": 2,
+   "conversion": 0.0,
+   "or_restant": 9,
+   "dernier_tour": 38,
+   "pieces": [
+    "Azir",
+    "Rammus",
+    "Fiddlesticks18"
+   ]
+  },
+  {
+   "date": "2026-10-13",
+   "placement": 4,
+   "niveau": 8,
+   "rang_niveau": 5,
+   "conversion": 1.0,
+   "or_restant": 9,
+   "dernier_tour": 31,
+   "pieces": [
+    "Veigar",
+    "RekSai",
+    "LeBlanc"
+   ]
+  },
+  {
+   "date": "2026-10-13",
+   "placement": 6,
+   "niveau": 7,
+   "rang_niveau": 7,
+   "conversion": 1.0,
+   "or_restant": 15,
+   "dernier_tour": 27,
+   "pieces": [
+    "Sentry",
+    "Cinderling18",
+    "Murkwolf18"
+   ]
+  },
+  {
+   "date": "2026-10-13",
+   "placement": 6,
+   "niveau": 7,
+   "rang_niveau": 7,
+   "conversion": 1.0,
+   "or_restant": 6,
+   "dernier_tour": 28,
+   "pieces": [
+    "Rakan",
+    "Hecarim",
+    "Rengar"
+   ]
+  },
+  {
+   "date": "2026-10-13",
+   "placement": 6,
+   "niveau": 8,
+   "rang_niveau": 5,
+   "conversion": -1.0,
+   "or_restant": 0,
+   "dernier_tour": 28,
+   "pieces": [
+    "Malphite",
+    "Kennen",
+    "Zyra"
+   ]
+  },
+  {
+   "date": "2026-10-13",
+   "placement": 3,
+   "niveau": 8,
+   "rang_niveau": 4,
+   "conversion": 1.0,
+   "or_restant": 1,
+   "dernier_tour": 34,
+   "pieces": [
+    "Sentry",
+    "Cinderling18",
+    "Krug18"
+   ]
+  },
+  {
+   "date": "2026-10-13",
+   "placement": 1,
+   "niveau": 10,
+   "rang_niveau": 1,
+   "conversion": 0.0,
+   "or_restant": 2,
+   "dernier_tour": 35,
+   "pieces": [
+    "Draven18",
+    "Maokai",
+    "Ezreal"
+   ]
+  },
+  {
+   "date": "2026-10-13",
+   "placement": 7,
+   "niveau": 7,
+   "rang_niveau": 7,
+   "conversion": 0.0,
+   "or_restant": 4,
+   "dernier_tour": 30,
+   "pieces": [
+    "Sentry",
+    "Cinderling18",
+    "Scuttlecrab18"
+   ]
+  },
+  {
+   "date": "2026-10-13",
+   "placement": 5,
+   "niveau": 8,
+   "rang_niveau": 5,
+   "conversion": 0.0,
+   "or_restant": 4,
+   "dernier_tour": 30,
+   "pieces": [
+    "Brambleback18",
+    "Sentinel18",
+    "Zyra"
+   ]
+  }
+ ],
  "traits": [
   {
    "nom": "AluneUniqueTrait18",

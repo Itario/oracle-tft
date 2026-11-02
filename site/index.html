@@ -315,6 +315,34 @@ td.num{font-variant-numeric:tabular-nums;text-align:right}
   background:var(--or);transform:rotate(45deg)}
 .ecarts b{color:var(--texte);font-weight:700}
 
+/* ---------------------------------------------- journal de parties */
+.parties{display:grid;gap:.4rem;margin:1.1rem 0}
+.partie{display:grid;grid-template-columns:auto 1fr auto;gap:.85rem;
+  align-items:center;padding:.6rem .9rem;background:var(--abysse);
+  border:1px solid var(--trait)}
+.partie .corps{min-width:0;display:grid;gap:.35rem}
+.partie .meta{font-size:.82rem;color:var(--faible);
+  font-variant-numeric:tabular-nums}
+.partie .ros{margin:0}
+.partie .puce{font-size:.78rem;padding:.18rem .5rem}
+
+/* Le placement, dans un hexagone : c'est littéralement là qu'on finit. */
+.hex.mini{width:40px;aspect-ratio:1.1547/1;gap:0;padding:0}
+.hex.mini .r{font-size:1.05rem}
+.hex.mini.or{background:linear-gradient(165deg,#6B5427,#3E3017)}
+.hex.mini.or .r{color:var(--or-vif)}
+.hex.mini.ok{background:linear-gradient(165deg,#13504C,#0C2E2C)}
+.hex.mini.ok .r{color:var(--hextech)}
+.hex.mini.bas{background:linear-gradient(165deg,#1B3A5C,#102338)}
+.hex.mini.bas .r{color:var(--faible)}
+@media (prefers-reduced-motion:no-preference){.hex.mini{animation:none}}
+
+.conv{font-weight:700;font-variant-numeric:tabular-nums;font-size:1rem;
+  white-space:nowrap;font-family:var(--titre)}
+.conv.pl{color:var(--hextech)} .conv.mo{color:var(--sang)}
+.conv.nul{color:var(--faible)}
+.evt .conv{font-size:.92rem}
+
 /* ---------------------------------------------- le champ de pivot */
 /* La vue « En partie » se consulte au téléphone entre deux manches :
    le champ est la première chose touchée, et rien ne passe devant. */
@@ -604,6 +632,89 @@ function barresDistribution(mi){
     donnerait le hasard : ${att.toFixed(1)} parties par place.</p></div>`;
 }
 
+/* -------------------------------------------------- la review */
+/* Une partie seule ne permet aucune statistique : n = 1. La seule mesure
+   qui tienne à cette échelle est INTERNE AU LOBBY — le rang de niveau
+   contre le placement réel. Elle ne compare à aucune population, donc elle
+   ne demande ni échantillon ni seuil de bruit. Tout le reste de cette
+   section est un journal, pas une inférence, et c'est écrit comme tel. */
+
+function ligneConversion(c){
+  if(c == null) return "";
+  const cl = c > 0 ? "pl" : (c < 0 ? "mo" : "nul");
+  const signe = c > 0 ? "+" : (c < 0 ? "−" : "");
+  return `<span class="conv ${cl}">${signe}${Math.abs(c).toFixed(1)}</span>`;
+}
+
+function ligneParties(p){
+  const bande = p.placement <= 2 ? "or" : (p.placement <= 4 ? "ok" : "bas");
+  return `<div class="partie">
+    <span class="hex mini ${bande}"><span class="r">${p.placement}</span></span>
+    <span class="corps">
+      <span class="ros">${(p.pieces || []).map(x =>
+        `<span class="puce">${esc(x)}</span>`).join("")}</span>
+      <span class="meta">${fdate(p.date)} · niveau ${p.niveau ?? "?"}${
+        p.rang_niveau ? ` — ${p.rang_niveau}<sup>${p.rang_niveau === 1 ? "re" : "e"}</sup> du lobby` : ""}${
+        p.or_restant != null ? ` · ${p.or_restant} or restant` : ""}</span>
+    </span>
+    ${ligneConversion(p.conversion)}
+  </div>`;
+}
+
+function blocParties(mi){
+  const P = mi.parties || [];
+  if(!P.length) return "";
+  const dix = P.slice(0, 10), reste = P.slice(10);
+  return `<h2>Tes dernières parties</h2>
+    <p class="doux">Le chiffre de droite est l'écart entre ton rang de niveau dans le
+      lobby et ton placement réel. <b>Positif, tu as placé au-dessus de tes
+      ressources. Négatif, tu les avais et tu ne les as pas converties.</b></p>
+    <p class="faible">C'est la seule mesure qui tienne sur une partie unique : elle se
+      calcule à l'intérieur du lobby, sans comparaison à une population. Tout le reste
+      de cette liste est un journal, pas un jugement — à n = 1, rien n'est significatif.</p>
+    <div class="parties">${dix.map(ligneParties).join("")}</div>
+    ${reste.length ? `<details class="pourquoi">
+      <summary>Les ${reste.length} parties précédentes</summary>
+      <div class="parties">${reste.map(ligneParties).join("")}</div>
+    </details>` : ""}`;
+}
+
+function blocSessions(mi){
+  const S = mi.sessions || [];
+  if(!S.length) return "";
+  return `<h2>Tes dernières sessions</h2>
+    <div class="cal">${S.map(s => {
+      const bon = s.placement_moyen <= 4.0;
+      return `<div class="evt${bon ? " prochain" : ""}">
+        <span class="dt">${fdate(s.date)}</span>
+        <span class="nm">${s.n} partie${s.n > 1 ? "s" : ""} —
+          <b>${s.placement_moyen.toFixed(2)}</b> de moyenne,
+          ${s.top4}/${s.n} en top 4
+          <span class="faible">(de la ${s.meilleur}<sup>${s.meilleur === 1 ? "re" : "e"}</sup>
+          à la ${s.pire}<sup>e</sup>)</span></span>
+        ${ligneConversion(s.conversion_moyenne)}</div>`;
+    }).join("")}</div>`;
+}
+
+function blocRythme(mi){
+  const r = mi.rythme;
+  if(!r) return "";
+  return `<h2>Ton rythme</h2>
+    <div class="grille">
+      <div class="carte"><div class="chiffre sm">${r.parties_par_jour_calendaire}</div>
+        <div class="unite">parties par jour, sur toute la période</div></div>
+      <div class="carte"><div class="chiffre sm">${r.jours_sans_jouer}</div>
+        <div class="unite">jours sans jouer, sur ${r.etendue_jours}</div></div>
+      <div class="carte"><div class="chiffre sm">${r.parties_par_jour_actif}</div>
+        <div class="unite">parties les jours où tu joues</div></div>
+    </div>
+    <div class="note warn">Le volume gouverne le classement autant que le placement.
+      À Master, la décroissance retire <b>50 LP par jour</b> une fois les 14 parties en
+      banque épuisées : un joueur qui place à ${mi.placement_moyen.toFixed(2)} peut perdre
+      son rang sans jamais mal jouer. C'est une mesure de régularité, pas de niveau — et
+      elle ne demande aucun seuil de bruit pour être lue.</div>`;
+}
+
 function vueApres(){
   const mi = D.miroir;
   const p  = D.profil?.joueurs?.[0];
@@ -682,6 +793,10 @@ function vueApres(){
       <div class="carte"><div class="chiffre sm">${mi.premieres_pct} %</div>
         <div class="unite">1<sup>res</sup> places — le hasard donne 12,5 %</div></div>
     </div>
+
+    ${blocParties(mi)}
+    ${blocSessions(mi)}
+    ${blocRythme(mi)}
 
     <h2>Ta distribution</h2>
     <div class="carte">${barresDistribution(mi)}

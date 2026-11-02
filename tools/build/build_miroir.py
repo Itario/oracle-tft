@@ -67,6 +67,83 @@ def groupes(lignes, cle, base, sdp):
     return sorted(out, key=lambda d: d["ecart"])
 
 
+def conversion(r):
+    """Ce qu'il avait, contre ce qu'il en a fait.
+
+    `rang_niveau` est son rang parmi les HUIT du lobby selon le niveau final ;
+    `placement` est son classement réel. L'écart entre les deux est la seule
+    mesure honnête à l'échelle d'UNE partie : elle est interne au lobby, donc
+    elle ne demande aucun échantillon et aucune comparaison à une population.
+
+    Positif  : il a placé mieux que ses ressources ne le laissaient attendre.
+    Négatif  : il avait les ressources et ne les a pas converties.
+    """
+    if not r.get("rang_niveau") or not r.get("placement"):
+        return None
+    return round(r["rang_niveau"] - r["placement"], 1)
+
+
+def resume_partie(r):
+    pieces = [x for x in (r.get("carries") or "").split("|") if x][:3]
+    return {
+        "date": r["date"],
+        "placement": int(r["placement"]),
+        "niveau": int(r["niveau"]) if r.get("niveau") else None,
+        "rang_niveau": int(r["rang_niveau"]) if r.get("rang_niveau") else None,
+        "conversion": conversion(r),
+        "or_restant": int(r["or_restant"]) if r.get("or_restant") is not None else None,
+        "dernier_tour": int(r["dernier_tour"]) if r.get("dernier_tour") else None,
+        "pieces": pieces,
+    }
+
+
+def rythme(L):
+    """Le volume, qui gouverne le classement autant que le placement.
+
+    À Master, la décroissance retire 50 LP par jour une fois les 14 parties
+    en banque épuisées. Un joueur qui place à 3.74 mais ne joue pas assez
+    perd son rang sans jamais mal jouer. C'est une mesure de régularité, pas
+    de niveau — et elle ne demande aucun seuil de bruit.
+    """
+    from datetime import date
+    jours = sorted({r["date"] for r in L if r["date"]})
+    if len(jours) < 2:
+        return None
+    d1 = date.fromisoformat(jours[0])
+    d2 = date.fromisoformat(jours[-1])
+    etendue = (d2 - d1).days + 1
+    return {
+        "jours_actifs": len(jours),
+        "etendue_jours": etendue,
+        "jours_sans_jouer": etendue - len(jours),
+        "parties_par_jour_actif": round(len(L) / len(jours), 2),
+        "parties_par_jour_calendaire": round(len(L) / etendue, 2),
+    }
+
+
+def sessions(L, maxi=12):
+    """Une session = les parties d'une même journée. C'est l'unité à laquelle
+    il joue, et donc celle à laquelle une review a un sens."""
+    par_jour = defaultdict(list)
+    for r in L:
+        par_jour[r["date"]].append(r)
+    out = []
+    for jour in sorted(par_jour, reverse=True)[:maxi]:
+        v = par_jour[jour]
+        pl = [x["placement"] for x in v]
+        conv = [c for c in (conversion(x) for x in v) if c is not None]
+        out.append({
+            "date": jour,
+            "n": len(v),
+            "placement_moyen": round(st.mean(pl), 2),
+            "meilleur": int(min(pl)),
+            "pire": int(max(pl)),
+            "top4": sum(1 for p in pl if p <= 4),
+            "conversion_moyenne": round(st.mean(conv), 2) if conv else None,
+        })
+    return out
+
+
 def main(csv_path, resume_path):
     L = list(csv.DictReader(open(csv_path, encoding="utf-8")))
     for r in L:
@@ -118,6 +195,11 @@ def main(csv_path, resume_path):
             for x in resume.get("parties_lachees_retirees", [])
         ],
         "zone_grise": len(resume.get("parties_zone_grise", [])),
+        "rythme": rythme(L),
+        "sessions": sessions(L),
+        # Les plus récentes d'abord : c'est la dernière session qu'on regarde
+        # après avoir joué, pas la première.
+        "parties": [resume_partie(r) for r in reversed(L[-50:])],
         "traits":  groupes(L, "traits",  base, sdp),
         "carries": groupes(L, "carries", base, sdp),
         "indisponible": {
