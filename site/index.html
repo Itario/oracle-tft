@@ -293,7 +293,9 @@ td.num{font-variant-numeric:tabular-nums;text-align:right}
 .dist{display:grid;gap:.4rem}
 .dl{display:grid;grid-template-columns:2.2rem 1fr 2.2rem 3.2rem;
   gap:.6rem;align-items:center}
-.dl .p{font-family:var(--titre);font-weight:700;color:var(--or);font-size:.98rem}
+.dl .p{font-family:var(--titre);font-weight:700;color:var(--or);font-size:1.02rem}
+/* Cinzel n'a pas de bas de casse : l'exposant y deviendrait une capitale. */
+.dl .p sup{font-family:var(--corps);font-size:.58em;font-weight:600}
 .dl .b{position:relative;height:16px;background:rgba(31,71,102,.38)}
 .dl .b i{display:block;height:100%}
 .dl .b i.pl{background:linear-gradient(90deg,#0AC8B9,#14E0CF)}
@@ -668,7 +670,7 @@ function blocDistribution(me){
     const ec = v - att;
     const sens = ec >= 0 ? "pl" : "mo";
     return `<div class="dl">
-      <span class="p">${k}<sup>e</sup></span>
+      <span class="p">${k}<sup>${k === 1 ? "re" : "e"}</sup></span>
       <span class="b"><i class="${sens}" style="width:${v / max * 100}%"></i>
         <u style="left:${att / max * 100}%"></u></span>
       <span class="v">${v}</span>
