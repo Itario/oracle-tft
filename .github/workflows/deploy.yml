@@ -49,7 +49,15 @@ jobs:
           fi
           echo "Aucune clé trouvée."
 
+      # enablement: true active Pages et bascule sa source sur « GitHub Actions »
+      # depuis le workflow lui-même. Sans ce réglage, le premier déploiement
+      # échoue sur un dépôt neuf tant que personne n'a cliqué dans Settings.
+      # Le faire ici plutôt qu'à la main : c'est reproductible, et ça survit à
+      # un dépôt recréé de zéro.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
