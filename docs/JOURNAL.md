@@ -1244,3 +1244,97 @@ et Riot ne l'a jamais inscrite à sa liste de réparations — ce qui n'est pas 
 pas planifié. *À vérifier sur les premières parties du 01/12. Si je me trompe, c'est que
 la migration Unreal se termine avec le set, et il faudra retenir que Riot livre des
 correctifs de données sans les annoncer.*
+
+---
+
+## 02/11/2026, seconde partie de soirée — mise en ligne et réorganisation
+
+### LE DÉPÔT ET LE SITE SONT EN LIGNE
+
+`github.com/Itario/oracle-tft` → `itario.github.io/oracle-tft`. Chaque poussée régénère
+le site depuis les relevés et le déploie. Le site publié ne peut plus diverger des
+données : c'est le serveur qui recalcule.
+
+**Une proposition rejetée, à raison.** J'ai proposé de passer le dépôt en privé pour
+protéger `profil.json`. Clément a objecté qu'on l'avait laissé public pour la demande
+Riot. En vérifiant, la raison est plus forte que la sienne : **GitHub Pages ne publie
+pas depuis un dépôt privé hors Enterprise.** Le réglage n'aurait rien protégé — il aurait
+supprimé le site.
+
+**Leçon n°22 — un conseil de configuration se teste comme une mesure.** J'ai proposé un
+réglage sans vérifier ce qu'il cassait.
+
+**Et `enablement: true` ne marche pas** : le GITHUB_TOKEN d'un workflow ne peut pas créer
+le site Pages, même avec `pages: write`. Une action manuelle reste nécessaire une fois
+sur un dépôt neuf. La raison est écrite dans `deploy.yml`, là où on reviendra la chercher
+— pas dans un README qu'on ne relit pas.
+
+### LE SITE DÉCRIVAIT LE PROJET, PAS L'USAGE
+
+Clément : « l'oracle est encore brouillon… en terme d'utilité ».
+
+Diagnostic : le site était organisé selon la structure du projet — méta, préparer,
+outils, profil. Trois onglets sur quatre se lisaient une fois. L'onglet « L'Oracle »
+était de la documentation déguisée en page. Et la seule chose vraiment opérationnelle,
+le moteur de pivot, était enterrée en bas du deuxième onglet.
+
+Réorganisé selon les **moments d'usage** : `Avant` · `En partie` · `Après` · `Suivi`.
+
+**Leçon n°23 — quand quelque chose est « brouillon en termes d'utilité », chercher ce
+que la personne fait, pas ce que l'outil contient.**
+
+### CORRECTION DE MESURE — le top 4 franchit le seuil
+
+Le pipeline `build_miroir.py` a attrapé une de mes conclusions de la veille au soir.
+Sur les 120 parties **brutes**, le top 4 était à +1.46 écarts-types : dans le bruit. Une
+fois les six parties lâchées écartées — toutes dans la moitié basse — il passe à
+**+2.06**. Il franchit le seuil, de justesse.
+
+J'avais annoncé « dans le bruit » sans refaire le calcul après le nettoyage. **Un
+nettoyage de données invalide toutes les mesures qui le précèdent, y compris celles
+qu'on vient d'énoncer.**
+
+Dans l'autre sens, les traits se sont resserrés : sur 24 vus au moins 12 fois, **deux
+seulement** sortent du bruit après nettoyage (Alune −0.85 pour un seuil de 0.81,
+Rapidfire −0.79 pour 0.69), et **aucun carry sur 12**. Lunar, solide sur les parties
+brutes, est retombé dedans.
+
+### LE RYTHME — la mesure qui manquait
+
+46 jours joués sur 65. **19 jours sans jouer.** 1.75 partie par jour calendaire.
+
+À Master, la décroissance retire 50 LP par jour une fois les 14 parties en banque
+épuisées. **Un joueur qui place à 3.74 peut perdre son rang sans jamais mal jouer.**
+
+C'est une mesure de régularité, pas de niveau : elle se lit **sans seuil de bruit**, ce
+qui la rend exploitable tout de suite. Avec les parties lâchées, ce sont les deux seuls
+gisements de LP identifiés qui ne demandent aucun progrès technique.
+
+**Hypothèse posée, falsifiable :** ce qui sépare Clément de Challenger est un problème de
+**volume joué proprement**, pas de niveau de jeu. *Test : la recollecte du 25/11. Si le
+profil Master tient le placement de 3.74 sur ~100 parties, l'hypothèse se renforce. S'il
+se dégrade nettement, c'est le niveau qui bloque et je me serai trompé.*
+
+### CE QUI TIENT SUR UNE SEULE PARTIE
+
+La review par partie posait un problème de méthode : à n = 1, aucune statistique n'existe.
+
+La seule mesure honnête à cette échelle est **interne au lobby** — le rang de niveau
+final parmi les huit, contre le placement réel. Elle ne compare à aucune population, donc
+elle ne demande ni échantillon ni seuil de bruit. Positif : il a placé au-dessus de ses
+ressources. Négatif : il les avait et ne les a pas converties.
+
+Tout le reste de la liste des parties est présenté comme un **journal**, et le site
+l'écrit explicitement plutôt que de laisser croire à une inférence.
+
+### DEUX BUGS DE SORTIE ATTRAPÉS À L'ŒIL
+
+Les verdicts d'écart affichaient « au-dessus du hasard » pour un écart **négatif** :
+j'avais confondu le sens de l'écart et son caractère favorable. Les deux coïncidaient
+dans trois cas sur quatre, ce qui rendait l'erreur presque invisible.
+
+Et Cinzel, la police de titrage, n'a pas de bas de casse : « 1e » y rendait « 1E ».
+Au passage, la première place s'abrège **1re** en français, pas 1e — le gabarit mettait
+« e » pour les huit rangs.
+
+**Leçon n°24 — relire la sortie rendue, pas seulement le code qui la produit.**

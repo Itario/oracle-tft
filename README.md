@@ -3,7 +3,10 @@
 Outil d'analyse Teamfight Tactics. Trois briques qui se complètent, un site qui
 les présente.
 
-**Le site** → onglets Récap méta, Préparer ses games, L'Oracle, Profil.
+**Le site** → quatre onglets, selon les moments d'usage :
+`Avant` (quoi jouer) · `En partie` (le moteur de pivot) · `Après` (la review de tes
+parties) · `Suivi` (rotation, calendrier, outils).
+En ligne : <https://itario.github.io/oracle-tft>
 **L'Oracle** → référence consultable en partie, un fichier HTML autonome, hors ligne.
 **Le Carnet** → garde la série des relevés, mesure la rotation d'un patch à l'autre.
 **Le Miroir** → analyse tes propres parties, le lobby servant de groupe de contrôle.
@@ -38,14 +41,34 @@ cd tools/riot
 # mettre la clé API dans cle.txt (jamais dans le dépôt — voir .gitignore)
 python3 collecte.py      # récolte les parties
 python3 inspecter.py     # dit ce que les données contiennent vraiment
-python3 miroir.py        # produit l'analyse
+python3 miroir.py --set auto --csv parties_propres.csv --sortie miroir_resume.json
 ```
+
+Sous Windows, `LANCER.bat` enchaîne les trois d'un double-clic, et `DIAGNOSTIC.bat`
+tranche la question « est-ce la clé ? » en trois appels choisis pour se distinguer
+entre eux.
+
+`--set auto` n'est pas optionnel : une récolte de 200 parties remonte loin et couvre
+souvent **deux sets**. Les moyenner produit un chiffre qui ne décrit aucun des deux.
+
+Puis, pour que le site voie ces mesures :
+
+```bash
+python3 tools/build/build_miroir.py parties_propres.csv miroir_resume.json
+# -> data/miroir.json
+```
+
+⚠ **Le dossier `parties/` ne quitte jamais la machine.** Chaque fichier contient le
+puuid des **sept adversaires** du lobby — de la donnée personnelle de tiers.
+`data/miroir.json` est un agrégat sans aucun identifiant, et c'est lui qu'on versionne.
 
 ## Structure
 
 ```
 data/releves/      LA SOURCE DE VÉRITÉ — un relevé par patch, figé
-data/*.json        profil, calendrier (schema_version)
+data/profil.json   identité et lecture — AUCUN chiffre mesuré
+data/miroir.json   les mesures de tes parties — produit par build_miroir.py
+data/calendrier.json
 data/meta/         généré par build_site.py
 
 tools/lib/         le socle de mesure, partagé — une seule implémentation
@@ -62,8 +85,9 @@ docs/              ARCHITECTURE.md : v1, v2, v3
 régénère à chaque déploiement, ce qui garantit que le site publié ne peut pas
 diverger des relevés.
 
-**La règle :** le site ne connaît des données que trois URL. En v2 elles deviennent
-des routes d'API et rien d'autre ne change. Si une donnée de jeu se retrouve écrite
+**La règle :** le site ne connaît des données que **quatre URL** (`meta`, `profil`,
+`calendrier`, `miroir`). En v2 elles deviennent des routes d'API et rien d'autre ne
+change. Si une donnée de jeu se retrouve écrite
 dans le HTML, la migration est déjà cassée — lire `docs/ARCHITECTURE.md`.
 
 ## Ajouter un relevé
@@ -73,6 +97,11 @@ dans le HTML, la migration est déjà cassée — lire `docs/ARCHITECTURE.md`.
    avec `schema_version: 1`.
 3. `python3 tools/build/build_site.py`
 4. Pousser sur `main` — le site se republie seul.
+
+Sur un dépôt recréé de zéro, une action manuelle est nécessaire **une fois** :
+Settings → Pages → Source : **GitHub Actions**. Le workflow ne peut pas l'activer
+lui-même (le GITHUB_TOKEN n'a pas le droit de créer le site Pages) ; la raison est
+écrite dans `.github/workflows/deploy.yml`.
 
 Un relevé est une photo datée : **on ne le réécrit jamais.** S'il est faux, on en
 ajoute un autre avec une note.

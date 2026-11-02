@@ -350,10 +350,12 @@ def main():
     ap.add_argument("--joueur", default=None, help="nom en jeu, si la détection se trompe")
     ap.add_argument("--depuis", default=None, help="AAAA-MM-JJ")
     ap.add_argument("--csv", default=None, help="exporter le détail partie par partie")
-    ap.add_argument("--set", type=int, default=None, dest="jeu_set",
-                    help="n'analyser qu'un set (ex. --set 18). "
-                         "À UTILISER PAR DÉFAUT : une récolte couvre souvent "
-                         "deux sets, et les moyenner ne décrit ni l'un ni l'autre.")
+    ap.add_argument("--set", default=None, dest="jeu_set",
+                    help="n'analyser qu'un set : un numéro (--set 18) ou "
+                         "« auto » pour celui de la partie la plus récente. "
+                         "À UTILISER TOUJOURS : une récolte couvre souvent "
+                         "deux sets, et les moyenner ne décrit ni l'un ni l'autre. "
+                         "« auto » survit au changement de set sans rien réécrire.")
     ap.add_argument("--sortie", default="miroir_resume.json",
                     help="nom du fichier de résumé")
     ap.add_argument("--garder-tout", action="store_true", dest="garder_tout",
@@ -370,9 +372,22 @@ def main():
     print("parties par set : " + ", ".join(
         f"set {k} : {v}" for k, v in sorted(repartition.items(),
                                             key=lambda kv: (kv[0] is None, kv[0]))))
+    # « auto » : le set de la partie la plus récente. C'est ce qu'on veut
+    # neuf fois sur dix, et surtout ça survit au passage d'un set au suivant
+    # sans qu'on ait à éditer le script ou le .bat qui l'appelle.
+    if str(a.jeu_set).lower() == "auto":
+        recentes = sorted((p for p in tous if p.get("_set") is not None),
+                          key=lambda p: p.get("game_datetime") or 0)
+        if not recentes:
+            sys.exit("Impossible de déterminer le set : aucune partie n'en porte un.")
+        a.jeu_set = recentes[-1]["_set"]
+        print(f"  --set auto -> set {a.jeu_set} (celui de la partie la plus récente)")
+    elif a.jeu_set is not None:
+        a.jeu_set = int(a.jeu_set)
+
     if a.jeu_set is None and len(repartition) > 1:
         print("  ! plusieurs sets présents et aucun filtre : les moyennes qui")
-        print("    suivent sont à cheval. Relance avec --set <n>.")
+        print("    suivent sont à cheval. Relance avec --set auto.")
 
     parties = charger(a.depuis, a.jeu_set)
     if not parties:

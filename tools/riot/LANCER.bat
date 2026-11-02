@@ -51,14 +51,25 @@ echo --- 2/3 inspection ----------------------------------------
 
 echo.
 echo --- 3/3 miroir --------------------------------------------
-%PY% miroir.py
+REM --set auto : le set de la partie la plus recente. Une recolte de 200
+REM parties remonte loin et couvre souvent DEUX sets ; les moyenner ne
+REM decrit ni l'un ni l'autre. "auto" survit au passage au Set 19 sans
+REM qu'on ait a modifier ce fichier.
+REM Le CSV et le resume alimentent build_miroir.py, qui produit le
+REM data/miroir.json que lit le site.
+%PY% miroir.py --set auto --csv parties_propres.csv --sortie miroir_resume.json
 
 echo.
 echo ==========================================
 echo   TERMINE
 echo ==========================================
 echo.
-echo Envoie a Claude le fichier: miroir_resume.json
-echo N'envoie JAMAIS cle.txt.
+echo Dis simplement a Claude que c'est fait : il lit ces deux
+echo fichiers directement sur ton disque.
+echo   - miroir_resume.json
+echo   - parties_propres.csv
+echo.
+echo N'envoie JAMAIS cle.txt, et jamais le dossier parties\ :
+echo il contient l'identifiant de tes sept adversaires a chaque lobby.
 echo.
 pause
