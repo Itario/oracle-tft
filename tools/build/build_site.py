@@ -136,7 +136,7 @@ def main():
     cible = os.path.join(RACINE, "site", "data")
     os.makedirs(os.path.join(cible, "meta"), exist_ok=True)
     shutil.copy(SORTIE, os.path.join(cible, "meta", "courant.json"))
-    for f in ("profil.json", "calendrier.json"):
+    for f in ("profil.json", "calendrier.json", "miroir.json"):
         src = os.path.join(RACINE, "data", f)
         if os.path.exists(src):
             shutil.copy(src, os.path.join(cible, f))

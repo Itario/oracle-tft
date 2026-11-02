@@ -315,6 +315,23 @@ td.num{font-variant-numeric:tabular-nums;text-align:right}
   background:var(--or);transform:rotate(45deg)}
 .ecarts b{color:var(--texte);font-weight:700}
 
+/* ---------------------------------------------- le champ de pivot */
+/* La vue « En partie » se consulte au téléphone entre deux manches :
+   le champ est la première chose touchée, et rien ne passe devant. */
+.rech-grande{margin:1.4rem 0 1.1rem}
+.rech-grande input{font-size:1.15rem;padding:.95rem 1.1rem;
+  border-color:var(--trait-or);background:#0A1B2E}
+.rech-grande input:focus{border-color:var(--or);box-shadow:0 0 0 1px var(--or)}
+
+/* ---------------------------------------------- verdicts d'écart */
+.ecarts li{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem}
+.ecarts .z{font-weight:700;font-variant-numeric:tabular-nums}
+.ecarts .j{font-size:.84rem;color:var(--faible)}
+.ecarts li.bon .z{color:var(--hextech)}
+.ecarts li.mauvais .z{color:var(--sang)}
+.ecarts li.flou{opacity:.6}
+.ecarts li.flou::before{background:var(--faible)}
+
 details.pourquoi{border:1px solid var(--trait);background:var(--abysse);
   padding:.75rem 1.1rem;margin-bottom:1rem}
 details.pourquoi summary{cursor:pointer;font-weight:700;color:var(--or);
@@ -340,19 +357,19 @@ footer{border-top:1px solid var(--trait);margin-top:3.5rem;padding-top:1.3rem;
       <span class="sub" id="hsub">chargement…</span>
     </div>
     <nav role="tablist" aria-label="Sections">
-      <button role="tab" data-vue="recap"   aria-selected="true">Récap méta</button>
-      <button role="tab" data-vue="preparer" aria-selected="false">Préparer ses games</button>
-      <button role="tab" data-vue="oracle"  aria-selected="false">L'Oracle</button>
-      <button role="tab" data-vue="profil"  aria-selected="false">Profil</button>
+      <button role="tab" data-vue="avant"   aria-selected="true">Avant</button>
+      <button role="tab" data-vue="pendant" aria-selected="false">En partie</button>
+      <button role="tab" data-vue="apres"   aria-selected="false">Après</button>
+      <button role="tab" data-vue="suivi"   aria-selected="false">Suivi</button>
     </nav>
   </div>
 </header>
 
 <main>
-  <section class="vue" id="v-recap"></section>
-  <section class="vue" id="v-preparer" hidden></section>
-  <section class="vue" id="v-oracle" hidden></section>
-  <section class="vue" id="v-profil" hidden></section>
+  <section class="vue" id="v-avant"></section>
+  <section class="vue" id="v-pendant" hidden></section>
+  <section class="vue" id="v-apres" hidden></section>
+  <section class="vue" id="v-suivi" hidden></section>
   <footer>
     <p class="faible" id="pied">Données : MetaTFT. Projet personnel, sans lien avec Riot Games.</p>
   </footer>
@@ -367,7 +384,8 @@ footer{border-top:1px solid var(--trait);margin-top:3.5rem;padding-top:1.3rem;
 const SOURCES = {
   meta:       "data/meta/courant.json",
   profil:     "data/profil.json",
-  calendrier: "data/calendrier.json"
+  calendrier: "data/calendrier.json",
+  miroir:     "data/miroir.json"
 };
 const D = {};              // données chargées
 const $  = s => document.querySelector(s);
@@ -431,118 +449,6 @@ function carteCompo(c, mode, premier){
   </article>`;
 }
 
-/* -------------------------------------------------- vue : récap */
-function vueRecap(){
-  const m = D.meta;
-  if(!m) return `<div class="note warn"><b>Données indisponibles.</b>
-    Le fichier <code>${SOURCES.meta}</code> n'a pas pu être lu.
-    Relance <code>python3 tools/build/build_site.py</code>.</div>`;
-  const d = m.diff, t = m.tete_stable;
-
-  const bloc = d ? `
-    <div class="grille">
-      <div class="carte">
-        <div class="chiffre">${d.spearman}</div>
-        <div class="unite">corrélation de rang</div>
-        <p class="faible" style="margin:.8rem 0 0">Entre le relevé ${fdate(d.de.date)}
-          (${esc(d.de.patch)}) et celui du ${fdate(d.a.date)} (${esc(d.a.patch)}).</p>
-      </div>
-      <div class="carte">
-        <div class="chiffre sm">${d.deplacement_median} rangs</div>
-        <div class="unite">déplacement médian par unité</div>
-        <p class="faible" style="margin:.8rem 0 0">Maximum observé :
-          ${d.deplacement_max} rangs, sur ${d.n_comparables} unités comparables.</p>
-      </div>
-      <div class="carte">
-        <div class="chiffre sm">${d.part_reelle_pct} %</div>
-        <div class="unite">du mouvement est réel</div>
-        <p class="faible" style="margin:.8rem 0 0">Si rien n'avait changé, le seul hasard
-          d'échantillonnage donnerait ${d.plancher_bruit}. Le reste est du vrai mouvement.</p>
-      </div>
-    </div>
-
-    ${!d.meme_elo ? `<div class="note warn"><b>Tranches d'elo différentes</b>
-      (${esc(d.de.rang)} puis ${esc(d.a.rang)}) : une part du mouvement vient du
-      changement de population, pas des patchs.</div>` : ""}
-
-    <h2>Ce qui monte</h2>
-    <div class="carte">${d.montees.map(x => ligneMouvement(x, "up")).join("")}</div>
-    <h2>Ce qui tombe</h2>
-    <div class="carte">${d.chutes.map(x => ligneMouvement(x, "dn")).join("")}</div>` : "";
-
-  // Chaque unité de la tête est rejointe à son rang courant : l'hexagone
-  // porte une mesure, pas un médaillon décoratif.
-  const parNom = Object.fromEntries((m.unites || []).map(u => [u.nom, u]));
-
-  const tete = t && t.unites.length ? `
-    <h2>Ce qui ne bouge jamais</h2>
-    <div class="carte">
-      <p>Les <b>mêmes ${t.unites.length} unités</b> occupent la tête du classement
-      dans les ${t.n_releves} relevés depuis le ${fdate(t.depuis)}, malgré les patchs
-      et un changement de tranche d'elo. Seul leur ordre interne change.
-      ${t.premiere_chaque_fois ? `<b>${esc(t.premiere_chaque_fois)} est première à chaque fois.</b>` : ""}</p>
-      <div class="ruche">${[...t.unites]
-        .sort((a,b) => (parNom[a]?.rang ?? 99) - (parNom[b]?.rang ?? 99))
-        .map(nom => {
-        const u = parNom[nom];
-        return `<div class="hex">
-          <span class="r">${u ? u.rang : "—"}</span>
-          <span class="u">${esc(nom)}</span>
-          <span class="a">${u ? u.avg.toFixed(2) : ""}</span>
-        </div>`;
-      }).join("")}</div>
-      <p class="faible" style="margin:1.5rem 0 .9rem">Chaque hexagone porte le rang de
-      l'unité dans le relevé courant, et son placement moyen.</p>
-      <p class="faible" style="margin-top:.9rem">La tête du classement est structurelle —
-      elle suit le coût des unités, pas l'équilibrage. Le ventre, lui, bouge à chaque patch :
-      c'est là que se trouve l'avantage.</p>
-    </div>` : "";
-
-  return `<h1>Ce qui a vraiment bougé</h1>
-    <p class="doux">${nb(m.releve.n_parties)} parties en ${esc(m.releve.rang)},
-      comparées au relevé précédent. Pas une tier list : une mesure de l'écart entre deux patchs.</p>
-    ${bloc}${tete}
-    <h2>Le classement complet</h2>
-    <div class="tbl"><table>
-      <thead><tr><th>#</th><th>Unité</th><th class="num">Placement</th>
-        <th class="num">Victoires</th><th class="num">Parties</th></tr></thead>
-      <tbody>${m.unites.map(u => `<tr>
-        <td class="rang">${u.rang}</td><td>${esc(u.nom)}</td>
-        <td class="num">${u.avg.toFixed(2)}</td>
-        <td class="num">${u.wr.toFixed(1)} %</td>
-        <td class="num">${nb(u.n)}</td></tr>`).join("")}</tbody>
-    </table></div>`;
-}
-
-/* -------------------------------------------------- vue : préparer */
-let MODE = "ladder";
-function vuePreparer(){
-  const m = D.meta;
-  if(!m) return `<div class="note warn">Données indisponibles.</div>`;
-  const M = m.modes[MODE];
-  const libelle = {ladder:"Ladder", cumule:"Points cumulés", checkmate:"Checkmate"};
-  return `<h1>Préparer ses games</h1>
-    <p class="doux">La même question a trois réponses. Ce que tu dois jouer dépend de
-      l'enjeu, pas seulement du patch.</p>
-
-    <div class="seg" role="group" aria-label="Mode de jeu">
-      ${Object.keys(m.modes).map(k => `<button data-mode="${k}"
-        aria-pressed="${k === MODE}">${libelle[k]}</button>`).join("")}
-    </div>
-    <div class="note"><b>${libelle[MODE]}</b> — classé par ${esc(M.critere)}. ${esc(M.pourquoi)}</div>
-    ${M.classement.length
-      ? M.classement.map((c,i) => carteCompo(c, MODE, i === 0)).join("")
-      : `<div class="vide">Aucune compo ne porte cette mesure dans le relevé courant.</div>`}
-
-    <h2>Où je peux aller ?</h2>
-    <p class="doux">Tape les unités que tu as en main. Le classement se fait par proximité,
-      et le carry compte double — tenir trois pièces de façade ne vaut pas tenir le carry.</p>
-    <div class="rech">
-      <input id="pivot" type="text" autocomplete="off" spellcheck="false"
-        placeholder="ex : krug brambleback pebbles">
-    </div>
-    <div id="pivot-res"></div>`;
-}
 
 function norm(s){
   return String(s).toLowerCase().normalize("NFD")
@@ -568,7 +474,7 @@ function pivot(saisie){
   }).filter(p => p.ont.length).sort((a,b) => b.score - a.score);
 
   return `<p class="faible">Avec <b>${connus.map(esc).join(" · ")}</b> —
-    ${res.length} ligne(s) accessible(s).</p>` + res.map(p => `
+    ${res.length} ligne${res.length > 1 ? "s" : ""} accessible${res.length > 1 ? "s" : ""}.</p>` + res.map(p => `
     <article class="compo${p.aCarry ? " top" : ""}">
       <div class="ligne1"><span class="n">${esc(p.c.n)}</span>
         <span class="val">${p.ont.length}/${p.ont.length + p.manq.length}</span>
@@ -584,91 +490,109 @@ function pivot(saisie){
     </article>`).join("");
 }
 
-/* -------------------------------------------------- vue : Oracle */
-function vueOracle(){
+
+/* ===================================================================
+   LES QUATRE VUES
+   -------------------------------------------------------------------
+   Organisées selon les MOMENTS D'USAGE, pas selon la structure du
+   projet. Avant / Pendant / Après sont les trois instants où l'outil
+   sert ; Suivi est de la veille, qu'on consulte quand on veut.
+
+   L'ancienne organisation (méta / préparer / outils / profil) décrivait
+   le projet à lui-même : trois onglets sur quatre se lisaient une fois.
+   =================================================================== */
+
+/* -------------------------------------------------- AVANT la partie */
+let MODE = "ladder";
+const LIBMODE = {ladder:"Ladder", cumule:"Points cumulés", checkmate:"Checkmate"};
+
+function vueAvant(){
   const m = D.meta;
-  return `<h1>L'Oracle</h1>
-    <p class="doux">Trois outils qui se complètent. Le site les présente ; ils tournent
-      sur ta machine, avec tes données.</p>
+  if(!m) return `<div class="note warn"><b>Données indisponibles.</b>
+    Relance <code>python3 tools/build/build_site.py</code>.</div>`;
+  const M = m.modes[MODE];
 
-    <div class="grille">
-      <div class="carte">
-        <h3>L'Oracle</h3>
-        <p class="faible">Référence consultable en partie : radar d'équilibrage, méta du
-          jour, moteur de pivot, trois modes de jeu. Un fichier HTML autonome, hors ligne.</p>
-        <p><a href="oracle.html">Ouvrir l'Oracle →</a></p>
-      </div>
-      <div class="carte">
-        <h3>Le Carnet</h3>
-        <p class="faible">Garde la série des relevés, mesure la rotation d'un patch à
-          l'autre, et vérifie si un mouvement est réel ou du bruit.</p>
-        <p><code>carnet.py lister · comparer · rotation · bruit</code></p>
-      </div>
-      <div class="carte">
-        <h3>Le Miroir</h3>
-        <p class="faible">Analyse tes propres parties. Le lobby sert de groupe de contrôle :
-          il te classe parmi tes sept adversaires et compare ce rang à ton placement réel.</p>
-        <p><code>collecte.py → inspecter.py → miroir.py</code></p>
-      </div>
+  return `<h1>Ce que tu joues ce patch</h1>
+    <p class="doux">La même question a trois réponses : ce qu'il faut jouer dépend
+      de l'enjeu, pas seulement du patch.</p>
+
+    <div class="seg" role="group" aria-label="Enjeu">
+      ${Object.keys(m.modes).map(k => `<button data-mode="${k}"
+        aria-pressed="${k === MODE}">${LIBMODE[k]}</button>`).join("")}
     </div>
+    <div class="note"><b>${LIBMODE[MODE]}</b> — classé par ${esc(M.critere)}.
+      ${esc(M.pourquoi)}</div>
 
-    <h2>Mettre le Miroir en route</h2>
-    <div class="note"><b>Une clé API Riot est nécessaire.</b> Une clé de développement
-      expire en 24 h — suffisant pour une première récolte, les fichiers obtenus restant
-      ensuite acquis. Une clé personnelle n'expire pas et demande environ deux semaines.</div>
-    <pre><code>python collecte.py      # récolte tes parties (~4 min pour 200)
-python inspecter.py     # dit ce que les données contiennent vraiment
-python miroir.py        # produit l'analyse + miroir_resume.json</code></pre>
-    <p class="faible">Mets ta clé dans un fichier <code>cle.txt</code> à côté des scripts.
-      Ne la colle jamais dans une conversation : seul <code>miroir_resume.json</code>
-      a besoin d'être partagé.</p>
+    ${M.classement.length
+      ? M.classement.map((c,i) => carteCompo(c, MODE, i === 0)).join("")
+      : `<div class="vide">Aucune compo ne porte cette mesure dans le relevé courant.</div>`}
 
-    <h2>Ce que le Miroir mesure</h2>
-    <div class="carte">
-      <p><b>2<sup>e</sup> du lobby en niveau mais 5<sup>e</sup> au classement</b> → tu obtiens
-        les ressources sans les convertir. Le travail est sur le board : positionnement,
-        objets, composition.</p>
-      <p><b>6<sup>e</sup> en niveau mais 3<sup>e</sup> au classement</b> → tu joues au-dessus de
-        tes ressources. Le travail est sur l'économie et le tempo.</p>
-      <p class="faible" style="margin-bottom:0">Il produit aussi ta distribution de
-        placements, de la 1<sup>re</sup> à la 8<sup>e</sup> — la mesure sans laquelle le débat
-        pointe contre régularité ne peut pas se trancher.</p>
-    </div>
-
-    <h2>Où va le projet</h2>
-    <div class="cal">
-      <div class="evt prochain"><span class="dt">v1</span>
-        <span class="nm">Ce site, les trois outils, les relevés à chaque patch</span>
-        <span class="tag ok">en cours</span></div>
-      <div class="evt"><span class="dt">v2</span>
-        <span class="nm">Comptes, profils TFT liés, analyse automatique pour un groupe</span>
-        <span class="tag">Set 19</span></div>
-      <div class="evt"><span class="dt">v3</span>
-        <span class="nm">Récaps générés et publiés sans intervention</span>
-        <span class="tag">après</span></div>
-    </div>
-    <p class="faible" style="margin-top:1rem">La v2 demande un serveur : dès qu'il y a
-      des comptes, la clé Riot ne peut plus vivre côté joueur, sinon chacun la verrait.
-      C'est le serveur qui interroge Riot pour tout le monde.</p>
-    ${m ? `<p class="faible">Données du site générées le ${fdate(m.genere_le)}.</p>` : ""}`;
+    <details class="pourquoi">
+      <summary>Le classement complet des unités</summary>
+      <p class="faible">Ce tableau porte un <b>biais de survie</b> : il décrit des
+        boards finaux. Avoir une unité à 5 coûts sur son board veut surtout dire que
+        la partie se passait bien. Il sert à repérer un mouvement, pas à choisir
+        quoi jouer — c'est à ça que servent les compos ci-dessus.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>#</th><th>Unité</th><th class="num">Placement</th>
+          <th class="num">Victoires</th><th class="num">Parties</th></tr></thead>
+        <tbody>${m.unites.map(u => `<tr>
+          <td class="rang">${u.rang}</td><td>${esc(u.nom)}</td>
+          <td class="num">${u.avg.toFixed(2)}</td>
+          <td class="num">${u.wr.toFixed(1)} %</td>
+          <td class="num">${nb(u.n)}</td></tr>`).join("")}</tbody>
+      </table></div>
+    </details>`;
 }
 
-/* -------------------------------------------------- vue : profil */
-/* La distribution tranche ce qu'une moyenne ne peut pas : huit 4es et
-   quatre 1res suivies de quatre 8es donnent le même 4.50. Le trait vertical
-   marque la référence du hasard, sans laquelle un écart ne veut rien dire. */
-function blocDistribution(me){
-  const di = me.distribution;
-  if(!di) return "";
+/* -------------------------------------------------- PENDANT la partie */
+/* Un seul geste possible, en haut, et rien au-dessus. Cette vue se
+   consulte au téléphone, entre deux manches : tout ce qui n'aide pas
+   à décider en trois secondes en a été retiré. */
+function vuePendant(){
+  const m = D.meta;
+  if(!m) return `<div class="note warn">Données indisponibles.</div>`;
+  const t = m.tete_stable;
+  const parNom = Object.fromEntries((m.unites || []).map(u => [u.nom, u]));
+
+  return `<h1>Où je peux aller ?</h1>
+    <div class="rech rech-grande">
+      <input id="pivot" type="text" autocomplete="off" spellcheck="false"
+        inputmode="search" enterkeyhint="search"
+        placeholder="les unités que tu as en main">
+    </div>
+    <div id="pivot-res"></div>
+    <p class="faible">Classement par proximité, et <b>le carry compte double</b> :
+      tenir trois pièces de façade ne vaut pas tenir la pièce qui décide.</p>
+
+    ${t && t.unites.length ? `
+    <h2>Toujours bonnes</h2>
+    <p class="faible">Ces ${t.unites.length} unités occupent la tête depuis
+      ${t.n_releves} relevés, quel que soit le patch. En cas de doute, elles ne
+      sont jamais un mauvais choix.</p>
+    <div class="ruche">${[...t.unites]
+      .sort((a,b) => (parNom[a]?.rang ?? 99) - (parNom[b]?.rang ?? 99))
+      .map(nom => {
+        const u = parNom[nom];
+        return `<div class="hex">
+          <span class="r">${u ? u.rang : "—"}</span>
+          <span class="u">${esc(nom)}</span>
+          <span class="a">${u ? u.avg.toFixed(2) : ""}</span>
+        </div>`;
+      }).join("")}</div>` : ""}`;
+}
+
+/* -------------------------------------------------- APRÈS la partie */
+/* Tout ce qui est affiché ici est confronté à son seuil de bruit. Un
+   écart qui ne le franchit pas est montré comme tel, ou pas montré. */
+function barresDistribution(mi){
+  const di = mi.distribution || {};
   const vals = Object.values(di);
   const tot = vals.reduce((a,b) => a + b, 0);
   if(!tot) return "";
   const att = tot / 8, max = Math.max(...vals, 1);
-
-  const barres = [1,2,3,4,5,6,7,8].map(k => {
-    const v = di[k] ?? di[String(k)] ?? 0;
-    const ec = v - att;
-    const sens = ec >= 0 ? "pl" : "mo";
+  return `<div class="dist">${[1,2,3,4,5,6,7,8].map(k => {
+    const v = di[String(k)] ?? 0, ec = v - att, sens = ec >= 0 ? "pl" : "mo";
     return `<div class="dl">
       <span class="p">${k}<sup>${k === 1 ? "re" : "e"}</sup></span>
       <span class="b"><i class="${sens}" style="width:${v / max * 100}%"></i>
@@ -676,30 +600,149 @@ function blocDistribution(me){
       <span class="v">${v}</span>
       <span class="e ${sens}">${ec >= 0 ? "+" : "−"}${Math.abs(ec).toFixed(1)}</span>
     </div>`;
-  }).join("");
-
-  const lib = {top2:"Top 2", bas2:"7<sup>e</sup> et 8<sup>e</sup>",
-               top4:"Top 4", "8e":"8<sup>e</sup> place"};
-  const es = me.ecarts_solides || {};
-  const lignes = Object.entries(es).filter(([k]) => k !== "note")
-    .map(([k,v]) => `<li><b>${lib[k] || esc(k)}</b> ${esc(v)}</li>`).join("");
-
-  return `<div class="carte">
-    <h3>Distribution des placements</h3>
-    <p class="faible" style="margin-bottom:1rem">Le trait vertical marque ce que
-      donnerait le hasard : ${att.toFixed(1)} parties par place.</p>
-    <div class="dist">${barres}</div>
-    ${lignes ? `<ul class="ecarts">${lignes}</ul>` : ""}
-    ${es.note ? `<p class="faible" style="margin:.9rem 0 0">${esc(es.note)}</p>` : ""}
-  </div>`;
+  }).join("")}<p class="faible" style="margin:.9rem 0 0">Le trait doré marque ce que
+    donnerait le hasard : ${att.toFixed(1)} parties par place.</p></div>`;
 }
 
-function vueProfil(){
-  const p = D.profil?.joueurs?.[0];
-  const c = D.calendrier;
-  if(!p) return `<div class="note warn">Profil indisponible.</div>`;
-  const me = p.mesure;
+function vueApres(){
+  const mi = D.miroir;
+  const p  = D.profil?.joueurs?.[0];
+  if(!mi) return `<div class="note warn"><b>Le Miroir n'a pas encore tourné.</b>
+    Lance <code>LANCER.bat</code>, puis
+    <code>python3 tools/build/build_miroir.py &lt;csv&gt; &lt;résumé&gt;</code>.</div>`;
+
+  const S = mi.seuil_solide ?? 2;
+  const ec = mi.ecarts || {};
+  const libEc = {top2:"Top 2", top4:"Top 4",
+                 bas2:"7<sup>e</sup> et 8<sup>e</sup>", huit:"8<sup>e</sup> place"};
+  const sensEc = {top2:"haut", top4:"haut", bas2:"bas", huit:"bas"};
+
+  const lignesEc = Object.entries(ec).filter(([,v]) => v != null).map(([k,v]) => {
+    const solide = Math.abs(v) >= S;
+    const bon = sensEc[k] === "haut" ? v > 0 : v < 0;
+    return `<li class="${solide ? (bon ? "bon" : "mauvais") : "flou"}">
+      <b>${libEc[k] || k}</b>
+      <span class="z">${v > 0 ? "+" : "−"}${Math.abs(v).toFixed(2)} σ</span>
+      <span class="j">${solide ? (v > 0 ? "au-dessus du hasard" : "en dessous du hasard")
+                               : "dans le bruit"}</span></li>`;
+  }).join("");
+
+  const solides = mi.traits.filter(t => t.solide);
+  const autres  = mi.traits.length - solides.length;
+  const blocTraits = `
+    <h2>Tes lignes</h2>
+    ${solides.length ? `
+      <p class="doux">Sur ${mi.traits.length} traits vus au moins ${mi.nmin} fois,
+        <b>${solides.length}</b> sortent du bruit. Les autres sont indistinguables
+        de ta moyenne à ce volume.</p>
+      <div class="carte">${solides.map(t => `
+        <div class="mv ${t.ecart < 0 ? "up" : "dn"}">
+          <span class="nom">${esc(t.nom)}</span>
+          <span class="rg">${t.n} parties · placement ${t.placement.toFixed(2)}</span>
+          <span class="d">${t.ecart > 0 ? "+" : "−"}${Math.abs(t.ecart).toFixed(2)}</span>
+        </div>`).join("")}</div>
+      <div class="note warn"><b>Ne pas en tirer « joue plus Alune ».</b>
+        Ces mesures portent sur des <b>boards finaux</b> : avoir le trait unique d'une
+        unité à 5 coûts veut d'abord dire que la partie se passait bien. Le biais
+        gonfle ce qui est en tête. Le côté résistant au biais serait un trait présent
+        quand tu fais <i>moins</i> bien — et aucun ne franchit le seuil.</div>`
+    : `<div class="note">Aucun trait ne sort du bruit sur ${mi.n_parties} parties.</div>`}
+    ${autres ? `<p class="faible">${autres} autres traits mesurés, tous dans le
+      bruit — leur écart est plus petit que l'incertitude de mesure.</p>` : ""}
+    ${mi.carries.length ? `<p class="faible">${mi.carries.length} carries mesurés,
+      ${mi.carries.filter(c => c.solide).length} hors du bruit.</p>` : ""}`;
+
+  const lach = mi.lachees || [];
+  const pct = mi.n_parties ? (lach.length / (mi.n_parties + lach.length) * 100) : 0;
+  const blocLach = lach.length ? `
+    <h2>Les parties lâchées</h2>
+    <div class="note warn"><b>${lach.length} parties écartées de la mesure</b>, soit
+      ${pct.toFixed(1)} % de ton temps de jeu. Une partie quittée n'est pas une partie
+      mal jouée — mais elle coûte du LP exactement pareil. C'est le seul gisement de
+      points identifié qui ne demande aucun progrès technique.</div>
+    <div class="cal">${lach.map(x => `<div class="evt">
+      <span class="dt">${fdate(x.date)}</span>
+      <span class="nm">${x.placement}<sup>e</sup>, niveau ${x.niveau}</span>
+      <span class="tag">${x.or_restant} or non dépensé</span></div>`).join("")}</div>
+    <p class="faible">Reconnues à leur signature : de l'or gardé et un niveau bas.
+      ${mi.zone_grise ? `${mi.zone_grise} autres parties en zone grise sont
+      <b>conservées</b> dans la mesure — on ne retire rien sur une présomption.` : ""}</p>` : "";
+
+  const ind = Object.entries(mi.indisponible || {});
+  return `<h1>Ce que disent tes parties</h1>
+    <p class="doux">${mi.n_parties} parties du Set ${mi.set}, du
+      ${fdate(mi.fenetre.de)} au ${fdate(mi.fenetre.a)}${
+      p?.lecture?.rang_mesure ? `. ${esc(p.lecture.rang_mesure)}` : ""}.</p>
+
+    <div class="grille">
+      <div class="carte"><div class="chiffre sm">${mi.placement_moyen.toFixed(2)}</div>
+        <div class="unite">placement moyen — le hasard donne 4,50</div></div>
+      <div class="carte"><div class="chiffre sm">${mi.top4_pct} %</div>
+        <div class="unite">top 4 — le hasard donne 50 %</div></div>
+      <div class="carte"><div class="chiffre sm">${mi.premieres_pct} %</div>
+        <div class="unite">1<sup>res</sup> places — le hasard donne 12,5 %</div></div>
+    </div>
+
+    <h2>Ta distribution</h2>
+    <div class="carte">${barresDistribution(mi)}
+      <ul class="ecarts">${lignesEc}</ul>
+      <p class="faible" style="margin:.9rem 0 0">σ = écarts-types. Au-delà de
+        ${S.toFixed(1)}, le hasard seul n'explique plus l'écart à ce volume.</p>
+    </div>
+    ${p?.lecture?.resume ? `<div class="note">${esc(p.lecture.resume)}</div>` : ""}
+
+    ${blocTraits}
+    ${blocLach}
+
+    ${ind.length ? `<h2>Ce qu'on ne peut pas mesurer</h2>
+      <div class="carte">${ind.map(([k,v]) =>
+        `<p class="faible"><b>${esc(k)}</b> — ${esc(v)}</p>`).join("")}
+      <p class="faible" style="margin-bottom:0">Et tout ce qui relève du <b>refusé</b>
+        — unité non achetée, augment écarté — est hors de portée par nature : l'API ne
+        livre que des boards finaux.</p></div>` : ""}
+
+    ${p?.lecture ? `<details class="pourquoi">
+      <summary>Les réserves sur ces chiffres</summary>
+      ${p.lecture.a_refaire ? `<p class="faible"><b>À refaire :</b>
+        ${esc(p.lecture.a_refaire)}</p>` : ""}
+      ${p.lecture.retracte ? `<p class="faible"><b>Rétracté :</b>
+        ${esc(p.lecture.retracte)}</p>` : ""}
+      ${p.lecture.etiquette_abandonnee ? `<p class="faible">
+        ${esc(p.lecture.etiquette_abandonnee)}</p>` : ""}
+      ${p.lecture.centiles_provenance ? `<p class="faible"><b>Centiles :</b>
+        ${esc(p.lecture.centiles_provenance)}</p>` : ""}
+    </details>` : ""}`;
+}
+
+/* -------------------------------------------------- SUIVI */
+function vueSuivi(){
+  const m = D.meta, p = D.profil?.joueurs?.[0], c = D.calendrier;
+  const d = m?.diff;
   const auj = new Date().toISOString().slice(0,10);
+
+  const rotation = d ? `
+    <h2>La rotation du dernier patch</h2>
+    <div class="grille">
+      <div class="carte"><div class="chiffre">${d.spearman}</div>
+        <div class="unite">corrélation de rang</div>
+        <p class="faible" style="margin:.8rem 0 0">Entre ${fdate(d.de.date)}
+          (${esc(d.de.patch)}) et ${fdate(d.a.date)} (${esc(d.a.patch)}).</p></div>
+      <div class="carte"><div class="chiffre sm">${d.deplacement_median} rangs</div>
+        <div class="unite">déplacement médian par unité</div>
+        <p class="faible" style="margin:.8rem 0 0">Maximum ${d.deplacement_max} rangs,
+          sur ${d.n_comparables} unités comparables.</p></div>
+      <div class="carte"><div class="chiffre sm">${d.part_reelle_pct} %</div>
+        <div class="unite">du mouvement est réel</div>
+        <p class="faible" style="margin:.8rem 0 0">Si rien n'avait changé, le seul
+          hasard donnerait ${d.plancher_bruit}.</p></div>
+    </div>
+    ${!d.meme_elo ? `<div class="note warn"><b>Tranches d'elo différentes</b>
+      (${esc(d.de.rang)} puis ${esc(d.a.rang)}) : une part du mouvement vient du
+      changement de population, pas des patchs.</div>` : ""}
+    <h2>Ce qui monte</h2>
+    <div class="carte">${d.montees.map(x => ligneMouvement(x, "up")).join("")}</div>
+    <h2>Ce qui tombe</h2>
+    <div class="carte">${d.chutes.map(x => ligneMouvement(x, "dn")).join("")}</div>` : "";
 
   const evts = [];
   (c?.patchs || []).forEach(x => evts.push({...x, type:"patch"}));
@@ -707,33 +750,17 @@ function vueProfil(){
   evts.sort((a,b) => a.date.localeCompare(b.date));
   const prochain = evts.find(e => e.date > auj);
 
-  return `<h1>${esc(p.rang.tier)}, ${p.rang.lp} LP</h1>
-    <p class="doux">${esc(p.riot_id)}, ${esc(p.region.toUpperCase())}.
-      Rang atteint le ${fdate(p.rang.date)}. Objectif : <b>${esc(p.objectif)}</b>.</p>
-
-    <h2>Profil mesuré</h2>
-    <p class="doux">${me.parties} parties retenues${me.parties_lachees_retirees
-      ? `, ${me.parties_lachees_retirees} parties lâchées écartées` : ""}. Mesuré à
-      ${esc(me.rang_alors)}.</p>
-    <div class="grille">
-      <div class="carte"><div class="chiffre sm">${me.placement_moyen}</div>
-        <div class="unite">placement moyen — le hasard donne 4,50</div></div>
-      <div class="carte"><div class="chiffre sm">${me.top4_pct} %</div>
-        <div class="unite">top 4 — le hasard donne 50 %</div></div>
-      <div class="carte"><div class="chiffre sm">${me.victoires_pct} %</div>
-        <div class="unite">1<sup>res</sup> places — le hasard donne 12,5 %</div></div>
-    </div>
-    ${blocDistribution(me)}
-    ${me.note ? `<details class="pourquoi"><summary>Pourquoi ces chiffres</summary>
-      <p class="faible">${esc(me.note)}</p>
-      ${me.retracte ? `<p class="faible"><b>Rétracté :</b> ${esc(me.retracte)}</p>` : ""}
-      ${me.a_refaire ? `<p class="faible"><b>À refaire :</b> ${esc(me.a_refaire)}</p>` : ""}
-    </details>` : ""}
-
+  return `<h1>Suivi</h1>
+    ${p ? `<p class="doux"><b>${esc(p.rang.tier)}, ${p.rang.lp} LP</b> depuis le
+      ${fdate(p.rang.date)}. Objectif : ${esc(p.objectif)}.
+      ${esc(p.riot_id)}, ${esc(p.region.toUpperCase())}.</p>` : ""}
+    ${p ? `<div class="note warn">À partir de Master : 14 parties en banque, une
+      retirée par jour, puis <b>−50 LP par jour</b> d'inactivité. À ${p.rang.lp} LP,
+      une semaine d'absence coûte le rang.</div>` : ""}
+    ${rotation}
     <h2>Calendrier</h2>
     <div class="cal">${evts.map(e => {
-      const passe = e.date <= auj;
-      const est = e === prochain;
+      const passe = e.date <= auj, est = e === prochain;
       return `<div class="evt${passe ? " passe" : ""}${est ? " prochain" : ""}">
         <span class="dt">${fdate(e.date)}</span>
         <span class="nm">${esc(e.nom)}${e.note ? ` <span class="faible">— ${esc(e.note)}</span>` : ""}</span>
@@ -745,27 +772,43 @@ function vueProfil(){
       <b>${esc(prochain.nom)}</b>, dans
       ${Math.round((Date.parse(prochain.date) - Date.parse(auj)) / 864e5)} jours.</p>` : ""}
 
-    <h2>Décroissance</h2>
-    <div class="note warn">À partir de Master : 14 parties en banque, une retirée par jour,
-      puis <b>−50 LP par jour</b> d'inactivité. À ${p.rang.lp} LP, une semaine d'absence
-      coûte le rang.</div>`;
+    <h2>Les outils</h2>
+    <div class="grille">
+      <div class="carte"><h3>L'Oracle hors ligne</h3>
+        <p class="faible">Un fichier HTML autonome, consultable sans réseau.</p>
+        <p><a href="oracle.html">Ouvrir</a></p></div>
+      <div class="carte"><h3>Le Carnet</h3>
+        <p class="faible">Série des relevés, rotation d'un patch à l'autre, et le
+          plancher de bruit avant toute conclusion.</p>
+        <p><code>carnet.py lister · comparer · rotation · bruit</code></p></div>
+      <div class="carte"><h3>Le Miroir</h3>
+        <p class="faible">Récolte et analyse tes parties. Le lobby sert de groupe de
+          contrôle : il te classe parmi tes sept adversaires.</p>
+        <p><code>LANCER.bat</code></p></div>
+    </div>
+    ${m ? `<p class="faible">Données du site générées le ${fdate(m.genere_le)}.</p>` : ""}`;
 }
 
 /* -------------------------------------------------- rendu */
-const VUES = {recap: vueRecap, preparer: vuePreparer, oracle: vueOracle, profil: vueProfil};
-let vueActive = "recap";
+const VUES = {avant: vueAvant, pendant: vuePendant, apres: vueApres, suivi: vueSuivi};
+let vueActive = "avant";
 
 function rendre(){
   $("#v-" + vueActive).innerHTML = VUES[vueActive]();
-  if(vueActive === "preparer") brancherPreparer();
+  if(vueActive === "avant")   brancherModes();
+  if(vueActive === "pendant") brancherPivot();
 }
-function brancherPreparer(){
+function brancherModes(){
   document.querySelectorAll("[data-mode]").forEach(b =>
     b.addEventListener("click", () => { MODE = b.dataset.mode; rendre(); }));
+}
+function brancherPivot(){
   const inp = $("#pivot");
-  if(inp) inp.addEventListener("input", () => {
+  if(!inp) return;
+  inp.addEventListener("input", () => {
     $("#pivot-res").innerHTML = inp.value.trim() ? pivot(inp.value) : "";
   });
+  if(matchMedia("(min-width:700px)").matches) inp.focus();
 }
 function aller(v){
   vueActive = v;
@@ -773,10 +816,17 @@ function aller(v){
     b.setAttribute("aria-selected", String(b.dataset.vue === v)));
   document.querySelectorAll(".vue").forEach(s => s.hidden = (s.id !== "v-" + v));
   rendre();
-  try { history.replaceState(null, "", "#" + v); } catch(e){}
+  // On empile dans l'historique : le bouton Retour du navigateur revient à
+  // l'onglet précédent, ce qui est le réflexe au téléphone.
+  try { if((location.hash || "").slice(1) !== v) history.pushState({v}, "", "#" + v); }
+  catch(e){}
 }
 document.querySelectorAll("nav button").forEach(b =>
   b.addEventListener("click", () => aller(b.dataset.vue)));
+addEventListener("popstate", () => {
+  const h = (location.hash || "").slice(1);
+  if(VUES[h] && h !== vueActive) aller(h);
+});
 
 charger().then(() => {
   const m = D.meta;
@@ -784,11 +834,11 @@ charger().then(() => {
     ? `patch ${m.releve.patch} · ${m.releve.rang} · ${fdate(m.releve.date)}`
     : "données indisponibles";
   if(m) $("#pied").innerHTML =
-    `Données : ${esc(m.releve.source || "MetaTFT")} — ${nb(m.releve.n_parties)} parties,
+    `Méta : ${esc(m.releve.source || "MetaTFT")} — ${nb(m.releve.n_parties)} parties,
      ${esc(m.releve.fenetre || "")}. Généré le ${fdate(m.genere_le)}.
      Projet personnel, sans lien avec Riot Games.`;
-  const h = (location.hash || "").replace("#", "");
-  aller(VUES[h] ? h : "recap");
+  const h = (location.hash || "").slice(1);
+  aller(VUES[h] ? h : "avant");
 });
 </script>
 </body>

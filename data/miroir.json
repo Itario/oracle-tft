@@ -1,0 +1,367 @@
+{
+ "schema_version": 1,
+ "set": 18,
+ "n_parties": 114,
+ "fenetre": {
+  "de": "2026-08-26",
+  "a": "2026-10-29"
+ },
+ "placement_moyen": 3.737,
+ "top4_pct": 59.6,
+ "premieres_pct": 18.4,
+ "distribution": {
+  "1": 21,
+  "2": 20,
+  "3": 16,
+  "4": 11,
+  "5": 17,
+  "6": 17,
+  "7": 10,
+  "8": 2
+ },
+ "ecarts": {
+  "top2": 2.7,
+  "top4": 2.06,
+  "bas2": -3.57,
+  "huit": -3.47
+ },
+ "seuil_solide": 2.0,
+ "rang_niveau_moyen": 3.91,
+ "or_restant_median": 2.0,
+ "lachees": [
+  {
+   "date": "2026-09-06",
+   "placement": 8,
+   "niveau": 6,
+   "or_restant": 30
+  },
+  {
+   "date": "2026-09-29",
+   "placement": 7,
+   "niveau": 7,
+   "or_restant": 21
+  },
+  {
+   "date": "2026-10-03",
+   "placement": 8,
+   "niveau": 6,
+   "or_restant": 115
+  },
+  {
+   "date": "2026-10-09",
+   "placement": 8,
+   "niveau": 7,
+   "or_restant": 152
+  },
+  {
+   "date": "2026-10-12",
+   "placement": 8,
+   "niveau": 8,
+   "or_restant": 37
+  },
+  {
+   "date": "2026-10-16",
+   "placement": 6,
+   "niveau": 7,
+   "or_restant": 30
+  }
+ ],
+ "zone_grise": 3,
+ "traits": [
+  {
+   "nom": "AluneUniqueTrait18",
+   "n": 26,
+   "placement": 2.88,
+   "ecart": -0.85,
+   "solide": true,
+   "seuil": 0.81
+  },
+  {
+   "nom": "Rapidfire",
+   "n": 36,
+   "placement": 2.94,
+   "ecart": -0.79,
+   "solide": true,
+   "seuil": 0.69
+  },
+  {
+   "nom": "Lunar",
+   "n": 36,
+   "placement": 3.17,
+   "ecart": -0.57,
+   "solide": false,
+   "seuil": 0.69
+  },
+  {
+   "nom": "Greenfather",
+   "n": 31,
+   "placement": 3.29,
+   "ecart": -0.45,
+   "solide": false,
+   "seuil": 0.74
+  },
+  {
+   "nom": "Brawler",
+   "n": 35,
+   "placement": 3.34,
+   "ecart": -0.39,
+   "solide": false,
+   "seuil": 0.7
+  },
+  {
+   "nom": "Emerald18",
+   "n": 47,
+   "placement": 3.38,
+   "ecart": -0.35,
+   "solide": false,
+   "seuil": 0.6
+  },
+  {
+   "nom": "DravenUniqueTrait18",
+   "n": 23,
+   "placement": 3.39,
+   "ecart": -0.35,
+   "solide": false,
+   "seuil": 0.86
+  },
+  {
+   "nom": "UniqueTrait",
+   "n": 27,
+   "placement": 3.41,
+   "ecart": -0.33,
+   "solide": false,
+   "seuil": 0.8
+  },
+  {
+   "nom": "Riftbeast18",
+   "n": 30,
+   "placement": 3.43,
+   "ecart": -0.3,
+   "solide": false,
+   "seuil": 0.76
+  },
+  {
+   "nom": "Elderwood",
+   "n": 44,
+   "placement": 3.59,
+   "ecart": -0.15,
+   "solide": false,
+   "seuil": 0.62
+  },
+  {
+   "nom": "Inferno",
+   "n": 39,
+   "placement": 3.62,
+   "ecart": -0.12,
+   "solide": false,
+   "seuil": 0.66
+  },
+  {
+   "nom": "Slayer",
+   "n": 35,
+   "placement": 3.69,
+   "ecart": -0.05,
+   "solide": false,
+   "seuil": 0.7
+  },
+  {
+   "nom": "Spellweaver",
+   "n": 30,
+   "placement": 3.7,
+   "ecart": -0.04,
+   "solide": false,
+   "seuil": 0.76
+  },
+  {
+   "nom": "Executioner",
+   "n": 40,
+   "placement": 3.75,
+   "ecart": 0.01,
+   "solide": false,
+   "seuil": 0.65
+  },
+  {
+   "nom": "Vanguard",
+   "n": 57,
+   "placement": 3.75,
+   "ecart": 0.02,
+   "solide": false,
+   "seuil": 0.55
+  },
+  {
+   "nom": "Defender",
+   "n": 36,
+   "placement": 3.78,
+   "ecart": 0.04,
+   "solide": false,
+   "seuil": 0.69
+  },
+  {
+   "nom": "Juggernaut18",
+   "n": 53,
+   "placement": 3.89,
+   "ecart": 0.15,
+   "solide": false,
+   "seuil": 0.57
+  },
+  {
+   "nom": "Invoker",
+   "n": 17,
+   "placement": 3.88,
+   "ecart": 0.15,
+   "solide": false,
+   "seuil": 1.0
+  },
+  {
+   "nom": "Rival",
+   "n": 16,
+   "placement": 3.94,
+   "ecart": 0.2,
+   "solide": false,
+   "seuil": 1.03
+  },
+  {
+   "nom": "Summoner",
+   "n": 29,
+   "placement": 4.17,
+   "ecart": 0.44,
+   "solide": false,
+   "seuil": 0.77
+  },
+  {
+   "nom": "ZyraUniqueTrait",
+   "n": 29,
+   "placement": 4.21,
+   "ecart": 0.47,
+   "solide": false,
+   "seuil": 0.77
+  },
+  {
+   "nom": "FloraFatalis18",
+   "n": 33,
+   "placement": 4.33,
+   "ecart": 0.6,
+   "solide": false,
+   "seuil": 0.72
+  },
+  {
+   "nom": "Primal18",
+   "n": 16,
+   "placement": 4.38,
+   "ecart": 0.64,
+   "solide": false,
+   "seuil": 1.03
+  },
+  {
+   "nom": "Blackthorn",
+   "n": 23,
+   "placement": 4.39,
+   "ecart": 0.65,
+   "solide": false,
+   "seuil": 0.86
+  }
+ ],
+ "carries": [
+  {
+   "nom": "Draven18",
+   "n": 20,
+   "placement": 3.0,
+   "ecart": -0.74,
+   "solide": false,
+   "seuil": 0.93
+  },
+  {
+   "nom": "Kennen",
+   "n": 17,
+   "placement": 3.12,
+   "ecart": -0.62,
+   "solide": false,
+   "seuil": 1.0
+  },
+  {
+   "nom": "Ezreal",
+   "n": 31,
+   "placement": 3.19,
+   "ecart": -0.54,
+   "solide": false,
+   "seuil": 0.74
+  },
+  {
+   "nom": "Maokai",
+   "n": 20,
+   "placement": 3.2,
+   "ecart": -0.54,
+   "solide": false,
+   "seuil": 0.93
+  },
+  {
+   "nom": "Aphelios",
+   "n": 25,
+   "placement": 3.28,
+   "ecart": -0.46,
+   "solide": false,
+   "seuil": 0.83
+  },
+  {
+   "nom": "Amumu18",
+   "n": 23,
+   "placement": 3.43,
+   "ecart": -0.3,
+   "solide": false,
+   "seuil": 0.86
+  },
+  {
+   "nom": "Brambleback18",
+   "n": 18,
+   "placement": 3.44,
+   "ecart": -0.29,
+   "solide": false,
+   "seuil": 0.98
+  },
+  {
+   "nom": "Hecarim",
+   "n": 16,
+   "placement": 3.5,
+   "ecart": -0.24,
+   "solide": false,
+   "seuil": 1.03
+  },
+  {
+   "nom": "Sentinel18",
+   "n": 28,
+   "placement": 3.54,
+   "ecart": -0.2,
+   "solide": false,
+   "seuil": 0.78
+  },
+  {
+   "nom": "Fiddlesticks18",
+   "n": 13,
+   "placement": 3.62,
+   "ecart": -0.12,
+   "solide": false,
+   "seuil": 1.15
+  },
+  {
+   "nom": "Diana",
+   "n": 12,
+   "placement": 4.08,
+   "ecart": 0.35,
+   "solide": false,
+   "seuil": 1.2
+  },
+  {
+   "nom": "Zyra",
+   "n": 27,
+   "placement": 4.3,
+   "ecart": 0.56,
+   "solide": false,
+   "seuil": 0.8
+  }
+ ],
+ "indisponible": {
+  "augments": "Champ absent du DTO Riot depuis la migration Unreal du Set 18. La revue des augments n'est pas constructible.",
+  "degats": "total_damage_to_players vide sur toutes les parties du Set 18. Le rang de dégâts est sans valeur."
+ },
+ "nmin": 12
+}
