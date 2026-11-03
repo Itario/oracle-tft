@@ -1,0 +1,75 @@
+# Relevé automatique de la méta, sans navigateur et sans intervention.
+#
+# Pourquoi ici et pas sur la machine de Clément : le runner GitHub a un accès
+# réseau libre. Le conteneur d'une session Claude, lui, se voit refuser
+# d3.tft.tools au CONNECT (403), et MetaTFT exige Chrome. C'est le seul
+# endroit où ce relevé peut tourner tout seul.
+name: Relevé de méta
+
+on:
+  schedule:
+    # Tous les jours à 07h13 UTC. L'heure est décalée volontairement : les
+    # minutes rondes concentrent la charge des runners.
+    # Quotidien, mais le script n'écrit QUE si le patch a changé — voir le
+    # garde-fou « un relevé figé par patch » dans tools/releve/tactics.py.
+    - cron: "13 7 * * *"
+  workflow_dispatch:
+    inputs:
+      rang:
+        description: "Tranche : 0=Master+, 1=Diamant+, 4=GM+"
+        required: false
+        default: "0"
+      forcer:
+        description: "Réécrire un relevé déjà présent pour ce patch"
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: releve
+  cancel-in-progress: false
+
+jobs:
+  relever:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Relever la méta
+        run: |
+          python3 tools/releve/tactics.py \
+            --rang "${{ github.event.inputs.rang || '0' }}" \
+            ${{ github.event.inputs.forcer == 'true' && '--forcer' || '' }}
+
+      - name: Vérifier qu'aucune clé API n'a été écrite
+        run: |
+          # Même garde-fou que le déploiement. Un relevé vient du réseau :
+          # on ne le pousse jamais sans l'avoir regardé.
+          if grep -rInE "RGAPI-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" data/ 2>/dev/null; then
+            echo "::error::Une chaîne au format clé API Riot se trouve dans data/."
+            exit 1
+          fi
+
+      - name: Pousser le relevé s'il y en a un nouveau
+        run: |
+          if [ -z "$(git status --porcelain data/releves-tt)" ]; then
+            echo "Aucun nouveau relevé — le patch n'a pas changé."
+            exit 0
+          fi
+          git config user.name  "Oracle TFT"
+          git config user.email "noreply@anthropic.com"
+          git add data/releves-tt
+          FICHIER=$(git diff --cached --name-only | head -1)
+          git commit -m "Relevé automatique : $(basename "$FICHIER" .json)
+
+          Relevé pris sur tactics.tools par le workflow, sans navigateur.
+          Série parallèle à data/releves/ (MetaTFT) : voir l'en-tête de
+          tools/releve/tactics.py pour pourquoi les deux ne se mélangent pas."
+          git push
