@@ -24,7 +24,10 @@ __pycache__/
 .DS_Store
 
 # Généré par le workflow de déploiement et par build_site.py.
-# La source est data/ ; versionner la copie créerait une péremption
-# silencieuse en local.
+# La source est data/releves/ ; versionner un dérivé créerait une
+# péremption silencieuse, et surtout la possibilité qu'il diverge des
+# relevés dont il descend.
 site/data/
 site/oracle.html
+data/meta/
+

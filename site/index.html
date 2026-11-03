@@ -315,6 +315,20 @@ td.num{font-variant-numeric:tabular-nums;text-align:right}
   background:var(--or);transform:rotate(45deg)}
 .ecarts b{color:var(--texte);font-weight:700}
 
+
+/* ---------------------------------------------- focus */
+.focus{display:grid;gap:.4rem;margin:1.1rem 0}
+.ligne-focus{display:grid;grid-template-columns:1fr auto;gap:.2rem .9rem;
+  padding:.6rem .9rem;background:var(--abysse);border:1px solid var(--trait)}
+.ligne-focus .nom{font-weight:700}
+.ligne-focus .ec{font-family:var(--titre);font-weight:700;font-size:1.05rem;
+  font-variant-numeric:tabular-nums;text-align:right}
+.ligne-focus .ec.pl{color:var(--hextech)} .ligne-focus .ec.mo{color:var(--sang)}
+.ligne-focus .det{font-size:.82rem;color:var(--faible);
+  font-variant-numeric:tabular-nums}
+.ligne-focus .verdict{font-size:.82rem;color:var(--doux);text-align:right;
+  white-space:nowrap}
+
 /* ---------------------------------------------- journal de parties */
 .parties{display:grid;gap:.4rem;margin:1.1rem 0}
 .partie{display:grid;grid-template-columns:auto 1fr auto;gap:.85rem;
@@ -413,7 +427,8 @@ const SOURCES = {
   meta:       "data/meta/courant.json",
   profil:     "data/profil.json",
   calendrier: "data/calendrier.json",
-  miroir:     "data/miroir.json"
+  miroir:     "data/miroir.json",
+  focus:      "data/focus.json"
 };
 const D = {};              // données chargées
 const $  = s => document.querySelector(s);
@@ -534,6 +549,58 @@ function pivot(saisie){
 let MODE = "ladder";
 const LIBMODE = {ladder:"Ladder", cumule:"Points cumulés", checkmate:"Checkmate"};
 
+
+/* -------------------------------------------------- le focus */
+/* Croise ses parties et la méta. La colonne décisive n'est pas l'écart :
+   c'est « il faudrait N parties », qui transforme « on ne sait pas » en
+   « voilà ce qu'il faudrait pour savoir ». */
+function blocFocus(){
+  const f = D.focus;
+  if(!f) return "";
+  const L = f.lignes || [];
+  const jamais = (f.fortes_peu_contestees || []).filter(x => !x.il_la_joue);
+  const solides = L.filter(l => l.solide);
+
+  const ligne = l => {
+    const sens = l.ecart_corrige < 0 ? "pl" : "mo";
+    return `<div class="ligne-focus">
+      <span class="nom">${esc(l.nom)}</span>
+      <span class="ec ${sens}">${l.ecart_corrige > 0 ? "+" : "−"}${Math.abs(l.ecart_corrige).toFixed(2)}</span>
+      <span class="det">${l.n} parties · pick ${l.pick} % du ladder</span>
+      <span class="verdict">${l.solide ? "hors du bruit"
+        : `il faudrait ${nb(l.parties_requises)} parties`}</span>
+    </div>`;
+  };
+
+  return `<h2>Sur quoi te concentrer</h2>
+    <p class="doux">Ton placement avec chaque unité, comparé à celui du ladder avec la
+      même unité, <b>moins ton avantage général de ${Math.abs(f.lui.avantage_general).toFixed(2)}
+      place</b> — sans quoi toutes tes lignes paraîtraient bonnes.</p>
+
+    ${solides.length === 0 ? `<div class="note warn"><b>Aucune de tes ${L.length} lignes
+      ne sort du bruit à ${f.lui.parties} parties.</b> Ce n'est pas un échec de mesure :
+      c'est la mesure. La dernière colonne dit ce qu'il faudrait pour trancher — et c'est
+      le même volume que celui qui mène à Challenger.</div>` : ""}
+
+    <div class="focus">${L.map(ligne).join("")}</div>
+
+    <h2>Fortes et peu contestées</h2>
+    <p class="doux">Bon placement, et peu présentes dans les lobbies. À placement égal,
+      la ligne la moins contestée gagne.</p>
+    <div class="cal">${(f.fortes_peu_contestees || []).map(x => `<div class="evt${x.il_la_joue ? " prochain" : ""}">
+      <span class="dt">${x.avg.toFixed(2)}</span>
+      <span class="nm">${esc(x.nom)} <span class="faible">— pick ${x.pick} %</span></span>
+      <span class="tag${x.il_la_joue ? " ok" : ""}">${x.il_la_joue ? "tu la joues" : "jamais jouée"}</span>
+    </div>`).join("")}</div>
+    ${jamais.length === 0 ? `<p class="faible"><b>Tu les joues déjà toutes.</b>
+      Aucun gisement inexploité : ta sélection de lignes est saine.</p>` : ""}
+
+    <details class="pourquoi">
+      <summary>Ce que cette page ne peut pas dire</summary>
+      ${Object.values(f.reserves || {}).map(r => `<p class="faible">${esc(r)}</p>`).join("")}
+    </details>`;
+}
+
 function vueAvant(){
   const m = D.meta;
   if(!m) return `<div class="note warn"><b>Données indisponibles.</b>
@@ -541,9 +608,11 @@ function vueAvant(){
   const M = m.modes[MODE];
 
   return `<h1>Ce que tu joues ce patch</h1>
+    ${blocFocus()}
+
+    <h2>Les compos du patch</h2>
     <p class="doux">La même question a trois réponses : ce qu'il faut jouer dépend
       de l'enjeu, pas seulement du patch.</p>
-
     <div class="seg" role="group" aria-label="Enjeu">
       ${Object.keys(m.modes).map(k => `<button data-mode="${k}"
         aria-pressed="${k === MODE}">${LIBMODE[k]}</button>`).join("")}

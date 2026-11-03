@@ -1,0 +1,288 @@
+{
+ "schema_version": 1,
+ "genere_le": "2026-11-03",
+ "releve": {
+  "patch": "18.5c",
+  "rang": "Master+",
+  "source": "tactics.tools",
+  "n_parties": 449902
+ },
+ "lui": {
+  "parties": 114,
+  "placement_moyen": 3.737,
+  "avantage_general": -0.763
+ },
+ "seuils": {
+  "quartile_fort": 4.41,
+  "pick_median": 11.9,
+  "volume_min": 3000
+ },
+ "lignes": [
+  {
+   "nom": "Ezreal",
+   "n": 31,
+   "son_placement": 3.19,
+   "placement_ladder": 4.41,
+   "ecart_brut": -1.22,
+   "ecart_corrige": -0.46,
+   "seuil": 0.79,
+   "solide": false,
+   "parties_requises": 92,
+   "pick": 16.4
+  },
+  {
+   "nom": "Aphelios",
+   "n": 25,
+   "son_placement": 3.28,
+   "placement_ladder": 4.49,
+   "ecart_brut": -1.21,
+   "ecart_corrige": -0.45,
+   "seuil": 0.88,
+   "solide": false,
+   "parties_requises": 96,
+   "pick": 11.7
+  },
+  {
+   "nom": "Draven18",
+   "n": 20,
+   "son_placement": 3.0,
+   "placement_ladder": 4.17,
+   "ecart_brut": -1.17,
+   "ecart_corrige": -0.41,
+   "seuil": 0.98,
+   "solide": false,
+   "parties_requises": 116,
+   "pick": 11.5
+  },
+  {
+   "nom": "Hecarim",
+   "n": 16,
+   "son_placement": 3.5,
+   "placement_ladder": 4.61,
+   "ecart_brut": -1.11,
+   "ecart_corrige": -0.35,
+   "seuil": 1.1,
+   "solide": false,
+   "parties_requises": 159,
+   "pick": 17.9
+  },
+  {
+   "nom": "Amumu18",
+   "n": 23,
+   "son_placement": 3.43,
+   "placement_ladder": 4.42,
+   "ecart_brut": -0.99,
+   "ecart_corrige": -0.23,
+   "seuil": 0.92,
+   "solide": false,
+   "parties_requises": 366,
+   "pick": 30.1
+  },
+  {
+   "nom": "Maokai",
+   "n": 20,
+   "son_placement": 3.2,
+   "placement_ladder": 4.14,
+   "ecart_brut": -0.94,
+   "ecart_corrige": -0.18,
+   "seuil": 0.98,
+   "solide": false,
+   "parties_requises": 598,
+   "pick": 16.9
+  },
+  {
+   "nom": "Brambleback18",
+   "n": 18,
+   "son_placement": 3.44,
+   "placement_ladder": 4.37,
+   "ecart_brut": -0.93,
+   "ecart_corrige": -0.17,
+   "seuil": 1.04,
+   "solide": false,
+   "parties_requises": 670,
+   "pick": 10.3
+  },
+  {
+   "nom": "Fiddlesticks18",
+   "n": 13,
+   "son_placement": 3.62,
+   "placement_ladder": 4.53,
+   "ecart_brut": -0.91,
+   "ecart_corrige": -0.15,
+   "seuil": 1.22,
+   "solide": false,
+   "parties_requises": 861,
+   "pick": 26.0
+  },
+  {
+   "nom": "Kennen",
+   "n": 17,
+   "son_placement": 3.12,
+   "placement_ladder": 3.98,
+   "ecart_brut": -0.86,
+   "ecart_corrige": -0.1,
+   "seuil": 1.07,
+   "solide": false,
+   "parties_requises": 1936,
+   "pick": 18.1
+  },
+  {
+   "nom": "Sentinel18",
+   "n": 28,
+   "son_placement": 3.54,
+   "placement_ladder": 4.38,
+   "ecart_brut": -0.84,
+   "ecart_corrige": -0.08,
+   "seuil": 0.83,
+   "solide": false,
+   "parties_requises": 3025,
+   "pick": 39.4
+  },
+  {
+   "nom": "Diana",
+   "n": 12,
+   "son_placement": 4.08,
+   "placement_ladder": 4.6,
+   "ecart_brut": -0.52,
+   "ecart_corrige": 0.24,
+   "seuil": 1.27,
+   "solide": false,
+   "parties_requises": 337,
+   "pick": 17.6
+  },
+  {
+   "nom": "Zyra",
+   "n": 27,
+   "son_placement": 4.3,
+   "placement_ladder": 4.51,
+   "ecart_brut": -0.21,
+   "ecart_corrige": 0.55,
+   "seuil": 0.85,
+   "solide": false,
+   "parties_requises": 64,
+   "pick": 14.4
+  }
+ ],
+ "fortes_peu_contestees": [
+  {
+   "nom": "ashe",
+   "n": 36584,
+   "variantes": 1,
+   "avg": 3.9,
+   "pick": 8.1,
+   "il_la_joue": true
+  },
+  {
+   "nom": "draven",
+   "n": 51842,
+   "variantes": 1,
+   "avg": 4.17,
+   "pick": 11.5,
+   "il_la_joue": true
+  },
+  {
+   "nom": "azir",
+   "n": 43909,
+   "variantes": 1,
+   "avg": 4.17,
+   "pick": 9.8,
+   "il_la_joue": true
+  },
+  {
+   "nom": "kayle",
+   "n": 48124,
+   "variantes": 1,
+   "avg": 4.29,
+   "pick": 10.7,
+   "il_la_joue": true
+  },
+  {
+   "nom": "murkwolf",
+   "n": 39645,
+   "variantes": 1,
+   "avg": 4.37,
+   "pick": 8.8,
+   "il_la_joue": true
+  },
+  {
+   "nom": "brambleback",
+   "n": 46182,
+   "variantes": 1,
+   "avg": 4.37,
+   "pick": 10.3,
+   "il_la_joue": true
+  }
+ ],
+ "tres_contestees": [
+  {
+   "nom": "sentinel",
+   "n": 177323,
+   "variantes": 1,
+   "avg": 4.38,
+   "pick": 39.4,
+   "il_la_joue": true
+  },
+  {
+   "nom": "amumu",
+   "n": 135539,
+   "variantes": 1,
+   "avg": 4.42,
+   "pick": 30.1,
+   "il_la_joue": true
+  },
+  {
+   "nom": "taric",
+   "n": 124562,
+   "variantes": 1,
+   "avg": 3.88,
+   "pick": 27.7,
+   "il_la_joue": false
+  },
+  {
+   "nom": "fiddlesticks",
+   "n": 116768,
+   "variantes": 1,
+   "avg": 4.53,
+   "pick": 26.0,
+   "il_la_joue": true
+  },
+  {
+   "nom": "yorick",
+   "n": 104719,
+   "variantes": 1,
+   "avg": 4.53,
+   "pick": 23.3,
+   "il_la_joue": false
+  },
+  {
+   "nom": "lillia",
+   "n": 102505,
+   "variantes": 1,
+   "avg": 4.49,
+   "pick": 22.8,
+   "il_la_joue": true
+  },
+  {
+   "nom": "gnarsmall",
+   "n": 100985,
+   "variantes": 1,
+   "avg": 3.78,
+   "pick": 22.4,
+   "il_la_joue": true
+  },
+  {
+   "nom": "krug",
+   "n": 94225,
+   "variantes": 1,
+   "avg": 4.45,
+   "pick": 20.9,
+   "il_la_joue": true
+  }
+ ],
+ "reserves": {
+  "conditionnement": "Son placement porte sur les parties où l'unité tenait des objets ; celui du ladder sur les parties où elle était présente, y compris en bouche-trou. Les deux ne décrivent pas la même situation : l'écart est une piste, jamais une conclusion.",
+  "ligne_de_base": "Le ladder place à 4.5 par construction et lui à 3.737, soit -0.76 d'office sur toutes les unités. C'est retiré de l'écart corrigé.",
+  "contestation": "Le pick rate mesure la présence en lobby. Pour un carry c'est de la contestation ; pour une unité universelle c'est de la banalité. Les deux ne se distinguent pas dans cette donnée.",
+  "variantes": "Les variantes d'un même champion sont regroupées : séparées, les dix Lux passaient pour dix unités rares et fortes."
+ }
+}
