@@ -48,6 +48,11 @@ jobs:
             --rang "${{ github.event.inputs.rang || '0' }}" \
             ${{ github.event.inputs.forcer == 'true' && '--forcer' || '' }}
 
+      - name: Relever la barre de Challenger
+        # La cible, mesurée plutôt que supposée. Tourne à chaque fois : le
+        # classement bouge tous les jours, contrairement au patch.
+        run: python3 tools/releve/barre.py --region euw
+
       - name: Vérifier qu'aucune clé API n'a été écrite
         run: |
           # Même garde-fou que le déploiement. Un relevé vient du réseau :
@@ -59,13 +64,13 @@ jobs:
 
       - name: Pousser le relevé s'il y en a un nouveau
         run: |
-          if [ -z "$(git status --porcelain data/releves-tt)" ]; then
-            echo "Aucun nouveau relevé — le patch n'a pas changé."
+          if [ -z "$(git status --porcelain data/releves-tt data/barre.json)" ]; then
+            echo "Rien de neuf : ni patch, ni mouvement du classement."
             exit 0
           fi
           git config user.name  "Oracle TFT"
           git config user.email "noreply@anthropic.com"
-          git add data/releves-tt
+          git add data/releves-tt data/barre.json
           FICHIER=$(git diff --cached --name-only | head -1)
           git commit -m "Relevé automatique : $(basename "$FICHIER" .json)
 

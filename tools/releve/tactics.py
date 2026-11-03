@@ -121,7 +121,10 @@ def construire(code, libelle, rang):
         "source": "tactics.tools",
         "n_parties": d.get("totalEntries"),
         "fenetre": "cumul depuis le début du patch",
-        "set": 18 if libelle.startswith("18") else None,
+        # Le numéro de set se lit dans le libellé (« 19.1 » -> 19). En dur,
+        # ce champ passerait à null le 1er décembre — le jour exact où il
+        # faudra que tout marche.
+        "set": int(libelle.split(".")[0]) if libelle.split(".")[0].isdigit() else None,
         "maj_source": d.get("lastUpdated"),
         "note": ("Série PARALLÈLE à data/releves/ (MetaTFT) : mêmes chiffres à "
                  "0.982 de corrélation, mais découpage des unités différent "
