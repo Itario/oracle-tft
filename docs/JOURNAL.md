@@ -1441,3 +1441,41 @@ transitions comparables mesurées donnent 0.819, 0.885 et 0.885.
 
 *Si le résultat sort de cette fourchette, c'est que la fin de set se comporte autrement
 que le milieu — ce qui serait une information neuve, et utile en décembre.*
+
+### LE RELEVÉ SANS NAVIGATEUR — le verrou de la v3 est levé
+
+`docs/ARCHITECTURE.md` listait depuis août, en tête des briques manquantes de la v3 :
+« **Relever sans navigateur.** Aujourd'hui MetaTFT exige Chrome. » C'était vrai, et ça
+condamnait chaque relevé à passer par une intervention humaine.
+
+tactics.tools sert les mêmes chiffres en JSON. Reste un obstacle : le proxy du conteneur
+Claude refuse `d3.tft.tools` au CONNECT (403). **Mais le runner GitHub Actions a un
+accès réseau libre.** C'est le seul endroit du dispositif où ce relevé peut tourner seul.
+
+`tools/releve/tactics.py` + `.github/workflows/releve.yml`, testés en conditions réelles
+ce soir : le runner a relevé le patch 18.5c en Master+ (449 902 parties, 74 unités),
+écrit `data/releves-tt/2026-11-03_18.5c_r0.json` et poussé le commit lui-même, en 21
+secondes, sans Chrome et sans personne.
+
+**Deux décisions de conception méritent d'être retenues.**
+
+*Rien n'est codé en dur.* Le code du patch se lit dans le `__NEXT_DATA__` de la page, son
+libellé dans le `<title>`. Les codes changent à chaque patch et surtout à chaque set :
+un script qui les contiendrait mourrait le 1er décembre, c'est-à-dire exactement quand
+on en aura le plus besoin.
+
+*Une photo figée par patch, jamais réécrite.* Le workflow tourne tous les jours, mais le
+script n'écrit que si le patch a changé. Sans ce garde-fou, une exécution quotidienne
+remplacerait la photo du jour du patch par une photo diluée sur toute sa durée de vie —
+et la série de rotation deviendrait silencieusement fausse.
+
+**Leçon n°29 — tester l'idempotence, pas seulement le succès.** Un workflow qui marche
+une fois et un workflow qui marche tous les jours ne sont pas le même workflow. Deux
+exécutions lancées à la suite : un seul fichier, un seul commit. C'est ce test-là qui
+valide le garde-fou, pas le premier.
+
+⚠ **Les deux séries ne se mélangent jamais.** `data/releves-tt/` est physiquement à part
+de `data/releves/`. Les sources donnent les mêmes chiffres (0.982) mais pas le même
+découpage : tactics.tools éclate Lux en neuf variantes, et les cinq meilleures unités du
+relevé de ce soir sont **cinq Lux différentes**. Comparer les deux séries sans agréger
+produirait un non-sens.
