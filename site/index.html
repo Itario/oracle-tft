@@ -316,6 +316,23 @@ td.num{font-variant-numeric:tabular-nums;text-align:right}
 .ecarts b{color:var(--texte);font-weight:700}
 
 
+
+/* ---------------------------------------------- la barre */
+.barre .barre-l{grid-template-columns:1fr auto auto auto;gap:.5rem .9rem;
+  align-items:baseline;padding:.45rem 0;
+  border-bottom:1px solid rgba(31,71,102,.4)}
+.barre .barre-l:last-child{border-bottom:0}
+.barre .barre-l.entete{font-size:.78rem;color:var(--faible);border-bottom-color:var(--trait-or)}
+.barre .p{font-family:var(--corps);font-weight:600;color:var(--texte);font-size:.95rem}
+.barre .sien{font-family:var(--titre);font-weight:700;font-size:1.15rem;
+  font-variant-numeric:tabular-nums;min-width:4.5rem;text-align:right}
+.barre .sien.pl{color:var(--hextech)} .barre .sien.mo{color:var(--sang)}
+.barre .cible{font-variant-numeric:tabular-nums;color:var(--doux);
+  min-width:4.5rem;text-align:right}
+.barre .j{font-size:.8rem;color:var(--faible);min-width:5.5rem;text-align:right}
+.barre .entete .sien,.barre .entete .cible{font-family:var(--corps);
+  font-size:.78rem;font-weight:600}
+
 /* ---------------------------------------------- focus */
 .focus{display:grid;gap:.4rem;margin:1.1rem 0}
 .ligne-focus{display:grid;grid-template-columns:1fr auto;gap:.2rem .9rem;
@@ -428,7 +445,8 @@ const SOURCES = {
   profil:     "data/profil.json",
   calendrier: "data/calendrier.json",
   miroir:     "data/miroir.json",
-  focus:      "data/focus.json"
+  focus:      "data/focus.json",
+  barre:      "data/barre.json"
 };
 const D = {};              // données chargées
 const $  = s => document.querySelector(s);
@@ -899,6 +917,48 @@ function vueApres(){
 }
 
 /* -------------------------------------------------- SUIVI */
+
+/* -------------------------------------------------- la barre */
+/* La cible, mesurée au lieu d'être supposée. On compare aux 25 DERNIERS
+   Challengers : la médiane du palier décrit des joueurs déjà installés,
+   pas le ticket d'entrée. */
+function blocBarre(){
+  const b = D.barre, mi = D.miroir, p = D.profil?.joueurs?.[0];
+  if(!b || !b.challenger_derniers_25) return "";
+  const B = b.challenger_derniers_25;
+
+  const ligne = (nom, sien, cible, unite, compare) => {
+    const ok = compare && sien != null && sien >= cible;
+    const ko = compare && sien != null && sien < cible;
+    return `<div class="dl barre-l">
+      <span class="p">${nom}</span>
+      <span class="sien ${ok ? "pl" : (ko ? "mo" : "")}">${sien == null ? "—" : sien + unite}</span>
+      <span class="cible">${cible}${unite}</span>
+      <span class="j">${!compare ? "" : (ok ? "au-dessus" : "en dessous")}</span>
+    </div>`;
+  };
+
+  return `<h2>Où tu en es</h2>
+    <p class="doux">La barre n'est pas la médiane du palier Challenger — ce sont les
+      <b>25 derniers</b>, c'est-à-dire le ticket d'entrée. Classement ${esc(b.region)}
+      relevé le ${fdate(b.genere_le)} : ${nb(b.paliers?.CHALLENGER || 0)} Challengers,
+      seuil à <b>${nb(b.seuil_challenger_lp)} LP</b>.</p>
+
+    <div class="carte">
+      <div class="dist barre">
+        <div class="dl barre-l entete">
+          <span class="p"></span><span class="sien">toi</span>
+          <span class="cible">la barre</span><span class="j"></span>
+        </div>
+        ${mi ? ligne("top 4", mi.top4_pct, B.top4_pct_median, " %", true) : ""}
+        ${mi ? ligne("1res", mi.premieres_pct, B.premieres_pct_median, " %", true) : ""}
+        ${mi ? ligne("parties", mi.n_parties, B.parties_mediane, "", true) : ""}
+        ${p ? ligne("LP", p.rang.lp, B.lp_median, "", true) : ""}
+      </div>
+      ${b.reserve ? `<p class="faible" style="margin:1rem 0 0">${esc(b.reserve)}</p>` : ""}
+    </div>`;
+}
+
 function vueSuivi(){
   const m = D.meta, p = D.profil?.joueurs?.[0], c = D.calendrier;
   const d = m?.diff;
@@ -935,6 +995,7 @@ function vueSuivi(){
   const prochain = evts.find(e => e.date > auj);
 
   return `<h1>Suivi</h1>
+    ${blocBarre()}
     ${p ? `<p class="doux"><b>${esc(p.rang.tier)}, ${p.rang.lp} LP</b> depuis le
       ${fdate(p.rang.date)}. Objectif : ${esc(p.objectif)}.
       ${esc(p.riot_id)}, ${esc(p.region.toUpperCase())}.</p>` : ""}
