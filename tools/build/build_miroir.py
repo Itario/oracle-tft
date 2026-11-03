@@ -168,6 +168,8 @@ def main(csv_path, resume_path):
     # Les champs que la migration Unreal a vidés : on les déclare morts ici
     # plutôt que de laisser le site afficher des zéros comme des mesures.
     degats_vides = all((r.get("degats") in (None, "", "0", "0.0", 0)) for r in L)
+    # miroir.py le constate en inspectant les parties ; on ne le suppose pas.
+    augments_presents = bool(resume.get("augments_presents"))
 
     out = {
         "schema_version": SCHEMA,
@@ -202,13 +204,21 @@ def main(csv_path, resume_path):
         "parties": [resume_partie(r) for r in reversed(L[-50:])],
         "traits":  groupes(L, "traits",  base, sdp),
         "carries": groupes(L, "carries", base, sdp),
+        # ⚠ CES ABSENCES SE CONSTATENT, ELLES NE SE DÉCLARENT PAS.
+        # La note sur les augments était écrite inconditionnellement : si Riot
+        # les rebranche au Set 19, le site aurait continué d'affirmer qu'ils
+        # sont absents, sans que rien ne le signale. Une donnée manquante qu'on
+        # proclame au lieu de la mesurer est pire qu'une donnée manquante.
         "indisponible": {
-            "augments": "Champ absent du DTO Riot depuis la migration Unreal "
-                        "du Set 18. La revue des augments n'est pas constructible.",
+            **({"augments": "Champ absent du DTO Riot — constaté sur les parties "
+                            "récoltées, depuis la migration Unreal. La revue des "
+                            "augments n'est pas constructible."}
+               if not augments_presents else {}),
             **({"degats": "total_damage_to_players vide sur toutes les parties "
-                          "du Set 18. Le rang de dégâts est sans valeur."}
+                          "récoltées. Le rang de dégâts est sans valeur."}
                if degats_vides else {}),
         },
+        "augments_presents": augments_presents,
         "nmin": NMIN,
     }
 

@@ -35,7 +35,7 @@ jobs:
       - name: Régénérer le site depuis les relevés
         run: |
           python3 tools/build/build_site.py
-          python3 tools/build/build_oracle.py 18
+          python3 tools/build/build_oracle.py
           echo "Fichiers produits :"
           find site -type f | sort
 

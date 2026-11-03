@@ -10,7 +10,8 @@ hors ligne :
     data_set<N>_fige.js      les fiches figées (plans, BiS, augments, lexique)
     data/releves/<dernier>   les données du relevé, GÉNÉRÉES ici
 
-    python3 tools/build/build_oracle.py 18     -> site/oracle.html
+    python3 tools/build/build_oracle.py        -> site/oracle.html (set auto)
+    python3 tools/build/build_oracle.py 19     -> force un set
 
 Pourquoi les blocs de relevé sont générés et non écrits à la main : ils vivaient
 auparavant dans data_set18.js, en double avec data/releves/. Les deux copies
@@ -77,12 +78,42 @@ def bloc_metacomps(r):
     return "\n".join(out)
 
 
-def construire(num):
+def set_courant():
+    """Le set du relevé le plus récent, et non une valeur en dur.
+
+    Le 03/11, `tactics.py` écrivait « set: 18 » en dur : au patch 19.1 il
+    aurait écrit null, le 1er décembre, c'est-à-dire le jour exact où tout
+    doit marcher. Même piège ici, en pire — le workflow de déploiement
+    appelait `build_oracle.py 18`, donc au Set 19 le site aurait publié
+    en silence un Oracle du Set 18, sans la moindre erreur pour le dire.
+    """
+    sets = [r.get("set") for r in M.charger() if r.get("set") is not None]
+    return str(sets[-1]) if sets else None
+
+
+def construire(num=None):
+    if num is None:
+        num = set_courant()
+        if num is None:
+            print("::warning::Aucun relevé ne porte de numéro de set. "
+                  "Oracle non régénéré.")
+            return None
+        print(f"set détecté depuis le dernier relevé : {num}")
+
     moteur_p = os.path.join(RACINE, "engine.html")
     fige_p   = os.path.join(RACINE, f"data_set{num}_fige.js")
-    for p in (moteur_p, fige_p):
-        if not os.path.exists(p):
-            raise SystemExit(f"Introuvable : {p}")
+    if not os.path.exists(moteur_p):
+        raise SystemExit(f"Introuvable : {moteur_p}")
+
+    # Les fiches d'un set neuf n'existent pas tant que personne ne les a
+    # écrites. C'est NORMAL au lancement d'un set, et ça ne doit surtout pas
+    # faire échouer le déploiement de tout le site : l'Oracle est une page
+    # parmi d'autres. On prévient, on passe.
+    if not os.path.exists(fige_p):
+        print(f"::warning::{os.path.basename(fige_p)} absent — "
+              f"l'Oracle du Set {num} n'est pas régénéré. "
+              "Écrire les fiches du set pour le rétablir.")
+        return None
 
     moteur = io.open(moteur_p, encoding="utf-8").read()
     fige   = io.open(fige_p, encoding="utf-8").read()
@@ -123,4 +154,6 @@ def construire(num):
 
 
 if __name__ == "__main__":
-    construire(sys.argv[1] if len(sys.argv) > 1 else "18")
+    # Sans argument : le set du relevé le plus récent. Un numéro en dur ici
+    # serait une panne programmée au changement de set.
+    construire(sys.argv[1] if len(sys.argv) > 1 else None)

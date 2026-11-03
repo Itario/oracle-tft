@@ -193,16 +193,57 @@ def cmd_rotation():
         # continûment, elle saute à chaque patch et reste stable entre deux.
         # Diviser par le nombre de jours serait une extrapolation fausse.
         pertes = [1 - l["spearman"] for l in comp]
-        print(f"\nSur {len(comp)} couple(s) à elo constant :")
-        print(f"  perte de corrélation PAR PATCH : {st.mean(pertes):.3f}")
-        print(f"  -> un relevé d'avant-patch décrit encore correctement le classement,")
-        print(f"     mais se trompe de ~{st.mean([l['dep_median'] for l in comp]):.0f} rangs en médiane sur chaque unité.")
-        print(f"  (la dérive ENTRE deux patchs n'est pas mesurée : il faudrait deux")
-        print(f"   relevés séparés de plusieurs jours SANS patch entre eux.)")
+        deps   = [l["dep_median"] for l in comp]
+        n = len(comp)
+        print(f"\nSur {n} couple(s) à elo constant :")
+
+        # ⚠ UNE MESURE SUR UN POINT N'EST PAS UNE CONSTANTE.
+        # Cet outil a affiché « perte PAR PATCH : 0.154 » pendant dix jours
+        # sur UN seul couple, et la charte l'a recopié en gras comme un fait
+        # acquis. Mesuré sur six transitions le 03/11, l'intervalle réel va
+        # de 0.057 à 0.353. Le chiffre n'était ni faux ni représentatif : il
+        # était unique. On refuse désormais de le présenter autrement.
+        if n == 1:
+            print(f"  perte observée sur CE couple : {pertes[0]:.3f} "
+                  f"({deps[0]:.0f} rangs de déplacement médian)")
+            print("  ⚠ UN SEUL POINT DE MESURE — ce n'est pas une constante.")
+            print("    Un patch peut coûter de 0.06 à 0.35 de corrélation selon")
+            print("    qu'il est un correctif ou un vrai patch, et selon l'âge du")
+            print("    set. Ne pas extrapoler ce chiffre.")
+        else:
+            print(f"  perte de corrélation par patch : {st.mean(pertes):.3f} "
+                  f"en moyenne, de {min(pertes):.3f} à {max(pertes):.3f}")
+            print(f"  déplacement médian : {st.mean(deps):.0f} rangs par unité")
+            if n < 4:
+                print(f"  ⚠ {n} points seulement : l'intervalle est indicatif.")
+        print("  (la dérive ENTRE deux patchs n'est toujours pas mesurée : il")
+        print("   faudrait deux relevés séparés de plusieurs jours SANS patch.)")
     else:
         print("\nAucun couple à elo constant : la constante de rotation n'est pas")
         print("encore mesurable. Il faut deux relevés consécutifs dans la MÊME tranche.")
-        print("Le prochain (patch 18.6, 04/11, Master+) rendra la mesure possible.")
+        pro = prochain_patch()
+        if pro:
+            print(f"Le prochain (patch {pro['nom']}, {pro['date']}) rendra la mesure possible.")
+        else:
+            print("Aucun patch à venir dans data/calendrier.json.")
+
+
+def prochain_patch():
+    """Le prochain patch, lu dans le calendrier — jamais écrit en dur.
+
+    Cette ligne annonçait « patch 18.6, 04/11 » en dur : juste jusqu'au
+    4 novembre, faux ensuite, et silencieusement faux. Un message d'aide
+    qui ment est pire qu'un message absent."""
+    import datetime
+    try:
+        cal = json.load(open(os.path.join(DEPOT, "data", "calendrier.json"),
+                             encoding="utf-8"))
+    except Exception:
+        return None
+    auj = datetime.date.today().isoformat()
+    a_venir = sorted((p for p in cal.get("patchs", []) if p.get("date", "") > auj),
+                     key=lambda p: p["date"])
+    return a_venir[0] if a_venir else None
 
 
 def cmd_fraicheur():
