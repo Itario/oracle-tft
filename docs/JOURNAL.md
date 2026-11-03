@@ -1338,3 +1338,106 @@ Au passage, la première place s'abrège **1re** en français, pas 1e — le gab
 « e » pour les huit rangs.
 
 **Leçon n°24 — relire la sortie rendue, pas seulement le code qui la produit.**
+
+---
+
+## 03/11/2026 — la constante de rotation tombe, et la question des augments se ferme
+
+*Soirée ouverte par une question de Clément : « en source tu mets MetaTFT ? Il n'y a pas
+mieux pour prendre de la data ? »*
+
+### LA RÉPONSE N'EST NI OUI NI NON
+
+Comparaison de MetaTFT et tactics.tools **sur le même patch (18.5), la même tranche
+(Master+), 57 unités appariées** :
+
+- **Spearman 0.982**, déplacement médian **1 rang** ;
+- plancher de bruit pour ce couple : **0.955** ;
+- l'observé dépasse le plancher → **l'écart entre les deux sources est indistinguable de
+  l'échantillonnage.**
+
+Un patch, lui, fait tomber la corrélation à 0.82–0.89 avec 4 à 6 rangs de déplacement.
+**La différence de source est six fois plus petite que l'effet d'un patch.** Les deux
+mesurent la même chose.
+
+**Leçon n°25 — « est-ce qu'il n'y a pas mieux ? » mérite une mesure, pas une opinion.**
+
+tactics.tools reste meilleur *pour le projet*, mais pour des raisons qui n'ont rien à
+voir avec la qualité des chiffres : données lisibles sans navigateur, 9× le volume en
+Master+, une tranche GM+, les identifiants de Riot, et tous les patchs archivés.
+
+### LA CONSTANTE DE ROTATION ÉTAIT UN ACCIDENT D'ÉCHANTILLON
+
+« Un patch coûte 0.154 de corrélation de rang » figurait dans la charte en gras depuis
+dix jours. C'était **un seul couple de relevés**. Nous attendions le patch du 4 novembre
+pour en obtenir un deuxième.
+
+Six transitions dormaient dans l'archive publique de tactics.tools. Mesurées :
+
+| de → à | Spearman | plancher | dépl. médian |
+|---|---|---|---|
+| 18.1 → 18.2 | **0.647** | 0.961 | **8 rangs** |
+| 18.2 → 18.3 | **0.819** | 0.984 | 6 rangs |
+| 18.3 → 18.4 | 0.874 | 0.914 | *inexploitable* |
+| 18.4 → 18.4b | 0.886 | 0.933 | *inexploitable* |
+| 18.4b → 18.5 | **0.885** | 0.996 | 4 rangs |
+| 18.5 → 18.5c | **0.943** | 0.995 | **2 rangs** |
+
+**La fourchette va de 0.647 à 0.943.** L'ancienne valeur tombait au milieu — ni fausse,
+ni représentative. Les deux lignes inexploitables impliquent le patch 18.4 (5 304 parties
+en Master+) : le plancher monte trop près de l'observé. *C'est exactement à ça que sert
+le plancher, et c'est la première fois qu'il sert à disqualifier plutôt qu'à confirmer.*
+
+**Leçon n°26 — une constante mesurée sur un point n'est pas une constante. Écrire le
+nombre de points de mesure À CÔTÉ de toute constante, systématiquement.**
+
+**Leçon n°27 — chercher l'historique avant d'attendre le futur.** Nous planifiions une
+mesure pour demain alors que six points étaient publiés depuis des semaines.
+
+### TROIS RÉGULARITÉS REMPLACENT LA CONSTANTE
+
+1. **Au lancement d'un set, la méta tourne deux fois plus vite** : 0.647 et 8 rangs
+   contre 0.885 et 4 rangs à maturité. *Conséquence directe : la règle « un relevé par
+   patch » ne tiendra pas au 1er décembre.*
+2. **Un patch à lettre déplace deux fois moins qu'un patch à chiffre** : 0.943 et 2 rangs
+   pour 18.5c, contre 0.82–0.89 et 4–6 rangs pour les patchs numérotés.
+3. **La rotation ralentit au fil du set** — trois points seulement, et confondu avec la
+   montée du volume. À revérifier au Set 19.
+
+### UNE ERREUR DE SIMULATION, ATTRAPÉE PAR LE SENS ET NON PAR LE CHIFFRE
+
+Mon premier calcul de plancher tirait les deux côtés avec les volumes du PREMIER patch.
+Les résultats n'avaient l'air ni absurdes ni suspects — jusqu'à ce qu'une transition dont
+le second relevé comptait 5 304 parties affiche un plancher de **0.991**.
+
+Moins de volume doit donner PLUS de bruit, donc un plancher PLUS BAS. Le chiffre allait
+dans le mauvais sens.
+
+**Leçon n°28 — quand un chiffre va dans le mauvais sens, c'est le calcul qu'il faut
+relire, pas le chiffre qu'il faut expliquer.**
+
+### LA QUESTION DES AUGMENTS EST CLOSE
+
+L'hypothèse de travail était : « les sites de stats publient des winrates d'augments là
+où l'API n'en livre pas, donc il existe une autre voie ». **Elle est fausse.**
+
+- **tactics.tools** a gardé la page, les filtres et les colonnes — *At 2-1, At 3-2,
+  At 4-2* comprises — et le tableau est **vide**. `augsData` renvoie
+  `{singles: [], pairs: [], trios: []}` à toutes les tranches.
+- **MetaTFT** a basculé sur une **tier list tenue à la main** par son équipe esport, avec
+  des lettres S/A/B et aucun taux, mise à jour tous les quelques jours.
+
+Deux sites majeurs, deux replis différents, même cause. **La donnée n'existe plus pour
+personne depuis la migration Unreal.** La seule information disponible est de l'opinion
+d'expert — utilisable, mais à étiqueter comme telle, jamais comme une mesure.
+
+*Ne plus chercher de source. La question est close jusqu'au Set 19.*
+
+### PRÉDICTION POSÉE CE SOIR
+
+**Le patch 18.6 du 04/11 donnera un Spearman entre 0.82 et 0.90, avec un déplacement
+médian de 4 à 6 rangs.** Raison : c'est un patch numéroté en régime mature, et les trois
+transitions comparables mesurées donnent 0.819, 0.885 et 0.885.
+
+*Si le résultat sort de cette fourchette, c'est que la fin de set se comporte autrement
+que le milieu — ce qui serait une information neuve, et utile en décembre.*
