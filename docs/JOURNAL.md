@@ -1535,3 +1535,38 @@ depuis les notes, ne bat pas « ne rien prédire » ; augments, données inexist
 **Leçon n°30 — mesurer la cible avant d'optimiser le chemin.** Trois semaines à affiner
 des relevés de méta sans savoir que la contrainte était le nombre de parties. La cible
 était publique et tenait en une requête.
+
+### LA BARRE DEVIENT PERMANENTE, ET LE FOCUS EXISTE
+
+`tools/releve/barre.py` relève le classement EUW à chaque exécution du workflow et écrit
+`data/barre.json`. L'onglet Suivi ouvre dessus : ses quatre chiffres contre ceux des
+25 derniers Challengers, turquoise au-dessus, rouge en dessous.
+
+**Le seuil Challenger est passé de 489 à 447 LP en vingt-cinq minutes**, entre deux
+exécutions. Une barre mesurée une fois à la main aurait été fausse le lendemain.
+
+`tools/build/build_focus.py` croise ses parties et la méta — possible seulement depuis
+que le relevé vient de tactics.tools, qui utilise les identifiants de Riot, exactement
+ceux de ses propres parties.
+
+**Et ce croisement dit trois fois non.** Aucune de ses 12 lignes ne sort du bruit à 114
+parties. Les six unités fortes et peu contestées du patch, il les joue déjà toutes les
+six. Sa sélection de lignes est saine — la progression n'est pas là.
+
+Ce qui sauve la page est la dernière colonne : **« il faudrait N parties »**. Zyra sort
+à +0.55 contre sa propre moyenne et demanderait 64 parties ; il en a 27. Ezreal à −0.46
+en demanderait 92 ; il en a 31.
+
+**Les deux objectifs se rejoignent : le volume qui mène à Challenger est exactement
+celui qui rendrait ce coaching possible.** Le seuil de bruit décroît en 1/√n — à 400
+parties il tombe de moitié et la moitié de ce tableau devient lisible.
+
+### UNE BOMBE À RETARDEMENT DÉSAMORCÉE
+
+`tactics.py` écrivait `"set": 18` **en dur**. Au patch 19.1 il aurait écrit `null` — le
+1er décembre, c'est-à-dire le jour exact où tout doit marcher. Le numéro se déduit
+maintenant du libellé.
+
+**Leçon n°31 — quand on écrit du code pour une échéance, relire chaque constante en se
+demandant ce qu'elle vaudra ce jour-là.** Le script avait été écrit deux heures plus tôt
+avec le Set 19 explicitement en tête, et la valeur en dur y était quand même.
