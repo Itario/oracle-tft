@@ -1479,3 +1479,59 @@ de `data/releves/`. Les sources donnent les mêmes chiffres (0.982) mais pas le 
 découpage : tactics.tools éclate Lux en neuf variantes, et les cinq meilleures unités du
 relevé de ce soir sont **cinq Lux différentes**. Comparer les deux séries sans agréger
 produirait un non-sens.
+
+---
+
+## 03/11/2026, 21h30 — LA BARRE DE CHALLENGER, ENFIN MESURÉE
+
+*Question de Clément : « que penses-tu de l'utilité de notre outil pour mon objectif
+passer challenger ? »*
+
+Trois semaines de projet sans avoir jamais mesuré la cible. Classement EUW du 03/11,
+1 000 joueurs (300 Challenger, 576 Grandmaster, 124 Master) :
+
+| | Challenger (300) | **Challenger, les 25 derniers** | Clément |
+|---|---|---|---|
+| LP | médiane 916 | médiane **728** · seuil **489** | **55** |
+| **parties** | médiane **429** | médiane **381** · min **199** | **114** |
+| top 4 | 56.3 % | **54.7 %** | **59.6 %** |
+| 1res places | 16.2 % | **15.4 %** | **18.4 %** |
+
+**Son taux de top 4 et son taux de 1res places dépassent déjà ceux du dernier quart des
+Challengers.** Ce qui lui manque n'est pas la qualité de placement : c'est le **volume**,
+d'un facteur 3 à 4.
+
+⚠ **La réserve capitale.** Ses 59.6 % sont mesurés dans des lobbies Diamant II → Master.
+Les 54.7 % des Challengers sont mesurés dans des lobbies Challenger. **Les deux chiffres
+ne décrivent pas la même difficulté** et son taux baisserait en montant. Mais la marge
+est large (+4.9 points de top 4, +3.0 de 1res), là où l'écart de volume — 114 contre 381
+— ne se réduit pas tout seul.
+
+**L'hypothèse posée hier dans la charte** (« ce qui le sépare de Challenger est un
+problème de volume joué proprement, pas de niveau ») **était jusqu'ici une inférence
+interne à ses propres parties. Elle est maintenant confrontée à la cible réelle, et elle
+tient.**
+
+### L'ARITHMÉTIQUE, SANS ENROBAGE
+
+Le Set 19 court du 1er décembre à ~fin mars, soit ~120 jours. Atteindre 381 parties
+demande **3,2 parties par jour, tous les jours**. Il en joue **1,75**, avec 19 jours
+sans jouer sur 65.
+
+*Ce n'est pas un conseil : c'est un fait arithmétique, et c'est à lui de décider s'il est
+compatible avec un travail et des enfants.* La seule chose qui serait malhonnête, c'est
+de le laisser optimiser des compos en croyant que c'est là que se joue la partie.
+
+### CE QUE ÇA DIT DE L'OUTIL
+
+En 114 parties analysées, le Miroir a produit **deux** conclusions exploitables — les 6
+parties lâchées et le rythme — **toutes deux comportementales, aucune technique**. Je
+l'avais noté comme une limite. **Le classement montre que c'était la bonne cible.**
+
+Et ce que l'outil ne sait pas faire, il a été mesuré qu'il ne sait pas le faire :
+moteur de puissance sur les stats de base, −0.17 ; prédiction du mouvement des compos
+depuis les notes, ne bat pas « ne rien prédire » ; augments, données inexistantes.
+
+**Leçon n°30 — mesurer la cible avant d'optimiser le chemin.** Trois semaines à affiner
+des relevés de méta sans savoir que la contrainte était le nombre de parties. La cible
+était publique et tenait en une requête.
