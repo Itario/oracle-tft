@@ -1570,3 +1570,46 @@ maintenant du libellé.
 **Leçon n°31 — quand on écrit du code pour une échéance, relire chaque constante en se
 demandant ce qu'elle vaudra ce jour-là.** Le script avait été écrit deux heures plus tôt
 avec le Set 19 explicitement en tête, et la valeur en dur y était quand même.
+
+### L'AUDIT SET 19 — trois pannes programmées, toutes silencieuses
+
+Après avoir trouvé `"set": 18` en dur dans `tactics.py`, balayage de tout le code
+exécutable. Trois vrais défauts. **Aucun n'aurait levé d'erreur** — c'est ce qui les
+rendait dangereux.
+
+**1.** Le workflow de déploiement appelait `build_oracle.py 18`, et le script retombait
+sur `"18"` sans argument. Au Set 19, le site aurait publié **un Oracle du Set 18 en
+silence**, avec les bonnes couleurs et les mauvaises données. Le set se déduit maintenant
+du relevé le plus récent — et l'absence des fiches d'un set neuf n'emporte plus le
+déploiement entier : avertissement, code 0, le reste du site se publie.
+
+**2.** `build_miroir.py` écrivait « augments absents depuis la migration Unreal »
+**inconditionnellement** dans les données du site. Si Riot les rebranche au Set 19 —
+ce qu'on espère — le site aurait continué d'affirmer le contraire. L'absence se constate
+désormais ; `miroir.py` l'inspectait déjà, personne ne lui demandait.
+
+**Leçon n°32 — une donnée manquante qu'on proclame au lieu de la mesurer est pire qu'une
+donnée manquante.**
+
+**3.** `carnet.py rotation` affichait « perte de corrélation PAR PATCH : 0.154 » sur UN
+seul couple. **C'est notre propre outil qui fabriquait la fausse constante que la charte
+avait recopiée en gras pendant dix jours.** Il refuse désormais de présenter un point
+unique comme une constante, et donne l'intervalle réel quand il n'en a qu'un.
+
+**Leçon n°33 — une leçon doit être appliquée à l'OUTIL, pas seulement écrite dans le
+document.** La n°26 disait d'écrire le nombre de points à côté de toute constante ; elle
+avait été consignée deux heures plus tôt sans que personne ne regarde le script qui
+produisait le chiffre.
+
+**Et un défaut qui n'en était pas.** `build_focus.py` normalisait les noms en retirant la
+chaîne « 18 » — ça semblait devoir casser au Set 19. Test avant correction : le filtre
+`[^a-z]` retire déjà tous les chiffres, `DA_19_Alune` s'apparie correctement. Redondant,
+pas nuisible, **non corrigé**. Corriger ce qui marche est du churn.
+
+### LE RELEVÉ PASSE À DEUX FOIS PAR JOUR
+
+Les patchs TFT sortent en journée heure du Pacifique, soit le soir en France. Une seule
+exécution matinale aurait relevé 18.6 le **5 novembre au matin**, douze heures après sa
+sortie — sur un patch qui déplace les unités de 4 à 6 rangs. Deuxième horaire à 22h13
+UTC : le patch est relevé le soir même. Coût nul, puisque le script n'écrit que si le
+patch a changé.
