@@ -99,6 +99,26 @@ def main():
     # palier décrit des joueurs déjà installés, pas le ticket d'entrée.
     bas = sorted(ch, key=lambda e: e["lp"])[:25]
 
+    # ── LE SEUIL : trois estimateurs, parce que le premier était mauvais ──
+    #
+    # min(LP des joueurs étiquetés Challenger) est une statistique d'ordre
+    # sur UN SEUL joueur. Mesurée trois fois en 24 h, elle a donné 447, 740
+    # puis 677 LP — pendant que la MÉDIANE des 25 derniers restait à 728,
+    # 750, 743 et leur taux de top 4 à 54.7, 54.7, 54.1. Ce n'est donc pas
+    # le ladder qui bougeait, c'est l'estimateur qui était fragile : les
+    # étiquettes de palier sont réattribuées périodiquement, et un joueur
+    # en cours de rétrogradation reste marqué CHALLENGER avec peu de LP.
+    #
+    # `seuil_par_rang` ne regarde aucune étiquette : Challenger est le top N
+    # par LP, donc le seuil est le LP du N-ième joueur de la liste triée.
+    # C'est la définition structurelle, immunisée contre le retard des
+    # étiquettes. C'est celle que le site affiche.
+    par_lp = sorted(E, key=lambda e: -e["lp"])
+    n_ch = len(ch)
+    seuil_rang = par_lp[n_ch - 1]["lp"] if 0 < n_ch <= len(par_lp) else None
+    lps_ch = sorted(e["lp"] for e in ch)
+    seuil_p10 = lps_ch[max(0, int(len(lps_ch) * 0.10) - 1)] if lps_ch else None
+
     out = {
         "schema_version": SCHEMA,
         "genere_le": date.today().isoformat(),
@@ -108,7 +128,19 @@ def main():
         "entrees_lues": len(E),
         "paliers": {p: sum(1 for e in E if e["palier"] == p)
                     for p in sorted({e["palier"] for e in E})},
-        "seuil_challenger_lp": min((e["lp"] for e in ch), default=None),
+        # Celui que le site affiche : la définition structurelle.
+        "seuil_challenger_lp": seuil_rang,
+        # Les deux autres, pour qu'on puisse voir l'écart plutôt que le subir.
+        "seuil_estimateurs": {
+            "par_rang": seuil_rang,
+            "percentile_10": seuil_p10,
+            "min_etiquette": min((e["lp"] for e in ch), default=None),
+            "note": "min_etiquette est VOLATILE : statistique d'ordre sur un "
+                    "seul joueur, et les étiquettes de palier sont réattribuées "
+                    "avec du retard. Mesurée 447, 740 puis 677 LP en 24 h alors "
+                    "que la médiane des 25 derniers ne bougeait pas. Ne pas "
+                    "l'afficher.",
+        },
         "challenger": stats(ch),
         "challenger_derniers_25": stats(bas),
         "grandmaster": stats(gm),
@@ -125,8 +157,10 @@ def main():
 
     b = out["challenger_derniers_25"]
     print(f"écrit : {SORTIE}")
-    print(f"  {a.region.upper()} · {out['entrees_lues']} joueurs lus · "
-          f"seuil Challenger {out['seuil_challenger_lp']} LP")
+    es = out["seuil_estimateurs"]
+    print(f"  {a.region.upper()} · {out['entrees_lues']} joueurs lus")
+    print(f"  seuil Challenger : {es['par_rang']} LP (par rang) · "
+          f"{es['percentile_10']} (p10) · {es['min_etiquette']} (min, volatile)")
     print(f"  les 25 derniers Challengers : {b['parties_mediane']} parties, "
           f"{b['top4_pct_median']} % de top 4, {b['premieres_pct_median']} % de 1res")
 

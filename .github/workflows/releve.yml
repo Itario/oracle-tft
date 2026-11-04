@@ -8,15 +8,22 @@ name: Relevé de méta
 
 on:
   schedule:
-    # DEUX FOIS PAR JOUR, et ce n'est pas du zèle. Les patchs TFT sortent
-    # en journée heure du Pacifique, soit le soir en France : une seule
-    # exécution matinale relèverait le patch de la veille et il faudrait
-    # attendre 24 h de plus. Deux passages ramènent le délai à ~12 h, et
-    # ça ne coûte rien puisque le script n'écrit QUE si le patch a changé
-    # (garde-fou « un relevé figé par patch », tools/releve/tactics.py).
-    # Minutes décalées : les minutes rondes concentrent la charge.
-    - cron: "13 7 * * *"
-    - cron: "13 22 * * *"
+    # TOUTES LES TROIS HEURES, et ce n'est toujours pas du zèle.
+    #
+    # Mesuré le 04/11 : les exécutions planifiées de GitHub arrivent avec
+    # 3 à 7 HEURES de retard (cron 22h13 UTC -> commit 01h20 ; cron 07h13
+    # -> commit 14h21). Le planificateur est en « meilleur effort » et les
+    # dépôts publics passent en dernier. Deux créneaux par jour, décalés de
+    # sept heures, ne garantissent plus rien du tout.
+    #
+    # Huit créneaux rendent le retard sans conséquence : quel que soit le
+    # décalage, un passage tombe dans les heures qui suivent le patch. Et
+    # ça reste gratuit — Actions est illimité sur un dépôt public, le
+    # script dure 25 s, et il n'écrit QUE si le patch a changé (garde-fou
+    # « un relevé figé par patch », tools/releve/tactics.py).
+    #
+    # Minute 13 : les minutes rondes concentrent la charge des runners.
+    - cron: "13 1,4,7,10,13,16,19,22 * * *"
   workflow_dispatch:
     inputs:
       rang:
