@@ -59,6 +59,14 @@ jobs:
       # garantit que le site publié ne peut pas diverger des relevés.
       - name: Régénérer le site depuis les relevés
         run: |
+          # build_objets.py AVANT build_site.py : c'est lui qui écrit
+          # data/objets.json, et build_site.py le copie vers site/data/.
+          # Dans l'autre ordre, le site publierait l'objets.json du
+          # déploiement PRÉCÉDENT — d'un patch de retard, en silence.
+          # Il ne fait pas échouer le déploiement : sans bloc `objets` dans
+          # le relevé (Set 19 au premier jour), il s'arrête proprement et le
+          # reste du site se publie.
+          python3 tools/build/build_objets.py || echo "::warning::objets non reconstruits"
           python3 tools/build/build_site.py
           python3 tools/build/build_oracle.py
           echo "Fichiers produits :"
