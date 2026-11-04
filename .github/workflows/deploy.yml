@@ -5,6 +5,20 @@ name: Déployer le site
 on:
   push:
     branches: [main]
+  # ⚠ SANS CECI, LE RELEVÉ AUTOMATIQUE N'ATTEINT JAMAIS LE SITE PUBLIÉ.
+  #
+  # Une poussée faite PAR un workflow, avec le GITHUB_TOKEN, ne déclenche
+  # aucun autre workflow : GitHub le refuse délibérément pour qu'un dépôt ne
+  # puisse pas se mettre en boucle. Donc `push` ci-dessus ne voyait que les
+  # poussées humaines.
+  #
+  # Constaté le 04/11 : quatre commits « Oracle TFT » (199219f, e712054,
+  # ea05ae6, 142e404) et pas un seul déploiement en face. Huit relevés par
+  # jour écrivaient dans data/, et le site servait les données de la dernière
+  # poussée à la main. La panne datait de la création du relevé.
+  workflow_run:
+    workflows: ["Relevé de méta"]
+    types: [completed]
   workflow_dispatch:        # bouton « Run workflow » dans l'onglet Actions
 
 permissions:
@@ -19,11 +33,22 @@ concurrency:
 jobs:
   deployer:
     runs-on: ubuntu-latest
+    # Un relevé qui a échoué ne mérite pas d'être publié. Les autres
+    # déclencheurs (poussée, bouton) passent sans condition.
+    if: >-
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
     environment:
       name: github-pages
       url: ${{ steps.pages.outputs.page_url }}
     steps:
+      # `ref: main` n'est pas décoratif. Sur un événement workflow_run, le SHA
+      # par défaut est celui sur lequel le RELEVÉ a tourné — c'est-à-dire
+      # AVANT sa propre poussée. On publierait les données de la veille en
+      # croyant publier les fraîches. On demande donc explicitement la pointe.
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:
