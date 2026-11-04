@@ -59,6 +59,13 @@ jobs:
             --rang "${{ github.event.inputs.rang || '0' }}" \
             ${{ github.event.inputs.forcer == 'true' && '--forcer' || '' }}
 
+      - name: Relever les compos
+        # APRÈS tactics.py : il revérifie à chaque passage que la tranche de
+        # rang des compos correspond bien à celle du relevé d'unités, au lieu
+        # de le supposer. Toléré en échec : une page peut changer de forme.
+        run: python3 tools/releve/compos.py
+        continue-on-error: true
+
       - name: Mettre à jour la table de recettes
         # APRÈS tactics.py : elle se cale sur les objets vus dans le dernier
         # relevé, ce qui lui évite de dépendre d'un préfixe de set.
@@ -101,7 +108,7 @@ jobs:
 
       - name: Pousser le relevé s'il y en a un nouveau
         run: |
-          SUIVIS="data/releves-tt data/barre.json data/joueur.json data/recettes.json"
+          SUIVIS="data/releves-tt data/barre.json data/joueur.json data/recettes.json data/compos.json"
           if [ -z "$(git status --porcelain $SUIVIS)" ]; then
             echo "Rien de neuf : ni patch, ni classement, ni position."
             exit 0
