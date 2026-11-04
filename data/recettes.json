@@ -1,0 +1,636 @@
+{
+ "schema_version": 1,
+ "genere_le": "2026-11-04",
+ "source": "CommunityDragon (données Riot)",
+ "cale_sur": {
+  "releve": "2026-11-04_18.5c_r0.json",
+  "patch": "18.5c",
+  "set": 18
+ },
+ "composants": {
+  "DA_Component_Spatula": {
+   "nom": "Spatula",
+   "fr": "spatule"
+  },
+  "DA_Component_FryingPan": {
+   "nom": "Frying Pan",
+   "fr": "poêle"
+  },
+  "DA_Component_RecurveBow": {
+   "nom": "Recurve Bow",
+   "fr": "arc"
+  },
+  "DA_Component_ChainVest": {
+   "nom": "Chain Vest",
+   "fr": "plastron"
+  },
+  "DA_Component_NeedlesslyLargeRod": {
+   "nom": "Needlessly Large Rod",
+   "fr": "baguette"
+  },
+  "DA_Component_TearOfTheGoddess": {
+   "nom": "Tear Of The Goddess",
+   "fr": "larme"
+  },
+  "DA_Component_SparringGloves": {
+   "nom": "Sparring Gloves",
+   "fr": "gants"
+  },
+  "DA_Component_BFSword": {
+   "nom": "B.F. Sword",
+   "fr": "épée"
+  },
+  "DA_Component_GiantsBelt": {
+   "nom": "Giant's Belt",
+   "fr": "ceinture"
+  },
+  "DA_Component_NegatronCloak": {
+   "nom": "Negatron Cloak",
+   "fr": "cape"
+  }
+ },
+ "recettes": {
+  "DA_TacticiansCape": {
+   "nom": "Tactician's Cape",
+   "de": [
+    "DA_Component_Spatula",
+    "DA_Component_FryingPan"
+   ]
+  },
+  "DA_18_EmblemRapidfire": {
+   "nom": "Rapidfire Emblem",
+   "de": [
+    "DA_Component_FryingPan",
+    "DA_Component_RecurveBow"
+   ]
+  },
+  "DA_BrambleVest": {
+   "nom": "Bramble Vest",
+   "de": [
+    "DA_Component_ChainVest",
+    "DA_Component_ChainVest"
+   ]
+  },
+  "DA_ArchangelsStaff": {
+   "nom": "Archangel's Staff",
+   "de": [
+    "DA_Component_NeedlesslyLargeRod",
+    "DA_Component_TearOfTheGoddess"
+   ]
+  },
+  "DA_LastWhisper": {
+   "nom": "Last Whisper",
+   "de": [
+    "DA_Component_RecurveBow",
+    "DA_Component_SparringGloves"
+   ]
+  },
+  "DA_EdgeOfNight": {
+   "nom": "Edge of Night",
+   "de": [
+    "DA_Component_BFSword",
+    "DA_Component_ChainVest"
+   ]
+  },
+  "DA_TacticiansShield": {
+   "nom": "Tacticians Shield",
+   "de": [
+    "DA_Component_FryingPan",
+    "DA_Component_FryingPan"
+   ]
+  },
+  "DA_18_EmblemBlackthorn": {
+   "nom": "Blackthorn Emblem",
+   "de": [
+    "DA_Component_Spatula",
+    "DA_Component_GiantsBelt"
+   ]
+  },
+  "DA_18_EmblemElderwood": {
+   "nom": "Elderwood Emblem",
+   "de": [
+    "DA_Component_Spatula",
+    "DA_Component_ChainVest"
+   ]
+  },
+  "DA_SteadfastHeart": {
+   "nom": "Steadfast Heart",
+   "de": [
+    "DA_Component_ChainVest",
+    "DA_Component_SparringGloves"
+   ]
+  },
+  "DA_TitansResolve": {
+   "nom": "Titan's Resolve",
+   "de": [
+    "DA_Component_RecurveBow",
+    "DA_Component_ChainVest"
+   ]
+  },
+  "DA_GiantSlayer": {
+   "nom": "Giant Slayer",
+   "de": [
+    "DA_Component_RecurveBow",
+    "DA_Component_BFSword"
+   ]
+  },
+  "DA_ThiefsGloves": {
+   "nom": "Thief's Gloves",
+   "de": [
+    "DA_Component_SparringGloves",
+    "DA_Component_SparringGloves"
+   ]
+  },
+  "DA_18_EmblemPrimal": {
+   "nom": "Primal Emblem",
+   "de": [
+    "DA_Component_Spatula",
+    "DA_Component_SparringGloves"
+   ]
+  },
+  "DA_DragonsClaw": {
+   "nom": "Dragon's Claw",
+   "de": [
+    "DA_Component_NegatronCloak",
+    "DA_Component_NegatronCloak"
+   ]
+  },
+  "DA_JeweledGauntlet": {
+   "nom": "Jeweled Gauntlet",
+   "de": [
+    "DA_Component_SparringGloves",
+    "DA_Component_NeedlesslyLargeRod"
+   ]
+  },
+  "DA_HextechGunblade": {
+   "nom": "Hextech Gunblade",
+   "de": [
+    "DA_Component_BFSword",
+    "DA_Component_NeedlesslyLargeRod"
+   ]
+  },
+  "DA_18_EmblemSpellweaver": {
+   "nom": "Spellweaver Emblem",
+   "de": [
+    "DA_Component_FryingPan",
+    "DA_Component_NeedlesslyLargeRod"
+   ]
+  },
+  "DA_GargoyleStoneplate": {
+   "nom": "Gargoyle Stoneplate",
+   "de": [
+    "DA_Component_ChainVest",
+    "DA_Component_NegatronCloak"
+   ]
+  },
+  "DA_Crownguard": {
+   "nom": "Crownguard",
+   "de": [
+    "DA_Component_NeedlesslyLargeRod",
+    "DA_Component_ChainVest"
+   ]
+  },
+  "DA_RabadonsDeathcap": {
+   "nom": "Rabadon's Deathcap",
+   "de": [
+    "DA_Component_NeedlesslyLargeRod",
+    "DA_Component_NeedlesslyLargeRod"
+   ]
+  },
+  "DA_Bloodthirster": {
+   "nom": "Bloodthirster",
+   "de": [
+    "DA_Component_BFSword",
+    "DA_Component_NegatronCloak"
+   ]
+  },
+  "DA_18_EmblemSlayer": {
+   "nom": "Ravager Emblem",
+   "de": [
+    "DA_Component_FryingPan",
+    "DA_Component_NegatronCloak"
+   ]
+  },
+  "DA_18_EmblemInvoker": {
+   "nom": "Invoker Emblem",
+   "de": [
+    "DA_Component_FryingPan",
+    "DA_Component_TearOfTheGoddess"
+   ]
+  },
+  "DA_18_EmblemInferno": {
+   "nom": "Inferno Emblem",
+   "de": [
+    "DA_Component_Spatula",
+    "DA_Component_RecurveBow"
+   ]
+  },
+  "DA_IonicSpark": {
+   "nom": "Ionic Spark",
+   "de": [
+    "DA_Component_NeedlesslyLargeRod",
+    "DA_Component_NegatronCloak"
+   ]
+  },
+  "DA_RedBuff": {
+   "nom": "Red Buff",
+   "de": [
+    "DA_Component_RecurveBow",
+    "DA_Component_RecurveBow"
+   ]
+  },
+  "DA_SteraksGage": {
+   "nom": "Sterak's Gage",
+   "de": [
+    "DA_Component_BFSword",
+    "DA_Component_GiantsBelt"
+   ]
+  },
+  "DA_Quicksilver": {
+   "nom": "Quicksilver",
+   "de": [
+    "DA_Component_NegatronCloak",
+    "DA_Component_SparringGloves"
+   ]
+  },
+  "DA_18_EmblemHunter": {
+   "nom": "Hunter Emblem",
+   "de": [
+    "DA_Component_FryingPan",
+    "DA_Component_BFSword"
+   ]
+  },
+  "DA_Evenshroud": {
+   "nom": "Evenshroud",
+   "de": [
+    "DA_Component_NegatronCloak",
+    "DA_Component_GiantsBelt"
+   ]
+  },
+  "DA_BlueBuff": {
+   "nom": "Blue Buff",
+   "de": [
+    "DA_Component_TearOfTheGoddess",
+    "DA_Component_TearOfTheGoddess"
+   ]
+  },
+  "DA_SpearOfShojin": {
+   "nom": "Spear of Shojin",
+   "de": [
+    "DA_Component_TearOfTheGoddess",
+    "DA_Component_BFSword"
+   ]
+  },
+  "DA_SpiritVisage": {
+   "nom": "Spirit Visage",
+   "de": [
+    "DA_Component_GiantsBelt",
+    "DA_Component_TearOfTheGoddess"
+   ]
+  },
+  "DA_ProtectorsVow": {
+   "nom": "Protector's Vow",
+   "de": [
+    "DA_Component_ChainVest",
+    "DA_Component_TearOfTheGoddess"
+   ]
+  },
+  "DA_KrakensFury": {
+   "nom": "Kraken's Fury",
+   "de": [
+    "DA_Component_RecurveBow",
+    "DA_Component_NegatronCloak"
+   ]
+  },
+  "DA_TacticiansCrown": {
+   "nom": "Tacticians Crown",
+   "de": [
+    "DA_Component_Spatula",
+    "DA_Component_Spatula"
+   ]
+  },
+  "DA_18_EmblemBrawler": {
+   "nom": "Brawler Emblem",
+   "de": [
+    "DA_Component_FryingPan",
+    "DA_Component_GiantsBelt"
+   ]
+  },
+  "DA_18_EmblemVanguard": {
+   "nom": "Vanguard Emblem",
+   "de": [
+    "DA_Component_FryingPan",
+    "DA_Component_ChainVest"
+   ]
+  },
+  "DA_18_EmblemBlossom": {
+   "nom": "Blossom Emblem",
+   "de": [
+    "DA_Component_Spatula",
+    "DA_Component_NeedlesslyLargeRod"
+   ]
+  },
+  "DA_Morellonomicon": {
+   "nom": "Morellonomicon",
+   "de": [
+    "DA_Component_GiantsBelt",
+    "DA_Component_NeedlesslyLargeRod"
+   ]
+  },
+  "DA_GuinsoosRageblade": {
+   "nom": "Guinsoo's Rageblade",
+   "de": [
+    "DA_Component_RecurveBow",
+    "DA_Component_NeedlesslyLargeRod"
+   ]
+  },
+  "DA_InfinityEdge": {
+   "nom": "Infinity Edge",
+   "de": [
+    "DA_Component_BFSword",
+    "DA_Component_SparringGloves"
+   ]
+  },
+  "DA_WarmogsArmor": {
+   "nom": "Warmog's Armor",
+   "de": [
+    "DA_Component_GiantsBelt",
+    "DA_Component_GiantsBelt"
+   ]
+  },
+  "DA_18_EmblemExecutioner": {
+   "nom": "Executioner Emblem",
+   "de": [
+    "DA_Component_FryingPan",
+    "DA_Component_SparringGloves"
+   ]
+  },
+  "DA_18_EmblemSprykin": {
+   "nom": "Sprykin Emblem",
+   "de": [
+    "DA_Component_Spatula",
+    "DA_Component_NegatronCloak"
+   ]
+  },
+  "DA_18_EmblemLunar": {
+   "nom": "Lunar Emblem",
+   "de": [
+    "DA_Component_Spatula",
+    "DA_Component_TearOfTheGoddess"
+   ]
+  },
+  "DA_SunfireCape": {
+   "nom": "Sunfire Cape",
+   "de": [
+    "DA_Component_ChainVest",
+    "DA_Component_GiantsBelt"
+   ]
+  },
+  "DA_VoidStaff": {
+   "nom": "Void Staff",
+   "de": [
+    "DA_Component_RecurveBow",
+    "DA_Component_TearOfTheGoddess"
+   ]
+  },
+  "DA_Deathblade": {
+   "nom": "Deathblade",
+   "de": [
+    "DA_Component_BFSword",
+    "DA_Component_BFSword"
+   ]
+  },
+  "DA_StrikersFlail": {
+   "nom": "Striker's Flail",
+   "de": [
+    "DA_Component_GiantsBelt",
+    "DA_Component_SparringGloves"
+   ]
+  },
+  "DA_18_EmblemFae": {
+   "nom": "Fae Emblem",
+   "de": [
+    "DA_Component_Spatula",
+    "DA_Component_BFSword"
+   ]
+  },
+  "DA_HandOfJustice": {
+   "nom": "Hand Of Justice",
+   "de": [
+    "DA_Component_TearOfTheGoddess",
+    "DA_Component_SparringGloves"
+   ]
+  },
+  "DA_AdaptiveHelm": {
+   "nom": "Adaptive Helm",
+   "de": [
+    "DA_Component_TearOfTheGoddess",
+    "DA_Component_NegatronCloak"
+   ]
+  },
+  "DA_NashorsTooth": {
+   "nom": "Nashor's Tooth",
+   "de": [
+    "DA_Component_RecurveBow",
+    "DA_Component_GiantsBelt"
+   ]
+  }
+ },
+ "ouvre": {
+  "DA_Component_Spatula": [
+   "DA_TacticiansCape",
+   "DA_18_EmblemBlackthorn",
+   "DA_18_EmblemElderwood",
+   "DA_18_EmblemPrimal",
+   "DA_18_EmblemInferno",
+   "DA_TacticiansCrown",
+   "DA_18_EmblemBlossom",
+   "DA_18_EmblemSprykin",
+   "DA_18_EmblemLunar",
+   "DA_18_EmblemFae"
+  ],
+  "DA_Component_FryingPan": [
+   "DA_TacticiansCape",
+   "DA_18_EmblemRapidfire",
+   "DA_TacticiansShield",
+   "DA_18_EmblemSpellweaver",
+   "DA_18_EmblemSlayer",
+   "DA_18_EmblemInvoker",
+   "DA_18_EmblemHunter",
+   "DA_18_EmblemBrawler",
+   "DA_18_EmblemVanguard",
+   "DA_18_EmblemExecutioner"
+  ],
+  "DA_Component_RecurveBow": [
+   "DA_18_EmblemRapidfire",
+   "DA_LastWhisper",
+   "DA_TitansResolve",
+   "DA_GiantSlayer",
+   "DA_18_EmblemInferno",
+   "DA_RedBuff",
+   "DA_KrakensFury",
+   "DA_GuinsoosRageblade",
+   "DA_VoidStaff",
+   "DA_NashorsTooth"
+  ],
+  "DA_Component_ChainVest": [
+   "DA_BrambleVest",
+   "DA_EdgeOfNight",
+   "DA_18_EmblemElderwood",
+   "DA_SteadfastHeart",
+   "DA_TitansResolve",
+   "DA_GargoyleStoneplate",
+   "DA_Crownguard",
+   "DA_ProtectorsVow",
+   "DA_18_EmblemVanguard",
+   "DA_SunfireCape"
+  ],
+  "DA_Component_NeedlesslyLargeRod": [
+   "DA_ArchangelsStaff",
+   "DA_JeweledGauntlet",
+   "DA_HextechGunblade",
+   "DA_18_EmblemSpellweaver",
+   "DA_Crownguard",
+   "DA_RabadonsDeathcap",
+   "DA_IonicSpark",
+   "DA_18_EmblemBlossom",
+   "DA_Morellonomicon",
+   "DA_GuinsoosRageblade"
+  ],
+  "DA_Component_TearOfTheGoddess": [
+   "DA_ArchangelsStaff",
+   "DA_18_EmblemInvoker",
+   "DA_BlueBuff",
+   "DA_SpearOfShojin",
+   "DA_SpiritVisage",
+   "DA_ProtectorsVow",
+   "DA_18_EmblemLunar",
+   "DA_VoidStaff",
+   "DA_HandOfJustice",
+   "DA_AdaptiveHelm"
+  ],
+  "DA_Component_SparringGloves": [
+   "DA_LastWhisper",
+   "DA_SteadfastHeart",
+   "DA_ThiefsGloves",
+   "DA_18_EmblemPrimal",
+   "DA_JeweledGauntlet",
+   "DA_Quicksilver",
+   "DA_InfinityEdge",
+   "DA_18_EmblemExecutioner",
+   "DA_StrikersFlail",
+   "DA_HandOfJustice"
+  ],
+  "DA_Component_BFSword": [
+   "DA_EdgeOfNight",
+   "DA_GiantSlayer",
+   "DA_HextechGunblade",
+   "DA_Bloodthirster",
+   "DA_SteraksGage",
+   "DA_18_EmblemHunter",
+   "DA_SpearOfShojin",
+   "DA_InfinityEdge",
+   "DA_Deathblade",
+   "DA_18_EmblemFae"
+  ],
+  "DA_Component_GiantsBelt": [
+   "DA_18_EmblemBlackthorn",
+   "DA_SteraksGage",
+   "DA_Evenshroud",
+   "DA_SpiritVisage",
+   "DA_18_EmblemBrawler",
+   "DA_Morellonomicon",
+   "DA_WarmogsArmor",
+   "DA_SunfireCape",
+   "DA_StrikersFlail",
+   "DA_NashorsTooth"
+  ],
+  "DA_Component_NegatronCloak": [
+   "DA_DragonsClaw",
+   "DA_GargoyleStoneplate",
+   "DA_Bloodthirster",
+   "DA_18_EmblemSlayer",
+   "DA_IonicSpark",
+   "DA_Quicksilver",
+   "DA_Evenshroud",
+   "DA_KrakensFury",
+   "DA_18_EmblemSprykin",
+   "DA_AdaptiveHelm"
+  ]
+ },
+ "sans_recette": [
+  "DA_18_EmblemCoven",
+  "DA_18_EmblemDefender",
+  "DA_18_EmblemFloraFatalis",
+  "DA_18_EmblemFloraFatalisAugment",
+  "DA_18_EmblemJuggernaut",
+  "DA_AdaptiveHelm_Radiant",
+  "DA_ArchangelsStaffRadiant",
+  "DA_Artifact_AegisOfDawn",
+  "DA_Artifact_AegisOfDusk",
+  "DA_Artifact_BlightingJewel",
+  "DA_Artifact_Dawncore",
+  "DA_Artifact_EternalPact",
+  "DA_Artifact_Fishbones",
+  "DA_Artifact_ForbiddenIdol",
+  "DA_Artifact_GamblersBlade",
+  "DA_Artifact_GoldCollector",
+  "DA_Artifact_HellfireHatchet",
+  "DA_Artifact_HorizonFocus",
+  "DA_Artifact_Hullcrusher",
+  "DA_Artifact_InfinityForce",
+  "DA_Artifact_LichBane",
+  "DA_Artifact_LightshieldCrest",
+  "DA_Artifact_LudensTempest",
+  "DA_Artifact_Manazane",
+  "DA_Artifact_Mittens",
+  "DA_Artifact_MogulsMail",
+  "DA_Artifact_NavoriFlickerblade",
+  "DA_Artifact_RapidFireCannon",
+  "DA_Artifact_SeekersArmguard",
+  "DA_Artifact_SilvermereDawn",
+  "DA_Artifact_StatikkShiv",
+  "DA_Artifact_TheIndomitable",
+  "DA_Artifact_TitanicHydra",
+  "DA_Artifact_VoidGauntlet",
+  "DA_Artifact_WitsEnd",
+  "DA_Artifact_ZhonyasParadox",
+  "DA_BloodthirsterRadiant",
+  "DA_BlueBuffRadiant",
+  "DA_BrambleVestRadiant",
+  "DA_CrownguardRadiant",
+  "DA_DeathbladeRadiant",
+  "DA_DragonsClawRadiant",
+  "DA_EdgeOfNightRadiant",
+  "DA_EvenshroudRadiant",
+  "DA_GargoyleStoneplate_Radiant",
+  "DA_GiantSlayer_Radiant",
+  "DA_GuinsoosRagebladeRadiant",
+  "DA_HandOfJusticeRadiant",
+  "DA_HextechGunbladeRadiant",
+  "DA_InfinityEdgeRadiant",
+  "DA_IonicSparkRadiant",
+  "DA_Item_Artifact_TalismanOfAscension",
+  "DA_JeweledGauntletRadiant",
+  "DA_KrakensFury_Radiant",
+  "DA_LastWhisperRadiant",
+  "DA_MorellonomiconRadiant",
+  "DA_NashorsToothRadiant",
+  "DA_ProtectorsVowRadiant",
+  "DA_QuicksilverRadiant",
+  "DA_RabadonsDeathcap_Radiant",
+  "DA_RedBuffRadiant",
+  "DA_SpearOfShojinRadiant",
+  "DA_SpiritVisage_Radiant",
+  "DA_SteadfastHeartRadiant",
+  "DA_SteraksGageRadiant",
+  "DA_StrikersFlailRadiant",
+  "DA_SunfireCape_Radiant",
+  "DA_ThiefsGlovesRadiant",
+  "DA_TitansResolve_Radiant",
+  "DA_VoidStaffRadiant",
+  "DA_WarmogsArmorRadiant"
+ ],
+ "inconnus": [],
+ "note": "Table calée sur les objets vus dans le dernier relevé, pas sur un préfixe de set : elle suivra le Set 19 sans qu'on touche au script. `sans_recette` liste les objets qui existent mais ne se fabriquent pas à partir de deux composants (radiants, artefacts) ; `inconnus` ceux que CommunityDragon ne connaît pas — s'il se remplit, c'est que la source a changé de nommage."
+}
