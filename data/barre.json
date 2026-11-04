@@ -1,42 +1,42 @@
 {
  "schema_version": 1,
- "genere_le": "2026-11-03",
+ "genere_le": "2026-11-04",
  "region": "EUW",
  "source": "tactics.tools",
- "date_classement": "Tue, 3 Nov 2026 20:48:07 +0000",
+ "date_classement": "Wed, 4 Nov 2026 02:13:47 +0000",
  "entrees_lues": 1000,
  "paliers": {
   "CHALLENGER": 300,
-  "GRANDMASTER": 576,
-  "MASTER": 124
+  "GRANDMASTER": 598,
+  "MASTER": 102
  },
- "seuil_challenger_lp": 447,
+ "seuil_challenger_lp": 740,
  "challenger": {
   "n_joueurs": 300,
-  "lp_median": 916,
-  "lp_min": 447,
-  "parties_mediane": 427,
+  "lp_median": 915,
+  "lp_min": 740,
+  "parties_mediane": 431,
   "parties_min": 118,
-  "top4_pct_median": 56.3,
+  "top4_pct_median": 56.4,
   "premieres_pct_median": 16.2
  },
  "challenger_derniers_25": {
   "n_joueurs": 25,
-  "lp_median": 728,
-  "lp_min": 447,
-  "parties_mediane": 381,
-  "parties_min": 199,
+  "lp_median": 750,
+  "lp_min": 740,
+  "parties_mediane": 367,
+  "parties_min": 178,
   "top4_pct_median": 54.7,
-  "premieres_pct_median": 15.6
+  "premieres_pct_median": 16.2
  },
  "grandmaster": {
-  "n_joueurs": 576,
-  "lp_median": 507,
-  "lp_min": 341,
+  "n_joueurs": 598,
+  "lp_median": 498,
+  "lp_min": 339,
   "parties_mediane": 332,
-  "parties_min": 61,
-  "top4_pct_median": 55.0,
-  "premieres_pct_median": 14.8
+  "parties_min": 81,
+  "top4_pct_median": 55.1,
+  "premieres_pct_median": 14.9
  },
  "reserve": "Le taux de top 4 d'un Challenger est mesuré dans des lobbies Challenger. Celui d'un joueur Master l'est dans des lobbies Master. Les deux ne décrivent pas la même difficulté, et les comparer directement flatte celui du bas. Le nombre de parties, lui, se compare sans réserve : c'est un compte."
 }
