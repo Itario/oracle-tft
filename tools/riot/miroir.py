@@ -436,14 +436,28 @@ def main():
         import csv
         with open(a.csv, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
+            # ⚠ `objets` a été ajoutée le 04/11, et elle corrige une perte.
+            #
+            # carries() LISAIT `itemNames` depuis le premier jour et les
+            # gardait en troisième position de chaque tuple — puis cette
+            # ligne n'écrivait que c[0], le nom de l'unité. La donnée était
+            # collectée chez Riot et jetée à la frontière du fichier.
+            #
+            # Format : « unité:étoiles>objet1,objet2,objet3 », séparés par |.
+            # Identifiants BRUTS, pas joli() : c'est ce qui permet de joindre
+            # ses builds à data/recettes.json et au BiS du relevé sans
+            # correspondance de noms approximative.
             w.writerow(["date","version","placement","niveau","or_restant","degats",
-                        "dernier_tour","rang_niveau","rang_degats","traits","carries"])
+                        "dernier_tour","rang_niveau","rang_degats","traits","carries",
+                        "objets"])
             for x in L:
                 w.writerow([x["date"], x["version"], x["placement"], x["niveau"],
                             x["or_restant"], x["degats"], x["dernier_tour"],
                             x["rang_niveau"], x["rang_degats"],
                             "|".join(joli(t) for t in x["traits"]),
-                            "|".join(joli(c[0]) for c in x["carries"])])
+                            "|".join(joli(c[0]) for c in x["carries"]),
+                            "|".join(f"{c[0]}:{c[1]}>{','.join(c[2])}"
+                                     for c in x["carries"])])
         print(f"  Détail partie par partie : {a.csv}")
 
 
