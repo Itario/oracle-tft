@@ -136,11 +136,25 @@ def main():
     cible = os.path.join(RACINE, "site", "data")
     os.makedirs(os.path.join(cible, "meta"), exist_ok=True)
     shutil.copy(SORTIE, os.path.join(cible, "meta", "courant.json"))
-    for f in ("profil.json", "calendrier.json", "miroir.json", "focus.json", "barre.json"):
+    # ⚠ CETTE LISTE DOIT SUIVRE `SOURCES` DANS site/index.html.
+    # Un fichier oublié ici ne provoque aucune erreur : le site reçoit un 404,
+    # le bloc concerné ne s'affiche pas, et rien ne dit pourquoi. On annonce
+    # donc les manquants à voix haute plutôt que de les laisser passer.
+    attendus = ("profil.json", "calendrier.json", "miroir.json",
+                "focus.json", "barre.json", "joueur.json")
+    copies, manquants = [], []
+    for f in attendus:
         src = os.path.join(RACINE, "data", f)
         if os.path.exists(src):
             shutil.copy(src, os.path.join(cible, f))
-    print(f"copié vers site/data/ (développement local)")
+            copies.append(f)
+        else:
+            manquants.append(f)
+    print(f"copié vers site/data/ : {len(copies)}/{len(attendus)} "
+          f"({', '.join(copies)})")
+    if manquants:
+        print(f"  ⚠ absents de data/ : {', '.join(manquants)} — le site "
+              f"affichera ces blocs vides, sans message d'erreur.")
     taille = os.path.getsize(SORTIE)
     print(f"écrit : {SORTIE} ({taille:,} octets)".replace(",", " "))
     if d:

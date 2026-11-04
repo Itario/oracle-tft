@@ -64,6 +64,16 @@ jobs:
         # classement bouge tous les jours, contrairement au patch.
         run: python3 tools/releve/barre.py --region euw
 
+      - name: Relever la position du joueur
+        # APRÈS barre.py, qui n'est pas un détail : joueur.py lit
+        # data/barre.json pour convertir l'écart à la barre en parties.
+        # Inversé, l'écart serait calculé sur le seuil de la veille.
+        #
+        # Ne fait pas échouer le relevé de méta s'il casse : la page d'un
+        # joueur change de structure plus souvent qu'un classement.
+        run: python3 tools/releve/joueur.py --region euw --nom Itario --tag EUW
+        continue-on-error: true
+
       - name: Vérifier qu'aucune clé API n'a été écrite
         run: |
           # Même garde-fou que le déploiement. Un relevé vient du réseau :
@@ -72,16 +82,25 @@ jobs:
             echo "::error::Une chaîne au format clé API Riot se trouve dans data/."
             exit 1
           fi
+          # La page du joueur PORTE un puuid. joueur.py ne le recopie pas,
+          # mais ce dépôt est public et un puuid est un identifiant Riot
+          # stable : on ne se repose pas sur la vigilance d'un script.
+          # Ne retire jamais ce garde-fou non plus.
+          if grep -rIn "puuid" data/ 2>/dev/null; then
+            echo "::error::Un champ puuid se trouve dans data/ — dépôt public."
+            exit 1
+          fi
 
       - name: Pousser le relevé s'il y en a un nouveau
         run: |
-          if [ -z "$(git status --porcelain data/releves-tt data/barre.json)" ]; then
-            echo "Rien de neuf : ni patch, ni mouvement du classement."
+          SUIVIS="data/releves-tt data/barre.json data/joueur.json"
+          if [ -z "$(git status --porcelain $SUIVIS)" ]; then
+            echo "Rien de neuf : ni patch, ni classement, ni position."
             exit 0
           fi
           git config user.name  "Oracle TFT"
           git config user.email "noreply@anthropic.com"
-          git add data/releves-tt data/barre.json
+          git add $SUIVIS
           FICHIER=$(git diff --cached --name-only | head -1)
           git commit -m "Relevé automatique : $(basename "$FICHIER" .json)
 

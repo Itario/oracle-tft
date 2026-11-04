@@ -47,7 +47,13 @@ jobs:
             echo "::error::Une clé API Riot a été trouvée dans les fichiers publiés."
             exit 1
           fi
-          echo "Aucune clé trouvée."
+          # Même garde que le relevé : la page du joueur porte un puuid, et ce
+          # qui part ici part sur le web. Ne retire jamais ce garde-fou.
+          if grep -rIn "puuid" site/ data/ 2>/dev/null; then
+            echo "::error::Un champ puuid a été trouvé dans les fichiers publiés."
+            exit 1
+          fi
+          echo "Ni clé API, ni puuid."
 
       # NE PAS remettre `enablement: true` ici.
       # Essayé le 02/11 pour que le workflow active Pages lui-même sur un dépôt

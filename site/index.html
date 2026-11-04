@@ -446,7 +446,11 @@ const SOURCES = {
   calendrier: "data/calendrier.json",
   miroir:     "data/miroir.json",
   focus:      "data/focus.json",
-  barre:      "data/barre.json"
+  barre:      "data/barre.json",
+  // Relevé huit fois par jour par le workflow. data/profil.json, lui, est
+  // écrit à la main : son LP datait du 22 octobre quand le vrai valait 39.
+  // Toute lecture de position passe désormais par ici, avec profil en repli.
+  joueur:     "data/joueur.json"
 };
 const D = {};              // données chargées
 const $  = s => document.querySelector(s);
@@ -922,6 +926,77 @@ function vueApres(){
 /* La cible, mesurée au lieu d'être supposée. On compare aux 25 DERNIERS
    Challengers : la médiane du palier décrit des joueurs déjà installés,
    pas le ticket d'entrée. */
+/* La distance à Challenger, en parties.
+ *
+ * C'est le seul endroit du site qui réponde à la question du projet. Tout le
+ * reste décrit un niveau ; ceci chiffre un trajet. Et il ne l'affiche qu'avec
+ * sa fourchette et son avertissement : un nombre seul serait un mensonge,
+ * parce que deux effets non modélisés le tirent vers le haut (les gains de
+ * LP se compriment en montant, le placement dérive vers 4.50). */
+function blocProjection(){
+  const j = D.joueur;
+  if(!j?.projection || !j.position) return "";
+  const pr = j.position, p = j.projection, e = p.erreur_decomposee || {};
+  const fo = p.parties_fourchette;
+
+  // Jours sans jouer : la décroissance ne pardonne pas à Master, et c'est le
+  // seul chiffre de cette page qui se périme tout seul.
+  let dormance = "";
+  if(pr.derniere_partie_connue){
+    const d = Math.floor((Date.now() - Date.parse(pr.derniere_partie_connue))
+                         / 86400000);
+    if(d >= 3) dormance = `<div class="note warn"><b>${d} jours sans partie
+      classée.</b> À Master, les 14 parties en banque s'épuisent à une par
+      jour, puis c'est −50 LP par jour. L'inaction coûte des LP que le
+      placement devra regagner.</div>`;
+  }
+
+  return `<h2>Combien de parties</h2>
+    <p class="doux">Au-dessus de Master il n'y a plus de division ni de série de
+      promotion : de Master 0 LP jusqu'à Challenger, c'est <b>une seule échelle
+      continue</b>. C'est ce qui permet de convertir un écart de LP en nombre de
+      parties — et de répondre enfin à la question du projet.</p>
+
+    <div class="grille">
+      <div class="carte">
+        <div class="chiffre">${nb(p.parties_estimees)}</div>
+        <div class="unite">parties, au rythme mesuré</div>
+        <p class="faible" style="margin:.8rem 0 0">Fourchette
+          <b>${fo ? nb(fo[0]) + "–" + nb(fo[1]) : "—"}</b> à deux
+          écarts-types. ${nb(p.lp_manquants)} LP séparent tes
+          ${nb(pr.lp)} LP du seuil.</p>
+      </div>
+      <div class="carte">
+        <div class="chiffre sm">${p.lp_par_partie_attendu > 0 ? "+" : ""}${p.lp_par_partie_attendu} LP</div>
+        <div class="unite">par partie, à ${p.placement_projete} de placement</div>
+        <p class="faible" style="margin:.8rem 0 0">± ${p.erreur_type}.
+          L'incertitude vient de ton placement (${e.placement}), pas du barème
+          de LP (${e.bareme}) — et elle décroît en 1/√n.</p>
+      </div>
+      <div class="carte">
+        <div class="chiffre sm">${nb(pr.rang_region)}<sup>e</sup></div>
+        <!-- « euw1 » est le code Riot brut : on affiche la région, pas le shard. -->
+        <div class="unite">sur ${esc(String(j.joueur?.region || "")
+          .replace(/\d+$/, "").toUpperCase() || "la région")}</div>
+        <p class="faible" style="margin:.8rem 0 0">Top ${pr.percentile_region} %
+          de la région, top ${pr.percentile_monde} % du monde. Un rang se lit
+          sans réserve : c'est un comptage, pas une performance.</p>
+      </div>
+    </div>
+
+    ${dormance}
+
+    <div class="note">${esc(p.avertissement)}</div>
+
+    <p class="faible">Barème mesuré sur tes propres parties :
+      <b>${j.bareme_lp?.droite?.pente_lp_par_place} LP par place</b>, neutre à
+      la ${j.bareme_lp?.droite?.place_neutre}<sup>e</sup>
+      (R² ${j.bareme_lp?.droite?.r2} sur
+      ${nb(j.bareme_lp?.parties_retenues)} parties,
+      ${nb(j.bareme_lp?.censurees_exclues)} écrêtées écartées).
+      ${esc(j.bareme_lp?.note_assiette || "")}</p>`;
+}
+
 function blocBarre(){
   const b = D.barre, mi = D.miroir, p = D.profil?.joueurs?.[0];
   if(!b || !b.challenger_derniers_25) return "";
@@ -953,7 +1028,12 @@ function blocBarre(){
         ${mi ? ligne("top 4", mi.top4_pct, B.top4_pct_median, " %", true) : ""}
         ${mi ? ligne("1res", mi.premieres_pct, B.premieres_pct_median, " %", true) : ""}
         ${mi ? ligne("parties", mi.n_parties, B.parties_mediane, "", true) : ""}
-        ${p ? ligne("LP", p.rang.lp, B.lp_median, "", true) : ""}
+        ${(() => {
+          // La position vive d'abord. data/profil.json est saisi à la main et
+          // retardait de treize jours : il ne sert plus que de repli.
+          const lp = D.joueur?.position?.lp ?? p?.rang?.lp;
+          return lp == null ? "" : ligne("LP", lp, B.lp_median, "", true);
+        })()}
       </div>
       ${b.reserve ? `<p class="faible" style="margin:1rem 0 0">${esc(b.reserve)}</p>` : ""}
     </div>`;
@@ -995,13 +1075,25 @@ function vueSuivi(){
   const prochain = evts.find(e => e.date > auj);
 
   return `<h1>Suivi</h1>
+    ${blocProjection()}
     ${blocBarre()}
-    ${p ? `<p class="doux"><b>${esc(p.rang.tier)}, ${p.rang.lp} LP</b> depuis le
-      ${fdate(p.rang.date)}. Objectif : ${esc(p.objectif)}.
-      ${esc(p.riot_id)}, ${esc(p.region.toUpperCase())}.</p>` : ""}
-    ${p ? `<div class="note warn">À partir de Master : 14 parties en banque, une
-      retirée par jour, puis <b>−50 LP par jour</b> d'inactivité. À ${p.rang.lp} LP,
-      une semaine d'absence coûte le rang.</div>` : ""}
+    ${(() => {
+      const J = D.joueur;
+      if(J?.position){
+        const q = J.position;
+        return `<p class="doux"><b>${esc(q.palier)}, ${q.lp} LP</b> —
+          relevé automatiquement le ${fdate(J.genere_le)}, dernière partie
+          connue le ${fdate((q.derniere_partie_connue || "").slice(0,10))}.
+          ${p ? `Objectif : ${esc(p.objectif)}. ${esc(p.riot_id)},
+          ${esc(p.region.toUpperCase())}.` : ""}</p>`;
+      }
+      // Repli : le fichier saisi à la main, et on dit que c'est un repli.
+      return p ? `<p class="doux"><b>${esc(p.rang.tier)}, ${p.rang.lp} LP</b>
+        au ${fdate(p.rang.date)}. Objectif : ${esc(p.objectif)}.
+        ${esc(p.riot_id)}, ${esc(p.region.toUpperCase())}.</p>
+        <div class="note warn">Relevé automatique indisponible : ce chiffre est
+        saisi à la main et peut avoir plusieurs jours de retard.</div>` : "";
+    })()}
     ${rotation}
     <h2>Calendrier</h2>
     <div class="cal">${evts.map(e => {

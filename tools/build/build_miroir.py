@@ -177,6 +177,11 @@ def main(csv_path, resume_path):
         "n_parties": n,
         "fenetre": {"de": L[0]["date"], "a": L[-1]["date"]},
         "placement_moyen": round(base, 3),
+        # Calculé depuis toujours pour les seuils de bruit, jamais publié.
+        # tools/releve/joueur.py en a besoin : c'est l'incertitude sur ce
+        # placement moyen — et non celle du barème de LP — qui gouverne la
+        # fourchette de la projection vers Challenger.
+        "placement_ecart_type": round(sdp, 3),
         "top4_pct": round(sum(1 for p in pl if p <= 4) / n * 100, 1),
         "premieres_pct": round(sum(1 for p in pl if p == 1) / n * 100, 1),
         "distribution": dist,
