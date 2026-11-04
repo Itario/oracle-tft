@@ -202,6 +202,9 @@ pre code{background:none;border:0;padding:0;color:var(--doux)}
 .mv .d{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;
   font-family:var(--titre);font-size:1.02rem}
 .up .d{color:var(--or)} .dn .d{color:var(--sang)}
+/* Un relevé de méta vieux d'une semaine ou plus doit se voir depuis le
+   bandeau, sans qu'on ait à lire la date et à faire la soustraction. */
+.perime{color:var(--sang)}
 .mv .bar{grid-column:1/-1;height:2px;margin-top:.3rem;background:rgba(31,71,102,.6)}
 .mv .bar i{display:block;height:100%}
 .up .bar i{background:linear-gradient(90deg,var(--or),var(--or-vif))}
@@ -1195,9 +1198,20 @@ addEventListener("popstate", () => {
 
 charger().then(() => {
   const m = D.meta;
+  // ⚠ L'ÂGE DU RELEVÉ NE SE DÉDUIT PAS, IL S'AFFICHE.
+  //
+  // Le bandeau portait la date du relevé, et c'était tout : « 23/10/2026 »
+  // à côté d'un patch, lu douze jours plus tard, ne saute pas aux yeux. Or
+  // le bandeau, la rotation et « ce qui monte » descendent de data/releves/
+  // (MetaTFT, déposé à la main), pas de data/releves-tt/ (automatique).
+  // Une méta périmée qui a l'air courante est pire qu'une méta absente.
+  const jours = m?.releve?.date
+    ? Math.floor((Date.now() - Date.parse(m.releve.date)) / 86400000) : null;
   $("#hsub").textContent = m
     ? `patch ${m.releve.patch} · ${m.releve.rang} · ${fdate(m.releve.date)}`
+      + (jours >= 7 ? `  ·  relevé il y a ${jours} jours` : "")
     : "données indisponibles";
+  if(jours >= 7) $("#hsub").classList.add("perime");
   if(m) $("#pied").innerHTML =
     `Méta : ${esc(m.releve.source || "MetaTFT")} — ${nb(m.releve.n_parties)} parties,
      ${esc(m.releve.fenetre || "")}. Généré le ${fdate(m.genere_le)}.
