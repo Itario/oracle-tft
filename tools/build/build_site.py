@@ -152,6 +152,17 @@ def main():
             copies.append(f)
         else:
             manquants.append(f)
+    # Les fichiers de référence vivent dans data/reference/ : ils sont écrits
+    # à la main, pas produits par un script, et ce dossier les distingue.
+    src_ref = os.path.join(RACINE, "data", "reference")
+    if os.path.isdir(src_ref):
+        dst_ref = os.path.join(cible, "reference")
+        os.makedirs(dst_ref, exist_ok=True)
+        for f in os.listdir(src_ref):
+            if f.endswith(".json"):
+                shutil.copy(os.path.join(src_ref, f), os.path.join(dst_ref, f))
+                copies.append("reference/" + f)
+
     print(f"copié vers site/data/ : {len(copies)}/{len(attendus)} "
           f"({', '.join(copies)})")
     if manquants:

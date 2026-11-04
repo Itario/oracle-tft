@@ -13,6 +13,16 @@
   "meme_population": true,
   "note": "Les deux relevés décrivent la même tranche : on peut croiser compos et unités."
  },
+ "augments": {
+  "champs": [
+   "augmentSingles",
+   "aug1s",
+   "aug2s",
+   "aug3s"
+  ],
+  "entrees_trouvees": 0,
+  "note": "Les quatre champs d'augments existent dans le schéma de la source et sont VIDES. Ce n'est pas une absence supposée : elle est comptée à chaque relevé. Si ce nombre devient positif, la donnée d'augments est revenue."
+ },
  "compos": [
   {
    "code": "0241f4393eb4104033ed3ef3ff412401TFTSet18",

@@ -209,6 +209,20 @@ pre code{background:none;border:0;padding:0;color:var(--doux)}
 /* Les lignes du bloc objets. Classes PROPRES : emprunter .dl, taillé pour la
    distribution des placements (quatre colonnes fixes), cassait le nom des
    objets sur deux lignes et masquait la barre, dont la classe y est .b. */
+/* Le rendu du NON-MESURÉ. Volontairement différent : bandeau, fond et
+   bordure à gauche, pour qu'un guide ou un raisonnement ne puisse jamais
+   se lire comme un relevé. */
+.ref{position:relative;border-left:3px solid var(--or);
+     background:rgba(200,170,110,.05);padding:2.1rem 1.2rem 1.2rem;margin:.9rem 0}
+.ref-b{position:absolute;top:0;left:0;font-size:.68rem;letter-spacing:.09em;
+       text-transform:uppercase;font-weight:700;color:var(--nuit);
+       background:var(--or);padding:.16rem .55rem}
+table.cotes{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+table.cotes th,table.cotes td{padding:.26rem .3rem;text-align:right;
+       border-bottom:1px solid rgba(31,71,102,.45);font-size:.9rem}
+table.cotes th{color:var(--or);font-family:var(--titre);text-align:right}
+table.cotes td.fort{color:var(--hextech);font-weight:700}
+table.cotes td.nul{color:rgba(165,182,198,.35)}
 .comp-t{display:flex;align-items:baseline;gap:.55rem;flex-wrap:wrap;margin-bottom:.6rem}
 .comp-t .lp{font-family:var(--titre);font-weight:700;font-size:1.5rem;color:var(--or)}
 .jauge{position:relative;height:18px;background:rgba(31,71,102,.38)}
@@ -478,7 +492,13 @@ const SOURCES = {
   // Toute lecture de position passe désormais par ici, avec profil en repli.
   joueur:     "data/joueur.json",
   objets:     "data/objets.json",
-  compos_lui: "data/compos_lui.json"
+  compos_lui: "data/compos_lui.json",
+  // ⚠ Ces deux-là ne sont NI mesurés ni relevés : un guide transcrit et un
+  // raisonnement. Ils ont leur propre rendu (.ref) pour qu'on ne les
+  // confonde jamais avec le reste, et une garde de set qui les cache quand
+  // ils périment.
+  fondamentaux: "data/reference/fondamentaux.json",
+  augments:     "data/reference/augments.json"
 };
 const D = {};              // données chargées
 const $  = s => document.querySelector(s);
@@ -871,7 +891,121 @@ function vuePendant(){
           <span class="u">${esc(nom)}</span>
           <span class="a">${u ? u.avg.toFixed(2) : ""}</span>
         </div>`;
-      }).join("")}</div>` : ""}`;
+      }).join("")}</div>` : ""}
+    ${blocFondamentaux()}
+    ${blocAugments()}`;
+}
+
+/* ══ LA DONNÉE QUI N'EN EST PAS ═══════════════════════════════════════════
+ * Quatre natures dans ce projet, de la plus forte à la plus faible :
+ *   mesure       on a compté, avec un seuil de bruit
+ *   releve       on a copié une source publique
+ *   reference    on a transcrit un guide
+ *   raisonnement on a réfléchi, et ça se discute
+ * Les deux dernières s'affichent en .ref : fond, bordure et bandeau distincts.
+ * Sans ça, dans trois semaines, personne ne saura plus lequel est lequel. */
+
+/* Le set du relevé courant, pour périmer ce qui doit l'être. */
+function setCourant(){
+  const s = D.compos_lui?.patch || D.meta?.releve?.patch;
+  const n = parseInt(String(s || "").split(".")[0], 10);
+  return Number.isFinite(n) ? n : null;
+}
+
+function enTeteRef(o, titre, sousTitre){
+  const sc = setCourant();
+  if(o?.set && sc && o.set !== sc) return null;   // périmé : on n'affiche pas
+  const lib = o?.nature === "raisonnement" ? "raisonnement, pas mesure"
+            : "guide transcrit, pas mesure";
+  return `<h2>${titre}</h2>
+    <p class="doux">${sousTitre}</p>
+    <div class="ref"><div class="ref-b">${lib}</div>`;
+}
+
+function blocFondamentaux(){
+  const o = D.fondamentaux;
+  const tete = enTeteRef(o, "Les chiffres du jeu",
+    `Les cotes de boutique rendent un roll calculable, et les timings donnent des
+     repères. <b>Rien ici ne vient de tes parties</b> — ce sont des constantes du
+     set ${o?.set ?? ""}, transcrites depuis un guide.`);
+  if(!tete) return "";
+
+  const c = o.cotes_boutique;
+  const lignes = Object.entries(c.par_niveau).map(([niv, v]) =>
+    `<tr><th>${niv}</th>${v.map((x, i) =>
+      // Colonne des 4-coûts (indice 3) : son saut au niveau 8 est la seule
+      // raison pour laquelle le « 8 rapide » existe. Un seuil uniforme
+      // surlignait les 1-coûts, c'est-à-dire le contraire de l'information.
+      `<td class="${i === 3 && x >= 10 ? "fort" : (x === 0 ? "nul" : "")}">${x ? x : "·"}</td>`
+    ).join("")}</tr>`).join("");
+
+  // Un remplacement d'underscores ne rend pas les accents : « serie de
+  // victoires » s'affichait sans accent. Les libellés sont écrits.
+  const LIBT = {
+    serie_de_victoires: "Série de victoires", serie_de_defaites: "Série de défaites",
+    serie_mixte: "Série mixte", reroll_1_cout: "Reroll 1-coût",
+    reroll_2_couts: "Reroll 2-coûts", reroll_3_couts: "Reroll 3-coûts"};
+  const tim = Object.entries(o.timings)
+    .filter(([k]) => !k.startsWith("_"))
+    .map(([k, t]) => {
+      const m = t.montees ? Object.entries(t.montees)
+        .map(([r, n]) => `${r} → <b>${n}</b>`).join(" · ") : esc(t._regle || "");
+      return `<p style="margin:.45rem 0"><b>${esc(LIBT[k] || k.replace(/_/g, " "))}</b>
+        <span class="faible">${esc(t._quand || "")}</span><br>${m}
+        ${t._condition ? `<span class="faible">${esc(t._condition)}</span>` : ""}</p>`;
+    }).join("");
+
+  return tete + `
+    <div class="grille">
+      <div>
+        <h3 style="margin:0 0 .6rem">Cotes de boutique</h3>
+        <table class="cotes">
+          <tr><th>niv.</th>${c.colonnes.map(x =>
+            `<th>${esc(x.replace(" coûts", "c").replace(" coût", "c"))}</th>`).join("")}</tr>
+          ${lignes}
+        </table>
+        <p class="faible" style="margin:.7rem 0 0"><b>Lis la colonne des
+          4-coûts :</b> 0 · 2 · 5 · 10 · <b>24</b> · 30 · 40. Le saut au niveau 8
+          est toute la raison d'être du « 8 rapide » — en dessous, on cherche une
+          unité qui sort une fois sur dix.</p>
+        <p class="faible" style="margin:.5rem 0 0">Exemplaires de chaque unité dans
+          le pool partagé : ${Object.entries(o.taille_pool)
+            .map(([k, v]) => `${k}c → ${v}`).join(" · ")}. C'est ce qui rend une
+          unité contestée.</p>
+      </div>
+      <div>
+        <h3 style="margin:0 0 .6rem">Quand monter</h3>
+        ${tim}
+      </div>
+    </div>
+    <p class="faible" style="margin:1rem 0 0">${
+      (o.ce_que_ce_fichier_ne_dit_pas || []).map(esc).join(" ")}</p>
+    <p class="faible">Source : ${(o.sources || []).map(s =>
+      `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.nom)}</a>`
+      ).join(", ")}, relevé le ${fdate(o.releve_le)}.</p>
+    </div>`;
+}
+
+function blocAugments(){
+  const o = D.augments;
+  const tete = enTeteRef(o, "Les augments",
+    "Aucun chiffre n'existe, pour personne. Ce qui suit est un cadre de décision.");
+  if(!tete) return "";
+  const p = o.pourquoi_pas_de_chiffres || {};
+  // Le compteur vient du relevé, lui : c'est la seule partie MESURÉE du bloc.
+  const n = D.compos_lui?.augments?.entrees_trouvees;
+  return tete + `
+    <p><b>${esc(p.constat || "")}</b></p>
+    <ul class="faible">${(p.preuves || []).map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+    ${n != null ? `<p class="faible"><b>Surveillance automatique :</b>
+      ${n} entrée${n > 1 ? "s" : ""} d'augment trouvée${n > 1 ? "s" : ""} au dernier
+      relevé. ${n === 0 ? "Toujours vide — le jour où ce nombre bouge, la donnée est revenue."
+      : "⚠ La donnée est revenue : ce bloc est à refaire."}</p>` : ""}
+    <h3 style="margin:1.2rem 0 .6rem">Ce qui ne dépend pas du patch</h3>
+    ${(o.cadre?.principes || []).map(x => `
+      <p style="margin:.6rem 0"><b>${esc(x.titre)}.</b>
+        <span class="faible">${esc(x.pourquoi)}</span></p>`).join("")}
+    </div>`;
 }
 
 /* -------------------------------------------------- APRÈS la partie */

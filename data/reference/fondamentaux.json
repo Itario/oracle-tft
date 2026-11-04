@@ -1,0 +1,89 @@
+{
+ "schema_version": 1,
+ "nature": "reference",
+ "_nature": "⚠ CE FICHIER N'EST PAS MESURÉ. Tout le reste de data/ vient d'un relevé ou d'une collecte : des nombres qu'on a comptés, avec un seuil de bruit. Ceci vient d'un guide, et se lit comme un guide. Le site DOIT le présenter autrement que le mesuré — sans quoi on aura, d'ici trois semaines, oublié lequel est lequel.",
+ "set": 18,
+ "_set": "⚠ PÉRIME AU SET 19. Les cotes de boutique et les timings changent à chaque set, et parfois dans un set. Le site compare ce numéro à celui du relevé courant et refuse d'afficher le bloc s'ils diffèrent : mieux vaut un bloc absent qu'un bloc faux.",
+ "releve_le": "2026-11-04",
+ "sources": [
+  {
+   "nom": "BunnyMuffins — Leveling & Econ Guide",
+   "url": "https://bunnymuffins.lol/tft-leveling-guide/",
+   "porte": ["cotes_boutique", "taille_pool", "timings", "spikes", "points_de_vie"]
+  }
+ ],
+
+ "cotes_boutique": {
+  "_note": "Probabilité, en %, que chaque emplacement de boutique propose une unité de ce coût. C'est la seule chose qui rende un roll calculable : à 8, un 4-coûts sort une fois sur quatre par emplacement ; à 7, une fois sur dix.",
+  "colonnes": ["1 coût", "2 coûts", "3 coûts", "4 coûts", "5 coûts"],
+  "par_niveau": {
+   "4":  [55, 30, 15, 0, 0],
+   "5":  [45, 33, 20, 2, 0],
+   "6":  [30, 40, 25, 5, 0],
+   "7":  [19, 30, 40, 10, 1],
+   "8":  [17, 24, 32, 24, 3],
+   "9":  [15, 18, 25, 30, 12],
+   "10": [5, 10, 20, 40, 25]
+  }
+ },
+
+ "taille_pool": {
+  "_note": "Exemplaires de CHAQUE unité dans le pool partagé des huit joueurs. C'est ce qui rend une unité contestée : si trois joueurs cherchent le même 4-coûts, il y a dix copies pour trois personnes.",
+  "1": 30, "2": 25, "3": 18, "4": 10, "5": 9
+ },
+
+ "timings": {
+  "_note": "À quel round monter de niveau, selon l'état de série. Ce ne sont pas des lois : ce sont les repères d'un guide, et l'état du plateau prime toujours.",
+  "serie_de_victoires": {
+   "_quand": "8 victoires ou plus — viser le 8 rapide ou le 9",
+   "montees": {"2-1": 4, "2-5": 5, "3-1": 6, "3-5": 7, "4-2": 8, "5-2": 9},
+   "_condition": "Le passage au 7 en 3-5 demande 30 or ou plus."
+  },
+  "serie_de_defaites": {
+   "_quand": "6 défaites ou plus",
+   "montees": {"2-3": 4, "2-7": 5, "3-2": 6, "3-5": 7, "4-1": 8, "5-2": 9},
+   "_condition": "Le 4 en 2-3 demande 10 or ou plus, le 7 en 3-5 en demande 40."
+  },
+  "serie_mixte": {
+   "_quand": "Ni l'un ni l'autre — le cas le plus fréquent",
+   "montees": {"2-1 ou 2-3": 4, "2-5 ou 3-1": 5, "3-2": 6, "3-5 ou 4-1": 7, "4-2 ou 4-5": 8, "5-2": 9}
+  },
+  "reroll_1_cout": {
+   "_quand": "On cherche un 1-coût en 3 étoiles",
+   "_regle": "Ne pas monter tant que le 1-coût n'est pas en 3 étoiles. Roll jusqu'à ~32 or en 3-1, puis agressivement en 3-5."
+  },
+  "reroll_2_couts": {
+   "montees": {"2-1": 4, "2-5": 5, "3-2": 6, "4-5": 7, "5-2": 8},
+   "_condition": "Monter en 2-1 seulement si le plateau est fort, avec une copie de l'unité cherchée et un objet slammable."
+  },
+  "reroll_3_couts": {
+   "montees": {"2-1": 4, "2-5": 5, "3-2": 6, "3-5 ou 4-1": 7, "5+": 8, "6+": 9},
+   "_condition": "Le 7 en 3-5 demande un augment d'économie ; en 4-1, un carry en 2 étoiles."
+  }
+ },
+
+ "spikes": {
+  "_note": "Le round où chaque archétype est à son maximum de puissance relative. C'est là qu'il faut être prêt, et c'est là que les autres le seront aussi.",
+  "8_rapide": ["4-2"],
+  "9_rapide": ["4-2", "5-2"],
+  "reroll_1_cout": ["3-1", "3-5", "4-1"],
+  "reroll_2_couts": ["3-2", "4-1", "4-5"],
+  "reroll_3_couts": ["3-2", "3-5", "4-1", "5-1"]
+ },
+
+ "points_de_vie": {
+  "_note": "Les PV sont une ressource qui s'échange contre du tempo, pas un score.",
+  "regles": [
+   "Ne pas encaisser 20 dégâts dans un combat de stage 4.",
+   "Gagner le 3-5 ou le 3-6 rapporte en général une vie d'avance.",
+   "En série de défaites, prévoir une vie perdue par combat de stage 4 — environ 50 à 60 PV de déficit.",
+   "En série mixte, préserver les PV : les plateaux verticaux sont favorisés."
+  ]
+ },
+
+ "ce_que_ce_fichier_ne_dit_pas": [
+  "Les paliers d'intérêt et les coûts d'XP par niveau n'y sont PAS : la source n'en donnait qu'un exemple ponctuel, et un chiffre recopié à peu près est pire qu'un chiffre absent.",
+  "Rien ici ne tient compte de SES parties. Ce sont des repères généraux ; data/focus.json et data/compos_lui.json sont les seuls fichiers qui parlent de lui.",
+  "Les timings supposent qu'on connaît son état de série et son archétype. Choisir l'archétype est la décision en amont, et elle n'est pas dans ce fichier."
+ ]
+}

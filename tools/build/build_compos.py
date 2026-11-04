@@ -143,6 +143,9 @@ def main():
         "patch": co.get("patch") or co.get("patch_code"),
         "n_parties_ladder": co.get("n_parties"),
         "population": pop,
+        # Le compteur d'augments voyage avec ce fichier plutôt que d'obliger
+        # le site à charger compos.json en entier pour un seul entier.
+        "augments": co.get("augments"),
         "compos": sortie,
         "limite": co.get("limite"),
         "reserves": {

@@ -1,0 +1,55 @@
+{
+ "schema_version": 1,
+ "nature": "raisonnement",
+ "_nature": "⚠ CECI N'EST NI MESURÉ NI RELEVÉ. Les trois autres natures du projet sont : `mesure` (on a compté, avec un seuil de bruit), `releve` (on a copié une source publique), `reference` (on a transcrit un guide). Ceci est la quatrième et la plus faible : un raisonnement. Il se discute, il ne se vérifie pas. Le site doit le marquer comme tel.",
+ "set": 18,
+ "ecrit_le": "2026-11-04",
+
+ "pourquoi_pas_de_chiffres": {
+  "constat": "La donnée d'augments n'existe plus pour personne depuis la migration Unreal. Ce n'est pas une limite de notre collecte.",
+  "preuves": [
+   "L'API Riot ne renvoie plus le champ `augments` : absent sur 200/200 parties récoltées le 02/11.",
+   "tactics.tools a gardé sa page de statistiques d'augments, filtres et colonnes compris, et le tableau est vide (`augsData: {singles:[], pairs:[], trios:[]}` à toutes les tranches).",
+   "MetaTFT a basculé sur une tier list tenue à la main, en lettres, sans aucun taux.",
+   "Le relevé de compos porte quatre champs d'augments dans le schéma de la source — augmentSingles, aug1s, aug2s, aug3s — et ils sont VIDES à 495 000 parties. C'est la preuve la plus nette : les emplacements existent, Riot n'envoie rien."
+  ],
+  "surveillance": "tools/releve/compos.py COMPTE ces quatre champs à chaque passage et écrit le total dans data/compos.json. Le jour où il devient positif, la donnée est revenue et on le saura sans rien relancer. Ne pas rechercher de source d'ici là.",
+  "consequence": "Tant que ça dure, aucun classement d'augments ne peut être honnête. Ce qui suit est un cadre de décision, pas un palmarès."
+ },
+
+ "cadre": {
+  "_note": "Ce qui ne dépend pas du patch. À relire au Set 19 : le nombre d'étapes et leur round peuvent changer, le raisonnement moins.",
+  "principes": [
+   {
+    "titre": "L'économie tôt, le combat tard",
+    "pourquoi": "Un augment d'économie rapporte proportionnellement au nombre de tours qui restent : pris à la première étape, il compose ; pris à la dernière, il ne sert presque à rien. Un augment de combat, lui, vaut la même chose quel que soit le moment où on le prend. Donc à valeur apparente égale, l'économie se prend tôt et le combat se prend tard."
+   },
+   {
+    "titre": "Un augment qui engage vaut son engagement",
+    "pourquoi": "Un emblème de trait ou un augment lié à une unité précise ferme des pivots. Il ne se compare pas à un augment neutre sur sa puissance brute, mais sur sa puissance MOINS ce qu'il coûte en flexibilité. Plus l'étape est précoce, plus cette flexibilité vaut cher — parce qu'il reste beaucoup de parties à jouer avec."
+   },
+   {
+    "titre": "Ne jamais prendre un augment pour une compo qu'on ne joue pas déjà",
+    "pourquoi": "Un augment ne crée pas une ligne : il renforce celle qu'on a. Prendre un augment pour pivoter suppose que le pivot réussisse, et on paie l'augment tout de suite contre une compo hypothétique. C'est la même erreur que de garder des composants pour un BiS qu'on n'atteindra pas."
+   },
+   {
+    "titre": "Un emblème est un composant, pas un bonus",
+    "pourquoi": "Il occupe un emplacement d'objet sur une unité. Son coût réel est l'objet qu'on n'y mettra pas — à comparer au BiS de cette unité, que data/objets.json donne."
+   },
+   {
+    "titre": "La force relative se lit sur le plateau, pas sur l'augment",
+    "pourquoi": "Le même augment n'a pas la même valeur selon les PV, la série en cours et ce que les sept autres jouent. C'est précisément ce qu'aucune statistique globale ne saurait dire, même si la donnée existait : un taux moyen décrit la moyenne des situations, pas la nôtre."
+   }
+  ]
+ },
+
+ "ou_regarder_en_attendant": [
+  {
+   "quoi": "Les tier lists d'experts, tenues à la main",
+   "ou": "MetaTFT publie des lettres S/A/B par augment, sans taux.",
+   "comment_lire": "C'est de l'opinion informée. Utilisable pour départager deux augments qu'on hésite à prendre, jamais pour justifier un choix contre ce que dit le plateau."
+  }
+ ],
+
+ "a_retester_au_set_19": "build_miroir.py CONSTATE désormais la présence du champ `augments` au lieu de la déclarer absente, et compos.py compte les entrées de la source. Les deux diront d'eux-mêmes si Riot rebranche la donnée au 1er décembre. Si c'est le cas, ce fichier devient caduc et un vrai relevé le remplace."
+}
