@@ -1,0 +1,110 @@
+{
+ "schema_version": 1,
+ "genere_le": "2026-11-04",
+ "source": "tactics.tools",
+ "page": "https://tactics.tools/player/euw/Itario/EUW",
+ "joueur": {
+  "nom": "Itario",
+  "tag": "EUW",
+  "region": "euw1"
+ },
+ "position": {
+  "palier": "MASTER I",
+  "lp": 39,
+  "rang_region": 3680,
+  "percentile_region": 0.512,
+  "rang_monde": 41275,
+  "percentile_monde": 0.831,
+  "derniere_partie_connue": "2026-10-29T21:00+00:00"
+ },
+ "saison": {
+  "parties": 120,
+  "placement_moyen": 3.925,
+  "top4": 68,
+  "premieres": 21,
+  "carry_principal": "DA_18_Ezreal",
+  "note": "Chiffres de tactics.tools, SANS retrait des parties lâchées. data/miroir.json porte la version nettoyée. Les deux doivent concorder sur le nombre de parties : si l'écart dépasse le nombre de parties lâchées, une des deux collectes a dérivé."
+ },
+ "bareme_lp": {
+  "parties_retenues": 47,
+  "parties_master_plus": 8,
+  "censurees_exclues": 3,
+  "assiette_utilisee": "tous_paliers",
+  "droite": {
+   "n": 47,
+   "pente_lp_par_place": -15.38,
+   "ordonnee": 70.82,
+   "place_neutre": 4.61,
+   "sd_residus": 2.83,
+   "r2": 0.992
+  },
+  "droite_master_plus": {
+   "n": 8,
+   "pente_lp_par_place": -14.65,
+   "ordonnee": 66.22,
+   "place_neutre": 4.52,
+   "sd_residus": 2.21,
+   "r2": 0.994
+  },
+  "table_observee": {
+   "1": {
+    "n": 10,
+    "lp_moyen": 55.2
+   },
+   "2": {
+    "n": 6,
+    "lp_moyen": 42.2
+   },
+   "3": {
+    "n": 6,
+    "lp_moyen": 23.5
+   },
+   "4": {
+    "n": 5,
+    "lp_moyen": 11.0
+   },
+   "5": {
+    "n": 6,
+    "lp_moyen": -10.0
+   },
+   "6": {
+    "n": 10,
+    "lp_moyen": -21.1
+   },
+   "7": {
+    "n": 4,
+    "lp_moyen": -34.5
+   }
+  },
+  "note_assiette": "Pas encore assez de parties en Master+ pour un barème propre : ajusté sur tous les paliers. Les gains y sont plus généreux qu'en haut de l'échelle, donc la projection est optimiste."
+ },
+ "ecart_a_la_barre": {
+  "seuil_challenger_lp": 743,
+  "source_seuil": "data/barre.json du 2026-11-04",
+  "lp_manquants": 704,
+  "note": null
+ },
+ "projection": {
+  "placement_projete": 3.737,
+  "source_placement": "miroir (parties lâchées retirées)",
+  "lp_par_partie_attendu": 13.37,
+  "erreur_type": 3.01,
+  "erreur_decomposee": {
+   "bareme": 0.41,
+   "placement": 2.98,
+   "n_parties_placement": 114,
+   "ecart_type_placement": 2.07,
+   "ecart_type_approche": false,
+   "note": "Le terme dominant est le placement, pas le barème. Il décroît en 1/racine(n) : c'est le volume de parties qui resserre la fourchette."
+  },
+  "solide": true,
+  "lp_manquants": 704,
+  "parties_estimees": 53,
+  "parties_fourchette": [
+   36,
+   96
+  ],
+  "avertissement": "OPTIMISTE PAR CONSTRUCTION. Deux effets non modélisés poussent dans le même sens : les gains de LP se compriment quand le MMR rejoint le rang, et le placement moyen remonte vers 4.50 dans des lobbies plus durs. À lire comme une vitesse maximale, pas comme un calendrier."
+ },
+ "echelle": "Au-dessus de Master il n'y a plus de division ni de série de promotion : de Master 0 LP à Challenger, c'est une seule échelle continue. C'est ce qui rend un LP/partie mesuré en Master directement projetable jusqu'à la barre."
+}
