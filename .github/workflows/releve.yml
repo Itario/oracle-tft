@@ -59,6 +59,14 @@ jobs:
             --rang "${{ github.event.inputs.rang || '0' }}" \
             ${{ github.event.inputs.forcer == 'true' && '--forcer' || '' }}
 
+      - name: Mettre à jour la table de recettes
+        # APRÈS tactics.py : elle se cale sur les objets vus dans le dernier
+        # relevé, ce qui lui évite de dépendre d'un préfixe de set.
+        # Ne retélécharge que si le patch a changé — le fichier de
+        # CommunityDragon pèse plusieurs mégaoctets.
+        run: python3 tools/releve/recettes.py
+        continue-on-error: true
+
       - name: Relever la barre de Challenger
         # La cible, mesurée plutôt que supposée. Tourne à chaque fois : le
         # classement bouge tous les jours, contrairement au patch.
@@ -93,7 +101,7 @@ jobs:
 
       - name: Pousser le relevé s'il y en a un nouveau
         run: |
-          SUIVIS="data/releves-tt data/barre.json data/joueur.json"
+          SUIVIS="data/releves-tt data/barre.json data/joueur.json data/recettes.json"
           if [ -z "$(git status --porcelain $SUIVIS)" ]; then
             echo "Rien de neuf : ni patch, ni classement, ni position."
             exit 0
