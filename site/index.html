@@ -988,6 +988,34 @@ function blocProjection(){
 
     <div class="note">${esc(p.avertissement)}</div>
 
+    ${(() => {
+      // Deux chiffres se contredisent : ~53 parties selon l'écart de LP,
+      // 381 au compteur des 25 derniers Challengers. On publie les deux
+      // témoins qui arbitrent, plutôt que de choisir en silence.
+      const c = j.contre_epreuve, r = j.rang;
+      if(!c && !r) return "";
+      return `<h3 style="margin-top:2rem">Ce qui contredit ce chiffre</h3>
+        <div class="carte">
+          ${r ? `<p>Tu es <b>${nb(r.rang_region)}<sup>e</sup></b> et Challenger
+            s'arrête au <b>${nb(r.challengers_region)}<sup>e</sup></b> :
+            <b>${nb(r.joueurs_a_depasser)} joueurs à dépasser</b>. Un rang se
+            compare sans hypothèse ; la projection en LP en demande une — que
+            ton rythme actuel tienne. ${esc(r.note.split(". ").pop())}</p>` : ""}
+          ${c ? `<p class="faible">Et sans aucun modèle : sur tes
+            <b>${c.n_parties} parties en Master</b>, tu as pris
+            <b>${c.lp_par_partie_observe > 0 ? "+" : ""}${c.lp_par_partie_observe}
+            LP par partie</b> — ${c.ecart_a_la_projection != null
+              ? `soit ${Math.abs(c.ecart_a_la_projection)} de
+                 ${c.ecart_a_la_projection < 0 ? "moins" : "plus"} que la
+                 projection` : "à comparer à la projection"}.
+            ${c.exploitable
+              ? "L'écart sort du bruit : la compression est en train de se produire."
+              : `Le bruit à ce volume vaut ±${c.seuil_bruit} : <b>ça ne tranche
+                 pas encore</b>. Mais c'est cette mesure qui tranchera, et elle
+                 s'accumule toute seule à chaque relevé.`}</p>` : ""}
+        </div>`;
+    })()}
+
     <p class="faible">Barème mesuré sur tes propres parties :
       <b>${j.bareme_lp?.droite?.pente_lp_par_place} LP par place</b>, neutre à
       la ${j.bareme_lp?.droite?.place_neutre}<sup>e</sup>

@@ -337,6 +337,64 @@ def main():
                 "rythme la barre ne se rapproche pas. Ce n'est pas un volume "
                 "qui manque, c'est le placement.")
 
+    # ── LA CONTRE-ÉPREUVE ─────────────────────────────────────────────────
+    # Deux chiffres se contredisent, et les cacher l'un à l'autre serait la
+    # pire des solutions :
+    #
+    #   - l'écart de LP divisé par le rythme projeté donne ~53 parties ;
+    #   - les 25 derniers Challengers en ont 381 au compteur.
+    #
+    # La projection suppose que son LP/partie actuel tient. Or il est mesuré
+    # PENDANT une montée rapide, le régime exact où le MMR devance le LP
+    # affiché et où les gains sont les plus généreux. Quand les deux se
+    # rejoignent, le gain tend vers zéro — on ne monte plus qu'à la vitesse à
+    # laquelle on progresse vraiment.
+    #
+    # Deux témoins indépendants, qu'on publie à côté de la projection :
+    #
+    #   1. SON LP/PARTIE RÉELLEMENT OBSERVÉ EN MASTER. Sans modèle, sans
+    #      barème : la somme des LP de ses parties en Master+, divisée par
+    #      leur nombre. Si elle décroche de la projection, la compression est
+    #      en train de se produire.
+    #
+    #   2. SON RANG. Challenger est le top N de la région : un rang se compare
+    #      sans hypothèse, là où un LP/partie se projette avec une. C'est la
+    #      mesure de position la plus honnête dont on dispose.
+    obs = [l for _, l in hautes]
+    contre = None
+    if obs:
+        moy_obs = st.mean(obs)
+        sd_obs = st.stdev(obs) if len(obs) > 1 else 0.0
+        err_obs = sd_obs / math.sqrt(len(obs)) if len(obs) else None
+        att = (projection or {}).get("lp_par_partie_attendu")
+        contre = {
+            "lp_par_partie_observe": round(moy_obs, 2),
+            "n_parties": len(obs),
+            "seuil_bruit": round(2 * err_obs, 2) if err_obs else None,
+            "exploitable": bool(err_obs and abs(moy_obs) >= 2 * err_obs),
+            "ecart_a_la_projection": (round(moy_obs - att, 2)
+                                      if att is not None else None),
+            "note": "Mesure brute, sans barème : la somme des LP de ses "
+                    "parties en Master+, divisée par leur nombre. Tant que "
+                    "`exploitable` est faux, elle ne tranche rien — mais "
+                    "c'est elle qui tranchera, et elle s'accumule toute "
+                    "seule à chaque relevé.",
+        }
+
+    n_ch = (barre.get("paliers") or {}).get("CHALLENGER")
+    rang = None
+    if loc[0] and n_ch:
+        rang = {
+            "rang_region": loc[0],
+            "challengers_region": n_ch,
+            "joueurs_a_depasser": loc[0] - n_ch,
+            "note": "Challenger est le top N de la région. Un rang se compare "
+                    "SANS hypothèse — c'est sa force contre la projection en "
+                    "LP, qui en demande une (que le rythme actuel tienne). "
+                    "Quand les deux racontent des histoires différentes, "
+                    "croire le rang.",
+        }
+
     out = {
         "schema_version": SCHEMA,
         "genere_le": date.today().isoformat(),
@@ -357,6 +415,8 @@ def main():
                     "l'écart à la barre ne s'exprime pas en LP depuis ici.",
         },
         "projection": projection,
+        "contre_epreuve": contre,
+        "rang": rang,
         "echelle": "Au-dessus de Master il n'y a plus de division ni de série "
                    "de promotion : de Master 0 LP à Challenger, c'est une "
                    "seule échelle continue. C'est ce qui rend un LP/partie "
@@ -385,6 +445,16 @@ def main():
               f"-> {p['lp_manquants']} LP manquants = "
               f"{p['parties_estimees']} parties{fr}")
         print("  ⚠ borne basse sur la difficulté, pas un calendrier")
+    if contre:
+        c = contre
+        print(f"  contre-épreuve : {c['lp_par_partie_observe']:+} LP/partie "
+              f"observé sur {c['n_parties']} parties en Master "
+              f"(bruit ±{c['seuil_bruit']}, "
+              f"{'exploitable' if c['exploitable'] else 'PAS ENCORE exploitable'})")
+    if rang:
+        print(f"  rang : {rang['rang_region']}e, et Challenger s'arrête au "
+              f"{rang['challengers_region']}e -> "
+              f"{rang['joueurs_a_depasser']} joueurs à dépasser")
 
 
 if __name__ == "__main__":
