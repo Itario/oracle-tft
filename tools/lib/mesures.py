@@ -157,3 +157,47 @@ def tete_stable(releves, n=8, nmin=NMIN):
         "depuis": releves[0]["date"],
         "premiere_chaque_fois": tops[0][0] if all(t and t[0] == tops[0][0] for t in tops) else None,
     }
+
+
+# ── CE QU'IL JOUE ────────────────────────────────────────────────────────
+# Définition PARTAGÉE, et elle l'est pour une raison précise.
+#
+# Le 04/11, deux blocs de la même page se contredisaient : le Focus affichait
+# « tu la joues » pour murkwolf, le croisement des compos le comptait inconnu.
+# Aucun des deux ne se trompait — ils employaient deux définitions :
+#
+#   build_focus.py   carries (n>=12) OU porteur d'une des 50 dernières parties
+#   build_compos.py  carries (n>=12) seulement
+#
+# Deux fichiers portaient le même fait sous le même mot. La définition vit
+# donc ici, et les deux nuances sont RENDUES au lieu d'être aplaties : avoir
+# sorti une unité une fois en cinquante parties n'est pas la jouer, mais ce
+# n'est pas non plus ne jamais l'avoir touchée.
+
+def unites_jouees(miroir):
+    """{champion: 'regulier'|'occasionnel'} d'après ses parties.
+
+    `regulier`    : il la porte assez souvent pour qu'on mesure son placement
+                    dessus (elle est dans miroir.carries, donc n >= NMIN).
+    `occasionnel` : elle apparaît comme porteuse dans ses dernières parties,
+                    sans atteindre ce seuil.
+    Absente du dictionnaire : jamais vue comme porteuse.
+    """
+    import re
+    def champion(ident):
+        toks = [re.sub(r"\d+", "", t) for t in str(ident).split("_")
+                if t and t != "DA"]
+        toks = [t for t in toks if t]
+        return toks[0].lower() if toks else ""
+
+    out = {}
+    for x in (miroir.get("parties") or []):
+        for p in (x.get("pieces") or []):
+            c = champion(p)
+            if c:
+                out.setdefault(c, "occasionnel")
+    for c in (miroir.get("carries") or []):
+        ch = champion(c.get("nom", ""))
+        if ch:
+            out[ch] = "regulier"
+    return out

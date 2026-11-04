@@ -142,7 +142,8 @@ def main():
     # donc les manquants à voix haute plutôt que de les laisser passer.
     attendus = ("profil.json", "calendrier.json", "miroir.json",
                 "focus.json", "barre.json", "joueur.json",
-                "objets.json", "recettes.json")
+                "objets.json", "recettes.json",
+                "compos.json", "compos_lui.json")
     copies, manquants = [], []
     for f in attendus:
         src = os.path.join(RACINE, "data", f)

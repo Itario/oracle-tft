@@ -209,6 +209,12 @@ pre code{background:none;border:0;padding:0;color:var(--doux)}
 /* Les lignes du bloc objets. Classes PROPRES : emprunter .dl, taillé pour la
    distribution des placements (quatre colonnes fixes), cassait le nom des
    objets sur deux lignes et masquait la barre, dont la classe y est .b. */
+.comp-t{display:flex;align-items:baseline;gap:.55rem;flex-wrap:wrap;margin-bottom:.6rem}
+.comp-t .lp{font-family:var(--titre);font-weight:700;font-size:1.5rem;color:var(--or)}
+.jauge{position:relative;height:18px;background:rgba(31,71,102,.38)}
+.jauge i{display:block;height:100%;background:linear-gradient(90deg,var(--hextech),#0A8C84)}
+.jauge span{position:absolute;right:.45rem;top:0;line-height:18px;font-size:.76rem;
+            font-weight:600;color:var(--texte)}
 .ol{display:grid;grid-template-columns:7.5rem 1fr 2.6rem;gap:.7rem;
     align-items:center;padding:.22rem 0}
 .ol .n{font-family:var(--titre);font-weight:700;color:var(--or);font-size:.98rem}
@@ -471,7 +477,8 @@ const SOURCES = {
   // écrit à la main : son LP datait du 22 octobre quand le vrai valait 39.
   // Toute lecture de position passe désormais par ici, avec profil en repli.
   joueur:     "data/joueur.json",
-  objets:     "data/objets.json"
+  objets:     "data/objets.json",
+  compos_lui: "data/compos_lui.json"
 };
 const D = {};              // données chargées
 const $  = s => document.querySelector(s);
@@ -644,6 +651,67 @@ function blocFocus(){
     </details>`;
 }
 
+/* Les compos, classées par ce qu'elles RAPPORTENT et par ce qu'il sait déjà
+ * piloter. Un placement décrit une performance ; le LP décrit un classement,
+ * et c'est le classement qui est l'objectif. */
+function blocCompos(){
+  const C = D.compos_lui;
+  if(!C?.compos?.length) return "";
+
+  const nom = u => esc(String(u).replace(/^DA_/, "").replace(/_?18_?/g, "")
+                                .replace(/_/g, " "));
+
+  const cartes = C.compos.map(c => {
+    const part = Math.round(100 * (c.part_porteurs_connus || 0));
+    // Trois états, pas deux. « Occasionnel » veut dire qu'il a sorti
+    // l'unité sans la piloter assez pour qu'on mesure quoi que ce soit —
+    // aplatir les deux ferait mentir la page, comme avant le 04/11.
+    const connus = (c.porteurs_reguliers || []).map(nom).join(", ");
+    const parfois = (c.porteurs_occasionnels || []).map(nom).join(", ");
+    const manque = (c.porteurs_jamais_joues || []).map(nom).join(", ");
+    const wc = (c.conditions_de_victoire || [])[0];
+    const niv = (c.niveaux || []).slice(0, 2)
+                 .map(x => `niv. ${x.niveau}`).join(" / ");
+    return `<div class="carte">
+      <div class="comp-t">
+        <span class="lp">${c.lp_par_partie > 0 ? "+" : ""}${c.lp_par_partie} LP</span>
+        <span class="faible">par partie · place ${c.place} ·
+          ${nb(c.n)} parties${niv ? " · " + esc(niv) : ""}</span>
+      </div>
+      <div class="jauge" title="${part} % des porteurs déjà joués">
+        <i style="width:${part}%"></i><span>${part} %</span>
+      </div>
+      <p class="faible" style="margin:.6rem 0 0">
+        ${connus ? `<b>Tu joues</b> ${connus}.` : ""}
+        ${parfois ? ` <b>Tu as déjà sorti</b> ${parfois}, sans la piloter souvent.` : ""}
+        ${manque ? ` <b>Jamais joué :</b> ${manque}.` : ""}
+        ${!connus && !parfois ? "<b>Aucun porteur que tu sortes.</b>" : ""}
+        ${c.son_placement_sur_les_porteurs != null
+          ? ` Ton placement sur ceux que tu connais : ${c.son_placement_sur_les_porteurs}
+              sur ${c.parties_sur_les_porteurs} parties.` : ""}</p>
+      ${wc ? `<p class="faible" style="margin:.5rem 0 0"><b>Ce qui la fait gagner :</b>
+        ${(wc.unites || []).map(nom).join(" + ")} — place ${wc.place}
+        sur ${nb(wc.n)} parties.</p>` : ""}
+      <p class="faible" style="margin:.5rem 0 0"><b>Traits :</b>
+        ${(c.traits || []).slice(0, 4).map(t =>
+          `${nom(t.trait)} ${t.palier}`).join(" · ")}</p>
+    </div>`;
+  }).join("");
+
+  return `<h2>Les compos, par ce qu'elles rapportent</h2>
+    <p class="doux">Classées par <b>LP gagné par partie</b> et non par placement :
+      un placement décrit une performance, le LP décrit un classement — et c'est le
+      classement, l'objectif. La jauge dit quelle part des <b>porteurs</b> tu sors
+      déjà : connaître sept unités sur huit ne sert à rien si celle qui porte les
+      objets t'est étrangère. Patch ${esc(String(C.patch))},
+      ${nb(C.n_parties_ladder)} parties.</p>
+    <div class="grille">${cartes}</div>
+    <p class="faible">⚠ La jauge mesure une <b>familiarité</b>, pas une aptitude :
+      elle dit que tu as déjà sorti ces unités, pas que tu les joues bien. Et le
+      LP est mesuré sur le ladder Master+, pas sur toi.
+      ${esc(C.limite || "")}</p>`;
+}
+
 /* Les objets, en COMPOSANTS.
  *
  * Un objet fini ne se choisit pas, il se fabrique : on ramasse des composants
@@ -734,6 +802,7 @@ function vueAvant(){
 
   return `<h1>Ce que tu joues ce patch</h1>
     ${blocFocus()}
+    ${blocCompos()}
     ${blocObjets()}
 
     <h2>Les compos du patch</h2>
