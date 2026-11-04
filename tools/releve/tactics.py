@@ -35,6 +35,20 @@ from datetime import date
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SORTIE = os.path.join(RACINE, "data", "releves-tt")
+# ⚠ RESTE À 1, ET C'EST DÉLIBÉRÉ.
+#
+# Le 04/11, `objets`, `traits` et `unites[].objets` ont été ajoutés au relevé.
+# La tentation était de passer à 2. Mais `tools/lib/mesures.py` ÉCARTE en mode
+# strict tout relevé dont la version ne vaut pas son propre SCHEMA — et il
+# l'annonce sur une ligne au milieu d'une sortie de script. Monter ici aurait
+# fait disparaître tous les nouveaux relevés de la série de rotation, en
+# silence, au moment précis où on en ajoute.
+#
+# Les champs ajoutés sont PUREMENT ADDITIFS : aucun lecteur existant ne les
+# lit, aucun champ n'a changé de sens. Un lecteur qui en a besoin CONSTATE
+# leur présence (`if r.get("objets")`) au lieu de la supposer. Ne monter cette
+# version que pour un changement qui CASSE la lecture — et alors monter aussi
+# celle de mesures.py dans le même commit.
 SCHEMA = 1
 
 PAGE = "https://tactics.tools/units"
@@ -107,9 +121,51 @@ def construire(code, libelle, rang):
     # On garde les identifiants de Riot comme clés (DA_18_Alune). C'est ce
     # qui permettra de joindre ce relevé aux parties du Miroir sans
     # correspondance de noms approximative.
+    #
+    # `topItems` : les cinq objets les plus portés par CETTE unité, dans
+    # l'ordre de la source. C'est le BiS mesuré, et il était téléchargé depuis
+    # le premier jour sans jamais être conservé.
+    # `star*` : les mêmes statistiques en 3 étoiles, qui n'ont rien à voir avec
+    # celles en 2 — une unité peut être médiocre en 2 et décisive en 3.
     table = {k: {"avg": v["place"], "wr": v.get("won"), "t4": v.get("top4"),
-                 "n": v["count"]}
+                 "n": v["count"],
+                 "objets": v.get("topItems") or [],
+                 "etoile3": ({"n": v["starCount"], "avg": v.get("starPlace"),
+                              "t4": v.get("starTop4"), "wr": v.get("starWon")}
+                             if v.get("starCount") else None)}
              for k, v in unites.items() if v.get("count")}
+
+    # ── LES OBJETS ────────────────────────────────────────────────────────
+    # 126 entrées, dans la MÊME réponse que les unités. Jetées jusqu'ici.
+    #
+    # `porteurs` (topUsers à la source) est la pièce rare : pour chaque objet,
+    # les unités qui le portent AVEC l'effet mesuré sur le placement. Un delta
+    # négatif veut dire « meilleur placement » — c'est la convention de la
+    # source, et on la conserve telle quelle pour ne pas inventer un signe.
+    objets = {}
+    for o in (d.get("items") or []):
+        oid = o.get("itemId")
+        if not oid or not o.get("count"):
+            continue
+        objets[oid] = {
+            "avg": o.get("place"), "wr": o.get("won"), "t4": o.get("top4"),
+            "n": o["count"],
+            "porteurs": [[u, round(delta, 4)]
+                         for u, delta in (o.get("topUsers") or [])],
+        }
+
+    # ── LES TRAITS ────────────────────────────────────────────────────────
+    # Les clés portent le palier : « DA_18_Blackthorn__2 » = Blackthorn à 2.
+    # On sépare nom et palier ici plutôt que dans chaque lecteur — un palier
+    # n'est pas un suffixe de texte, c'est une donnée.
+    traits = {}
+    for k, v in (d.get("traits") or {}).items():
+        if not v.get("count"):
+            continue
+        nom, _, palier = k.partition("__")
+        traits[k] = {"trait": nom, "palier": int(palier) if palier.isdigit() else None,
+                     "avg": v.get("place"), "wr": v.get("won"),
+                     "t4": v.get("top4"), "n": v["count"]}
 
     return {
         "schema_version": SCHEMA,
@@ -132,6 +188,8 @@ def construire(code, libelle, rang):
                  "NE JAMAIS comparer un relevé de cette série à un relevé "
                  "MetaTFT sans agréger les variantes."),
         "unites": table,
+        "objets": objets,
+        "traits": traits,
     }
 
 
