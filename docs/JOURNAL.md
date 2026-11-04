@@ -1613,3 +1613,112 @@ exécution matinale aurait relevé 18.6 le **5 novembre au matin**, douze heures
 sortie — sur un patch qui déplace les unités de 4 à 6 rangs. Deuxième horaire à 22h13
 UTC : le patch est relevé le soir même. Coût nul, puisque le script n'écrit que si le
 patch a changé.
+
+---
+
+## 04/11/2026 — LA DISTANCE À CHALLENGER, ENFIN EN PARTIES
+
+Trois semaines d'outils qui décrivent un **niveau**. Ce soir, le premier qui chiffre un
+**trajet**.
+
+### LE SITE AFFICHAIT UNE POSITION VIEILLE DE TREIZE JOURS
+
+`data/profil.json` est saisi à la main. Il disait « Master, 55 LP », relevé le 22 octobre.
+Le vrai chiffre, le 4 novembre, valait **39**. Tout l'onglet « Où tu en es » comparait sa
+position à la barre — avec une position périmée.
+
+La page publique du joueur sur tactics.tools porte tout ce qu'il fallait, dans
+`__NEXT_DATA__` : palier et LP courants, rang régional et mondial, et l'historique complet
+des 116 parties de la saison. `tools/releve/joueur.py` le relève huit fois par jour avec
+le reste, sans navigateur et sans clé API.
+
+**Au passage, une validation croisée gratuite.** `seasonStats` de tactics.tools donne 120
+parties à 3.925 de placement. Le Miroir en compte 114 à 3.737. L'écart est de **six
+parties** — exactement les six parties lâchées que `miroir.py` avait identifiées à la
+signature de l'or, puis retirées. Deux chaînes de collecte indépendantes, le même nombre.
+Le pipeline est juste.
+
+### CE QUE LA PAGE PORTAIT EN PLUS : `lpDiff`
+
+Chaque partie y vient avec le LP réellement gagné ou perdu. Pas un placement à convertir :
+le chiffre lui-même.
+
+Et un fait de structure qu'on n'avait jamais exploité : **au-dessus de Master, il n'y a
+plus de division ni de série de promotion.** De Master 0 LP jusqu'à Challenger, c'est une
+seule échelle continue. Un LP/partie mesuré en Master se projette donc directement
+jusqu'à la barre.
+
+Le barème ajusté sur ses 47 parties exploitables : **−15.38 LP par place, neutre à la
+4.61ᵉ, R² 0.992**. Le placement explique 99 % de la variation du LP. La table observée :
+
+| place | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|---|---|---|---|---|---|---|---|
+| LP | +55 | +42 | +24 | +11 | −10 | −21 | −35 |
+
+À son placement de 3.737 : **+13.37 LP par partie**. 704 LP le séparent du seuil.
+**53 parties.**
+
+### MAIS LA PREMIÈRE FOURCHETTE ÉTAIT UN MENSONGE
+
+Le premier jet ne propageait que l'erreur résiduelle de la droite — 0.41 LP/partie, parce
+que le barème s'ajuste à R² 0.99. Il annonçait **±5 parties**. Une précision absurde pour
+une projection à un an.
+
+La vraie incertitude n'est pas dans le barème, elle est dans **son placement moyen**. À
+114 parties d'écart-type 2.070, l'erreur-type du placement vaut 0.194 place ; multipliée
+par la pente du barème, elle pèse **2.98 LP/partie**. Sept fois le terme qu'on propageait.
+
+Fourchette réelle : **36 à 96 parties**.
+
+**Leçon n°34 — quand on compose deux mesures, l'incertitude du résultat est celle de la
+plus FLOUE, pas celle qu'on vient de calculer.** Le barème était frais, précis, et sous
+les yeux ; le placement venait d'un autre fichier et n'a pas été regardé. Un modèle
+excellent appliqué à une entrée incertaine ne produit pas un résultat certain.
+
+Et le terme dominant décroît en 1/√n. **C'est encore le volume qui resserre tout** — la
+troisième fois que le projet aboutit là par un chemin différent.
+
+### DEUX AUTRES PIÈGES DANS LA MÊME SOIRÉE
+
+**Les défaites écrêtées.** À 5 LP d'une fin de division, une 7ᵉ place ne retire que 5 LP :
+la protection de rétrogradation tronque la perte. Trois parties dans ce cas. Les garder
+aurait aplati le bas de la table et fait croire que mal jouer coûte peu.
+
+**`build_site.py` copiait une liste explicite de fichiers vers `site/data/`.** Un oubli ne
+lève rien : le site reçoit un 404, le bloc ne s'affiche pas, aucun message. Il annonce
+désormais les manquants à voix haute.
+
+### ET LA PANNE QUI DURAIT DEPUIS LA CRÉATION DU RELEVÉ
+
+En vérifiant le déploiement, comparaison des deux historiques. Quatre commits signés
+« Oracle TFT » — le workflow — et **pas un seul déploiement en face**. Tous les
+déploiements correspondaient à des commits signés « Claude ».
+
+Une poussée faite par un workflow avec le `GITHUB_TOKEN` **ne déclenche aucun autre
+workflow** : GitHub le refuse délibérément pour qu'un dépôt ne puisse pas se mettre en
+boucle. Le déclencheur `push` ne voyait que les poussées humaines.
+
+Donc : huit relevés par jour écrivaient consciencieusement dans `data/`, le dépôt était à
+jour, et **le site publié servait les données de la dernière poussée à la main**. Depuis
+toujours.
+
+Invisible, parce que je poussais à la main le même soir — ce qui déployait les relevés de
+la journée au passage. L'automatisation avait l'air de marcher parce qu'un humain passait
+derrière sans le savoir.
+
+**Leçon n°35 — une chaîne automatique ne se vérifie pas maillon par maillon mais de bout
+en bout, et en l'absence de l'humain qui la répare sans s'en apercevoir.** Chaque pièce
+fonctionnait : le relevé relevait, le déploiement déployait. C'est le lien entre les deux
+qui n'existait pas, et aucune des deux pièces ne pouvait le signaler.
+
+Correction : `workflow_run` sur « Relevé de méta », conditionné à sa réussite. Et
+`ref: main` explicite au checkout — sur un événement `workflow_run`, le SHA par défaut est
+celui sur lequel le relevé a tourné, donc **avant sa propre poussée**. Le piège de
+remplacement était déjà en place, en plus discret.
+
+### LES AUGMENTS RESTENT FERMÉS
+
+Le mot `augments` apparaît bien dans les données de la page, à `matches[].ratings`. Ce
+sont les **notes internes de tactics.tools** sur la qualité des augments d'une partie, pas
+l'identité des augments choisis. La charte reste juste : la question est close jusqu'au
+Set 19.
