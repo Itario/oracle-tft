@@ -205,6 +205,23 @@ pre code{background:none;border:0;padding:0;color:var(--doux)}
 /* Un relevé de méta vieux d'une semaine ou plus doit se voir depuis le
    bandeau, sans qu'on ait à lire la date et à faire la soustraction. */
 .perime{color:var(--sang)}
+/* La liste BiS : numérotée, parce que l'ordre du BiS est une information. */
+/* Les lignes du bloc objets. Classes PROPRES : emprunter .dl, taillé pour la
+   distribution des placements (quatre colonnes fixes), cassait le nom des
+   objets sur deux lignes et masquait la barre, dont la classe y est .b. */
+.ol{display:grid;grid-template-columns:7.5rem 1fr 2.6rem;gap:.7rem;
+    align-items:center;padding:.22rem 0}
+.ol .n{font-family:var(--titre);font-weight:700;color:var(--or);font-size:.98rem}
+.ol .b{position:relative;height:14px;background:rgba(31,71,102,.38)}
+.ol .b i{display:block;height:100%;
+         background:linear-gradient(90deg,var(--hextech),#0A8C84)}
+.ol .b.r{background:none;height:auto;font-size:.86rem;color:var(--doux);
+         text-align:right;font-family:var(--corps)}
+.ol .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.ol.slam{grid-template-columns:9.5rem 1fr 1.6rem}
+.bis{margin:0;padding-left:1.2rem;line-height:1.75}
+.bis li{font-size:.95rem}
+.bis .pl{color:var(--hextech)} .bis .mo{color:var(--sang)}
 .mv .bar{grid-column:1/-1;height:2px;margin-top:.3rem;background:rgba(31,71,102,.6)}
 .mv .bar i{display:block;height:100%}
 .up .bar i{background:linear-gradient(90deg,var(--or),var(--or-vif))}
@@ -453,7 +470,8 @@ const SOURCES = {
   // Relevé huit fois par jour par le workflow. data/profil.json, lui, est
   // écrit à la main : son LP datait du 22 octobre quand le vrai valait 39.
   // Toute lecture de position passe désormais par ici, avec profil en repli.
-  joueur:     "data/joueur.json"
+  joueur:     "data/joueur.json",
+  objets:     "data/objets.json"
 };
 const D = {};              // données chargées
 const $  = s => document.querySelector(s);
@@ -626,6 +644,88 @@ function blocFocus(){
     </details>`;
 }
 
+/* Les objets, en COMPOSANTS.
+ *
+ * Un objet fini ne se choisit pas, il se fabrique : on ramasse des composants
+ * et on décide quoi en faire. Un classement d'objets finis par taux de
+ * victoire ne répond à aucune décision réelle. Ce bloc répond aux deux qui
+ * existent : que prendre au carrousel, et quel slam ne coûte rien. */
+function blocObjets(){
+  const o = D.objets;
+  if(!o?.carries?.length) return "";
+
+  const car = (o.carrousel || []).slice(0, 6);
+  const maxi = car.length ? car[0].n_carries : 1;
+
+  // Le carrousel d'abord : c'est la décision qui revient le plus souvent.
+  const barres = car.map(c => `
+    <div class="ol">
+      <span class="n">${esc(c.composant)}</span>
+      <span class="b"><i style="width:${Math.round(100 * c.n_carries / maxi)}%"></i></span>
+      <span class="v">${c.n_carries}<span class="faible">/${o.carries.length}</span></span>
+    </div>`).join("");
+
+  const slams = (o.slams_gratuits || []).slice(0, 5).map(s => `
+    <div class="ol slam">
+      <span class="n">${esc(s.nom)}</span>
+      <span class="b r">${esc(s.composants.join(" + "))}</span>
+      <span class="v">${s.n_carries}</span>
+    </div>`).join("");
+
+  const fiches = o.carries.slice(0, 6).map(c => {
+    const courses = (c.composants_requis || []).map(x =>
+      x.fois > 1 ? `${x.composant} ×${x.fois}` : x.composant).join(" · ");
+    const bis = (c.bis || []).slice(0, 5).map(b => {
+      const eff = b.effet_sur_cette_unite;
+      return `<li><b>${esc(b.nom)}</b>${b.craftable
+        ? ` <span class="faible">${esc(b.composants.join(" + "))}</span>` : ""}${
+        eff != null ? ` <span class="${eff < 0 ? "pl" : "mo"}">${eff < 0 ? "" : "+"}${
+          (eff).toFixed(3)}</span>` : ""}</li>`;
+    }).join("");
+    return `<div class="carte">
+      <h3 style="margin:0 0 .3rem">${esc(c.carry)}</h3>
+      <p class="faible" style="margin:0 0 .7rem">Tu la sors ${c.n_parties_lui} fois
+        (place ${c.sa_place}) · le ladder ${c.place_ladder} sur
+        ${nb(c.n_ladder)} parties${c.etoile3
+          ? ` · en 3★ : ${c.etoile3.avg} sur ${nb(c.etoile3.n)}` : ""}</p>
+      <ol class="bis">${bis}</ol>
+      <p class="faible" style="margin:.7rem 0 0"><b>À ramasser :</b> ${esc(courses)}</p>
+    </div>`;
+  }).join("");
+
+  return `<h2>Les objets, en composants</h2>
+    <p class="doux">Un objet fini ne se choisit pas, il se fabrique. Les deux seules
+      décisions qui existent sont <b>quel composant prendre au carrousel</b> et
+      <b>quand slammer plutôt que garder</b> — alors c'est à celles-là que ce bloc
+      répond. Patch ${esc(o.patch)}, ${esc(o.rang)},
+      ${nb(o.n_parties_ladder)} parties.</p>
+
+    <div class="grille">
+      <div class="carte">
+        <h3 style="margin:0 0 .8rem">Au carrousel</h3>
+        <p class="faible" style="margin:0 0 .8rem">Combien de <b>tes</b> carries
+          ont besoin de ce composant. Celui qui en sert beaucoup reste utile quel
+          que soit ton pivot ; celui qui n'en sert qu'un engage la partie.</p>
+        <div class="dist">${barres}</div>
+      </div>
+      <div class="carte">
+        <h3 style="margin:0 0 .8rem">Les slams qui ne coûtent rien</h3>
+        <p class="faible" style="margin:0 0 .8rem">Ces objets sont déjà au BiS d'un
+          de tes carries : les monter tôt ne gâche rien. <b>Tout le reste est un
+          vrai arbitrage</b>, et il dépend de tes PV et de ton tempo — pas de la
+          donnée.</p>
+        <div class="dist">${slams}</div>
+      </div>
+    </div>
+
+    <div class="grille" style="margin-top:1rem">${fiches}</div>
+
+    <p class="faible">⚠ Le BiS est un classement de <b>fréquence</b>, pas d'effet :
+      ce sont les objets les plus portés sur l'unité, pas forcément ceux qui la
+      font le mieux placer. Quand la source donne un effet mesuré, il est affiché
+      à côté — un nombre négatif veut dire meilleur placement.</p>`;
+}
+
 function vueAvant(){
   const m = D.meta;
   if(!m) return `<div class="note warn"><b>Données indisponibles.</b>
@@ -634,6 +734,7 @@ function vueAvant(){
 
   return `<h1>Ce que tu joues ce patch</h1>
     ${blocFocus()}
+    ${blocObjets()}
 
     <h2>Les compos du patch</h2>
     <p class="doux">La même question a trois réponses : ce qu'il faut jouer dépend

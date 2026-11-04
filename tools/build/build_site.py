@@ -141,7 +141,8 @@ def main():
     # le bloc concerné ne s'affiche pas, et rien ne dit pourquoi. On annonce
     # donc les manquants à voix haute plutôt que de les laisser passer.
     attendus = ("profil.json", "calendrier.json", "miroir.json",
-                "focus.json", "barre.json", "joueur.json")
+                "focus.json", "barre.json", "joueur.json",
+                "objets.json", "recettes.json")
     copies, manquants = [], []
     for f in attendus:
         src = os.path.join(RACINE, "data", f)

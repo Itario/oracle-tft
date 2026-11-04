@@ -1,0 +1,1330 @@
+{
+ "schema_version": 1,
+ "genere_le": "2026-11-04",
+ "patch": "18.5c",
+ "rang": "Master+",
+ "n_parties_ladder": 500777,
+ "source": "tactics.tools (BiS et effets) + CommunityDragon (recettes)",
+ "carries": [
+  {
+   "carry": "Draven18",
+   "unite_meta": "DA_Draven18",
+   "n_parties_lui": 20,
+   "sa_place": 3.0,
+   "son_ecart": -0.74,
+   "solide": false,
+   "place_ladder": 4.17,
+   "n_ladder": 58023,
+   "etoile3": {
+    "n": 85,
+    "avg": 1.02,
+    "t4": 100.0,
+    "wr": 97.65
+   },
+   "bis": [
+    {
+     "objet": "DA_KrakensFury",
+     "nom": "Kraken's Fury",
+     "composants": [
+      "arc",
+      "cape"
+     ],
+     "craftable": true,
+     "place_objet": 4.3,
+     "n_objet": 94981,
+     "effet_sur_cette_unite": -0.2015
+    },
+    {
+     "objet": "DA_GuinsoosRageblade",
+     "nom": "Guinsoo's Rageblade",
+     "composants": [
+      "arc",
+      "baguette"
+     ],
+     "craftable": true,
+     "place_objet": 4.44,
+     "n_objet": 236322,
+     "effet_sur_cette_unite": -0.1706
+    },
+    {
+     "objet": "DA_InfinityEdge",
+     "nom": "Infinity Edge",
+     "composants": [
+      "épée",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.31,
+     "n_objet": 186737,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_GiantSlayer",
+     "nom": "Giant Slayer",
+     "composants": [
+      "arc",
+      "épée"
+     ],
+     "craftable": true,
+     "place_objet": 4.15,
+     "n_objet": 115441,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_RedBuff",
+     "nom": "Red Buff",
+     "composants": [
+      "arc",
+      "arc"
+     ],
+     "craftable": true,
+     "place_objet": 4.15,
+     "n_objet": 145041,
+     "effet_sur_cette_unite": null
+    }
+   ],
+   "composants_requis": [
+    {
+     "composant": "arc",
+     "fois": 5
+    },
+    {
+     "composant": "épée",
+     "fois": 2
+    },
+    {
+     "composant": "cape",
+     "fois": 1
+    },
+    {
+     "composant": "baguette",
+     "fois": 1
+    },
+    {
+     "composant": "gants",
+     "fois": 1
+    }
+   ]
+  },
+  {
+   "carry": "Kennen",
+   "unite_meta": "DA_18_Kennen",
+   "n_parties_lui": 17,
+   "sa_place": 3.12,
+   "son_ecart": -0.62,
+   "solide": false,
+   "place_ladder": 3.99,
+   "n_ladder": 90831,
+   "etoile3": {
+    "n": 44,
+    "avg": 1.0,
+    "t4": 100.0,
+    "wr": 100.0
+   },
+   "bis": [
+    {
+     "objet": "DA_EdgeOfNight",
+     "nom": "Edge of Night",
+     "composants": [
+      "épée",
+      "plastron"
+     ],
+     "craftable": true,
+     "place_objet": 4.16,
+     "n_objet": 116356,
+     "effet_sur_cette_unite": -0.1508
+    },
+    {
+     "objet": "DA_VoidStaff",
+     "nom": "Void Staff",
+     "composants": [
+      "arc",
+      "larme"
+     ],
+     "craftable": true,
+     "place_objet": 4.24,
+     "n_objet": 159396,
+     "effet_sur_cette_unite": -0.1256
+    },
+    {
+     "objet": "DA_StrikersFlail",
+     "nom": "Striker's Flail",
+     "composants": [
+      "ceinture",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.16,
+     "n_objet": 116698,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_Bloodthirster",
+     "nom": "Bloodthirster",
+     "composants": [
+      "épée",
+      "cape"
+     ],
+     "craftable": true,
+     "place_objet": 3.96,
+     "n_objet": 52891,
+     "effet_sur_cette_unite": -0.0762
+    },
+    {
+     "objet": "DA_HextechGunblade",
+     "nom": "Hextech Gunblade",
+     "composants": [
+      "épée",
+      "baguette"
+     ],
+     "craftable": true,
+     "place_objet": 4.25,
+     "n_objet": 124031,
+     "effet_sur_cette_unite": null
+    }
+   ],
+   "composants_requis": [
+    {
+     "composant": "épée",
+     "fois": 3
+    },
+    {
+     "composant": "plastron",
+     "fois": 1
+    },
+    {
+     "composant": "arc",
+     "fois": 1
+    },
+    {
+     "composant": "larme",
+     "fois": 1
+    },
+    {
+     "composant": "ceinture",
+     "fois": 1
+    },
+    {
+     "composant": "gants",
+     "fois": 1
+    },
+    {
+     "composant": "cape",
+     "fois": 1
+    },
+    {
+     "composant": "baguette",
+     "fois": 1
+    }
+   ]
+  },
+  {
+   "carry": "Ezreal",
+   "unite_meta": "DA_18_Ezreal",
+   "n_parties_lui": 31,
+   "sa_place": 3.19,
+   "son_ecart": -0.54,
+   "solide": false,
+   "place_ladder": 4.41,
+   "n_ladder": 82338,
+   "etoile3": {
+    "n": 288,
+    "avg": 1.36,
+    "t4": 97.57,
+    "wr": 81.94
+   },
+   "bis": [
+    {
+     "objet": "DA_InfinityEdge",
+     "nom": "Infinity Edge",
+     "composants": [
+      "épée",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.31,
+     "n_objet": 186737,
+     "effet_sur_cette_unite": -0.203
+    },
+    {
+     "objet": "DA_GiantSlayer",
+     "nom": "Giant Slayer",
+     "composants": [
+      "arc",
+      "épée"
+     ],
+     "craftable": true,
+     "place_objet": 4.15,
+     "n_objet": 115441,
+     "effet_sur_cette_unite": -0.1988
+    },
+    {
+     "objet": "DA_StrikersFlail",
+     "nom": "Striker's Flail",
+     "composants": [
+      "ceinture",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.16,
+     "n_objet": 116698,
+     "effet_sur_cette_unite": -0.1926
+    },
+    {
+     "objet": "DA_LastWhisper",
+     "nom": "Last Whisper",
+     "composants": [
+      "arc",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.27,
+     "n_objet": 144062,
+     "effet_sur_cette_unite": -0.1699
+    },
+    {
+     "objet": "DA_SpearOfShojin",
+     "nom": "Spear of Shojin",
+     "composants": [
+      "larme",
+      "épée"
+     ],
+     "craftable": true,
+     "place_objet": 4.3,
+     "n_objet": 237222,
+     "effet_sur_cette_unite": -0.1528
+    }
+   ],
+   "composants_requis": [
+    {
+     "composant": "épée",
+     "fois": 3
+    },
+    {
+     "composant": "gants",
+     "fois": 3
+    },
+    {
+     "composant": "arc",
+     "fois": 2
+    },
+    {
+     "composant": "ceinture",
+     "fois": 1
+    },
+    {
+     "composant": "larme",
+     "fois": 1
+    }
+   ]
+  },
+  {
+   "carry": "Maokai",
+   "unite_meta": "DA_18_Maokai",
+   "n_parties_lui": 20,
+   "sa_place": 3.2,
+   "son_ecart": -0.54,
+   "solide": false,
+   "place_ladder": 4.14,
+   "n_ladder": 84986,
+   "etoile3": {
+    "n": 57,
+    "avg": 1.05,
+    "t4": 100.0,
+    "wr": 94.74
+   },
+   "bis": [
+    {
+     "objet": "DA_WarmogsArmor",
+     "nom": "Warmog's Armor",
+     "composants": [
+      "ceinture",
+      "ceinture"
+     ],
+     "craftable": true,
+     "place_objet": 4.31,
+     "n_objet": 243419,
+     "effet_sur_cette_unite": -0.2145
+    },
+    {
+     "objet": "DA_ThiefsGloves",
+     "nom": "Thief's Gloves",
+     "composants": [
+      "gants",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.07,
+     "n_objet": 131357,
+     "effet_sur_cette_unite": null
+    }
+   ],
+   "composants_requis": [
+    {
+     "composant": "ceinture",
+     "fois": 2
+    },
+    {
+     "composant": "gants",
+     "fois": 2
+    }
+   ]
+  },
+  {
+   "carry": "Aphelios",
+   "unite_meta": "DA_18_Aphelios",
+   "n_parties_lui": 25,
+   "sa_place": 3.28,
+   "son_ecart": -0.46,
+   "solide": false,
+   "place_ladder": 4.5,
+   "n_ladder": 58671,
+   "etoile3": {
+    "n": 360,
+    "avg": 1.2,
+    "t4": 98.89,
+    "wr": 88.61
+   },
+   "bis": [
+    {
+     "objet": "DA_KrakensFury",
+     "nom": "Kraken's Fury",
+     "composants": [
+      "arc",
+      "cape"
+     ],
+     "craftable": true,
+     "place_objet": 4.3,
+     "n_objet": 94981,
+     "effet_sur_cette_unite": -0.1485
+    },
+    {
+     "objet": "DA_GiantSlayer",
+     "nom": "Giant Slayer",
+     "composants": [
+      "arc",
+      "épée"
+     ],
+     "craftable": true,
+     "place_objet": 4.15,
+     "n_objet": 115441,
+     "effet_sur_cette_unite": -0.1418
+    },
+    {
+     "objet": "DA_InfinityEdge",
+     "nom": "Infinity Edge",
+     "composants": [
+      "épée",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.31,
+     "n_objet": 186737,
+     "effet_sur_cette_unite": -0.14
+    },
+    {
+     "objet": "DA_GuinsoosRageblade",
+     "nom": "Guinsoo's Rageblade",
+     "composants": [
+      "arc",
+      "baguette"
+     ],
+     "craftable": true,
+     "place_objet": 4.44,
+     "n_objet": 236322,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_RedBuff",
+     "nom": "Red Buff",
+     "composants": [
+      "arc",
+      "arc"
+     ],
+     "craftable": true,
+     "place_objet": 4.15,
+     "n_objet": 145041,
+     "effet_sur_cette_unite": null
+    }
+   ],
+   "composants_requis": [
+    {
+     "composant": "arc",
+     "fois": 5
+    },
+    {
+     "composant": "épée",
+     "fois": 2
+    },
+    {
+     "composant": "cape",
+     "fois": 1
+    },
+    {
+     "composant": "gants",
+     "fois": 1
+    },
+    {
+     "composant": "baguette",
+     "fois": 1
+    }
+   ]
+  },
+  {
+   "carry": "Amumu18",
+   "unite_meta": "DA_Amumu18",
+   "n_parties_lui": 23,
+   "sa_place": 3.43,
+   "son_ecart": -0.3,
+   "solide": false,
+   "place_ladder": 4.43,
+   "n_ladder": 151677,
+   "etoile3": {
+    "n": 157,
+    "avg": 1.27,
+    "t4": 98.09,
+    "wr": 83.44
+   },
+   "bis": [
+    {
+     "objet": "DA_WarmogsArmor",
+     "nom": "Warmog's Armor",
+     "composants": [
+      "ceinture",
+      "ceinture"
+     ],
+     "craftable": true,
+     "place_objet": 4.31,
+     "n_objet": 243419,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_ThiefsGloves",
+     "nom": "Thief's Gloves",
+     "composants": [
+      "gants",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.07,
+     "n_objet": 131357,
+     "effet_sur_cette_unite": 0.2182
+    }
+   ],
+   "composants_requis": [
+    {
+     "composant": "ceinture",
+     "fois": 2
+    },
+    {
+     "composant": "gants",
+     "fois": 2
+    }
+   ]
+  },
+  {
+   "carry": "Brambleback18",
+   "unite_meta": "DA_Brambleback18",
+   "n_parties_lui": 18,
+   "sa_place": 3.44,
+   "son_ecart": -0.29,
+   "solide": false,
+   "place_ladder": 4.36,
+   "n_ladder": 50892,
+   "etoile3": {
+    "n": 805,
+    "avg": 1.12,
+    "t4": 99.38,
+    "wr": 93.54
+   },
+   "bis": [
+    {
+     "objet": "DA_SteraksGage",
+     "nom": "Sterak's Gage",
+     "composants": [
+      "épée",
+      "ceinture"
+     ],
+     "craftable": true,
+     "place_objet": 4.14,
+     "n_objet": 115139,
+     "effet_sur_cette_unite": -0.1226
+    },
+    {
+     "objet": "DA_EdgeOfNight",
+     "nom": "Edge of Night",
+     "composants": [
+      "épée",
+      "plastron"
+     ],
+     "craftable": true,
+     "place_objet": 4.16,
+     "n_objet": 116356,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_TitansResolve",
+     "nom": "Titan's Resolve",
+     "composants": [
+      "arc",
+      "plastron"
+     ],
+     "craftable": true,
+     "place_objet": 4.19,
+     "n_objet": 55316,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_GiantSlayer",
+     "nom": "Giant Slayer",
+     "composants": [
+      "arc",
+      "épée"
+     ],
+     "craftable": true,
+     "place_objet": 4.15,
+     "n_objet": 115441,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_Bloodthirster",
+     "nom": "Bloodthirster",
+     "composants": [
+      "épée",
+      "cape"
+     ],
+     "craftable": true,
+     "place_objet": 3.96,
+     "n_objet": 52891,
+     "effet_sur_cette_unite": null
+    }
+   ],
+   "composants_requis": [
+    {
+     "composant": "épée",
+     "fois": 4
+    },
+    {
+     "composant": "plastron",
+     "fois": 2
+    },
+    {
+     "composant": "arc",
+     "fois": 2
+    },
+    {
+     "composant": "ceinture",
+     "fois": 1
+    },
+    {
+     "composant": "cape",
+     "fois": 1
+    }
+   ]
+  },
+  {
+   "carry": "Hecarim",
+   "unite_meta": "DA_18_Hecarim",
+   "n_parties_lui": 16,
+   "sa_place": 3.5,
+   "son_ecart": -0.24,
+   "solide": false,
+   "place_ladder": 4.61,
+   "n_ladder": 89827,
+   "etoile3": {
+    "n": 7374,
+    "avg": 3.75,
+    "t4": 65.5,
+    "wr": 13.52
+   },
+   "bis": [
+    {
+     "objet": "DA_WarmogsArmor",
+     "nom": "Warmog's Armor",
+     "composants": [
+      "ceinture",
+      "ceinture"
+     ],
+     "craftable": true,
+     "place_objet": 4.31,
+     "n_objet": 243419,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_ThiefsGloves",
+     "nom": "Thief's Gloves",
+     "composants": [
+      "gants",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.07,
+     "n_objet": 131357,
+     "effet_sur_cette_unite": null
+    }
+   ],
+   "composants_requis": [
+    {
+     "composant": "ceinture",
+     "fois": 2
+    },
+    {
+     "composant": "gants",
+     "fois": 2
+    }
+   ]
+  },
+  {
+   "carry": "Sentinel18",
+   "unite_meta": "DA_Sentinel18",
+   "n_parties_lui": 28,
+   "sa_place": 3.54,
+   "son_ecart": -0.2,
+   "solide": false,
+   "place_ladder": 4.38,
+   "n_ladder": 198039,
+   "etoile3": {
+    "n": 170,
+    "avg": 1.19,
+    "t4": 100.0,
+    "wr": 86.47
+   },
+   "bis": [
+    {
+     "objet": "DA_WarmogsArmor",
+     "nom": "Warmog's Armor",
+     "composants": [
+      "ceinture",
+      "ceinture"
+     ],
+     "craftable": true,
+     "place_objet": 4.31,
+     "n_objet": 243419,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_ThiefsGloves",
+     "nom": "Thief's Gloves",
+     "composants": [
+      "gants",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.07,
+     "n_objet": 131357,
+     "effet_sur_cette_unite": null
+    }
+   ],
+   "composants_requis": [
+    {
+     "composant": "ceinture",
+     "fois": 2
+    },
+    {
+     "composant": "gants",
+     "fois": 2
+    }
+   ]
+  },
+  {
+   "carry": "Fiddlesticks18",
+   "unite_meta": "DA_Fiddlesticks18",
+   "n_parties_lui": 13,
+   "sa_place": 3.62,
+   "son_ecart": -0.12,
+   "solide": false,
+   "place_ladder": 4.53,
+   "n_ladder": 129970,
+   "etoile3": {
+    "n": 7896,
+    "avg": 3.41,
+    "t4": 71.78,
+    "wr": 18.96
+   },
+   "bis": [
+    {
+     "objet": "DA_TitansResolve",
+     "nom": "Titan's Resolve",
+     "composants": [
+      "arc",
+      "plastron"
+     ],
+     "craftable": true,
+     "place_objet": 4.19,
+     "n_objet": 55316,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_WarmogsArmor",
+     "nom": "Warmog's Armor",
+     "composants": [
+      "ceinture",
+      "ceinture"
+     ],
+     "craftable": true,
+     "place_objet": 4.31,
+     "n_objet": 243419,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_ThiefsGloves",
+     "nom": "Thief's Gloves",
+     "composants": [
+      "gants",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.07,
+     "n_objet": 131357,
+     "effet_sur_cette_unite": null
+    }
+   ],
+   "composants_requis": [
+    {
+     "composant": "ceinture",
+     "fois": 2
+    },
+    {
+     "composant": "gants",
+     "fois": 2
+    },
+    {
+     "composant": "arc",
+     "fois": 1
+    },
+    {
+     "composant": "plastron",
+     "fois": 1
+    }
+   ]
+  },
+  {
+   "carry": "Diana",
+   "unite_meta": "DA_18_Diana",
+   "n_parties_lui": 12,
+   "sa_place": 4.08,
+   "son_ecart": 0.35,
+   "solide": false,
+   "place_ladder": 4.6,
+   "n_ladder": 88097,
+   "etoile3": {
+    "n": 2646,
+    "avg": 3.85,
+    "t4": 63.87,
+    "wr": 13.91
+   },
+   "bis": [
+    {
+     "objet": "DA_EdgeOfNight",
+     "nom": "Edge of Night",
+     "composants": [
+      "épée",
+      "plastron"
+     ],
+     "craftable": true,
+     "place_objet": 4.16,
+     "n_objet": 116356,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_Bloodthirster",
+     "nom": "Bloodthirster",
+     "composants": [
+      "épée",
+      "cape"
+     ],
+     "craftable": true,
+     "place_objet": 3.96,
+     "n_objet": 52891,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_TitansResolve",
+     "nom": "Titan's Resolve",
+     "composants": [
+      "arc",
+      "plastron"
+     ],
+     "craftable": true,
+     "place_objet": 4.19,
+     "n_objet": 55316,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_ThiefsGloves",
+     "nom": "Thief's Gloves",
+     "composants": [
+      "gants",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.07,
+     "n_objet": 131357,
+     "effet_sur_cette_unite": 0.1416
+    }
+   ],
+   "composants_requis": [
+    {
+     "composant": "épée",
+     "fois": 2
+    },
+    {
+     "composant": "plastron",
+     "fois": 2
+    },
+    {
+     "composant": "gants",
+     "fois": 2
+    },
+    {
+     "composant": "cape",
+     "fois": 1
+    },
+    {
+     "composant": "arc",
+     "fois": 1
+    }
+   ]
+  },
+  {
+   "carry": "Zyra",
+   "unite_meta": "DA_18_Zyra",
+   "n_parties_lui": 27,
+   "sa_place": 4.3,
+   "son_ecart": 0.56,
+   "solide": false,
+   "place_ladder": 4.51,
+   "n_ladder": 72244,
+   "etoile3": {
+    "n": 262,
+    "avg": 1.14,
+    "t4": 99.62,
+    "wr": 90.46
+   },
+   "bis": [
+    {
+     "objet": "DA_SpearOfShojin",
+     "nom": "Spear of Shojin",
+     "composants": [
+      "larme",
+      "épée"
+     ],
+     "craftable": true,
+     "place_objet": 4.3,
+     "n_objet": 237222,
+     "effet_sur_cette_unite": -0.1911
+    },
+    {
+     "objet": "DA_VoidStaff",
+     "nom": "Void Staff",
+     "composants": [
+      "arc",
+      "larme"
+     ],
+     "craftable": true,
+     "place_objet": 4.24,
+     "n_objet": 159396,
+     "effet_sur_cette_unite": -0.1762
+    },
+    {
+     "objet": "DA_HextechGunblade",
+     "nom": "Hextech Gunblade",
+     "composants": [
+      "épée",
+      "baguette"
+     ],
+     "craftable": true,
+     "place_objet": 4.25,
+     "n_objet": 124031,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_RedBuff",
+     "nom": "Red Buff",
+     "composants": [
+      "arc",
+      "arc"
+     ],
+     "craftable": true,
+     "place_objet": 4.15,
+     "n_objet": 145041,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_GiantSlayer",
+     "nom": "Giant Slayer",
+     "composants": [
+      "arc",
+      "épée"
+     ],
+     "craftable": true,
+     "place_objet": 4.15,
+     "n_objet": 115441,
+     "effet_sur_cette_unite": null
+    }
+   ],
+   "composants_requis": [
+    {
+     "composant": "arc",
+     "fois": 4
+    },
+    {
+     "composant": "épée",
+     "fois": 3
+    },
+    {
+     "composant": "larme",
+     "fois": 2
+    },
+    {
+     "composant": "baguette",
+     "fois": 1
+    }
+   ]
+  }
+ ],
+ "carrousel": [
+  {
+   "composant": "gants",
+   "n_carries": 10,
+   "carries": [
+    "Amumu18",
+    "Aphelios",
+    "Diana",
+    "Draven18",
+    "Ezreal",
+    "Fiddlesticks18",
+    "Hecarim",
+    "Kennen",
+    "Maokai",
+    "Sentinel18"
+   ]
+  },
+  {
+   "composant": "arc",
+   "n_carries": 8,
+   "carries": [
+    "Aphelios",
+    "Brambleback18",
+    "Diana",
+    "Draven18",
+    "Ezreal",
+    "Fiddlesticks18",
+    "Kennen",
+    "Zyra"
+   ]
+  },
+  {
+   "composant": "ceinture",
+   "n_carries": 8,
+   "carries": [
+    "Amumu18",
+    "Brambleback18",
+    "Ezreal",
+    "Fiddlesticks18",
+    "Hecarim",
+    "Kennen",
+    "Maokai",
+    "Sentinel18"
+   ]
+  },
+  {
+   "composant": "épée",
+   "n_carries": 7,
+   "carries": [
+    "Aphelios",
+    "Brambleback18",
+    "Diana",
+    "Draven18",
+    "Ezreal",
+    "Kennen",
+    "Zyra"
+   ]
+  },
+  {
+   "composant": "cape",
+   "n_carries": 5,
+   "carries": [
+    "Aphelios",
+    "Brambleback18",
+    "Diana",
+    "Draven18",
+    "Kennen"
+   ]
+  },
+  {
+   "composant": "baguette",
+   "n_carries": 4,
+   "carries": [
+    "Aphelios",
+    "Draven18",
+    "Kennen",
+    "Zyra"
+   ]
+  },
+  {
+   "composant": "plastron",
+   "n_carries": 4,
+   "carries": [
+    "Brambleback18",
+    "Diana",
+    "Fiddlesticks18",
+    "Kennen"
+   ]
+  },
+  {
+   "composant": "larme",
+   "n_carries": 3,
+   "carries": [
+    "Ezreal",
+    "Kennen",
+    "Zyra"
+   ]
+  }
+ ],
+ "slams_gratuits": [
+  {
+   "objet": "DA_ThiefsGloves",
+   "nom": "Thief's Gloves",
+   "composants": [
+    "gants",
+    "gants"
+   ],
+   "n_carries": 6,
+   "carries": [
+    "Amumu18",
+    "Diana",
+    "Fiddlesticks18",
+    "Hecarim",
+    "Maokai",
+    "Sentinel18"
+   ],
+   "place_objet": 4.07
+  },
+  {
+   "objet": "DA_GiantSlayer",
+   "nom": "Giant Slayer",
+   "composants": [
+    "arc",
+    "épée"
+   ],
+   "n_carries": 5,
+   "carries": [
+    "Aphelios",
+    "Brambleback18",
+    "Draven18",
+    "Ezreal",
+    "Zyra"
+   ],
+   "place_objet": 4.15
+  },
+  {
+   "objet": "DA_WarmogsArmor",
+   "nom": "Warmog's Armor",
+   "composants": [
+    "ceinture",
+    "ceinture"
+   ],
+   "n_carries": 5,
+   "carries": [
+    "Amumu18",
+    "Fiddlesticks18",
+    "Hecarim",
+    "Maokai",
+    "Sentinel18"
+   ],
+   "place_objet": 4.31
+  },
+  {
+   "objet": "DA_Bloodthirster",
+   "nom": "Bloodthirster",
+   "composants": [
+    "épée",
+    "cape"
+   ],
+   "n_carries": 3,
+   "carries": [
+    "Brambleback18",
+    "Diana",
+    "Kennen"
+   ],
+   "place_objet": 3.96
+  },
+  {
+   "objet": "DA_RedBuff",
+   "nom": "Red Buff",
+   "composants": [
+    "arc",
+    "arc"
+   ],
+   "n_carries": 3,
+   "carries": [
+    "Aphelios",
+    "Draven18",
+    "Zyra"
+   ],
+   "place_objet": 4.15
+  },
+  {
+   "objet": "DA_EdgeOfNight",
+   "nom": "Edge of Night",
+   "composants": [
+    "épée",
+    "plastron"
+   ],
+   "n_carries": 3,
+   "carries": [
+    "Brambleback18",
+    "Diana",
+    "Kennen"
+   ],
+   "place_objet": 4.16
+  },
+  {
+   "objet": "DA_TitansResolve",
+   "nom": "Titan's Resolve",
+   "composants": [
+    "arc",
+    "plastron"
+   ],
+   "n_carries": 3,
+   "carries": [
+    "Brambleback18",
+    "Diana",
+    "Fiddlesticks18"
+   ],
+   "place_objet": 4.19
+  },
+  {
+   "objet": "DA_InfinityEdge",
+   "nom": "Infinity Edge",
+   "composants": [
+    "épée",
+    "gants"
+   ],
+   "n_carries": 3,
+   "carries": [
+    "Aphelios",
+    "Draven18",
+    "Ezreal"
+   ],
+   "place_objet": 4.31
+  },
+  {
+   "objet": "DA_StrikersFlail",
+   "nom": "Striker's Flail",
+   "composants": [
+    "ceinture",
+    "gants"
+   ],
+   "n_carries": 2,
+   "carries": [
+    "Ezreal",
+    "Kennen"
+   ],
+   "place_objet": 4.16
+  },
+  {
+   "objet": "DA_VoidStaff",
+   "nom": "Void Staff",
+   "composants": [
+    "arc",
+    "larme"
+   ],
+   "n_carries": 2,
+   "carries": [
+    "Kennen",
+    "Zyra"
+   ],
+   "place_objet": 4.24
+  },
+  {
+   "objet": "DA_HextechGunblade",
+   "nom": "Hextech Gunblade",
+   "composants": [
+    "épée",
+    "baguette"
+   ],
+   "n_carries": 2,
+   "carries": [
+    "Kennen",
+    "Zyra"
+   ],
+   "place_objet": 4.25
+  },
+  {
+   "objet": "DA_KrakensFury",
+   "nom": "Kraken's Fury",
+   "composants": [
+    "arc",
+    "cape"
+   ],
+   "n_carries": 2,
+   "carries": [
+    "Aphelios",
+    "Draven18"
+   ],
+   "place_objet": 4.3
+  },
+  {
+   "objet": "DA_SpearOfShojin",
+   "nom": "Spear of Shojin",
+   "composants": [
+    "larme",
+    "épée"
+   ],
+   "n_carries": 2,
+   "carries": [
+    "Ezreal",
+    "Zyra"
+   ],
+   "place_objet": 4.3
+  },
+  {
+   "objet": "DA_GuinsoosRageblade",
+   "nom": "Guinsoo's Rageblade",
+   "composants": [
+    "arc",
+    "baguette"
+   ],
+   "n_carries": 2,
+   "carries": [
+    "Aphelios",
+    "Draven18"
+   ],
+   "place_objet": 4.44
+  },
+  {
+   "objet": "DA_SteraksGage",
+   "nom": "Sterak's Gage",
+   "composants": [
+    "épée",
+    "ceinture"
+   ],
+   "n_carries": 1,
+   "carries": [
+    "Brambleback18"
+   ],
+   "place_objet": 4.14
+  },
+  {
+   "objet": "DA_LastWhisper",
+   "nom": "Last Whisper",
+   "composants": [
+    "arc",
+    "gants"
+   ],
+   "n_carries": 1,
+   "carries": [
+    "Ezreal"
+   ],
+   "place_objet": 4.27
+  }
+ ],
+ "carries_sans_correspondance": [],
+ "reserves": {
+  "bis_est_une_frequence": "`topItems` liste les objets les plus PORTÉS sur l'unité, pas ceux qui la font le mieux placer. Les deux coïncident souvent, mais c'est une hypothèse. `effet_sur_cette_unite` porte un effet mesuré quand la source le donne — un delta NÉGATIF veut dire meilleur placement.",
+  "pas_de_decision_de_slam": "Slammer dépend des PV, du tempo, de la force du plateau et des sept autres joueurs : rien de cela n'est dans la donnée. Ce fichier dit seulement qu'un slam est GRATUIT si l'objet est déjà au BiS d'un de tes carries, et un vrai arbitrage sinon.",
+  "biais_de_survie": "Un objet « porté sur un board final » l'a été dans une partie qui s'est assez bien passée pour qu'on le construise."
+ }
+}
