@@ -108,7 +108,22 @@ jobs:
 
       - name: Pousser le relevé s'il y en a un nouveau
         run: |
-          SUIVIS="data/releves-tt data/barre.json data/joueur.json data/recettes.json data/compos.json"
+          # ⚠ NE JAMAIS LISTER UN FICHIER SANS VÉRIFIER QU'IL EXISTE.
+          # `git add` sur un chemin absent échoue sèchement ("pathspec did
+          # not match any files") et emporte toute l'étape : le 04/11, une
+          # étape tolérée en échec a produit un fichier manquant, et le
+          # commit a sauté — emportant AUSSI le relevé qui, lui, avait
+          # réussi. Une étape tolérante en amont ne sert à rien si celle
+          # d'après ne l'est pas.
+          SUIVIS=""
+          for p in data/releves-tt data/barre.json data/joueur.json \
+                   data/recettes.json data/compos.json; do
+            [ -e "$p" ] && SUIVIS="$SUIVIS $p"
+          done
+          if [ -z "$SUIVIS" ]; then
+            echo "Aucun fichier de relevé présent — rien à pousser."
+            exit 0
+          fi
           if [ -z "$(git status --porcelain $SUIVIS)" ]; then
             echo "Rien de neuf : ni patch, ni classement, ni position."
             exit 0

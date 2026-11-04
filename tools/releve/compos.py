@@ -187,11 +187,16 @@ def main():
                  "traits_sup": c.get("extraTraits") or []}
                 for c in paires(f.get("comps"), 4) if c.get("count")],
             # couple unité×objet AVEC placement — un effet, pas une fréquence
+            # ⚠ `unitItems` est une LISTE, pas un dictionnaire. Sondé depuis
+            # le navigateur avec Object.keys(), il renvoyait "0", "1", "2" —
+            # les indices d'un tableau, que j'ai lus comme des clés. Une
+            # sonde qui marche sur les deux formes ne distingue pas les deux
+            # formes : vérifier le TYPE, pas seulement les clés.
             "objets_par_unite": [
                 {"unite": v.get("unitId"), "objet": v.get("itemId"),
                  "n": v.get("count"),
                  "place": round(v["place"], 3) if v.get("place") else None}
-                for _, v in list((f.get("unitItems") or {}).items())[:14]
+                for v in (f.get("unitItems") or [])[:14]
                 if isinstance(v, dict) and v.get("count")],
         })
 
