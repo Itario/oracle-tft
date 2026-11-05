@@ -808,6 +808,8 @@ function blocObjets(){
 
     <div class="grille" style="margin-top:1rem">${fiches}</div>
 
+    ${o.fraicheur?.patch_frais ? `<div class="note warn">${esc(o.fraicheur.avertissement)}</div>` : ""}
+
     <p class="faible">⚠ Le BiS est un classement de <b>fréquence</b>, pas d'effet :
       ce sont les objets les plus portés sur l'unité, pas forcément ceux qui la
       font le mieux placer. Quand la source donne un effet mesuré, il est affiché

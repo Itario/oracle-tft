@@ -1,9 +1,9 @@
 {
  "schema_version": 1,
- "genere_le": "2026-11-04",
- "patch": "18.5c",
+ "genere_le": "2026-11-05",
+ "patch": "18.6",
  "rang": "Master+",
- "n_parties_ladder": 500777,
+ "n_parties_ladder": 54954,
  "source": "tactics.tools (BiS et effets) + CommunityDragon (recettes)",
  "carries": [
   {
@@ -13,13 +13,13 @@
    "sa_place": 3.0,
    "son_ecart": -0.74,
    "solide": false,
-   "place_ladder": 4.17,
-   "n_ladder": 58023,
+   "place_ladder": 4.2,
+   "n_ladder": 6720,
    "etoile3": {
-    "n": 85,
-    "avg": 1.02,
+    "n": 9,
+    "avg": 1.0,
     "t4": 100.0,
-    "wr": 97.65
+    "wr": 100.0
    },
    "bis": [
     {
@@ -30,9 +30,9 @@
       "cape"
      ],
      "craftable": true,
-     "place_objet": 4.3,
-     "n_objet": 94981,
-     "effet_sur_cette_unite": -0.2015
+     "place_objet": 4.31,
+     "n_objet": 10550,
+     "effet_sur_cette_unite": -0.0903
     },
     {
      "objet": "DA_GuinsoosRageblade",
@@ -42,9 +42,9 @@
       "baguette"
      ],
      "craftable": true,
-     "place_objet": 4.44,
-     "n_objet": 236322,
-     "effet_sur_cette_unite": -0.1706
+     "place_objet": 4.42,
+     "n_objet": 25588,
+     "effet_sur_cette_unite": -0.0764
     },
     {
      "objet": "DA_InfinityEdge",
@@ -54,8 +54,8 @@
       "gants"
      ],
      "craftable": true,
-     "place_objet": 4.31,
-     "n_objet": 186737,
+     "place_objet": 4.32,
+     "n_objet": 20967,
      "effet_sur_cette_unite": null
     },
     {
@@ -66,30 +66,34 @@
       "épée"
      ],
      "craftable": true,
-     "place_objet": 4.15,
-     "n_objet": 115441,
+     "place_objet": 4.17,
+     "n_objet": 12759,
      "effet_sur_cette_unite": null
     },
     {
-     "objet": "DA_RedBuff",
-     "nom": "Red Buff",
+     "objet": "DA_StrikersFlail",
+     "nom": "Striker's Flail",
      "composants": [
-      "arc",
-      "arc"
+      "ceinture",
+      "gants"
      ],
      "craftable": true,
-     "place_objet": 4.15,
-     "n_objet": 145041,
+     "place_objet": 4.16,
+     "n_objet": 13137,
      "effet_sur_cette_unite": null
     }
    ],
    "composants_requis": [
     {
      "composant": "arc",
-     "fois": 5
+     "fois": 3
     },
     {
      "composant": "épée",
+     "fois": 2
+    },
+    {
+     "composant": "gants",
      "fois": 2
     },
     {
@@ -101,7 +105,7 @@
      "fois": 1
     },
     {
-     "composant": "gants",
+     "composant": "ceinture",
      "fois": 1
     }
    ]
@@ -113,15 +117,27 @@
    "sa_place": 3.12,
    "son_ecart": -0.62,
    "solide": false,
-   "place_ladder": 3.99,
-   "n_ladder": 90831,
+   "place_ladder": 4.02,
+   "n_ladder": 10345,
    "etoile3": {
-    "n": 44,
+    "n": 3,
     "avg": 1.0,
     "t4": 100.0,
     "wr": 100.0
    },
    "bis": [
+    {
+     "objet": "DA_Bloodthirster",
+     "nom": "Bloodthirster",
+     "composants": [
+      "épée",
+      "cape"
+     ],
+     "craftable": true,
+     "place_objet": 3.99,
+     "n_objet": 5665,
+     "effet_sur_cette_unite": -0.075
+    },
     {
      "objet": "DA_EdgeOfNight",
      "nom": "Edge of Night",
@@ -130,9 +146,9 @@
       "plastron"
      ],
      "craftable": true,
-     "place_objet": 4.16,
-     "n_objet": 116356,
-     "effet_sur_cette_unite": -0.1508
+     "place_objet": 4.17,
+     "n_objet": 12187,
+     "effet_sur_cette_unite": -0.0454
     },
     {
      "objet": "DA_VoidStaff",
@@ -142,9 +158,9 @@
       "larme"
      ],
      "craftable": true,
-     "place_objet": 4.24,
-     "n_objet": 159396,
-     "effet_sur_cette_unite": -0.1256
+     "place_objet": 4.26,
+     "n_objet": 17393,
+     "effet_sur_cette_unite": -0.0406
     },
     {
      "objet": "DA_StrikersFlail",
@@ -155,20 +171,8 @@
      ],
      "craftable": true,
      "place_objet": 4.16,
-     "n_objet": 116698,
+     "n_objet": 13137,
      "effet_sur_cette_unite": null
-    },
-    {
-     "objet": "DA_Bloodthirster",
-     "nom": "Bloodthirster",
-     "composants": [
-      "épée",
-      "cape"
-     ],
-     "craftable": true,
-     "place_objet": 3.96,
-     "n_objet": 52891,
-     "effet_sur_cette_unite": -0.0762
     },
     {
      "objet": "DA_HextechGunblade",
@@ -178,8 +182,8 @@
       "baguette"
      ],
      "craftable": true,
-     "place_objet": 4.25,
-     "n_objet": 124031,
+     "place_objet": 4.23,
+     "n_objet": 13034,
      "effet_sur_cette_unite": null
     }
    ],
@@ -187,6 +191,10 @@
     {
      "composant": "épée",
      "fois": 3
+    },
+    {
+     "composant": "cape",
+     "fois": 1
     },
     {
      "composant": "plastron",
@@ -209,10 +217,6 @@
      "fois": 1
     },
     {
-     "composant": "cape",
-     "fois": 1
-    },
-    {
      "composant": "baguette",
      "fois": 1
     }
@@ -226,38 +230,14 @@
    "son_ecart": -0.54,
    "solide": false,
    "place_ladder": 4.41,
-   "n_ladder": 82338,
+   "n_ladder": 9018,
    "etoile3": {
-    "n": 288,
-    "avg": 1.36,
-    "t4": 97.57,
-    "wr": 81.94
+    "n": 34,
+    "avg": 1.38,
+    "t4": 97.06,
+    "wr": 76.47
    },
    "bis": [
-    {
-     "objet": "DA_InfinityEdge",
-     "nom": "Infinity Edge",
-     "composants": [
-      "épée",
-      "gants"
-     ],
-     "craftable": true,
-     "place_objet": 4.31,
-     "n_objet": 186737,
-     "effet_sur_cette_unite": -0.203
-    },
-    {
-     "objet": "DA_GiantSlayer",
-     "nom": "Giant Slayer",
-     "composants": [
-      "arc",
-      "épée"
-     ],
-     "craftable": true,
-     "place_objet": 4.15,
-     "n_objet": 115441,
-     "effet_sur_cette_unite": -0.1988
-    },
     {
      "objet": "DA_StrikersFlail",
      "nom": "Striker's Flail",
@@ -267,20 +247,32 @@
      ],
      "craftable": true,
      "place_objet": 4.16,
-     "n_objet": 116698,
-     "effet_sur_cette_unite": -0.1926
+     "n_objet": 13137,
+     "effet_sur_cette_unite": -0.1344
     },
     {
-     "objet": "DA_LastWhisper",
-     "nom": "Last Whisper",
+     "objet": "DA_InfinityEdge",
+     "nom": "Infinity Edge",
      "composants": [
-      "arc",
+      "épée",
       "gants"
      ],
      "craftable": true,
-     "place_objet": 4.27,
-     "n_objet": 144062,
-     "effet_sur_cette_unite": -0.1699
+     "place_objet": 4.32,
+     "n_objet": 20967,
+     "effet_sur_cette_unite": -0.1204
+    },
+    {
+     "objet": "DA_GiantSlayer",
+     "nom": "Giant Slayer",
+     "composants": [
+      "arc",
+      "épée"
+     ],
+     "craftable": true,
+     "place_objet": 4.17,
+     "n_objet": 12759,
+     "effet_sur_cette_unite": -0.1112
     },
     {
      "objet": "DA_SpearOfShojin",
@@ -290,18 +282,30 @@
       "épée"
      ],
      "craftable": true,
-     "place_objet": 4.3,
-     "n_objet": 237222,
-     "effet_sur_cette_unite": -0.1528
+     "place_objet": 4.33,
+     "n_objet": 26563,
+     "effet_sur_cette_unite": -0.1054
+    },
+    {
+     "objet": "DA_LastWhisper",
+     "nom": "Last Whisper",
+     "composants": [
+      "arc",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.29,
+     "n_objet": 15467,
+     "effet_sur_cette_unite": -0.1046
     }
    ],
    "composants_requis": [
     {
-     "composant": "épée",
+     "composant": "gants",
      "fois": 3
     },
     {
-     "composant": "gants",
+     "composant": "épée",
      "fois": 3
     },
     {
@@ -326,12 +330,12 @@
    "son_ecart": -0.54,
    "solide": false,
    "place_ladder": 4.14,
-   "n_ladder": 84986,
+   "n_ladder": 9549,
    "etoile3": {
-    "n": 57,
-    "avg": 1.05,
+    "n": 6,
+    "avg": 1.17,
     "t4": 100.0,
-    "wr": 94.74
+    "wr": 83.33
    },
    "bis": [
     {
@@ -343,8 +347,8 @@
      ],
      "craftable": true,
      "place_objet": 4.31,
-     "n_objet": 243419,
-     "effet_sur_cette_unite": -0.2145
+     "n_objet": 26674,
+     "effet_sur_cette_unite": -0.0839
     },
     {
      "objet": "DA_ThiefsGloves",
@@ -354,8 +358,8 @@
       "gants"
      ],
      "craftable": true,
-     "place_objet": 4.07,
-     "n_objet": 131357,
+     "place_objet": 4.08,
+     "n_objet": 14104,
      "effet_sur_cette_unite": null
     }
    ],
@@ -377,13 +381,13 @@
    "sa_place": 3.28,
    "son_ecart": -0.46,
    "solide": false,
-   "place_ladder": 4.5,
-   "n_ladder": 58671,
+   "place_ladder": 4.52,
+   "n_ladder": 6701,
    "etoile3": {
-    "n": 360,
-    "avg": 1.2,
-    "t4": 98.89,
-    "wr": 88.61
+    "n": 41,
+    "avg": 1.1,
+    "t4": 100.0,
+    "wr": 90.24
    },
    "bis": [
     {
@@ -394,21 +398,9 @@
       "cape"
      ],
      "craftable": true,
-     "place_objet": 4.3,
-     "n_objet": 94981,
-     "effet_sur_cette_unite": -0.1485
-    },
-    {
-     "objet": "DA_GiantSlayer",
-     "nom": "Giant Slayer",
-     "composants": [
-      "arc",
-      "épée"
-     ],
-     "craftable": true,
-     "place_objet": 4.15,
-     "n_objet": 115441,
-     "effet_sur_cette_unite": -0.1418
+     "place_objet": 4.31,
+     "n_objet": 10550,
+     "effet_sur_cette_unite": -0.0783
     },
     {
      "objet": "DA_InfinityEdge",
@@ -418,9 +410,21 @@
       "gants"
      ],
      "craftable": true,
-     "place_objet": 4.31,
-     "n_objet": 186737,
-     "effet_sur_cette_unite": -0.14
+     "place_objet": 4.32,
+     "n_objet": 20967,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_GiantSlayer",
+     "nom": "Giant Slayer",
+     "composants": [
+      "arc",
+      "épée"
+     ],
+     "craftable": true,
+     "place_objet": 4.17,
+     "n_objet": 12759,
+     "effet_sur_cette_unite": -0.037
     },
     {
      "objet": "DA_GuinsoosRageblade",
@@ -430,30 +434,34 @@
       "baguette"
      ],
      "craftable": true,
-     "place_objet": 4.44,
-     "n_objet": 236322,
-     "effet_sur_cette_unite": null
+     "place_objet": 4.42,
+     "n_objet": 25588,
+     "effet_sur_cette_unite": -0.0305
     },
     {
-     "objet": "DA_RedBuff",
-     "nom": "Red Buff",
+     "objet": "DA_StrikersFlail",
+     "nom": "Striker's Flail",
      "composants": [
-      "arc",
-      "arc"
+      "ceinture",
+      "gants"
      ],
      "craftable": true,
-     "place_objet": 4.15,
-     "n_objet": 145041,
+     "place_objet": 4.16,
+     "n_objet": 13137,
      "effet_sur_cette_unite": null
     }
    ],
    "composants_requis": [
     {
      "composant": "arc",
-     "fois": 5
+     "fois": 3
     },
     {
      "composant": "épée",
+     "fois": 2
+    },
+    {
+     "composant": "gants",
      "fois": 2
     },
     {
@@ -461,11 +469,11 @@
      "fois": 1
     },
     {
-     "composant": "gants",
+     "composant": "baguette",
      "fois": 1
     },
     {
-     "composant": "baguette",
+     "composant": "ceinture",
      "fois": 1
     }
    ]
@@ -477,13 +485,13 @@
    "sa_place": 3.43,
    "son_ecart": -0.3,
    "solide": false,
-   "place_ladder": 4.43,
-   "n_ladder": 151677,
+   "place_ladder": 4.44,
+   "n_ladder": 17640,
    "etoile3": {
-    "n": 157,
-    "avg": 1.27,
-    "t4": 98.09,
-    "wr": 83.44
+    "n": 19,
+    "avg": 1.47,
+    "t4": 94.74,
+    "wr": 84.21
    },
    "bis": [
     {
@@ -495,7 +503,7 @@
      ],
      "craftable": true,
      "place_objet": 4.31,
-     "n_objet": 243419,
+     "n_objet": 26674,
      "effet_sur_cette_unite": null
     },
     {
@@ -506,9 +514,9 @@
       "gants"
      ],
      "craftable": true,
-     "place_objet": 4.07,
-     "n_objet": 131357,
-     "effet_sur_cette_unite": 0.2182
+     "place_objet": 4.08,
+     "n_objet": 14104,
+     "effet_sur_cette_unite": 0.1237
     }
    ],
    "composants_requis": [
@@ -529,27 +537,15 @@
    "sa_place": 3.44,
    "son_ecart": -0.29,
    "solide": false,
-   "place_ladder": 4.36,
-   "n_ladder": 50892,
+   "place_ladder": 4.33,
+   "n_ladder": 4883,
    "etoile3": {
-    "n": 805,
-    "avg": 1.12,
-    "t4": 99.38,
-    "wr": 93.54
+    "n": 94,
+    "avg": 1.1,
+    "t4": 100.0,
+    "wr": 94.68
    },
    "bis": [
-    {
-     "objet": "DA_SteraksGage",
-     "nom": "Sterak's Gage",
-     "composants": [
-      "épée",
-      "ceinture"
-     ],
-     "craftable": true,
-     "place_objet": 4.14,
-     "n_objet": 115139,
-     "effet_sur_cette_unite": -0.1226
-    },
     {
      "objet": "DA_EdgeOfNight",
      "nom": "Edge of Night",
@@ -558,32 +554,8 @@
       "plastron"
      ],
      "craftable": true,
-     "place_objet": 4.16,
-     "n_objet": 116356,
-     "effet_sur_cette_unite": null
-    },
-    {
-     "objet": "DA_TitansResolve",
-     "nom": "Titan's Resolve",
-     "composants": [
-      "arc",
-      "plastron"
-     ],
-     "craftable": true,
-     "place_objet": 4.19,
-     "n_objet": 55316,
-     "effet_sur_cette_unite": null
-    },
-    {
-     "objet": "DA_GiantSlayer",
-     "nom": "Giant Slayer",
-     "composants": [
-      "arc",
-      "épée"
-     ],
-     "craftable": true,
-     "place_objet": 4.15,
-     "n_objet": 115441,
+     "place_objet": 4.17,
+     "n_objet": 12187,
      "effet_sur_cette_unite": null
     },
     {
@@ -594,8 +566,44 @@
       "cape"
      ],
      "craftable": true,
-     "place_objet": 3.96,
-     "n_objet": 52891,
+     "place_objet": 3.99,
+     "n_objet": 5665,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_SteraksGage",
+     "nom": "Sterak's Gage",
+     "composants": [
+      "épée",
+      "ceinture"
+     ],
+     "craftable": true,
+     "place_objet": 4.17,
+     "n_objet": 12804,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_LastWhisper",
+     "nom": "Last Whisper",
+     "composants": [
+      "arc",
+      "gants"
+     ],
+     "craftable": true,
+     "place_objet": 4.29,
+     "n_objet": 15467,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_GiantSlayer",
+     "nom": "Giant Slayer",
+     "composants": [
+      "arc",
+      "épée"
+     ],
+     "craftable": true,
+     "place_objet": 4.17,
+     "n_objet": 12759,
      "effet_sur_cette_unite": null
     }
    ],
@@ -605,19 +613,23 @@
      "fois": 4
     },
     {
-     "composant": "plastron",
+     "composant": "arc",
      "fois": 2
     },
     {
-     "composant": "arc",
-     "fois": 2
+     "composant": "plastron",
+     "fois": 1
+    },
+    {
+     "composant": "cape",
+     "fois": 1
     },
     {
      "composant": "ceinture",
      "fois": 1
     },
     {
-     "composant": "cape",
+     "composant": "gants",
      "fois": 1
     }
    ]
@@ -629,13 +641,13 @@
    "sa_place": 3.5,
    "son_ecart": -0.24,
    "solide": false,
-   "place_ladder": 4.61,
-   "n_ladder": 89827,
+   "place_ladder": 4.59,
+   "n_ladder": 9944,
    "etoile3": {
-    "n": 7374,
-    "avg": 3.75,
-    "t4": 65.5,
-    "wr": 13.52
+    "n": 726,
+    "avg": 3.77,
+    "t4": 66.12,
+    "wr": 13.64
    },
    "bis": [
     {
@@ -647,7 +659,7 @@
      ],
      "craftable": true,
      "place_objet": 4.31,
-     "n_objet": 243419,
+     "n_objet": 26674,
      "effet_sur_cette_unite": null
     },
     {
@@ -658,8 +670,8 @@
       "gants"
      ],
      "craftable": true,
-     "place_objet": 4.07,
-     "n_objet": 131357,
+     "place_objet": 4.08,
+     "n_objet": 14104,
      "effet_sur_cette_unite": null
     }
    ],
@@ -681,13 +693,13 @@
    "sa_place": 3.54,
    "son_ecart": -0.2,
    "solide": false,
-   "place_ladder": 4.38,
-   "n_ladder": 198039,
+   "place_ladder": 4.39,
+   "n_ladder": 22476,
    "etoile3": {
-    "n": 170,
-    "avg": 1.19,
+    "n": 29,
+    "avg": 1.28,
     "t4": 100.0,
-    "wr": 86.47
+    "wr": 79.31
    },
    "bis": [
     {
@@ -699,8 +711,8 @@
      ],
      "craftable": true,
      "place_objet": 4.31,
-     "n_objet": 243419,
-     "effet_sur_cette_unite": null
+     "n_objet": 26674,
+     "effet_sur_cette_unite": -0.0638
     },
     {
      "objet": "DA_ThiefsGloves",
@@ -710,8 +722,8 @@
       "gants"
      ],
      "craftable": true,
-     "place_objet": 4.07,
-     "n_objet": 131357,
+     "place_objet": 4.08,
+     "n_objet": 14104,
      "effet_sur_cette_unite": null
     }
    ],
@@ -734,12 +746,12 @@
    "son_ecart": -0.12,
    "solide": false,
    "place_ladder": 4.53,
-   "n_ladder": 129970,
+   "n_ladder": 14359,
    "etoile3": {
-    "n": 7896,
-    "avg": 3.41,
-    "t4": 71.78,
-    "wr": 18.96
+    "n": 736,
+    "avg": 3.45,
+    "t4": 70.92,
+    "wr": 17.8
    },
    "bis": [
     {
@@ -750,8 +762,8 @@
       "plastron"
      ],
      "craftable": true,
-     "place_objet": 4.19,
-     "n_objet": 55316,
+     "place_objet": 4.22,
+     "n_objet": 5857,
      "effet_sur_cette_unite": null
     },
     {
@@ -763,7 +775,7 @@
      ],
      "craftable": true,
      "place_objet": 4.31,
-     "n_objet": 243419,
+     "n_objet": 26674,
      "effet_sur_cette_unite": null
     },
     {
@@ -774,8 +786,8 @@
       "gants"
      ],
      "craftable": true,
-     "place_objet": 4.07,
-     "n_objet": 131357,
+     "place_objet": 4.08,
+     "n_objet": 14104,
      "effet_sur_cette_unite": null
     }
    ],
@@ -805,27 +817,15 @@
    "sa_place": 4.08,
    "son_ecart": 0.35,
    "solide": false,
-   "place_ladder": 4.6,
-   "n_ladder": 88097,
+   "place_ladder": 4.59,
+   "n_ladder": 9674,
    "etoile3": {
-    "n": 2646,
-    "avg": 3.85,
-    "t4": 63.87,
-    "wr": 13.91
+    "n": 247,
+    "avg": 3.7,
+    "t4": 65.99,
+    "wr": 12.96
    },
    "bis": [
-    {
-     "objet": "DA_EdgeOfNight",
-     "nom": "Edge of Night",
-     "composants": [
-      "épée",
-      "plastron"
-     ],
-     "craftable": true,
-     "place_objet": 4.16,
-     "n_objet": 116356,
-     "effet_sur_cette_unite": null
-    },
     {
      "objet": "DA_Bloodthirster",
      "nom": "Bloodthirster",
@@ -834,8 +834,20 @@
       "cape"
      ],
      "craftable": true,
-     "place_objet": 3.96,
-     "n_objet": 52891,
+     "place_objet": 3.99,
+     "n_objet": 5665,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_EdgeOfNight",
+     "nom": "Edge of Night",
+     "composants": [
+      "épée",
+      "plastron"
+     ],
+     "craftable": true,
+     "place_objet": 4.17,
+     "n_objet": 12187,
      "effet_sur_cette_unite": null
     },
     {
@@ -846,8 +858,20 @@
       "plastron"
      ],
      "craftable": true,
-     "place_objet": 4.19,
-     "n_objet": 55316,
+     "place_objet": 4.22,
+     "n_objet": 5857,
+     "effet_sur_cette_unite": null
+    },
+    {
+     "objet": "DA_SteraksGage",
+     "nom": "Sterak's Gage",
+     "composants": [
+      "épée",
+      "ceinture"
+     ],
+     "craftable": true,
+     "place_objet": 4.17,
+     "n_objet": 12804,
      "effet_sur_cette_unite": null
     },
     {
@@ -858,15 +882,15 @@
       "gants"
      ],
      "craftable": true,
-     "place_objet": 4.07,
-     "n_objet": 131357,
-     "effet_sur_cette_unite": 0.1416
+     "place_objet": 4.08,
+     "n_objet": 14104,
+     "effet_sur_cette_unite": 0.0897
     }
    ],
    "composants_requis": [
     {
      "composant": "épée",
-     "fois": 2
+     "fois": 3
     },
     {
      "composant": "plastron",
@@ -883,6 +907,10 @@
     {
      "composant": "arc",
      "fois": 1
+    },
+    {
+     "composant": "ceinture",
+     "fois": 1
     }
    ]
   },
@@ -893,26 +921,26 @@
    "sa_place": 4.3,
    "son_ecart": 0.56,
    "solide": false,
-   "place_ladder": 4.51,
-   "n_ladder": 72244,
+   "place_ladder": 4.5,
+   "n_ladder": 8241,
    "etoile3": {
-    "n": 262,
-    "avg": 1.14,
-    "t4": 99.62,
-    "wr": 90.46
+    "n": 33,
+    "avg": 1.33,
+    "t4": 100.0,
+    "wr": 75.76
    },
    "bis": [
     {
-     "objet": "DA_SpearOfShojin",
-     "nom": "Spear of Shojin",
+     "objet": "DA_HextechGunblade",
+     "nom": "Hextech Gunblade",
      "composants": [
-      "larme",
-      "épée"
+      "épée",
+      "baguette"
      ],
      "craftable": true,
-     "place_objet": 4.3,
-     "n_objet": 237222,
-     "effet_sur_cette_unite": -0.1911
+     "place_objet": 4.23,
+     "n_objet": 13034,
+     "effet_sur_cette_unite": -0.118
     },
     {
      "objet": "DA_VoidStaff",
@@ -922,21 +950,9 @@
       "larme"
      ],
      "craftable": true,
-     "place_objet": 4.24,
-     "n_objet": 159396,
-     "effet_sur_cette_unite": -0.1762
-    },
-    {
-     "objet": "DA_HextechGunblade",
-     "nom": "Hextech Gunblade",
-     "composants": [
-      "épée",
-      "baguette"
-     ],
-     "craftable": true,
-     "place_objet": 4.25,
-     "n_objet": 124031,
-     "effet_sur_cette_unite": null
+     "place_objet": 4.26,
+     "n_objet": 17393,
+     "effet_sur_cette_unite": -0.1144
     },
     {
      "objet": "DA_RedBuff",
@@ -946,9 +962,21 @@
       "arc"
      ],
      "craftable": true,
-     "place_objet": 4.15,
-     "n_objet": 145041,
-     "effet_sur_cette_unite": null
+     "place_objet": 4.14,
+     "n_objet": 16009,
+     "effet_sur_cette_unite": -0.1088
+    },
+    {
+     "objet": "DA_SpearOfShojin",
+     "nom": "Spear of Shojin",
+     "composants": [
+      "larme",
+      "épée"
+     ],
+     "craftable": true,
+     "place_objet": 4.33,
+     "n_objet": 26563,
+     "effet_sur_cette_unite": -0.0956
     },
     {
      "objet": "DA_GiantSlayer",
@@ -958,9 +986,9 @@
       "épée"
      ],
      "craftable": true,
-     "place_objet": 4.15,
-     "n_objet": 115441,
-     "effet_sur_cette_unite": null
+     "place_objet": 4.17,
+     "n_objet": 12759,
+     "effet_sur_cette_unite": -0.0427
     }
    ],
    "composants_requis": [
@@ -986,10 +1014,28 @@
  "carrousel": [
   {
    "composant": "gants",
-   "n_carries": 10,
+   "n_carries": 11,
    "carries": [
     "Amumu18",
     "Aphelios",
+    "Brambleback18",
+    "Diana",
+    "Draven18",
+    "Ezreal",
+    "Fiddlesticks18",
+    "Hecarim",
+    "Kennen",
+    "Maokai",
+    "Sentinel18"
+   ]
+  },
+  {
+   "composant": "ceinture",
+   "n_carries": 11,
+   "carries": [
+    "Amumu18",
+    "Aphelios",
+    "Brambleback18",
     "Diana",
     "Draven18",
     "Ezreal",
@@ -1012,20 +1058,6 @@
     "Fiddlesticks18",
     "Kennen",
     "Zyra"
-   ]
-  },
-  {
-   "composant": "ceinture",
-   "n_carries": 8,
-   "carries": [
-    "Amumu18",
-    "Brambleback18",
-    "Ezreal",
-    "Fiddlesticks18",
-    "Hecarim",
-    "Kennen",
-    "Maokai",
-    "Sentinel18"
    ]
   },
   {
@@ -1099,7 +1131,7 @@
     "Maokai",
     "Sentinel18"
    ],
-   "place_objet": 4.07
+   "place_objet": 4.08
   },
   {
    "objet": "DA_GiantSlayer",
@@ -1116,7 +1148,7 @@
     "Ezreal",
     "Zyra"
    ],
-   "place_objet": 4.15
+   "place_objet": 4.17
   },
   {
    "objet": "DA_WarmogsArmor",
@@ -1136,6 +1168,22 @@
    "place_objet": 4.31
   },
   {
+   "objet": "DA_StrikersFlail",
+   "nom": "Striker's Flail",
+   "composants": [
+    "ceinture",
+    "gants"
+   ],
+   "n_carries": 4,
+   "carries": [
+    "Aphelios",
+    "Draven18",
+    "Ezreal",
+    "Kennen"
+   ],
+   "place_objet": 4.16
+  },
+  {
    "objet": "DA_Bloodthirster",
    "nom": "Bloodthirster",
    "composants": [
@@ -1148,22 +1196,7 @@
     "Diana",
     "Kennen"
    ],
-   "place_objet": 3.96
-  },
-  {
-   "objet": "DA_RedBuff",
-   "nom": "Red Buff",
-   "composants": [
-    "arc",
-    "arc"
-   ],
-   "n_carries": 3,
-   "carries": [
-    "Aphelios",
-    "Draven18",
-    "Zyra"
-   ],
-   "place_objet": 4.15
+   "place_objet": 3.99
   },
   {
    "objet": "DA_EdgeOfNight",
@@ -1178,22 +1211,7 @@
     "Diana",
     "Kennen"
    ],
-   "place_objet": 4.16
-  },
-  {
-   "objet": "DA_TitansResolve",
-   "nom": "Titan's Resolve",
-   "composants": [
-    "arc",
-    "plastron"
-   ],
-   "n_carries": 3,
-   "carries": [
-    "Brambleback18",
-    "Diana",
-    "Fiddlesticks18"
-   ],
-   "place_objet": 4.19
+   "place_objet": 4.17
   },
   {
    "objet": "DA_InfinityEdge",
@@ -1208,35 +1226,35 @@
     "Draven18",
     "Ezreal"
    ],
-   "place_objet": 4.31
+   "place_objet": 4.32
   },
   {
-   "objet": "DA_StrikersFlail",
-   "nom": "Striker's Flail",
+   "objet": "DA_SteraksGage",
+   "nom": "Sterak's Gage",
    "composants": [
-    "ceinture",
-    "gants"
+    "épée",
+    "ceinture"
    ],
    "n_carries": 2,
    "carries": [
-    "Ezreal",
-    "Kennen"
+    "Brambleback18",
+    "Diana"
    ],
-   "place_objet": 4.16
+   "place_objet": 4.17
   },
   {
-   "objet": "DA_VoidStaff",
-   "nom": "Void Staff",
+   "objet": "DA_TitansResolve",
+   "nom": "Titan's Resolve",
    "composants": [
     "arc",
-    "larme"
+    "plastron"
    ],
    "n_carries": 2,
    "carries": [
-    "Kennen",
-    "Zyra"
+    "Diana",
+    "Fiddlesticks18"
    ],
-   "place_objet": 4.24
+   "place_objet": 4.22
   },
   {
    "objet": "DA_HextechGunblade",
@@ -1250,7 +1268,35 @@
     "Kennen",
     "Zyra"
    ],
-   "place_objet": 4.25
+   "place_objet": 4.23
+  },
+  {
+   "objet": "DA_VoidStaff",
+   "nom": "Void Staff",
+   "composants": [
+    "arc",
+    "larme"
+   ],
+   "n_carries": 2,
+   "carries": [
+    "Kennen",
+    "Zyra"
+   ],
+   "place_objet": 4.26
+  },
+  {
+   "objet": "DA_LastWhisper",
+   "nom": "Last Whisper",
+   "composants": [
+    "arc",
+    "gants"
+   ],
+   "n_carries": 2,
+   "carries": [
+    "Brambleback18",
+    "Ezreal"
+   ],
+   "place_objet": 4.29
   },
   {
    "objet": "DA_KrakensFury",
@@ -1264,7 +1310,7 @@
     "Aphelios",
     "Draven18"
    ],
-   "place_objet": 4.3
+   "place_objet": 4.31
   },
   {
    "objet": "DA_SpearOfShojin",
@@ -1278,7 +1324,7 @@
     "Ezreal",
     "Zyra"
    ],
-   "place_objet": 4.3
+   "place_objet": 4.33
   },
   {
    "objet": "DA_GuinsoosRageblade",
@@ -1292,36 +1338,30 @@
     "Aphelios",
     "Draven18"
    ],
-   "place_objet": 4.44
+   "place_objet": 4.42
   },
   {
-   "objet": "DA_SteraksGage",
-   "nom": "Sterak's Gage",
-   "composants": [
-    "épée",
-    "ceinture"
-   ],
-   "n_carries": 1,
-   "carries": [
-    "Brambleback18"
-   ],
-   "place_objet": 4.14
-  },
-  {
-   "objet": "DA_LastWhisper",
-   "nom": "Last Whisper",
+   "objet": "DA_RedBuff",
+   "nom": "Red Buff",
    "composants": [
     "arc",
-    "gants"
+    "arc"
    ],
    "n_carries": 1,
    "carries": [
-    "Ezreal"
+    "Zyra"
    ],
-   "place_objet": 4.27
+   "place_objet": 4.14
   }
  ],
  "carries_sans_correspondance": [],
+ "fraicheur": {
+  "n_parties": 54954,
+  "n_parties_patch_precedent": 500777,
+  "patch_precedent": "18.5c",
+  "patch_frais": true,
+  "avertissement": "Le patch 18.6 vient de sortir : 54 954 parties contre 500 777 pour 18.5c. Le BiS est un classement de FRÉQUENCE — à ce volume, l'ordre des cinq objets peut encore bouger. Les composants polyvalents, eux, tiennent mieux : ils agrègent cinq objets sur douze carries, donc beaucoup plus de parties que chaque objet pris isolément."
+ },
  "reserves": {
   "bis_est_une_frequence": "`topItems` liste les objets les plus PORTÉS sur l'unité, pas ceux qui la font le mieux placer. Les deux coïncident souvent, mais c'est une hypothèse. `effet_sur_cette_unite` porte un effet mesuré quand la source le donne — un delta NÉGATIF veut dire meilleur placement.",
   "pas_de_decision_de_slam": "Slammer dépend des PV, du tempo, de la force du plateau et des sept autres joueurs : rien de cela n'est dans la donnée. Ce fichier dit seulement qu'un slam est GRATUIT si l'objet est déjà au BiS d'un de tes carries, et un vrai arbitrage sinon.",

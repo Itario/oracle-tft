@@ -86,6 +86,25 @@ def main():
         sys.exit("Aucun relevé dans data/releves-tt/ — lance tactics.py.")
     rel = json.load(open(fs[-1], encoding="utf-8"))
 
+    # ── ⚠ UN PATCH FRAIS DONNE UN BiS FRAGILE ────────────────────────────
+    # Le BiS est un classement de FRÉQUENCE sur les cinq objets les plus
+    # portés. À 11 % du volume d'un patch mûr — 54 954 parties pour 18.6 le
+    # jour de sa sortie, contre 500 777 pour 18.5c — l'ordre de ces cinq
+    # peut se brouiller sans que rien ne le signale, exactement comme le
+    # Spearman ne signalait pas le changement de sous-ensemble (leçon n°39).
+    #
+    # On ne devine pas un seuil absolu : on compare au relevé PRÉCÉDENT de la
+    # même série, qui est mûr. En dessous de la moitié, on le dit.
+    precedent = None
+    if len(fs) >= 2:
+        try:
+            precedent = json.load(open(fs[-2], encoding="utf-8"))
+        except Exception:
+            precedent = None
+    n_cour = rel.get("n_parties") or 0
+    n_prec = (precedent or {}).get("n_parties") or 0
+    frais = bool(n_prec and n_cour < 0.5 * n_prec)
+
     if not rel.get("objets"):
         sys.exit(f"{os.path.basename(fs[-1])} ne porte pas de bloc `objets`. "
                  "C'est un relevé antérieur au 04/11 : relance tactics.py "
@@ -209,6 +228,27 @@ def main():
         "carrousel": carrousel,
         "slams_gratuits": slams,
         "carries_sans_correspondance": absents,
+        "fraicheur": {
+            "n_parties": n_cour,
+            "n_parties_patch_precedent": n_prec or None,
+            "patch_precedent": (precedent or {}).get("patch"),
+            "patch_frais": frais,
+            # ⚠ Les séparateurs de milliers se formatent AVANT, pas en
+            # nettoyant la phrase : un .replace(",", " ") sur la chaîne
+            # entière mange aussi les virgules grammaticales — il avait
+            # produit « à ce volume  l'ordre ».
+            "avertissement": (
+                f"Le patch {rel.get('patch')} vient de sortir : "
+                f"{n_cour:,}".replace(",", " ")
+                + f" parties contre {n_prec:,}".replace(",", " ")
+                + f" pour {(precedent or {}).get('patch')}. "
+                "Le BiS est un classement de FRÉQUENCE — à ce volume, l'ordre "
+                "des cinq objets peut encore bouger. Les composants "
+                "polyvalents, eux, tiennent mieux : ils agrègent cinq objets "
+                "sur douze carries, donc beaucoup plus de parties que chaque "
+                "objet pris isolément."
+            ) if frais else None,
+        },
         "reserves": {
             "bis_est_une_frequence": (
                 "`topItems` liste les objets les plus PORTÉS sur l'unité, pas "
