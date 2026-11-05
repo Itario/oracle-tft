@@ -144,7 +144,7 @@ def main():
                 "focus.json", "barre.json", "joueur.json",
                 "objets.json", "recettes.json",
                 "compos.json", "compos_lui.json",
-                "fuites.json")
+                "fuites.json", "contestation.json")
     copies, manquants = [], []
     for f in attendus:
         src = os.path.join(RACINE, "data", f)

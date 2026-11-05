@@ -508,7 +508,10 @@ const SOURCES = {
   // ils périment.
   fondamentaux: "data/reference/fondamentaux.json",
   augments:     "data/reference/augments.json",
-  fuites:       "data/fuites.json"
+  fuites:       "data/fuites.json",
+  // N'existe qu'après une collecte sur sa machine. Le bloc est
+  // gardé : il apparaîtra tout seul au prochain LANCER.bat.
+  contestation: "data/contestation.json"
 };
 const D = {};              // données chargées
 const $  = s => document.querySelector(s);
@@ -1245,6 +1248,72 @@ function vueApres(){
 /* La cible, mesurée au lieu d'être supposée. On compare aux 25 DERNIERS
    Challengers : la médiane du palier décrit des joueurs déjà installés,
    pas le ticket d'entrée. */
+/* LA CONTESTATION — ce que jouaient les sept autres.
+ *
+ * collecte.py enregistre l'objet de partie ENTIER, donc les huit plateaux.
+ * On n'en lisait que son rang. C'est l'axe le plus discriminant entre Master
+ * et Challenger, et personne ne peut le publier : il demande SES lobbies. */
+function blocContestation(){
+  const C = D.contestation;
+  if(!C?.par_champion?.length) return "";
+  const g = C.global;
+  const nom = u => esc(String(u).charAt(0).toUpperCase() + String(u).slice(1));
+
+  const verdict = !g ? "" : (g.solide
+    ? `<div class="regle"><div class="regle-b">mesuré sur tes lobbies</div>
+        <p style="margin:0">Quand au moins un adversaire construisait ton carry,
+        tu places <b>${g.placement_conteste}</b> contre <b>${g.placement_seul}</b>
+        quand tu étais seul dessus — <b>${g.ecart > 0 ? "+" : ""}${g.ecart} place</b>,
+        pour un seuil de bruit de ±${g.seuil_bruit}. <b>L'écart est réel.</b>
+        La charte l'affirmait depuis le début sans preuve ; c'en est une, et
+        elle vient de tes propres parties.</p></div>`
+    : `<div class="note warn">Seul : <b>${g.placement_seul}</b> sur ${g.n_seul}
+        parties. Contesté : <b>${g.placement_conteste}</b> sur ${g.n_conteste}.
+        Écart ${g.ecart > 0 ? "+" : ""}${g.ecart} pour un bruit de
+        ±${g.seuil_bruit} : <b>ça ne tranche pas encore</b>${
+        g.parties_requises ? ` — il faudrait environ ${nb(g.parties_requises)}
+        parties` : ""}.</div>`);
+
+  const ligne = c => `
+    <div class="ol" style="grid-template-columns:7rem 1fr 4.5rem">
+      <span class="n">${nom(c.champion)}</span>
+      <span class="b r">${c.n} parties · contesté ${c.part_contestee_pct} %
+        ${c.presence_attendue != null
+          ? `· vu ${c.presence_moyenne} en face pour ${c.presence_attendue} attendus`
+          : ""}</span>
+      <span class="v ${c.rapport > 1 ? "mo" : "pl"}">${c.rapport ?? "—"}</span>
+    </div>`;
+
+  return `<h2>Ce que jouaient les sept autres</h2>
+    <p class="doux">Chaque partie récoltée contient les <b>huit</b> plateaux, pas
+      seulement le tien. Si une unité est présente sur p % des plateaux du ladder,
+      on en attend <b>7 × p</b> chez tes adversaires : le rapport entre l'observé
+      et cet attendu est la seule lecture honnête. <b>Sous 1, tu la trouves moins
+      disputée que la moyenne ; au-dessus, tu tombes dessus plus souvent que le
+      hasard ne l'explique.</b> ${nb(C.n_parties)} parties, repère du patch
+      ${esc(String(C.patch_releve))}.</p>
+
+    ${verdict}
+
+    <div class="grille">
+      <div class="carte">
+        <h3 style="margin:0 0 .8rem">Plus disputés que prévu</h3>
+        <div class="dist">${(C.plus_disputes_que_prevu || []).map(ligne).join("")}</div>
+      </div>
+      <div class="carte">
+        <h3 style="margin:0 0 .8rem">Moins disputés que prévu</h3>
+        <div class="dist">${(C.moins_disputes_que_prevu || []).map(ligne).join("")}</div>
+      </div>
+    </div>
+
+    <p class="faible">⚠ <b>Le biais va toujours dans le même sens.</b> Le joueur
+      qui PERD une contestation meurt tôt, sans objets sur l'unité disputée, et
+      n'apparaît donc pas comme contestant — surtout dans les parties où la
+      contestation a été la plus violente. <b>Tout chiffre ici est un plancher.</b>
+      Et un rapport supérieur à 1 n'est pas une faute : il peut venir des heures
+      auxquelles tu joues. ${esc((C.reserves || {}).pas_une_faute || "")}</p>`;
+}
+
 /* LES FUITES — ce qui coûte des LP sans aucun défaut de jeu.
  *
  * Tous les autres blocs cherchent une faiblesse technique et répondent non :
@@ -1494,6 +1563,7 @@ function vueSuivi(){
   return `<h1>Suivi</h1>
     ${blocProjection()}
     ${blocFuites()}
+    ${blocContestation()}
     ${blocBarre()}
     ${(() => {
       const J = D.joueur;

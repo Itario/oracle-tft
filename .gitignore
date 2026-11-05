@@ -31,3 +31,8 @@ site/data/
 site/oracle.html
 data/meta/
 
+
+# Le résumé de contestation : agrégats sans identifiant, mais produit
+# sur sa machine comme les autres. Il entre dans le dépôt via
+# build_contestation.py, pas directement.
+**/contestation_*.json
