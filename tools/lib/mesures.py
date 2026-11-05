@@ -118,12 +118,51 @@ def comparer(avant, apres, nmin=NMIN, avec_bruit=True):
     def topn(g, n_):
         return set(sorted(g, key=lambda k: g[k])[:n_])
 
+    # ── ⚠ LE PIÈGE DU VOLUME INÉGAL ──────────────────────────────────────
+    #
+    # Mesuré le 05/11 sur 18.5c -> 18.6 : le relevé d'arrivée avait 54 954
+    # parties contre 500 777 au départ, soit 11 % du volume. SEIZE unités
+    # sont passées sous le seuil `nmin`, dont les HUIT variantes de Lux —
+    # c'est-à-dire tout le haut du classement de départ.
+    #
+    # Conséquences, toutes invisibles dans le Spearman seul :
+    #   - on compare 57 unités là où le relevé mûr en portait 73 ;
+    #   - « 0/8 de la tête conservée » est un artefact de volume, pas un
+    #     bouleversement de la méta ;
+    #   - le déplacement médian n'est pas comparable à celui d'une transition
+    #     mesurée entre deux relevés mûrs, parce que les rangs se tassent.
+    #
+    # Le Spearman sur le sous-ensemble commun reste valide pour CE
+    # sous-ensemble. Ce qui ne l'est pas, c'est de le comparer aux
+    # transitions historiques, toutes mesurées entre relevés mûrs.
+    na, nb = avant.get("n_parties") or 0, apres.get("n_parties") or 0
+    ratio = (min(na, nb) / max(na, nb)) if max(na, nb) else None
+    perdues = sorted(set(ga) - set(gb))
+    gagnees = sorted(set(gb) - set(ga))
+    volume_comparable = bool(ratio and ratio >= 0.5 and len(perdues) <= 3)
+
     return {
         "de": {"date": avant["date"], "patch": avant.get("patch"), "rang": avant.get("rang")},
         "a":  {"date": apres["date"], "patch": apres.get("patch"), "rang": apres.get("rang")},
         "jours": (date.fromisoformat(apres["date"]) - date.fromisoformat(avant["date"])).days,
         "meme_elo": avant.get("rang") == apres.get("rang"),
         "n_comparables": n,
+        "volume": {
+            "n_avant": na, "n_apres": nb,
+            "ratio": round(ratio, 3) if ratio else None,
+            "unites_perdues": perdues,
+            "unites_gagnees": gagnees,
+            "comparable": volume_comparable,
+            "avertissement": None if volume_comparable else (
+                f"VOLUMES TRÈS INÉGAUX ({na:,} contre {nb:,} parties) : "
+                f"{len(perdues)} unité(s) sont passées sous le seuil de "
+                f"{nmin} parties et sortent de la comparaison. Le Spearman "
+                "reste valide POUR LE SOUS-ENSEMBLE COMMUN, mais ni la "
+                "rotation de tête ni le déplacement médian ne se comparent "
+                "aux transitions mesurées entre deux relevés mûrs. "
+                "Refaire la mesure quand le patch d'arrivée aura mûri."
+            ).replace(",", " "),
+        },
         "spearman": round(obs, 3) if obs is not None else None,
         "spearman_exact": obs,
         "plancher_bruit": round(plancher, 3) if plancher is not None else None,

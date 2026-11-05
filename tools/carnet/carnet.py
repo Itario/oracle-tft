@@ -137,6 +137,10 @@ def comparer(r1, r2, nmin=NMIN, silencieux=False):
         "chutes": sorted(dep.items(), key=lambda kv: -kv[1])[:8],
         "delta_avg_median": st.median(dav),
         "comparable": r1.get("rang") == r2.get("rang"),
+        # ⚠ Ajouté le 05/11. Même contrôle que dans mesures.comparer() : deux
+        # relevés de volumes très inégaux ne se comparent pas comme deux
+        # relevés mûrs, et rien dans le Spearman ne le signale.
+        "volume": _volume(r1, r2, g1, g2, nmin),
     }
 
     if silencieux:
@@ -148,6 +152,19 @@ def comparer(r1, r2, nmin=NMIN, silencieux=False):
     if not res["comparable"]:
         print("  ⚠ TRANCHES D'ELO DIFFÉRENTES : une partie du mouvement vient du")
         print("    changement de population, pas des patchs. À interpréter avec prudence.")
+    v = res["volume"]
+    if not v["comparable"]:
+        print(f"\n  ⚠ VOLUMES TRÈS INÉGAUX : {v['n_avant']:,} parties contre "
+              f"{v['n_apres']:,}.".replace(",", " "))
+        if v["unites_perdues"]:
+            noms = ", ".join(x.replace("DA_", "") for x in v["unites_perdues"][:6])
+            print(f"    {len(v['unites_perdues'])} unité(s) sous le seuil de "
+                  f"{v['seuil']} parties sortent de la comparaison : {noms}"
+                  + (" …" if len(v["unites_perdues"]) > 6 else ""))
+        print("    Le Spearman reste valide POUR LE SOUS-ENSEMBLE COMMUN. En")
+        print("    revanche la rotation de tête et le déplacement médian NE SE")
+        print("    COMPARENT PAS aux transitions mesurées entre relevés mûrs.")
+        print("    Refaire la mesure quand le patch d'arrivée aura mûri.")
     print(f"\nCorrélation de rang (Spearman) : {rho:.3f}"
           f"   ({'méta quasi figée' if rho>.95 else 'rotation modérée' if rho>.85 else 'forte rotation'})")
     print(f"Déplacement  médian {res['dep_median']:.0f} rangs ·"
@@ -253,6 +270,24 @@ def cmd_rotation():
             print(f"Le prochain (patch {pro['nom']}, {pro['date']}) rendra la mesure possible.")
         else:
             print("Aucun patch à venir dans data/calendrier.json.")
+
+
+def _volume(r1, r2, g1, g2, nmin):
+    """Deux relevés de volumes très inégaux ne se comparent pas.
+
+    Mesuré le 05/11 sur 18.5c -> 18.6 : 500 777 parties contre 54 954, soit
+    11 %. SEIZE unités sont passées sous le seuil, dont les HUIT variantes de
+    Lux — tout le haut du classement de départ. « 0/8 de tête conservée »
+    était un artefact de volume, et rien dans le Spearman ne le disait.
+    """
+    na = r1.get("n_parties") or 0
+    nb = r2.get("n_parties") or 0
+    ratio = (min(na, nb) / max(na, nb)) if max(na, nb) else None
+    perdues = sorted(set(g1) - set(g2))
+    ok = bool(ratio and ratio >= 0.5 and len(perdues) <= 3)
+    return {"n_avant": na, "n_apres": nb,
+            "ratio": round(ratio, 3) if ratio else None,
+            "unites_perdues": perdues, "comparable": ok, "seuil": nmin}
 
 
 def patchs_connus():

@@ -1722,3 +1722,103 @@ Le mot `augments` apparaît bien dans les données de la page, à `matches[].rat
 sont les **notes internes de tactics.tools** sur la qualité des augments d'une partie, pas
 l'identité des augments choisis. La charte reste juste : la question est close jusqu'au
 Set 19.
+
+---
+
+## 05/11/2026 — LE 18.6 SORT, ET LA PRÉDICTION EST À MOITIÉ JUSTE
+
+### LA CHAÎNE A TOURNÉ SEULE
+
+Premier test du correctif d'hier sans personne derrière : relevé planifié à 02:23,
+déploiement `workflow_run` déclenché, les deux réussis. **La chaîne se referme.**
+
+⚠ **Mais la cadence n'est pas celle qu'on croit.** Le cron à huit créneaux a été posé le
+04/11 à 20h49. Depuis, quatre créneaux auraient dû tomber : **un seul a tourné**. La
+version à deux créneaux, elle, les livrait tous les deux. Hypothèse : GitHub plafonne la
+cadence sur les dépôts publics, et ajouter des créneaux n'ajoute rien. *Quatre points, on
+ne conclut pas — on laisse mesurer.*
+
+### LA DÉRIVE INTRA-PATCH N'EST TOUJOURS PAS MESURÉE, ET NE LE SERA PAS COMME ÇA
+
+Deux relevés de 18.5c, 03/11 et 04/11. Spearman **0.999** pour un plancher de bruit à
+**0.994** : un observé AU-DESSUS du hasard, ce qui n'a aucun sens pour deux mesures
+distinctes.
+
+**Parce qu'elles ne sont pas distinctes.** Les relevés sont **cumulés depuis le début du
+patch** : les 500 777 parties du 04/11 contiennent les 449 902 du 03/11, et le n de chaque
+unité ne fait que croître (Taric 124 562 → 138 845). Deux échantillons qui se recouvrent à
+90 % corrèlent à 0.999 par construction.
+
+La charte affirmait hier que cette paire était « celle qui manquait ». **C'était faux.**
+Il faut des fenêtres DISJOINTES — piste repérée : le champ `dateStats` de la page des
+compos.
+
+### LA CONSÉQUENCE QUI AURAIT COÛTÉ CHER
+
+`tactics.py` figeait le **premier** relevé de chaque patch, jamais réécrit. L'intention
+était bonne : ne pas diluer la photo du jour du patch. Elle servait mal les deux usages
+réels — le site veut le cliché le plus fourni, la rotation veut deux clichés mûrs.
+
+Un patch sort, le workflow le voit dans l'heure, et on gelait **le cliché le moins fourni
+qui existera jamais de ce patch** — puis on s'en servait pour mesurer une rotation contre
+des archives de fin de patch.
+
+Puisque les relevés sont cumulés, réécrire ne remplace pas une mesure : **ça complète la
+même mesure.** Nouvelle règle : on réécrit tant que le cliché est plus fourni, en gardant
+le nom du premier fichier et `premier_releve` / `n_parties_premier` / `n_mises_a_jour`.
+
+**Corrigé quelques heures avant que ça compte.**
+
+### LE 18.6 EST SORTI — 54 954 PARTIES
+
+Le relevé l'a attrapé à 09:29. Et sous l'ancienne logique, ces 54 954 parties auraient été
+gelées pour toujours face aux 500 777 de 18.5c.
+
+**La prédiction, posée le 03/11 avant le résultat : Spearman entre 0.82 et 0.90,
+déplacement médian 4 à 6 rangs.**
+
+| | prédit | mesuré | |
+|---|---|---|---|
+| Spearman | 0.82 – 0.90 | **0.832** | ✅ dans la fourchette |
+| déplacement médian | 4 – 6 rangs | **8 rangs** | ❌ le double |
+
+**Et la rotation est RÉELLE** : plancher de bruit à 0.972, observé à 0.832, donc **83 % de
+l'écart n'est pas du hasard**. Le 18.6 a bougé la méta pour de bon.
+
+⚠ **Mais la mesure est contaminée, et je suis tombé dans le piège avant de le voir.**
+À 11 % du volume, **seize unités sont passées sous le seuil de 2 000 parties — dont les
+HUIT variantes de Lux**, c'est-à-dire tout le haut du classement de départ. On compare 57
+unités là où le relevé mûr en portait 73.
+
+Le signal qui m'a alerté : « Tête : 0/8 conservées », avec pour entrantes exactement les
+unités qui étaient 9ᵉ à 16ᵉ. **Un bouleversement total de la tête est moins probable qu'un
+artefact**, et c'en était un.
+
+**Verdict honnête : prédiction à moitié vérifiée, à reprendre quand 18.6 aura mûri.** Le
+Spearman sur le sous-ensemble commun reste valide ; le déplacement médian et la rotation
+de tête ne se comparent pas à des transitions mesurées entre relevés mûrs.
+
+**Leçon n°39 — deux mesures de volumes très inégaux ne se comparent pas, et le coefficient
+ne le dit jamais.** Le Spearman se calcule sur le sous-ensemble commun sans signaler que
+ce sous-ensemble a changé. `mesures.comparer()` et `carnet.py` portent désormais le
+contrôle : ratio de volume, liste des unités perdues, et un avertissement AVANT les
+chiffres.
+
+### DEUX CALENDRIERS DANS LE MÊME FICHIER
+
+`carnet.py` ne savait lire que la série MetaTFT : la série automatique — la seule à jour
+toute seule — n'avait aucun outil de comparaison, et c'est elle qui portait la prédiction.
+`--serie tactics` ajouté.
+
+En le testant, `cmd_fraicheur` annonçait encore « 18.6B le 11/11 », un jour après la
+correction en 18.7. Elle portait **sa propre liste de patchs en dur** — alors que
+`prochain_patch()`, trois lignes plus haut, a pour docstring « lu dans le calendrier —
+jamais écrit en dur ». **La leçon avait été appliquée à une fonction et pas à sa voisine,
+dans le même fichier.**
+
+Et le calendrier ANNONCE sans constater : il affirmait « 18.6 le 04/11 » alors que le
+patch en ligne était 18.5c, et le carnet déclarait le relevé périmé à cause d'un patch
+jamais sorti. Il croise maintenant l'annonce avec l'observation.
+
+**Leçon n°40 — une prévision dont la date est passée devient un fait faux, en silence.**
+Tout calendrier doit se faire croiser avec ce qui a été observé.
