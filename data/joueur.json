@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "genere_le": "2026-11-04",
+ "genere_le": "2026-11-05",
  "source": "tactics.tools",
  "page": "https://tactics.tools/player/euw/Itario/EUW",
  "joueur": {
@@ -79,9 +79,9 @@
   "note_assiette": "Pas encore assez de parties en Master+ pour un barème propre : ajusté sur tous les paliers. Les gains y sont plus généreux qu'en haut de l'échelle, donc la projection est optimiste."
  },
  "ecart_a_la_barre": {
-  "seuil_challenger_lp": 741,
-  "source_seuil": "data/barre.json du 2026-11-04",
-  "lp_manquants": 702,
+  "seuil_challenger_lp": 740,
+  "source_seuil": "data/barre.json du 2026-11-05",
+  "lp_manquants": 701,
   "note": null
  },
  "projection": {
@@ -98,11 +98,11 @@
    "note": "Le terme dominant est le placement, pas le barème. Il décroît en 1/racine(n) : c'est le volume de parties qui resserre la fourchette."
   },
   "solide": true,
-  "lp_manquants": 702,
-  "parties_estimees": 53,
+  "lp_manquants": 701,
+  "parties_estimees": 52,
   "parties_fourchette": [
    36,
-   96
+   95
   ],
   "avertissement": "OPTIMISTE PAR CONSTRUCTION. Deux effets non modélisés poussent dans le même sens : les gains de LP se compriment quand le MMR rejoint le rang, et le placement moyen remonte vers 4.50 dans des lobbies plus durs. À lire comme une vitesse maximale, pas comme un calendrier."
  },
