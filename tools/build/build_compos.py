@@ -38,13 +38,9 @@ SORTIE = os.path.join(RACINE, "data", "compos_lui.json")
 SCHEMA = 1
 
 
-def champion(ident):
-    """Le champion, sans variante ni numéro de set. Même règle que
-    build_focus.py et build_objets.py — trois fichiers, une seule définition
-    de ce qu'est « la même unité »."""
-    toks = [re.sub(r"\d+", "", t) for t in str(ident).split("_") if t and t != "DA"]
-    toks = [t for t in toks if t]
-    return toks[0].lower() if toks else ""
+# champion() vit dans tools/lib/mesures.py — UNE seule définition de
+# « est-ce la même unité ? ». Quatre copies existaient le 05/11.
+champion = M.champion
 
 
 def charger(nom):

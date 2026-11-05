@@ -68,6 +68,7 @@ jobs:
           # reste du site se publie.
           python3 tools/build/build_objets.py || echo "::warning::objets non reconstruits"
           python3 tools/build/build_compos.py || echo "::warning::compos non croisées"
+          python3 tools/build/build_fuites.py || echo "::warning::fuites non calculées"
           python3 tools/build/build_site.py
           python3 tools/build/build_oracle.py
           echo "Fichiers produits :"

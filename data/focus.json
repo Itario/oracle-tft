@@ -1,11 +1,11 @@
 {
  "schema_version": 1,
- "genere_le": "2026-11-03",
+ "genere_le": "2026-11-05",
  "releve": {
-  "patch": "18.5c",
+  "patch": "18.6",
   "rang": "Master+",
   "source": "tactics.tools",
-  "n_parties": 449902
+  "n_parties": 54954
  },
  "lui": {
   "parties": 114,
@@ -13,11 +13,23 @@
   "avantage_general": -0.763
  },
  "seuils": {
-  "quartile_fort": 4.41,
-  "pick_median": 11.9,
+  "quartile_fort": 4.33,
+  "pick_median": 13.1,
   "volume_min": 3000
  },
  "lignes": [
+  {
+   "nom": "Aphelios",
+   "n": 25,
+   "son_placement": 3.28,
+   "placement_ladder": 4.52,
+   "ecart_brut": -1.24,
+   "ecart_corrige": -0.48,
+   "seuil": 0.88,
+   "solide": false,
+   "parties_requises": 85,
+   "pick": 12.2
+  },
   {
    "nom": "Ezreal",
    "n": 31,
@@ -31,52 +43,40 @@
    "pick": 16.4
   },
   {
-   "nom": "Aphelios",
-   "n": 25,
-   "son_placement": 3.28,
-   "placement_ladder": 4.49,
-   "ecart_brut": -1.21,
-   "ecart_corrige": -0.45,
-   "seuil": 0.88,
-   "solide": false,
-   "parties_requises": 96,
-   "pick": 11.7
-  },
-  {
    "nom": "Draven18",
    "n": 20,
    "son_placement": 3.0,
-   "placement_ladder": 4.17,
-   "ecart_brut": -1.17,
-   "ecart_corrige": -0.41,
+   "placement_ladder": 4.2,
+   "ecart_brut": -1.2,
+   "ecart_corrige": -0.44,
    "seuil": 0.98,
    "solide": false,
-   "parties_requises": 116,
-   "pick": 11.5
+   "parties_requises": 100,
+   "pick": 12.2
   },
   {
    "nom": "Hecarim",
    "n": 16,
    "son_placement": 3.5,
-   "placement_ladder": 4.61,
-   "ecart_brut": -1.11,
-   "ecart_corrige": -0.35,
+   "placement_ladder": 4.59,
+   "ecart_brut": -1.09,
+   "ecart_corrige": -0.33,
    "seuil": 1.1,
    "solide": false,
-   "parties_requises": 159,
-   "pick": 17.9
+   "parties_requises": 178,
+   "pick": 18.1
   },
   {
    "nom": "Amumu18",
    "n": 23,
    "son_placement": 3.43,
-   "placement_ladder": 4.42,
-   "ecart_brut": -0.99,
-   "ecart_corrige": -0.23,
+   "placement_ladder": 4.44,
+   "ecart_brut": -1.01,
+   "ecart_corrige": -0.25,
    "seuil": 0.92,
    "solide": false,
-   "parties_requises": 366,
-   "pick": 30.1
+   "parties_requises": 310,
+   "pick": 32.1
   },
   {
    "nom": "Maokai",
@@ -88,19 +88,7 @@
    "seuil": 0.98,
    "solide": false,
    "parties_requises": 598,
-   "pick": 16.9
-  },
-  {
-   "nom": "Brambleback18",
-   "n": 18,
-   "son_placement": 3.44,
-   "placement_ladder": 4.37,
-   "ecart_brut": -0.93,
-   "ecart_corrige": -0.17,
-   "seuil": 1.04,
-   "solide": false,
-   "parties_requises": 670,
-   "pick": 10.3
+   "pick": 17.4
   },
   {
    "nom": "Fiddlesticks18",
@@ -112,170 +100,190 @@
    "seuil": 1.22,
    "solide": false,
    "parties_requises": 861,
-   "pick": 26.0
+   "pick": 26.1
   },
   {
    "nom": "Kennen",
    "n": 17,
    "son_placement": 3.12,
-   "placement_ladder": 3.98,
-   "ecart_brut": -0.86,
-   "ecart_corrige": -0.1,
+   "placement_ladder": 4.02,
+   "ecart_brut": -0.9,
+   "ecart_corrige": -0.14,
    "seuil": 1.07,
    "solide": false,
-   "parties_requises": 1936,
-   "pick": 18.1
+   "parties_requises": 988,
+   "pick": 18.8
+  },
+  {
+   "nom": "Brambleback18",
+   "n": 18,
+   "son_placement": 3.44,
+   "placement_ladder": 4.33,
+   "ecart_brut": -0.89,
+   "ecart_corrige": -0.13,
+   "seuil": 1.04,
+   "solide": false,
+   "parties_requises": 1146,
+   "pick": 8.9
   },
   {
    "nom": "Sentinel18",
    "n": 28,
    "son_placement": 3.54,
-   "placement_ladder": 4.38,
-   "ecart_brut": -0.84,
-   "ecart_corrige": -0.08,
+   "placement_ladder": 4.39,
+   "ecart_brut": -0.85,
+   "ecart_corrige": -0.09,
    "seuil": 0.83,
    "solide": false,
-   "parties_requises": 3025,
-   "pick": 39.4
+   "parties_requises": 2391,
+   "pick": 40.9
   },
   {
    "nom": "Diana",
    "n": 12,
    "son_placement": 4.08,
-   "placement_ladder": 4.6,
-   "ecart_brut": -0.52,
-   "ecart_corrige": 0.24,
+   "placement_ladder": 4.59,
+   "ecart_brut": -0.51,
+   "ecart_corrige": 0.25,
    "seuil": 1.27,
    "solide": false,
-   "parties_requises": 337,
+   "parties_requises": 310,
    "pick": 17.6
   },
   {
    "nom": "Zyra",
    "n": 27,
    "son_placement": 4.3,
-   "placement_ladder": 4.51,
-   "ecart_brut": -0.21,
-   "ecart_corrige": 0.55,
+   "placement_ladder": 4.5,
+   "ecart_brut": -0.2,
+   "ecart_corrige": 0.56,
    "seuil": 0.85,
    "solide": false,
-   "parties_requises": 64,
-   "pick": 14.4
+   "parties_requises": 62,
+   "pick": 15.0
   }
  ],
  "fortes_peu_contestees": [
   {
-   "nom": "ashe",
-   "n": 36584,
+   "nom": "lux",
+   "n": 7186,
+   "variantes": 10,
+   "avg": 3.47,
+   "pick": 13.1,
+   "il_la_joue": false
+  },
+  {
+   "nom": "alune",
+   "n": 7109,
    "variantes": 1,
-   "avg": 3.9,
+   "avg": 3.83,
+   "pick": 12.9,
+   "il_la_joue": true
+  },
+  {
+   "nom": "ashe",
+   "n": 4452,
+   "variantes": 1,
+   "avg": 3.89,
    "pick": 8.1,
    "il_la_joue": true
   },
   {
-   "nom": "draven",
-   "n": 51842,
+   "nom": "azir",
+   "n": 5277,
    "variantes": 1,
-   "avg": 4.17,
-   "pick": 11.5,
+   "avg": 4.16,
+   "pick": 9.6,
    "il_la_joue": true
   },
   {
-   "nom": "azir",
-   "n": 43909,
+   "nom": "draven",
+   "n": 6720,
    "variantes": 1,
-   "avg": 4.17,
-   "pick": 9.8,
+   "avg": 4.2,
+   "pick": 12.2,
    "il_la_joue": true
   },
   {
    "nom": "kayle",
-   "n": 48124,
+   "n": 5495,
    "variantes": 1,
-   "avg": 4.29,
-   "pick": 10.7,
-   "il_la_joue": true
-  },
-  {
-   "nom": "murkwolf",
-   "n": 39645,
-   "variantes": 1,
-   "avg": 4.37,
-   "pick": 8.8,
+   "avg": 4.32,
+   "pick": 10.0,
    "il_la_joue": true
   },
   {
    "nom": "brambleback",
-   "n": 46182,
+   "n": 4883,
    "variantes": 1,
-   "avg": 4.37,
-   "pick": 10.3,
+   "avg": 4.33,
+   "pick": 8.9,
    "il_la_joue": true
   }
  ],
  "tres_contestees": [
   {
    "nom": "sentinel",
-   "n": 177323,
+   "n": 22476,
    "variantes": 1,
-   "avg": 4.38,
-   "pick": 39.4,
+   "avg": 4.39,
+   "pick": 40.9,
    "il_la_joue": true
   },
   {
    "nom": "amumu",
-   "n": 135539,
+   "n": 17640,
    "variantes": 1,
-   "avg": 4.42,
-   "pick": 30.1,
+   "avg": 4.44,
+   "pick": 32.1,
    "il_la_joue": true
   },
   {
    "nom": "taric",
-   "n": 124562,
+   "n": 15442,
    "variantes": 1,
-   "avg": 3.88,
-   "pick": 27.7,
+   "avg": 3.9,
+   "pick": 28.1,
    "il_la_joue": false
   },
   {
    "nom": "fiddlesticks",
-   "n": 116768,
+   "n": 14359,
    "variantes": 1,
    "avg": 4.53,
-   "pick": 26.0,
+   "pick": 26.1,
+   "il_la_joue": true
+  },
+  {
+   "nom": "lillia",
+   "n": 13624,
+   "variantes": 1,
+   "avg": 4.49,
+   "pick": 24.8,
    "il_la_joue": true
   },
   {
    "nom": "yorick",
-   "n": 104719,
+   "n": 13056,
    "variantes": 1,
    "avg": 4.53,
-   "pick": 23.3,
+   "pick": 23.8,
    "il_la_joue": false
   },
   {
-   "nom": "lillia",
-   "n": 102505,
+   "nom": "rakan",
+   "n": 11786,
    "variantes": 1,
-   "avg": 4.49,
-   "pick": 22.8,
+   "avg": 4.7,
+   "pick": 21.4,
    "il_la_joue": true
   },
   {
-   "nom": "gnarsmall",
-   "n": 100985,
+   "nom": "alistar",
+   "n": 11276,
    "variantes": 1,
-   "avg": 3.78,
-   "pick": 22.4,
-   "il_la_joue": true
-  },
-  {
-   "nom": "krug",
-   "n": 94225,
-   "variantes": 1,
-   "avg": 4.45,
-   "pick": 20.9,
+   "avg": 4.43,
+   "pick": 20.5,
    "il_la_joue": true
   }
  ],

@@ -14,7 +14,7 @@ Règle : ce module ne lit que `data/releves/`. Il n'écrit rien, n'affiche rien,
 et ne connaît ni le site ni l'Oracle.
 """
 
-import json, os, glob, random, statistics as st
+import json, os, glob, random, re, statistics as st
 from datetime import date
 
 SCHEMA = 1            # version de format attendue pour un relevé
@@ -198,6 +198,26 @@ def tete_stable(releves, n=8, nmin=NMIN):
     }
 
 
+# ── « LA MÊME UNITÉ » ────────────────────────────────────────────────────
+# Définition PARTAGÉE. Elle existait en QUATRE exemplaires le 05/11 —
+# build_focus, build_objets, build_compos et, imbriquée, unites_jouees().
+# Les quatre étaient identiques ce jour-là, donc aucun bug actif : mais la
+# prochaine correction en aurait fait diverger une, et deux fichiers qui
+# répondent différemment à « est-ce la même unité ? » produisent deux pages
+# qui se contredisent. C'est arrivé le 04/11 avec « ce qu'il joue ».
+#
+# tactics.tools éclate Lux en DIX entrées (Lux_Moonbeam, Lux_Sunbeam, …) et
+# MetaTFT n'en voit qu'une. Sans regroupement, chaque variante compte pour
+# une unité distincte et la contestation devient illisible.
+
+def champion(ident):
+    """Le champion seul : sans variante, sans numéro de set, sans préfixe."""
+    toks = [re.sub(r"\d+", "", t) for t in str(ident).split("_")
+            if t and t != "DA"]
+    toks = [t for t in toks if t]
+    return toks[0].lower() if toks else ""
+
+
 # ── CE QU'IL JOUE ────────────────────────────────────────────────────────
 # Définition PARTAGÉE, et elle l'est pour une raison précise.
 #
@@ -222,13 +242,6 @@ def unites_jouees(miroir):
                     sans atteindre ce seuil.
     Absente du dictionnaire : jamais vue comme porteuse.
     """
-    import re
-    def champion(ident):
-        toks = [re.sub(r"\d+", "", t) for t in str(ident).split("_")
-                if t and t != "DA"]
-        toks = [t for t in toks if t]
-        return toks[0].lower() if toks else ""
-
     out = {}
     for x in (miroir.get("parties") or []):
         for p in (x.get("pieces") or []):

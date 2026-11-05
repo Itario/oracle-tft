@@ -1,0 +1,88 @@
+{
+ "schema_version": 1,
+ "genere_le": "2026-11-05",
+ "lp_manquants": 740,
+ "lp_par_partie_attendu": 13.31,
+ "bareme": {
+  "pente": -15.42,
+  "ordonnee": 70.94,
+  "lp_8e_place": -52.4,
+  "note": "La 8e place est EXTRAPOLÉE par la droite : aucune 8e propre dans la fenêtre de 50 parties (les seules présentes finissaient à 0 LP, donc écrêtées)."
+ },
+ "abandons": {
+  "n": 6,
+  "n_parties_total": 120,
+  "part_des_parties_pct": 5.0,
+  "zone_grise_signalee": 3,
+  "detail": [
+   {
+    "date": "2026-09-06",
+    "placement": 8,
+    "niveau": 6,
+    "or_restant": 30,
+    "lp_a_ce_placement": -52.4,
+    "manque_a_gagner": 65.7
+   },
+   {
+    "date": "2026-09-29",
+    "placement": 7,
+    "niveau": 7,
+    "or_restant": 21,
+    "lp_a_ce_placement": -37.0,
+    "manque_a_gagner": 50.3
+   },
+   {
+    "date": "2026-10-03",
+    "placement": 8,
+    "niveau": 6,
+    "or_restant": 115,
+    "lp_a_ce_placement": -52.4,
+    "manque_a_gagner": 65.7
+   },
+   {
+    "date": "2026-10-09",
+    "placement": 8,
+    "niveau": 7,
+    "or_restant": 152,
+    "lp_a_ce_placement": -52.4,
+    "manque_a_gagner": 65.7
+   },
+   {
+    "date": "2026-10-12",
+    "placement": 8,
+    "niveau": 8,
+    "or_restant": 37,
+    "lp_a_ce_placement": -52.4,
+    "manque_a_gagner": 65.7
+   },
+   {
+    "date": "2026-10-16",
+    "placement": 6,
+    "niveau": 7,
+    "or_restant": 30,
+    "lp_a_ce_placement": -21.6,
+    "manque_a_gagner": 34.9
+   }
+  ],
+  "cout_d_un_abandon_maintenant": 65.7,
+  "cout_total_au_rang_actuel": 348.0,
+  "part_de_l_ecart_a_la_barre_pct": 47.0,
+  "asymetrie": "Ne pas lancer une partie coûte 0 LP. En lancer une et l'abandonner en coûte 52 — et fait en plus renoncer aux 13 qu'une partie ordinaire rapporte. L'écart est de 66 LP par partie abandonnée.",
+  "reserve": "Les six abandons datent de septembre-octobre, entre Silver et Diamant, où l'échelle de LP n'était pas la même. Ce chiffre n'additionne PAS des pertes passées : il projette ce que le même comportement coûte à son rang ACTUEL."
+ },
+ "rythme": {
+  "jours_actifs": 46,
+  "etendue_jours": 65,
+  "jours_sans_jouer": 19,
+  "parties_par_jour_actif": 2.48,
+  "parties_par_jour_calendaire": 1.75,
+  "lp_par_jour_actif": 33.0,
+  "jours_actifs_requis": 23,
+  "lecture": "Un taux de change, pas un reproche : voilà ce qu'une journée de jeu rapporte en moyenne, pour qu'il décide lui-même. Un travail et des enfants ne se négocient pas contre des LP."
+ },
+ "decroissance": {
+  "observee": false,
+  "note": "Aucune perte de LP sans partie n'a été observée à ce jour : son LP n'a bougé que sur des parties jouées. La décroissance à Master existe (-50 LP/jour une fois les parties en banque épuisées) mais elle ne l'a jamais touché. On ne compte pas une perte qu'on n'a pas constatée."
+ },
+ "pourquoi": "Tous les autres fichiers cherchent une faiblesse technique et répondent non : rang de niveau 3.91/8, conversion +0.40, or restant médian 2, deux traits sur 24 hors du bruit, aucun carry sur 12. Il n'y a pas de fuite technique dans les agrégats. Celui-ci chiffre ce qui reste : des LP perdus sans rapport avec la qualité du jeu."
+}

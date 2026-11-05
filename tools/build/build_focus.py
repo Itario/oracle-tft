@@ -38,6 +38,8 @@ dit s'il franchit seulement le bruit.
 import glob, json, math, os, re, statistics as st, sys, unicodedata
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(RACINE, "tools", "lib"))
+import mesures as M
 SORTIE = os.path.join(RACINE, "data", "focus.json")
 SCHEMA = 1
 SD = 2.2                 # écart-type du placement, pour les seuils de bruit
@@ -45,11 +47,9 @@ NEUTRE = 4.50            # placement moyen du ladder, par construction
 VOL_MIN = 3000           # sous ce volume, une unité du relevé n'est pas lisible
 
 
-def champion(ident):
-    """Le champion, sans sa variante ni son numéro de set."""
-    toks = [re.sub(r"\d+", "", t) for t in str(ident).split("_") if t and t != "DA"]
-    toks = [t for t in toks if t]
-    return toks[0].lower() if toks else ""
+# champion() vit dans tools/lib/mesures.py — UNE seule définition de
+# « est-ce la même unité ? ». Quatre copies existaient le 05/11.
+champion = M.champion
 
 
 def norm(s):

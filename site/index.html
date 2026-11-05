@@ -212,6 +212,15 @@ pre code{background:none;border:0;padding:0;color:var(--doux)}
 /* Le rendu du NON-MESURÉ. Volontairement différent : bandeau, fond et
    bordure à gauche, pour qu'un guide ou un raisonnement ne puisse jamais
    se lire comme un relevé. */
+/* Une RÈGLE dérivée d'une mesure. Elle ne porte PAS le costume .ref, qui
+   veut dire « pas mesuré » : celle-ci sort du barème ajusté sur ses propres
+   parties. Même forme pour que l'œil la repère, accent hextech au lieu de
+   l'or pour que la distinction tienne. */
+.regle{position:relative;border-left:3px solid var(--hextech);
+       background:rgba(10,200,185,.06);padding:2.1rem 1.2rem 1.2rem;margin:.9rem 0}
+.regle-b{position:absolute;top:0;left:0;font-size:.68rem;letter-spacing:.09em;
+         text-transform:uppercase;font-weight:700;color:var(--nuit);
+         background:var(--hextech);padding:.16rem .55rem}
 .ref{position:relative;border-left:3px solid var(--or);
      background:rgba(200,170,110,.05);padding:2.1rem 1.2rem 1.2rem;margin:.9rem 0}
 .ref-b{position:absolute;top:0;left:0;font-size:.68rem;letter-spacing:.09em;
@@ -498,7 +507,8 @@ const SOURCES = {
   // confonde jamais avec le reste, et une garde de set qui les cache quand
   // ils périment.
   fondamentaux: "data/reference/fondamentaux.json",
-  augments:     "data/reference/augments.json"
+  augments:     "data/reference/augments.json",
+  fuites:       "data/fuites.json"
 };
 const D = {};              // données chargées
 const $  = s => document.querySelector(s);
@@ -1235,6 +1245,76 @@ function vueApres(){
 /* La cible, mesurée au lieu d'être supposée. On compare aux 25 DERNIERS
    Challengers : la médiane du palier décrit des joueurs déjà installés,
    pas le ticket d'entrée. */
+/* LES FUITES — ce qui coûte des LP sans aucun défaut de jeu.
+ *
+ * Tous les autres blocs cherchent une faiblesse technique et répondent non :
+ * rang de niveau 3.91/8, conversion positive, or restant médian 2, deux
+ * traits sur 24 hors du bruit, aucun carry sur 12. Chercher plus loin dans
+ * cette direction produirait du conseil tiré du hasard. Celui-ci chiffre ce
+ * qui reste, et c'est la seule règle de décision que le projet ait produite. */
+function blocFuites(){
+  const F = D.fuites;
+  if(!F?.abandons) return "";
+  const A = F.abandons, R = F.rythme;
+
+  return `<h2>Ce qui te coûte des LP sans faute de jeu</h2>
+    <p class="doux">Aucun de tes agrégats ne montre de faiblesse technique :
+      tu montes de niveau mieux que ton lobby, tu convertis au-dessus de ton
+      niveau, tu ne thésaurises pas. <b>Il n'y a rien à corriger dans ton
+      jeu.</b> Reste ce que la donnée montre sans ambiguïté.</p>
+
+    <div class="regle"><div class="regle-b">règle, tirée du barème</div>
+      <p style="margin:0"><b>Ne pas lancer une partie coûte 0 LP. En lancer une
+        et l'abandonner en coûte ${Math.abs(Math.round(F.bareme.lp_8e_place))}</b>
+        — et te fait renoncer aux ${F.lp_par_partie_attendu} qu'une partie
+        ordinaire rapporte. <b>Soit ${A.cout_d_un_abandon_maintenant} LP d'écart
+        par abandon.</b> Ce n'est pas de la discipline, c'est une asymétrie :
+        si tu risques d'être interrompu, la file d'attente est le mauvais choix
+        — pas le jeu.</p>
+    </div>
+
+    <div class="grille">
+      <div class="carte">
+        <div class="chiffre">${nb(A.cout_total_au_rang_actuel)}</div>
+        <div class="unite">LP, tes ${A.n} abandons à ton rang d'aujourd'hui</div>
+        <p class="faible" style="margin:.8rem 0 0"><b>${A.part_de_l_ecart_a_la_barre_pct} %
+          de l'écart à Challenger</b>, pour ${A.part_des_parties_pct} % de tes
+          parties.</p>
+      </div>
+      <div class="carte">
+        <div class="chiffre">${R.jours_actifs_requis}</div>
+        <div class="unite">jours de jeu jusqu'à la barre</div>
+        <p class="faible" style="margin:.8rem 0 0">À ton rythme réel
+          (${R.parties_par_jour_actif} parties les jours où tu joues) et à
+          ${R.lp_par_partie_attendu ?? F.lp_par_partie_attendu} LP la partie, soit
+          <b>${R.lp_par_jour_actif > 0 ? "+" : ""}${R.lp_par_jour_actif} LP par
+          jour joué</b>.</p>
+      </div>
+      <div class="carte">
+        <div class="chiffre sm">${R.jours_sans_jouer}<span class="faible" style="font-size:.5em">/${R.etendue_jours}</span></div>
+        <div class="unite">jours sans jouer sur la période</div>
+        <p class="faible" style="margin:.8rem 0 0">Un taux de change, pas un
+          reproche : à toi de décider. Un travail et des enfants ne se négocient
+          pas contre des LP.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.6rem">Les parties lâchées</h3>
+    <div class="dist">${(A.detail || []).map(d => `
+      <div class="ol" style="grid-template-columns:6.5rem 1fr 5.5rem">
+        <span class="n">${fdate(d.date)}</span>
+        <span class="b r">${d.placement}<sup>e</sup> · niveau ${d.niveau} ·
+          <b>${d.or_restant} or non dépensé</b></span>
+        <span class="v mo">${d.manque_a_gagner > 0 ? "−" : ""}${Math.abs(d.manque_a_gagner)} LP</span>
+      </div>`).join("")}</div>
+    <p class="faible">L'or non dépensé est la signature : qui lâche arrête
+      d'acheter et de monter. ${A.zone_grise_signalee} autre(s) partie(s)
+      ressemblent à des abandons sans en porter la signature complète — elles
+      sont signalées mais <b>jamais retirées d'office</b>.</p>
+
+    <div class="note">${esc(A.reserve)} ${esc(F.decroissance.note)}</div>`;
+}
+
 /* La distance à Challenger, en parties.
  *
  * C'est le seul endroit du site qui réponde à la question du projet. Tout le
@@ -1413,6 +1493,7 @@ function vueSuivi(){
 
   return `<h1>Suivi</h1>
     ${blocProjection()}
+    ${blocFuites()}
     ${blocBarre()}
     ${(() => {
       const J = D.joueur;

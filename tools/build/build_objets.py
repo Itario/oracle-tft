@@ -53,20 +53,19 @@ import glob, json, os, re, sys
 from collections import Counter, defaultdict
 from datetime import date
 
+sys.path.insert(0, os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "lib"))
+import mesures as M
+
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SORTIE = os.path.join(RACINE, "data", "objets.json")
 SCHEMA = 1
 VOL_MIN = 3000     # sous ce volume, le BiS d'une unité n'est pas lisible
 
 
-def champion(ident):
-    """Le champion, sans sa variante ni son numéro de set.
-
-    Repris de build_focus.py : tactics.tools éclate Lux en dix entrées, et
-    sans ce regroupement chaque variante compte pour une unité distincte."""
-    toks = [re.sub(r"\d+", "", t) for t in str(ident).split("_") if t and t != "DA"]
-    toks = [t for t in toks if t]
-    return toks[0].lower() if toks else ""
+# champion() vit dans tools/lib/mesures.py — UNE seule définition de
+# « est-ce la même unité ? ». Quatre copies existaient le 05/11.
+champion = M.champion
 
 
 def charger(chemin):
