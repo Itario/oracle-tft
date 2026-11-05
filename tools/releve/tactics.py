@@ -205,18 +205,68 @@ def main():
     print(f"patch courant : {libelle} (code {code}) · tranche {RANGS.get(a.rang, a.rang)}")
 
     os.makedirs(SORTIE, exist_ok=True)
-    # Un relevé est une photo FIGÉE : un seul par patch et par tranche, jamais
-    # réécrit. Sans ce garde-fou, une exécution quotidienne écraserait la photo
-    # du jour du patch par une photo diluée sur toute sa durée de vie.
-    deja = [f for f in os.listdir(SORTIE)
-            if f.endswith(f"_{libelle}_r{a.rang}.json")]
-    if deja and not a.forcer:
-        print(f"  relevé déjà présent : {deja[0]} — rien à faire.")
-        print("::notice::Aucun nouveau patch, relevé inchangé.")
-        return 0
+
+    # ─── UN RELEVÉ PAR PATCH, QUI MÛRIT ───────────────────────────────────
+    #
+    # Ce bloc figeait le PREMIER relevé de chaque patch et ne le réécrivait
+    # jamais. L'intention était bonne — « ne pas diluer la photo du jour du
+    # patch sur toute sa durée de vie » — et elle servait mal les deux seuls
+    # usages réels :
+    #
+    #   « qu'est-ce qui est fort maintenant » (le site) veut le cliché LE PLUS
+    #   FOURNI ; « de combien la méta a tourné » veut deux clichés COMPARABLES,
+    #   donc tous deux mûrs.
+    #
+    # Figer à J+0 ne sert ni l'un ni l'autre. Un patch sort, le workflow le
+    # voit dans les heures qui suivent, et on gèle pour toujours le cliché le
+    # moins fourni qui existera jamais de ce patch — puis on s'en sert pour
+    # mesurer une rotation. Les six transitions de la charte viennent
+    # d'archives de FIN de patch : on comparerait un jeune à des mûrs.
+    #
+    # Et les relevés sont CUMULÉS depuis le début du patch, constaté le 05/11 :
+    # les 500 777 parties du 04/11 contiennent les 449 902 du 03/11, le n de
+    # chaque unité ne fait que croître. Réécrire n'écrase donc pas une mesure
+    # par une autre : ça complète la même mesure.
+    #
+    # Nouvelle règle : on réécrit tant que le nouveau cliché est PLUS FOURNI,
+    # en gardant le nom de fichier du premier (l'ordre chronologique de la
+    # série reste stable) et en conservant la date de première vue.
+    #
+    # ⚠ Ce qu'on perd : la reproductibilité d'une mesure faite hier sur un
+    # relevé qui a changé depuis. C'est assumé — l'historique git garde chaque
+    # version, et `premier_releve` dit depuis quand le patch est suivi.
+    deja = sorted(f for f in os.listdir(SORTIE)
+                  if f.endswith(f"_{libelle}_r{a.rang}.json"))
+    ancien = None
+    if deja:
+        try:
+            ancien = json.load(open(os.path.join(SORTIE, deja[0]),
+                                    encoding="utf-8"))
+        except Exception:
+            ancien = None
 
     r = construire(code, libelle, a.rang)
-    nom = f"{r['date']}_{libelle}_r{a.rang}.json"
+
+    if ancien and not a.forcer:
+        avant = ancien.get("n_parties") or 0
+        if r["n_parties"] <= avant:
+            print(f"  relevé déjà présent et aussi fourni : {deja[0]} "
+                  f"({avant:,} parties) — rien à faire.".replace(",", " "))
+            print("::notice::Relevé inchangé.")
+            return 0
+        # On complète : même fichier, même date de première vue.
+        r["premier_releve"] = ancien.get("premier_releve") or ancien.get("date")
+        r["n_parties_premier"] = ancien.get("n_parties_premier") or avant
+        r["n_mises_a_jour"] = (ancien.get("n_mises_a_jour") or 0) + 1
+        nom = deja[0]
+        print(f"  le patch mûrit : {avant:,} -> {r['n_parties']:,} parties"
+              .replace(",", " "))
+    else:
+        r["premier_releve"] = r["date"]
+        r["n_parties_premier"] = r["n_parties"]
+        r["n_mises_a_jour"] = 0
+        nom = f"{r['date']}_{libelle}_r{a.rang}.json"
+
     chemin = os.path.join(SORTIE, nom)
     with open(chemin, "w", encoding="utf-8") as f:
         json.dump(r, f, ensure_ascii=False, indent=1)

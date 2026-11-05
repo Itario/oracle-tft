@@ -58,9 +58,26 @@ NMIN = M.NMIN
 
 # ---------------------------------------------------------------- chargement
 
+# Laquelle des deux séries on lit. Elles ne se mélangent JAMAIS dans une même
+# comparaison — sources différentes, nommage des patchs différent, et
+# tactics.tools éclate Lux en dix entrées là où MetaTFT n'en voit qu'une.
+SERIES = {
+    "metatft":  os.path.join(DEPOT, "data", "releves"),      # manuelle
+    "tactics":  os.path.join(DEPOT, "data", "releves-tt"),    # AUTOMATIQUE
+}
+SERIE = "metatft"          # défaut historique ; `--serie tactics` pour l'autre
+
+
 def charger():
-    """Délégué au socle commun — vérifie schema_version."""
-    return M.charger()
+    """Délégué au socle commun — vérifie schema_version.
+
+    ⚠ Jusqu'au 05/11 ce carnet ne savait lire QUE data/releves/ (MetaTFT,
+    déposée à la main, douze jours de retard au 04/11). La série automatique
+    n'avait donc aucun outil de comparaison : au patch suivant, on n'aurait
+    pas pu mesurer la rotation sur la seule série qui se tient à jour toute
+    seule — et c'est elle qui portera la prédiction du 18.6.
+    """
+    return M.charger(SERIES[SERIE])
 
 
 def par_date(releves, date):
@@ -216,8 +233,18 @@ def cmd_rotation():
             print(f"  déplacement médian : {st.mean(deps):.0f} rangs par unité")
             if n < 4:
                 print(f"  ⚠ {n} points seulement : l'intervalle est indicatif.")
-        print("  (la dérive ENTRE deux patchs n'est toujours pas mesurée : il")
-        print("   faudrait deux relevés séparés de plusieurs jours SANS patch.)")
+        # ⚠ Corrigé le 05/11 : « deux relevés sans patch » NE SUFFIT PAS.
+        # Essayé sur 18.5c, 03/11 contre 04/11 : Spearman 0.999 pour un
+        # plancher à 0.994, donc un observé AU-DESSUS du hasard. La raison
+        # est que les relevés sont CUMULÉS depuis le début du patch — les
+        # 500 777 parties du 04/11 contiennent les 449 902 du 03/11, et le n
+        # de chaque unité ne fait que croître. Deux échantillons qui se
+        # recouvrent à 90 % corrèlent à 0.999 par construction.
+        print("  (la dérive INTRA-patch reste non mesurée, et deux relevés")
+        print("   sans patch n'y suffisent PAS : ils sont cumulés depuis le")
+        print("   début du patch, donc ils se recouvrent presque entièrement.")
+        print("   Il faudrait des fenêtres DISJOINTES — une piste existe,")
+        print("   le champ `dateStats` de la page des compos.)")
     else:
         print("\nAucun couple à elo constant : la constante de rotation n'est pas")
         print("encore mesurable. Il faut deux relevés consécutifs dans la MÊME tranche.")
@@ -228,6 +255,25 @@ def cmd_rotation():
             print("Aucun patch à venir dans data/calendrier.json.")
 
 
+def patchs_connus():
+    """Tous les patchs du calendrier, triés. UNE SEULE source.
+
+    ⚠ Le 05/11, ce fichier portait DEUX calendriers : celui-ci, lu dans
+    data/calendrier.json, et une liste en dur dans cmd_fraicheur() qui
+    annonçait encore « 18.6B le 11/11 » alors que le calendrier disait 18.7
+    depuis la veille. La docstring de prochain_patch() disait pourtant
+    « jamais écrit en dur » : la leçon avait été appliquée à une fonction et
+    pas à sa voisine, dans le même fichier.
+    """
+    try:
+        cal = json.load(open(os.path.join(DEPOT, "data", "calendrier.json"),
+                             encoding="utf-8"))
+    except Exception:
+        return []
+    return sorted((p for p in cal.get("patchs", []) if p.get("date")),
+                  key=lambda p: p["date"])
+
+
 def prochain_patch():
     """Le prochain patch, lu dans le calendrier — jamais écrit en dur.
 
@@ -235,14 +281,8 @@ def prochain_patch():
     4 novembre, faux ensuite, et silencieusement faux. Un message d'aide
     qui ment est pire qu'un message absent."""
     import datetime
-    try:
-        cal = json.load(open(os.path.join(DEPOT, "data", "calendrier.json"),
-                             encoding="utf-8"))
-    except Exception:
-        return None
     auj = datetime.date.today().isoformat()
-    a_venir = sorted((p for p in cal.get("patchs", []) if p.get("date", "") > auj),
-                     key=lambda p: p["date"])
+    a_venir = [p for p in patchs_connus() if p["date"] > auj]
     return a_venir[0] if a_venir else None
 
 
@@ -253,24 +293,56 @@ def cmd_fraicheur():
     d = rs[-1]
     age = (datetime.date.today() - datetime.date.fromisoformat(d["date"])).days
     print(f"Dernier relevé : {d['date']} ({d.get('patch')}, {d.get('rang')}) — {age} jours")
-    # patchs connus du Set 18 / début Set 19
-    patchs = [("2026-10-21","18.5"), ("2026-11-04","18.6"), ("2026-11-11","18.6B"),
-              ("2026-12-01","19.1"), ("2026-12-15","19.2")]
-    depuis = [(d2,p) for d2,p in patchs
-              if d["date"] < d2 <= datetime.date.today().isoformat()]
-    if depuis:
-        print(f"\n  ⚠ {len(depuis)} patch(s) depuis ce relevé : "
-              + ", ".join(f"{p} ({d2})" for d2,p in depuis))
+    # Le MÊME calendrier que prochain_patch(). Cette liste était écrite en dur
+    # juste ici et annonçait encore « 18.6B » pour le 11/11, un jour après que
+    # le calendrier ait été corrigé en 18.7.
+    auj = datetime.date.today().isoformat()
+
+    # ⚠ LE CALENDRIER ANNONCE, IL NE CONSTATE PAS.
+    #
+    # Le 05/11, il affirmait « 18.6 le 04/11 » — et le patch en ligne était
+    # toujours 18.5c. Une date prévue qui passe devient un faux fait
+    # silencieux, et ce bloc déclarait le relevé « PÉRIMÉ » à cause d'un
+    # patch qui n'est jamais sorti.
+    #
+    # On croise donc l'annonce avec l'observation : un patch est OBSERVÉ si
+    # un relevé de la série porte son libellé. Sinon il reste annoncé, et on
+    # le dit autrement.
+    vus = {str(r.get("patch", "")).lower() for r in rs}
+    def observe(p):
+        return str(p.get("nom") or p.get("patch") or "").lower() in vus
+
+    depuis = [p for p in patchs_connus() if d["date"] < p["date"] <= auj]
+    obs = [p for p in depuis if observe(p)]
+    annonces = [p for p in depuis if not observe(p)]
+
+    if obs:
+        print(f"\n  ⚠ {len(obs)} patch(s) OBSERVÉ(s) depuis ce relevé : "
+              + ", ".join(f"{p.get('nom') or p.get('patch')} ({p['date']})"
+                          for p in obs))
         print("    Le relevé est PÉRIMÉ. En refaire un avant de s'y fier.")
-    elif age > 14:
-        print(f"\n  ⚠ {age} jours sans patch connu, mais c'est long. À rafraîchir.")
-    else:
-        print("\n  Aucun patch depuis ce relevé : il est à jour.")
-    prochain = [(d2,p) for d2,p in patchs if d2 > datetime.date.today().isoformat()]
-    if prochain:
-        d2,p = prochain[0]
-        j = (datetime.date.fromisoformat(d2) - datetime.date.today()).days
-        print(f"  Prochain patch : {p} le {d2} (dans {j} jours)")
+    if annonces:
+        print(f"\n  {len(annonces)} patch(s) ANNONCÉ(s) mais pas encore vu(s) "
+              "en relevé : "
+              + ", ".join(f"{p.get('nom') or p.get('patch')} (prévu {p['date']})"
+                          for p in annonces))
+        print(f"    Le dernier patch réellement observé est {d.get('patch')}. "
+              "Soit la sortie a glissé, soit le calendrier se trompe —")
+        print("    dans les deux cas c'est le calendrier qu'il faut corriger, "
+              "pas le relevé.")
+    if not depuis:
+        if age > 14:
+            print(f"\n  ⚠ {age} jours sans patch connu, mais c'est long. "
+                  "À rafraîchir.")
+        else:
+            print("\n  Aucun patch depuis ce relevé : il est à jour.")
+    # Même source encore : prochain_patch() lit le calendrier.
+    pro = prochain_patch()
+    if pro:
+        j = (datetime.date.fromisoformat(pro["date"]) - datetime.date.today()).days
+        print(f"  Prochain patch : {pro.get('nom') or pro.get('patch')} "
+              f"le {pro['date']} (dans {j} jours)"
+              + (f" — {pro['note']}" if pro.get("note") else ""))
 
 
 def cmd_bruit():
@@ -313,12 +385,25 @@ if __name__ == "__main__":
     cmds = {"lister":cmd_lister, "rotation":cmd_rotation,
             "fraicheur":cmd_fraicheur, "bruit":cmd_bruit}
     a = sys.argv[1:]
+
+    # `--serie tactics` AVANT tout le reste : les commandes lisent SERIE au
+    # moment où elles appellent charger(), donc le choix doit être arrêté
+    # avant la première lecture.
+    if "--serie" in a:
+        i = a.index("--serie")
+        if i + 1 >= len(a) or a[i + 1] not in SERIES:
+            sys.exit(f"--serie attend : {' ou '.join(SERIES)}")
+        SERIE = a[i + 1]
+        del a[i:i + 2]
+    print(f"[série : {SERIE} — {os.path.relpath(SERIES[SERIE], DEPOT)}]")
+
     if not a or a[0] not in list(cmds) + ["comparer"]:
         print(__doc__)
         sys.exit(0)
     if a[0] == "comparer":
         if len(a) != 3:
-            sys.exit("Usage : python3 carnet.py comparer AAAA-MM-JJ AAAA-MM-JJ")
+            sys.exit("Usage : python3 carnet.py [--serie tactics] "
+                     "comparer AAAA-MM-JJ AAAA-MM-JJ")
         cmd_comparer(a[1], a[2])
     else:
         cmds[a[0]]()
