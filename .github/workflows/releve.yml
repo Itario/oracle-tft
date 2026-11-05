@@ -89,6 +89,12 @@ jobs:
         run: python3 tools/releve/joueur.py --region euw --nom Itario --tag EUW
         continue-on-error: true
 
+      - name: Les leçons du projet, rendues exécutables
+        # APRÈS les relevés, AVANT la poussée : un relevé qui violerait une
+        # leçon (un puuid recopié, une population non vérifiée) ne doit pas
+        # entrer dans le dépôt.
+        run: python3 tools/tests/test_socle.py
+
       - name: Vérifier qu'aucune clé API n'a été écrite
         run: |
           # Même garde-fou que le déploiement. Un relevé vient du réseau :

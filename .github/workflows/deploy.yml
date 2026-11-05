@@ -57,6 +57,18 @@ jobs:
       # site/data/ et site/oracle.html ne sont pas versionnés : ils descendent
       # de data/releves/, seule source de vérité. On les régénère ici, ce qui
       # garantit que le site publié ne peut pas diverger des relevés.
+      - name: Les leçons du projet, rendues exécutables
+        # AVANT de reconstruire : chaque test correspond à une erreur
+        # réellement commise, et son nom dit laquelle. Un échec ici n'est pas
+        # une régression technique — c'est une erreur du projet qui revient,
+        # et on ne publie pas par-dessus.
+        #
+        # Les mutations ont été vérifiées le 05/11 : retirer un fichier de la
+        # liste de copie, dédoubler champion(), tirer le plancher de bruit
+        # avec un seul côté ou désactiver le garde-fou des volumes inégaux
+        # sont tous les quatre attrapés.
+        run: python3 tools/tests/test_socle.py
+
       - name: Régénérer le site depuis les relevés
         run: |
           # build_objets.py AVANT build_site.py : c'est lui qui écrit
