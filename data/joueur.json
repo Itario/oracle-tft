@@ -10,32 +10,32 @@
  },
  "position": {
   "palier": "MASTER I",
-  "lp": 39,
-  "rang_region": 3680,
-  "percentile_region": 0.512,
-  "rang_monde": 41275,
-  "percentile_monde": 0.831,
-  "derniere_partie_connue": "2026-10-29T21:00+00:00"
+  "lp": 0,
+  "rang_region": 6475,
+  "percentile_region": 0.899,
+  "rang_monde": 66521,
+  "percentile_monde": 1.338,
+  "derniere_partie_connue": "2026-11-04T21:29+00:00"
  },
  "saison": {
-  "parties": 120,
-  "placement_moyen": 3.925,
+  "parties": 121,
+  "placement_moyen": 3.958677685950413,
   "top4": 68,
   "premieres": 21,
   "carry_principal": "DA_18_Ezreal",
   "note": "Chiffres de tactics.tools, SANS retrait des parties lâchées. data/miroir.json porte la version nettoyée. Les deux doivent concorder sur le nombre de parties : si l'écart dépasse le nombre de parties lâchées, une des deux collectes a dérivé."
  },
  "bareme_lp": {
-  "parties_retenues": 47,
+  "parties_retenues": 46,
   "parties_master_plus": 8,
-  "censurees_exclues": 3,
+  "censurees_exclues": 4,
   "assiette_utilisee": "tous_paliers",
   "droite": {
-   "n": 47,
-   "pente_lp_par_place": -15.38,
-   "ordonnee": 70.82,
-   "place_neutre": 4.61,
-   "sd_residus": 2.83,
+   "n": 46,
+   "pente_lp_par_place": -15.42,
+   "ordonnee": 70.94,
+   "place_neutre": 4.6,
+   "sd_residus": 2.82,
    "r2": 0.992
   },
   "droite_master_plus": {
@@ -72,8 +72,8 @@
     "lp_moyen": -21.1
    },
    "7": {
-    "n": 4,
-    "lp_moyen": -34.5
+    "n": 3,
+    "lp_moyen": -34.7
    }
   },
   "note_assiette": "Pas encore assez de parties en Master+ pour un barème propre : ajusté sur tous les paliers. Les gains y sont plus généreux qu'en haut de l'échelle, donc la projection est optimiste."
@@ -81,28 +81,28 @@
  "ecart_a_la_barre": {
   "seuil_challenger_lp": 740,
   "source_seuil": "data/barre.json du 2026-11-05",
-  "lp_manquants": 701,
+  "lp_manquants": 740,
   "note": null
  },
  "projection": {
   "placement_projete": 3.737,
   "source_placement": "miroir (parties lâchées retirées)",
-  "lp_par_partie_attendu": 13.37,
-  "erreur_type": 3.01,
+  "lp_par_partie_attendu": 13.31,
+  "erreur_type": 3.02,
   "erreur_decomposee": {
-   "bareme": 0.41,
-   "placement": 2.98,
+   "bareme": 0.42,
+   "placement": 2.99,
    "n_parties_placement": 114,
    "ecart_type_placement": 2.07,
    "ecart_type_approche": false,
    "note": "Le terme dominant est le placement, pas le barème. Il décroît en 1/racine(n) : c'est le volume de parties qui resserre la fourchette."
   },
   "solide": true,
-  "lp_manquants": 701,
-  "parties_estimees": 52,
+  "lp_manquants": 740,
+  "parties_estimees": 56,
   "parties_fourchette": [
-   36,
-   95
+   38,
+   102
   ],
   "avertissement": "OPTIMISTE PAR CONSTRUCTION. Deux effets non modélisés poussent dans le même sens : les gains de LP se compriment quand le MMR rejoint le rang, et le placement moyen remonte vers 4.50 dans des lobbies plus durs. À lire comme une vitesse maximale, pas comme un calendrier."
  },
@@ -111,13 +111,13 @@
   "n_parties": 8,
   "seuil_bruit": 20.73,
   "exploitable": false,
-  "ecart_a_la_projection": -11.24,
+  "ecart_a_la_projection": -11.19,
   "note": "Mesure brute, sans barème : la somme des LP de ses parties en Master+, divisée par leur nombre. Tant que `exploitable` est faux, elle ne tranche rien — mais c'est elle qui tranchera, et elle s'accumule toute seule à chaque relevé."
  },
  "rang": {
-  "rang_region": 3680,
+  "rang_region": 6475,
   "challengers_region": 300,
-  "joueurs_a_depasser": 3380,
+  "joueurs_a_depasser": 6175,
   "note": "Challenger est le top N de la région. Un rang se compare SANS hypothèse — c'est sa force contre la projection en LP, qui en demande une (que le rythme actuel tienne). Quand les deux racontent des histoires différentes, croire le rang."
  },
  "echelle": "Au-dessus de Master il n'y a plus de division ni de série de promotion : de Master 0 LP à Challenger, c'est une seule échelle continue. C'est ce qui rend un LP/partie mesuré en Master directement projetable jusqu'à la barre."
