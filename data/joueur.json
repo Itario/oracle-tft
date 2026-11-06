@@ -11,10 +11,10 @@
  "position": {
   "palier": "MASTER I",
   "lp": 0,
-  "rang_region": 6552,
-  "percentile_region": 0.908,
-  "rang_monde": 66935,
-  "percentile_monde": 1.344,
+  "rang_region": 6537,
+  "percentile_region": 0.905,
+  "rang_monde": 67019,
+  "percentile_monde": 1.345,
   "derniere_partie_connue": "2026-11-04T21:29+00:00"
  },
  "saison": {
@@ -79,9 +79,9 @@
   "note_assiette": "Pas encore assez de parties en Master+ pour un barème propre : ajusté sur tous les paliers. Les gains y sont plus généreux qu'en haut de l'échelle, donc la projection est optimiste."
  },
  "ecart_a_la_barre": {
-  "seuil_challenger_lp": 733,
+  "seuil_challenger_lp": 736,
   "source_seuil": "data/barre.json du 2026-11-06",
-  "lp_manquants": 733,
+  "lp_manquants": 736,
   "note": null
  },
  "projection": {
@@ -98,7 +98,7 @@
    "note": "Le terme dominant est le placement, pas le barème. Il décroît en 1/racine(n) : c'est le volume de parties qui resserre la fourchette."
   },
   "solide": true,
-  "lp_manquants": 733,
+  "lp_manquants": 736,
   "parties_estimees": 55,
   "parties_fourchette": [
    38,
@@ -115,9 +115,9 @@
   "note": "Mesure brute, sans barème : la somme des LP de ses parties en Master+, divisée par leur nombre. Tant que `exploitable` est faux, elle ne tranche rien — mais c'est elle qui tranchera, et elle s'accumule toute seule à chaque relevé."
  },
  "rang": {
-  "rang_region": 6552,
+  "rang_region": 6537,
   "challengers_region": 300,
-  "joueurs_a_depasser": 6252,
+  "joueurs_a_depasser": 6237,
   "note": "Challenger est le top N de la région. Un rang se compare SANS hypothèse — c'est sa force contre la projection en LP, qui en demande une (que le rythme actuel tienne). Quand les deux racontent des histoires différentes, croire le rang."
  },
  "echelle": "Au-dessus de Master il n'y a plus de division ni de série de promotion : de Master 0 LP à Challenger, c'est une seule échelle continue. C'est ce qui rend un LP/partie mesuré en Master directement projetable jusqu'à la barre."
