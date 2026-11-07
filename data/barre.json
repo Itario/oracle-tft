@@ -3,24 +3,24 @@
  "genere_le": "2026-11-07",
  "region": "EUW",
  "source": "tactics.tools",
- "date_classement": "Sat, 7 Nov 2026 10:57:50 +0000",
+ "date_classement": "Sat, 7 Nov 2026 17:57:33 +0000",
  "entrees_lues": 1000,
  "paliers": {
   "CHALLENGER": 300,
-  "GRANDMASTER": 597,
-  "MASTER": 103
+  "GRANDMASTER": 588,
+  "MASTER": 112
  },
- "seuil_challenger_lp": 740,
+ "seuil_challenger_lp": 744,
  "seuil_estimateurs": {
-  "par_rang": 740,
-  "percentile_10": 757,
-  "min_etiquette": 722,
+  "par_rang": 744,
+  "percentile_10": 756,
+  "min_etiquette": 680,
   "note": "min_etiquette est VOLATILE : statistique d'ordre sur un seul joueur, et les étiquettes de palier sont réattribuées avec du retard. Mesurée 447, 740 puis 677 LP en 24 h alors que la médiane des 25 derniers ne bougeait pas. Ne pas l'afficher."
  },
  "challenger": {
   "n_joueurs": 300,
-  "lp_median": 905,
-  "lp_min": 722,
+  "lp_median": 900,
+  "lp_min": 680,
   "parties_mediane": 430,
   "parties_min": 114,
   "top4_pct_median": 56.3,
@@ -28,18 +28,18 @@
  },
  "challenger_derniers_25": {
   "n_joueurs": 25,
-  "lp_median": 747,
-  "lp_min": 722,
-  "parties_mediane": 429,
+  "lp_median": 745,
+  "lp_min": 680,
+  "parties_mediane": 476,
   "parties_min": 189,
-  "top4_pct_median": 54.4,
-  "premieres_pct_median": 14.1
+  "top4_pct_median": 54.1,
+  "premieres_pct_median": 14.2
  },
  "grandmaster": {
-  "n_joueurs": 597,
-  "lp_median": 490,
-  "lp_min": 343,
-  "parties_mediane": 345,
+  "n_joueurs": 588,
+  "lp_median": 492,
+  "lp_min": 341,
+  "parties_mediane": 343,
   "parties_min": 81,
   "top4_pct_median": 54.9,
   "premieres_pct_median": 14.9
