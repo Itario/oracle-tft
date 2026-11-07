@@ -10,46 +10,46 @@
  },
  "position": {
   "palier": "MASTER I",
-  "lp": 0,
-  "rang_region": 6571,
-  "percentile_region": 0.908,
-  "rang_monde": 67622,
-  "percentile_monde": 1.354,
-  "derniere_partie_connue": "2026-11-04T21:29+00:00"
+  "lp": 10,
+  "rang_region": 4676,
+  "percentile_region": 0.645,
+  "rang_monde": 54913,
+  "percentile_monde": 1.099,
+  "derniere_partie_connue": "2026-11-06T21:49+00:00"
  },
  "saison": {
-  "parties": 121,
-  "placement_moyen": 3.958677685950413,
-  "top4": 68,
+  "parties": 122,
+  "placement_moyen": 3.959016393442623,
+  "top4": 69,
   "premieres": 21,
   "carry_principal": "DA_18_Ezreal",
   "note": "Chiffres de tactics.tools, SANS retrait des parties lâchées. data/miroir.json porte la version nettoyée. Les deux doivent concorder sur le nombre de parties : si l'écart dépasse le nombre de parties lâchées, une des deux collectes a dérivé."
  },
  "bareme_lp": {
   "parties_retenues": 46,
-  "parties_master_plus": 8,
+  "parties_master_plus": 9,
   "censurees_exclues": 4,
   "assiette_utilisee": "tous_paliers",
   "droite": {
    "n": 46,
-   "pente_lp_par_place": -15.42,
-   "ordonnee": 70.94,
+   "pente_lp_par_place": -15.4,
+   "ordonnee": 70.84,
    "place_neutre": 4.6,
    "sd_residus": 2.82,
    "r2": 0.992
   },
   "droite_master_plus": {
-   "n": 8,
-   "pente_lp_par_place": -14.65,
-   "ordonnee": 66.22,
-   "place_neutre": 4.52,
+   "n": 9,
+   "pente_lp_par_place": -14.68,
+   "ordonnee": 66.61,
+   "place_neutre": 4.54,
    "sd_residus": 2.21,
    "r2": 0.994
   },
   "table_observee": {
    "1": {
-    "n": 10,
-    "lp_moyen": 55.2
+    "n": 9,
+    "lp_moyen": 55.0
    },
    "2": {
     "n": 6,
@@ -60,8 +60,8 @@
     "lp_moyen": 23.5
    },
    "4": {
-    "n": 5,
-    "lp_moyen": 11.0
+    "n": 6,
+    "lp_moyen": 10.8
    },
    "5": {
     "n": 6,
@@ -81,14 +81,14 @@
  "ecart_a_la_barre": {
   "seuil_challenger_lp": 740,
   "source_seuil": "data/barre.json du 2026-11-07",
-  "lp_manquants": 740,
+  "lp_manquants": 730,
   "note": null
  },
  "projection": {
   "placement_projete": 3.737,
   "source_placement": "miroir (parties lâchées retirées)",
-  "lp_par_partie_attendu": 13.31,
-  "erreur_type": 3.02,
+  "lp_par_partie_attendu": 13.29,
+  "erreur_type": 3.01,
   "erreur_decomposee": {
    "bareme": 0.42,
    "placement": 2.99,
@@ -98,26 +98,26 @@
    "note": "Le terme dominant est le placement, pas le barème. Il décroît en 1/racine(n) : c'est le volume de parties qui resserre la fourchette."
   },
   "solide": true,
-  "lp_manquants": 740,
-  "parties_estimees": 56,
+  "lp_manquants": 730,
+  "parties_estimees": 55,
   "parties_fourchette": [
    38,
-   102
+   101
   ],
   "avertissement": "OPTIMISTE PAR CONSTRUCTION. Deux effets non modélisés poussent dans le même sens : les gains de LP se compriment quand le MMR rejoint le rang, et le placement moyen remonte vers 4.50 dans des lobbies plus durs. À lire comme une vitesse maximale, pas comme un calendrier."
  },
  "contre_epreuve": {
-  "lp_par_partie_observe": 2.12,
-  "n_parties": 8,
-  "seuil_bruit": 20.73,
+  "lp_par_partie_observe": 3.0,
+  "n_parties": 9,
+  "seuil_bruit": 18.37,
   "exploitable": false,
-  "ecart_a_la_projection": -11.19,
+  "ecart_a_la_projection": -10.29,
   "note": "Mesure brute, sans barème : la somme des LP de ses parties en Master+, divisée par leur nombre. Tant que `exploitable` est faux, elle ne tranche rien — mais c'est elle qui tranchera, et elle s'accumule toute seule à chaque relevé."
  },
  "rang": {
-  "rang_region": 6571,
+  "rang_region": 4676,
   "challengers_region": 300,
-  "joueurs_a_depasser": 6271,
+  "joueurs_a_depasser": 4376,
   "note": "Challenger est le top N de la région. Un rang se compare SANS hypothèse — c'est sa force contre la projection en LP, qui en demande une (que le rythme actuel tienne). Quand les deux racontent des histoires différentes, croire le rang."
  },
  "echelle": "Au-dessus de Master il n'y a plus de division ni de série de promotion : de Master 0 LP à Challenger, c'est une seule échelle continue. C'est ce qui rend un LP/partie mesuré en Master directement projetable jusqu'à la barre."
