@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "genere_le": "2026-11-07",
+ "genere_le": "2026-11-08",
  "source": "tactics.tools",
  "page": "https://tactics.tools/player/euw/Itario/EUW",
  "joueur": {
@@ -11,10 +11,10 @@
  "position": {
   "palier": "MASTER I",
   "lp": 10,
-  "rang_region": 4722,
+  "rang_region": 4727,
   "percentile_region": 0.65,
-  "rang_monde": 55262,
-  "percentile_monde": 1.104,
+  "rang_monde": 55366,
+  "percentile_monde": 1.105,
   "derniere_partie_connue": "2026-11-06T21:49+00:00"
  },
  "saison": {
@@ -79,9 +79,9 @@
   "note_assiette": "Pas encore assez de parties en Master+ pour un barème propre : ajusté sur tous les paliers. Les gains y sont plus généreux qu'en haut de l'échelle, donc la projection est optimiste."
  },
  "ecart_a_la_barre": {
-  "seuil_challenger_lp": 748,
-  "source_seuil": "data/barre.json du 2026-11-07",
-  "lp_manquants": 738,
+  "seuil_challenger_lp": 741,
+  "source_seuil": "data/barre.json du 2026-11-08",
+  "lp_manquants": 731,
   "note": null
  },
  "projection": {
@@ -98,11 +98,11 @@
    "note": "Le terme dominant est le placement, pas le barème. Il décroît en 1/racine(n) : c'est le volume de parties qui resserre la fourchette."
   },
   "solide": true,
-  "lp_manquants": 738,
-  "parties_estimees": 56,
+  "lp_manquants": 731,
+  "parties_estimees": 55,
   "parties_fourchette": [
    38,
-   102
+   101
   ],
   "avertissement": "OPTIMISTE PAR CONSTRUCTION. Deux effets non modélisés poussent dans le même sens : les gains de LP se compriment quand le MMR rejoint le rang, et le placement moyen remonte vers 4.50 dans des lobbies plus durs. À lire comme une vitesse maximale, pas comme un calendrier."
  },
@@ -115,9 +115,9 @@
   "note": "Mesure brute, sans barème : la somme des LP de ses parties en Master+, divisée par leur nombre. Tant que `exploitable` est faux, elle ne tranche rien — mais c'est elle qui tranchera, et elle s'accumule toute seule à chaque relevé."
  },
  "rang": {
-  "rang_region": 4722,
+  "rang_region": 4727,
   "challengers_region": 300,
-  "joueurs_a_depasser": 4422,
+  "joueurs_a_depasser": 4427,
   "note": "Challenger est le top N de la région. Un rang se compare SANS hypothèse — c'est sa force contre la projection en LP, qui en demande une (que le rythme actuel tienne). Quand les deux racontent des histoires différentes, croire le rang."
  },
  "echelle": "Au-dessus de Master il n'y a plus de division ni de série de promotion : de Master 0 LP à Challenger, c'est une seule échelle continue. C'est ce qui rend un LP/partie mesuré en Master directement projetable jusqu'à la barre."
