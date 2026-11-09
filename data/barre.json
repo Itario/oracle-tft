@@ -1,47 +1,47 @@
 {
  "schema_version": 1,
- "genere_le": "2026-11-08",
+ "genere_le": "2026-11-09",
  "region": "EUW",
  "source": "tactics.tools",
- "date_classement": "Sun, 8 Nov 2026 22:48:21 +0000",
+ "date_classement": "Mon, 9 Nov 2026 07:54:34 +0000",
  "entrees_lues": 1000,
  "paliers": {
   "CHALLENGER": 300,
-  "GRANDMASTER": 574,
-  "MASTER": 126
+  "GRANDMASTER": 597,
+  "MASTER": 103
  },
- "seuil_challenger_lp": 747,
+ "seuil_challenger_lp": 745,
  "seuil_estimateurs": {
-  "par_rang": 747,
-  "percentile_10": 759,
-  "min_etiquette": 591,
+  "par_rang": 745,
+  "percentile_10": 763,
+  "min_etiquette": 625,
   "note": "min_etiquette est VOLATILE : statistique d'ordre sur un seul joueur, et les étiquettes de palier sont réattribuées avec du retard. Mesurée 447, 740 puis 677 LP en 24 h alors que la médiane des 25 derniers ne bougeait pas. Ne pas l'afficher."
  },
  "challenger": {
   "n_joueurs": 300,
-  "lp_median": 908,
-  "lp_min": 591,
+  "lp_median": 900,
+  "lp_min": 625,
   "parties_mediane": 436,
   "parties_min": 118,
-  "top4_pct_median": 56.4,
+  "top4_pct_median": 56.3,
   "premieres_pct_median": 16.1
  },
  "challenger_derniers_25": {
   "n_joueurs": 25,
-  "lp_median": 750,
-  "lp_min": 591,
-  "parties_mediane": 380,
+  "lp_median": 755,
+  "lp_min": 625,
+  "parties_mediane": 314,
   "parties_min": 179,
-  "top4_pct_median": 54.6,
-  "premieres_pct_median": 15.6
+  "top4_pct_median": 55.7,
+  "premieres_pct_median": 14.4
  },
  "grandmaster": {
-  "n_joueurs": 574,
-  "lp_median": 498,
-  "lp_min": 342,
-  "parties_mediane": 340,
-  "parties_min": 81,
-  "top4_pct_median": 54.9,
+  "n_joueurs": 597,
+  "lp_median": 490,
+  "lp_min": 331,
+  "parties_mediane": 341,
+  "parties_min": 85,
+  "top4_pct_median": 54.8,
   "premieres_pct_median": 15.0
  },
  "reserve": "Le taux de top 4 d'un Challenger est mesuré dans des lobbies Challenger. Celui d'un joueur Master l'est dans des lobbies Master. Les deux ne décrivent pas la même difficulté, et les comparer directement flatte celui du bas. Le nombre de parties, lui, se compare sans réserve : c'est un compte."
