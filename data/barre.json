@@ -3,45 +3,45 @@
  "genere_le": "2026-11-09",
  "region": "EUW",
  "source": "tactics.tools",
- "date_classement": "Mon, 9 Nov 2026 07:54:34 +0000",
+ "date_classement": "Mon, 9 Nov 2026 20:37:33 +0000",
  "entrees_lues": 1000,
  "paliers": {
   "CHALLENGER": 300,
-  "GRANDMASTER": 597,
-  "MASTER": 103
+  "GRANDMASTER": 583,
+  "MASTER": 117
  },
- "seuil_challenger_lp": 745,
+ "seuil_challenger_lp": 742,
  "seuil_estimateurs": {
-  "par_rang": 745,
-  "percentile_10": 763,
-  "min_etiquette": 625,
+  "par_rang": 742,
+  "percentile_10": 758,
+  "min_etiquette": 605,
   "note": "min_etiquette est VOLATILE : statistique d'ordre sur un seul joueur, et les étiquettes de palier sont réattribuées avec du retard. Mesurée 447, 740 puis 677 LP en 24 h alors que la médiane des 25 derniers ne bougeait pas. Ne pas l'afficher."
  },
  "challenger": {
   "n_joueurs": 300,
-  "lp_median": 900,
-  "lp_min": 625,
-  "parties_mediane": 436,
-  "parties_min": 118,
+  "lp_median": 903,
+  "lp_min": 605,
+  "parties_mediane": 437,
+  "parties_min": 119,
   "top4_pct_median": 56.3,
   "premieres_pct_median": 16.1
  },
  "challenger_derniers_25": {
   "n_joueurs": 25,
-  "lp_median": 755,
-  "lp_min": 625,
-  "parties_mediane": 314,
+  "lp_median": 746,
+  "lp_min": 605,
+  "parties_mediane": 390,
   "parties_min": 179,
-  "top4_pct_median": 55.7,
-  "premieres_pct_median": 14.4
+  "top4_pct_median": 55.0,
+  "premieres_pct_median": 14.1
  },
  "grandmaster": {
-  "n_joueurs": 597,
-  "lp_median": 490,
-  "lp_min": 331,
-  "parties_mediane": 341,
+  "n_joueurs": 583,
+  "lp_median": 500,
+  "lp_min": 342,
+  "parties_mediane": 342,
   "parties_min": 85,
-  "top4_pct_median": 54.8,
+  "top4_pct_median": 54.9,
   "premieres_pct_median": 15.0
  },
  "reserve": "Le taux de top 4 d'un Challenger est mesuré dans des lobbies Challenger. Celui d'un joueur Master l'est dans des lobbies Master. Les deux ne décrivent pas la même difficulté, et les comparer directement flatte celui du bas. Le nombre de parties, lui, se compare sans réserve : c'est un compte."
