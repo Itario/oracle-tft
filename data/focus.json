@@ -11,7 +11,7 @@
   "patch": "18.6",
   "rang": "Master+",
   "source": "tactics.tools",
-  "n_parties": 343297
+  "n_parties": 352894
  },
  "lui": {
   "parties": 114,
@@ -40,12 +40,12 @@
    "nom": "Ezreal",
    "n": 31,
    "son_placement": 3.19,
-   "placement_ladder": 4.41,
-   "ecart_brut": -1.22,
-   "ecart_corrige": -0.46,
+   "placement_ladder": 4.42,
+   "ecart_brut": -1.23,
+   "ecart_corrige": -0.47,
    "seuil": 0.79,
    "solide": false,
-   "parties_requises": 92,
+   "parties_requises": 88,
    "pick": 15.7
   },
   {
@@ -70,7 +70,7 @@
    "seuil": 1.1,
    "solide": false,
    "parties_requises": 168,
-   "pick": 17.8
+   "pick": 17.7
   },
   {
    "nom": "Amumu18",
@@ -82,7 +82,7 @@
    "seuil": 0.92,
    "solide": false,
    "parties_requises": 287,
-   "pick": 31.7
+   "pick": 31.8
   },
   {
    "nom": "Maokai",
@@ -94,18 +94,18 @@
    "seuil": 0.98,
    "solide": false,
    "parties_requises": 537,
-   "pick": 17.3
+   "pick": 17.4
   },
   {
    "nom": "Fiddlesticks18",
    "n": 13,
    "son_placement": 3.62,
-   "placement_ladder": 4.55,
-   "ecart_brut": -0.93,
-   "ecart_corrige": -0.17,
+   "placement_ladder": 4.54,
+   "ecart_brut": -0.92,
+   "ecart_corrige": -0.16,
    "seuil": 1.22,
    "solide": false,
-   "parties_requises": 670,
+   "parties_requises": 757,
    "pick": 25.8
   },
   {
@@ -142,7 +142,7 @@
    "seuil": 0.83,
    "solide": false,
    "parties_requises": 2391,
-   "pick": 41.6
+   "pick": 41.7
   },
   {
    "nom": "Diana",
@@ -172,15 +172,15 @@
  "fortes_peu_contestees": [
   {
    "nom": "gnarsmall",
-   "n": 16367,
+   "n": 16563,
    "variantes": 1,
    "avg": 3.76,
-   "pick": 4.8,
+   "pick": 4.7,
    "il_la_joue": true
   },
   {
    "nom": "ashe",
-   "n": 26856,
+   "n": 27602,
    "variantes": 1,
    "avg": 3.91,
    "pick": 7.8,
@@ -188,15 +188,15 @@
   },
   {
    "nom": "azir",
-   "n": 33813,
+   "n": 34772,
    "variantes": 1,
    "avg": 4.13,
-   "pick": 9.8,
+   "pick": 9.9,
    "il_la_joue": true
   },
   {
    "nom": "murkwolf",
-   "n": 28883,
+   "n": 29738,
    "variantes": 1,
    "avg": 4.28,
    "pick": 8.4,
@@ -204,7 +204,7 @@
   },
   {
    "nom": "kayle",
-   "n": 34761,
+   "n": 35759,
    "variantes": 1,
    "avg": 4.28,
    "pick": 10.1,
@@ -212,7 +212,7 @@
   },
   {
    "nom": "brambleback",
-   "n": 33029,
+   "n": 34026,
    "variantes": 1,
    "avg": 4.3,
    "pick": 9.6,
@@ -220,15 +220,15 @@
   },
   {
    "nom": "masteryi",
-   "n": 17480,
+   "n": 17937,
    "variantes": 1,
-   "avg": 4.36,
+   "avg": 4.35,
    "pick": 5.1,
    "il_la_joue": false
   },
   {
    "nom": "sentry",
-   "n": 39879,
+   "n": 40995,
    "variantes": 1,
    "avg": 4.36,
    "pick": 11.6,
@@ -236,7 +236,7 @@
   },
   {
    "nom": "soraka",
-   "n": 39841,
+   "n": 40971,
    "variantes": 1,
    "avg": 4.39,
    "pick": 11.6,
@@ -246,23 +246,23 @@
  "tres_contestees": [
   {
    "nom": "sentinel",
-   "n": 142951,
+   "n": 147009,
    "variantes": 1,
    "avg": 4.39,
-   "pick": 41.6,
+   "pick": 41.7,
    "il_la_joue": true
   },
   {
    "nom": "amumu",
-   "n": 108974,
+   "n": 112090,
    "variantes": 1,
    "avg": 4.45,
-   "pick": 31.7,
+   "pick": 31.8,
    "il_la_joue": true
   },
   {
    "nom": "taric",
-   "n": 97250,
+   "n": 100018,
    "variantes": 1,
    "avg": 3.88,
    "pick": 28.3,
@@ -270,23 +270,23 @@
   },
   {
    "nom": "fiddlesticks",
-   "n": 88447,
+   "n": 90904,
    "variantes": 1,
-   "avg": 4.55,
+   "avg": 4.54,
    "pick": 25.8,
    "il_la_joue": true
   },
   {
    "nom": "lillia",
-   "n": 84853,
+   "n": 87324,
    "variantes": 1,
-   "avg": 4.51,
+   "avg": 4.52,
    "pick": 24.7,
    "il_la_joue": true
   },
   {
    "nom": "yorick",
-   "n": 83009,
+   "n": 85368,
    "variantes": 1,
    "avg": 4.52,
    "pick": 24.2,
@@ -294,7 +294,7 @@
   },
   {
    "nom": "rakan",
-   "n": 74132,
+   "n": 76328,
    "variantes": 1,
    "avg": 4.73,
    "pick": 21.6,
@@ -302,7 +302,7 @@
   },
   {
    "nom": "krug",
-   "n": 70271,
+   "n": 72207,
    "variantes": 1,
    "avg": 4.42,
    "pick": 20.5,

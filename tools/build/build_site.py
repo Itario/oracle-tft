@@ -212,7 +212,8 @@ def fiche(c, total, recettes, composants_fr):
         liste = objets.setdefault(o["unite"], [])
         if len(liste) >= 3:
             continue                      # trois objets par unité, pas plus
-        liste.append({"id": o["objet"], "nom": r.get("nom") or nom(o["objet"]),
+        liste.append({"id": o["objet"],
+                      "nom": JEU["objets"].get(o["objet"]) or r.get("nom") or nom(o["objet"]),
                       "composants": de, "n": o.get("n"), "place": o.get("place")})
         for x in de:
             besoins[x] += 1
@@ -399,6 +400,13 @@ def main():
         ids |= {p["unite"] for p in (c.get("porteurs") or [])}
         ids |= {t["trait"] for t in (c.get("traits") or [])}
     noms = {i: nommer(i) for i in sorted(i for i in ids if i)}
+    # Les fichiers tirés de SES parties (miroir, focus, contestation) nomment
+    # les unités autrement que le relevé : « Draven18 », « murkwolf ». La clé
+    # commune est champion() ; le site s'en sert en second recours.
+    par_cle = {}
+    for i in sorted(ids | set(JEU["unites"]) | set(JEU["traits"])):
+        if i:
+            par_cle.setdefault(M.champion(i), nommer(i).split(" (")[0])
 
     fige = os.path.join(RACINE, "tools", "build", f"data_set{setn}_fige.js")
     out = {
@@ -441,6 +449,7 @@ def main():
                           if fiches else None),
         "modes": modes(fiches),
         "noms": noms,
+        "noms_par_cle": par_cle,
         "jeu": {"du_set": bool(JEU["unites"]), "n_unites": len(JEU["unites"]),
                 "francais": bool((jeu or {}).get("francais")) if JEU["unites"] else None},
         "a_venir": a_venir(jeu),

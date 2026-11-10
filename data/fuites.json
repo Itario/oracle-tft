@@ -8,12 +8,12 @@
  },
  "etat": "ok",
  "n_parties": 114,
- "lp_manquants": 714,
- "lp_par_partie_attendu": 13.22,
+ "lp_manquants": 734,
+ "lp_par_partie_attendu": 13.21,
  "bareme": {
-  "pente": -15.39,
-  "ordonnee": 70.73,
-  "lp_8e_place": -52.4,
+  "pente": -15.37,
+  "ordonnee": 70.66,
+  "lp_8e_place": -52.3,
   "note": "La 8e place est EXTRAPOLÉE par la droite : aucune 8e propre dans la fenêtre de 50 parties (les seules présentes finissaient à 0 LP, donc écrêtées)."
  },
  "abandons": {
@@ -27,40 +27,40 @@
     "placement": 8,
     "niveau": 6,
     "or_restant": 30,
-    "lp_a_ce_placement": -52.4,
-    "manque_a_gagner": 65.6
+    "lp_a_ce_placement": -52.3,
+    "manque_a_gagner": 65.5
    },
    {
     "date": "2026-09-29",
     "placement": 7,
     "niveau": 7,
     "or_restant": 21,
-    "lp_a_ce_placement": -37.0,
-    "manque_a_gagner": 50.2
+    "lp_a_ce_placement": -36.9,
+    "manque_a_gagner": 50.1
    },
    {
     "date": "2026-10-03",
     "placement": 8,
     "niveau": 6,
     "or_restant": 115,
-    "lp_a_ce_placement": -52.4,
-    "manque_a_gagner": 65.6
+    "lp_a_ce_placement": -52.3,
+    "manque_a_gagner": 65.5
    },
    {
     "date": "2026-10-09",
     "placement": 8,
     "niveau": 7,
     "or_restant": 152,
-    "lp_a_ce_placement": -52.4,
-    "manque_a_gagner": 65.6
+    "lp_a_ce_placement": -52.3,
+    "manque_a_gagner": 65.5
    },
    {
     "date": "2026-10-12",
     "placement": 8,
     "niveau": 8,
     "or_restant": 37,
-    "lp_a_ce_placement": -52.4,
-    "manque_a_gagner": 65.6
+    "lp_a_ce_placement": -52.3,
+    "manque_a_gagner": 65.5
    },
    {
     "date": "2026-10-16",
@@ -71,9 +71,9 @@
     "manque_a_gagner": 34.8
    }
   ],
-  "cout_d_un_abandon_maintenant": 65.6,
-  "cout_total_au_rang_actuel": 347.4,
-  "part_de_l_ecart_a_la_barre_pct": 48.7,
+  "cout_d_un_abandon_maintenant": 65.5,
+  "cout_total_au_rang_actuel": 346.9,
+  "part_de_l_ecart_a_la_barre_pct": 47.3,
   "asymetrie": "Ne pas lancer une partie coûte 0 LP. En lancer une et l'abandonner en coûte 52 — et fait en plus renoncer aux 13 qu'une partie ordinaire rapporte. L'écart est de 66 LP par partie abandonnée.",
   "reserve": "Ces 6 abandons vont du 2026-09-06 au 2026-10-16. Ils n'ont pas tous été joués au rang actuel, où l'échelle de LP n'est pas la même : ce chiffre n'additionne PAS des pertes passées, il projette ce que le même comportement coûte à son rang ACTUEL."
  },
@@ -84,7 +84,7 @@
   "parties_par_jour_actif": 2.48,
   "parties_par_jour_calendaire": 1.75,
   "lp_par_jour_actif": 32.8,
-  "jours_actifs_requis": 22,
+  "jours_actifs_requis": 23,
   "lecture": "Un taux de change, pas un reproche : voilà ce qu'une journée de jeu rapporte en moyenne, pour qu'il décide lui-même. Un travail et des enfants ne se négocient pas contre des LP."
  },
  "decroissance": {

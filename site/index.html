@@ -558,6 +558,9 @@ const fdate = iso => { if(!iso) return "—";
 function setCourant(){ return D.meta?.set ?? null; }
 
 const nomU = id => esc(D.meta?.noms?.[id]
+  // Second recours : la clé de champion (« Draven18 », « murkwolf »), pour les
+  // fichiers tirés de ses parties, qui ne nomment pas comme le relevé.
+  ?? D.meta?.noms_par_cle?.[String(id ?? "").replace(/\d+/g, "").toLowerCase()]
   ?? String(id ?? "").replace(/^[A-Za-z]{2,4}\d*_/, "").replace(/\d+/g, "")
        .replace(/_/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2").trim());
 
@@ -863,7 +866,7 @@ function blocObjets(){
 
   const slams = (o.slams_gratuits || []).slice(0, 5).map(s => `
     <div class="ol slam">
-      <span class="n">${esc(s.nom)}</span>
+      <span class="n">${esc(D.meta?.noms?.[s.objet] ?? s.nom)}</span>
       <span class="b r">${esc(s.composants.join(" + "))}</span>
       <span class="v">${s.n_carries}</span>
     </div>`).join("");
@@ -873,7 +876,7 @@ function blocObjets(){
       x.fois > 1 ? `${x.composant} ×${x.fois}` : x.composant).join(" · ");
     const bis = (c.bis || []).slice(0, 5).map(b => {
       const eff = b.effet_sur_cette_unite;
-      return `<li><b>${esc(b.nom)}</b>${b.craftable
+      return `<li><b>${esc(D.meta?.noms?.[b.objet] ?? b.nom)}</b>${b.craftable
         ? ` <span class="faible">${esc(b.composants.join(" + "))}</span>` : ""}${
         eff != null ? ` <span class="${eff < 0 ? "pl" : "mo"}">${eff < 0 ? "" : "+"}${
           (eff).toFixed(3)}</span>` : ""}</li>`;
