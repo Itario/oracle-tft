@@ -1,10 +1,10 @@
 {
  "schema_version": 1,
+ "genere_le": "2026-11-10",
+ "source": "tactics.tools",
  "set": 18,
  "etat": "classe",
  "etat_note": null,
- "genere_le": "2026-11-10",
- "source": "tactics.tools",
  "page": "https://tactics.tools/player/euw/Itario/EUW",
  "joueur": {
   "nom": "Itario",
@@ -13,16 +13,16 @@
  },
  "position": {
   "palier": "MASTER I",
-  "lp": 20,
-  "rang_region": 4277,
-  "percentile_region": 0.585,
-  "rang_monde": 52382,
-  "percentile_monde": 1.04,
-  "derniere_partie_connue": "2026-11-09T20:25+00:00"
+  "lp": 0,
+  "rang_region": 6647,
+  "percentile_region": 0.907,
+  "rang_monde": 69831,
+  "percentile_monde": 1.385,
+  "derniere_partie_connue": "2026-11-09T21:15+00:00"
  },
  "saison": {
-  "parties": 123,
-  "placement_moyen": 3.951219512195122,
+  "parties": 125,
+  "placement_moyen": 3.984,
   "top4": 70,
   "premieres": 21,
   "carry_principal": "DA_18_Ezreal",
@@ -30,24 +30,25 @@
  },
  "bareme_lp": {
   "parties_retenues": 46,
-  "parties_master_plus": 10,
+  "parties_d_un_set_passe_ecartees": 0,
+  "parties_master_plus": 11,
   "censurees_exclues": 4,
   "assiette_utilisee": "tous_paliers",
   "droite": {
    "n": 46,
-   "pente_lp_par_place": -15.39,
-   "ordonnee": 70.73,
+   "pente_lp_par_place": -15.37,
+   "ordonnee": 70.66,
    "place_neutre": 4.6,
-   "sd_residus": 2.89,
+   "sd_residus": 2.9,
    "r2": 0.991
   },
   "droite_master_plus": {
-   "n": 10,
-   "pente_lp_par_place": -14.57,
-   "ordonnee": 65.91,
-   "place_neutre": 4.52,
-   "sd_residus": 2.23,
-   "r2": 0.993
+   "n": 11,
+   "pente_lp_par_place": -14.65,
+   "ordonnee": 65.95,
+   "place_neutre": 4.5,
+   "sd_residus": 2.3,
+   "r2": 0.992
   },
   "table_observee": {
    "1": {
@@ -67,12 +68,12 @@
     "lp_moyen": 10.8
    },
    "5": {
-    "n": 6,
+    "n": 7,
     "lp_moyen": -10.0
    },
    "6": {
-    "n": 10,
-    "lp_moyen": -21.1
+    "n": 9,
+    "lp_moyen": -20.7
    },
    "7": {
     "n": 3,
@@ -84,13 +85,15 @@
  "ecart_a_la_barre": {
   "seuil_challenger_lp": 734,
   "source_seuil": "data/barre.json du 2026-11-10",
-  "lp_manquants": 714,
+  "lp_manquants": 734,
+  "dont_jusqu_a_master": null,
+  "raison_si_absent": null,
   "note": null
  },
  "projection": {
   "placement_projete": 3.737,
   "source_placement": "miroir (parties lâchées retirées)",
-  "lp_par_partie_attendu": 13.22,
+  "lp_par_partie_attendu": 13.21,
   "erreur_type": 3.01,
   "erreur_decomposee": {
    "bareme": 0.43,
@@ -101,26 +104,26 @@
    "note": "Le terme dominant est le placement, pas le barème. Il décroît en 1/racine(n) : c'est le volume de parties qui resserre la fourchette."
   },
   "solide": true,
-  "lp_manquants": 714,
-  "parties_estimees": 54,
+  "lp_manquants": 734,
+  "parties_estimees": 56,
   "parties_fourchette": [
-   37,
-   99
+   38,
+   102
   ],
   "avertissement": "OPTIMISTE PAR CONSTRUCTION. Deux effets non modélisés poussent dans le même sens : les gains de LP se compriment quand le MMR rejoint le rang, et le placement moyen remonte vers 4.50 dans des lobbies plus durs. À lire comme une vitesse maximale, pas comme un calendrier."
  },
  "contre_epreuve": {
-  "lp_par_partie_observe": 4.7,
-  "n_parties": 10,
-  "seuil_bruit": 16.78,
+  "lp_par_partie_observe": 3.36,
+  "n_parties": 11,
+  "seuil_bruit": 15.41,
   "exploitable": false,
-  "ecart_a_la_projection": -8.52,
+  "ecart_a_la_projection": -9.85,
   "note": "Mesure brute, sans barème : la somme des LP de ses parties en Master+, divisée par leur nombre. Tant que `exploitable` est faux, elle ne tranche rien — mais c'est elle qui tranchera, et elle s'accumule toute seule à chaque relevé."
  },
  "rang": {
-  "rang_region": 4277,
+  "rang_region": 6647,
   "challengers_region": 300,
-  "joueurs_a_depasser": 3977,
+  "joueurs_a_depasser": 6347,
   "note": "Challenger est le top N de la région. Un rang se compare SANS hypothèse — c'est sa force contre la projection en LP, qui en demande une (que le rythme actuel tienne). Quand les deux racontent des histoires différentes, croire le rang."
  },
  "echelle": "Au-dessus de Master il n'y a plus de division ni de série de promotion : de Master 0 LP à Challenger, c'est une seule échelle continue. C'est ce qui rend un LP/partie mesuré en Master directement projetable jusqu'à la barre."
