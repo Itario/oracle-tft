@@ -1962,28 +1962,32 @@ la méta : le plancher de bruit est à 0.995, et l'écart réel vaut 0.009. Le �
 
 ### LES LEÇONS
 
-**Leçon n°41 — on ne teste pas le futur en l'attendant : on le fabrique.** Une chaîne
+*(Les n°41 et 42 datent du 05/11 et sont dans la charte : « quand tous les diagnostics
+répondent rien à corriger, c'est la réponse » et « un test qui ne peut pas échouer ne vaut
+rien ». Le commit du 10/11 annonce par erreur « leçons 41 à 46 » : ce sont les 43 à 48.)*
+
+**Leçon n°43 — on ne teste pas le futur en l'attendant : on le fabrique.** Une chaîne
 validée sur le monde d'aujourd'hui est validée pour aujourd'hui. Tout événement daté et
 certain — un changement de set, une remise à zéro — se répète avant, sur un monde
 fabriqué, avec les vrais scripts.
 
-**Leçon n°42 — un script qui ne peut pas produire son fichier doit écrire pourquoi, pas
+**Leçon n°44 — un script qui ne peut pas produire son fichier doit écrire pourquoi, pas
 sortir en erreur.** Une étape tolérée qui échoue laisse en place le fichier de la veille,
 et un fichier périmé qui se présente comme courant est pire qu'un fichier absent.
 « Vide » est une information sur le monde ; « structure changée » est une panne. Les deux
 ne se traitent pas pareil.
 
-**Leçon n°43 — une question à laquelle quatre fichiers peuvent répondre a quatre réponses
+**Leçon n°45 — une question à laquelle quatre fichiers peuvent répondre a quatre réponses
 le jour où ça compte.** « Quel set est en ligne » : une fonction, une source.
 
-**Leçon n°44 — les tests font partie de la chaîne qu'ils protègent.** S'ils tournent sans
+**Leçon n°46 — les tests font partie de la chaîne qu'ils protègent.** S'ils tournent sans
 tolérance avant une publication, ils peuvent l'empêcher ; ils se répètent donc avec le
 reste. Et un test écrit pour le régime de croisière casse au premier état transitoire.
 
-**Leçon n°45 — un champ que rien ne lit n'est vérifié par rien.** Le nommer d'après une
+**Leçon n°47 — un champ que rien ne lit n'est vérifié par rien.** Le nommer d'après une
 hypothèse, c'est graver l'hypothèse. Avant de nommer une valeur non documentée, la
 confronter à un champ voisin qui mesure la même chose autrement.
 
-**Leçon n°46 — une page se vérifie en l'ouvrant.** Un fichier juste peut s'afficher
+**Leçon n°48 — une page se vérifie en l'ouvrant.** Un fichier juste peut s'afficher
 « undefined ». Et un nombre recopié dans une phrase survit à la correction de la table
 dont il vient.
