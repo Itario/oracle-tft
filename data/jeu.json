@@ -1,0 +1,1152 @@
+{
+ "schema_version": 1,
+ "genere_le": "2026-11-10",
+ "nature": "releve",
+ "source": "CommunityDragon (données Riot)",
+ "set": 18,
+ "patch": "18.6",
+ "francais": true,
+ "unites": {
+  "DA_Gromp18_AP": {
+   "nom": "Gromp",
+   "nom_en": "Gromp",
+   "cout": 2,
+   "traits": [
+    "DA_Riftbeast18",
+    "DA_18_Adaptor"
+   ]
+  },
+  "DA_Murkwolf18": {
+   "nom": "Lycan",
+   "nom_en": "Murkwolf",
+   "cout": 2,
+   "traits": [
+    "DA_Riftbeast18",
+    "DA_18_Slayer"
+   ]
+  },
+  "DA_18_Sentry": {
+   "nom": "Caillou",
+   "nom_en": "Pebbles",
+   "cout": 1,
+   "traits": [
+    "DA_Riftbeast18",
+    "DA_18_Invoker"
+   ]
+  },
+  "DA_Cinderling18": {
+   "nom": "Rougelin",
+   "nom_en": "Cinderling",
+   "cout": 1,
+   "traits": [
+    "DA_Riftbeast18",
+    "DA_18_Hunter"
+   ]
+  },
+  "DA_Scuttlecrab18": {
+   "nom": "Carapateur",
+   "nom_en": "Scuttlecrab",
+   "cout": 2,
+   "traits": [
+    "DA_Riftbeast18",
+    "DA_Juggernaut18"
+   ]
+  },
+  "DA_Krug18": {
+   "nom": "Krug",
+   "nom_en": "Krug",
+   "cout": 3,
+   "traits": [
+    "DA_Riftbeast18",
+    "DA_18_Brawler"
+   ]
+  },
+  "DA_Sentinel18": {
+   "nom": "Sentinelle",
+   "nom_en": "Sentinel",
+   "cout": 4,
+   "traits": [
+    "DA_Riftbeast18",
+    "DA_18_Vanguard",
+    "DA_18_Invoker"
+   ]
+  },
+  "DA_Brambleback18": {
+   "nom": "Roncier",
+   "nom_en": "Brambleback",
+   "cout": 4,
+   "traits": [
+    "DA_Riftbeast18",
+    "DA_18_Slayer"
+   ]
+  },
+  "DA_18_Xayah": {
+   "nom": "Xayah",
+   "nom_en": "Xayah",
+   "cout": 1,
+   "traits": [
+    "DA_18_Elderwood",
+    "DA_18_Fae",
+    "DA_18_Rapidfire"
+   ]
+  },
+  "DA_18_Ornn": {
+   "nom": "Ornn",
+   "nom_en": "Ornn",
+   "cout": 1,
+   "traits": [
+    "DA_18_Elderwood",
+    "DA_18_Defender"
+   ]
+  },
+  "DA_Nidalee18_AP": {
+   "nom": "Nidalee",
+   "nom_en": "Nidalee",
+   "cout": 4,
+   "traits": [
+    "DA_Primal18",
+    "DA_18_Adaptor"
+   ]
+  },
+  "DA_18_Hecarim": {
+   "nom": "Hecarim",
+   "nom_en": "Hecarim",
+   "cout": 3,
+   "traits": [
+    "DA_18_Elderwood",
+    "DA_18_Vanguard"
+   ]
+  },
+  "DA_18_Ezreal": {
+   "nom": "Ezreal",
+   "nom_en": "Ezreal",
+   "cout": 4,
+   "traits": [
+    "DA_18_Elderwood",
+    "DA_18_Executioner"
+   ]
+  },
+  "DA_18_Azir": {
+   "nom": "Azir",
+   "nom_en": "Azir",
+   "cout": 3,
+   "traits": [
+    "DA_18_Blackthorn",
+    "DA_18_Executioner",
+    "DA_18_Summoner"
+   ]
+  },
+  "DA_18_RekSai": {
+   "nom": "Rek'Sai",
+   "nom_en": "Rek'Sai",
+   "cout": 1,
+   "traits": [
+    "DA_18_Blackthorn",
+    "DA_18_Brawler"
+   ]
+  },
+  "DA_18_Veigar": {
+   "nom": "Veigar",
+   "nom_en": "Veigar",
+   "cout": 1,
+   "traits": [
+    "DA_18_Blackthorn",
+    "DA_18_Sprykin",
+    "DA_18_Spellweaver"
+   ]
+  },
+  "DA_18_Maokai": {
+   "nom": "Maokai",
+   "nom_en": "Maokai",
+   "cout": 5,
+   "traits": [
+    "DA_18_Maokai_UniqueTrait",
+    "DA_Juggernaut18"
+   ]
+  },
+  "DA_18_Malphite": {
+   "nom": "Malphite",
+   "nom_en": "Malphite",
+   "cout": 4,
+   "traits": [
+    "DA_18_Blackthorn",
+    "DA_18_Battlemage"
+   ]
+  },
+  "DA_18_Yorick": {
+   "nom": "Yorick",
+   "nom_en": "Yorick",
+   "cout": 1,
+   "traits": [
+    "DA_18_Blossom",
+    "DA_Juggernaut18",
+    "DA_18_Summoner"
+   ]
+  },
+  "DA_18_Yunara": {
+   "nom": "Yunara",
+   "nom_en": "Yunara",
+   "cout": 2,
+   "traits": [
+    "DA_18_Blossom",
+    "DA_18_Executioner"
+   ]
+  },
+  "DA_18_Sett": {
+   "nom": "Sett",
+   "nom_en": "Sett",
+   "cout": 4,
+   "traits": [
+    "DA_18_Blossom",
+    "DA_18_Brawler"
+   ]
+  },
+  "DA_18_Ahri": {
+   "nom": "Ahri",
+   "nom_en": "Ahri",
+   "cout": 4,
+   "traits": [
+    "DA_18_Blossom",
+    "DA_18_Spellweaver"
+   ]
+  },
+  "DA_18_Ashe": {
+   "nom": "Ashe",
+   "nom_en": "Ashe",
+   "cout": 5,
+   "traits": [
+    "DA_18_Blossom",
+    "DA_18_Hunter"
+   ]
+  },
+  "DA_18_Elise": {
+   "nom": "Elise",
+   "nom_en": "Elise",
+   "cout": 2,
+   "traits": [
+    "DA_18_Coven",
+    "DA_18_Vanguard"
+   ]
+  },
+  "DA_18_Caitlyn": {
+   "nom": "Caitlyn",
+   "nom_en": "Caitlyn",
+   "cout": 2,
+   "traits": [
+    "DA_18_Coven",
+    "DA_18_Hunter"
+   ]
+  },
+  "DA_18_Cassiopeia": {
+   "nom": "Cassiopeia",
+   "nom_en": "Cassiopeia",
+   "cout": 3,
+   "traits": [
+    "DA_18_Coven",
+    "DA_18_Spellweaver"
+   ]
+  },
+  "DA_18_Morgana": {
+   "nom": "Morgana",
+   "nom_en": "Morgana",
+   "cout": 4,
+   "traits": [
+    "DA_18_Coven",
+    "DA_18_Invoker"
+   ]
+  },
+  "DA_18_Rakan": {
+   "nom": "Rakan",
+   "nom_en": "Rakan",
+   "cout": 1,
+   "traits": [
+    "DA_18_Fae",
+    "DA_Juggernaut18",
+    "DA_18_Vanguard"
+   ]
+  },
+  "DA_18_Lillia": {
+   "nom": "Lillia",
+   "nom_en": "Lillia",
+   "cout": 4,
+   "traits": [
+    "DA_18_Fae",
+    "DA_18_Defender"
+   ]
+  },
+  "DA_18_Kobuko": {
+   "nom": "Kobuko",
+   "nom_en": "Kobuko",
+   "cout": 1,
+   "traits": [
+    "DA_18_Sprykin",
+    "DA_18_Brawler"
+   ]
+  },
+  "DA_18_Teemo": {
+   "nom": "Teemo",
+   "nom_en": "Teemo",
+   "cout": 2,
+   "traits": [
+    "DA_18_Sprykin",
+    "DA_18_Invoker"
+   ]
+  },
+  "DA_18_Rammus": {
+   "nom": "Rammus",
+   "nom_en": "Rammus",
+   "cout": 3,
+   "traits": [
+    "DA_18_Sprykin",
+    "DA_18_Defender"
+   ]
+  },
+  "DA_18_GnarSmall": {
+   "nom": "Gnar",
+   "nom_en": "Gnar",
+   "cout": 5,
+   "traits": [
+    "DA_18_Elderwood",
+    "DA_18_Sprykin",
+    "DA_18_Brawler"
+   ]
+  },
+  "DA_18_Tristana": {
+   "nom": "Tristana",
+   "nom_en": "Tristana",
+   "cout": 3,
+   "traits": [
+    "DA_18_Fae",
+    "DA_18_Sprykin",
+    "DA_18_Hunter"
+   ]
+  },
+  "DA_18_Sivir": {
+   "nom": "Sivir",
+   "nom_en": "Sivir",
+   "cout": 4,
+   "traits": [
+    "DA_Primal18",
+    "DA_18_Hunter"
+   ]
+  },
+  "DA_Vi18": {
+   "nom": "Vi",
+   "nom_en": "Vi",
+   "cout": 3,
+   "traits": [
+    "DA_Primal18",
+    "DA_Juggernaut18"
+   ]
+  },
+  "DA_18_Akali_AD": {
+   "nom": "Akali",
+   "nom_en": "Akali",
+   "cout": 1,
+   "traits": [
+    "DA_18_Inferno",
+    "DA_18_Adaptor",
+    "DA_18_Slayer"
+   ]
+  },
+  "DA_18_Varus": {
+   "nom": "Varus",
+   "nom_en": "Varus",
+   "cout": 1,
+   "traits": [
+    "DA_18_Inferno",
+    "DA_18_Rapidfire"
+   ]
+  },
+  "DA_Amumu18": {
+   "nom": "Amumu",
+   "nom_en": "Amumu",
+   "cout": 4,
+   "traits": [
+    "DA_18_Inferno",
+    "DA_Juggernaut18"
+   ]
+  },
+  "DA_18_Kennen": {
+   "nom": "Kennen",
+   "nom_en": "Kennen",
+   "cout": 5,
+   "traits": [
+    "DA_18_Inferno",
+    "DA_18_Executioner"
+   ]
+  },
+  "DA_18_Aphelios": {
+   "nom": "Aphelios",
+   "nom_en": "Aphelios",
+   "cout": 4,
+   "traits": [
+    "DA_18_Lunar",
+    "DA_18_Rapidfire"
+   ]
+  },
+  "DA_18_Diana": {
+   "nom": "Diana",
+   "nom_en": "Diana",
+   "cout": 3,
+   "traits": [
+    "DA_18_Lunar",
+    "DA_18_Slayer",
+    "DA_18_Vanguard"
+   ]
+  },
+  "DA_18_Alune": {
+   "nom": "Alune",
+   "nom_en": "Alune",
+   "cout": 5,
+   "traits": [
+    "DA_AluneUniqueTrait18",
+    "DA_18_Lunar",
+    "DA_18_Spellweaver"
+   ]
+  },
+  "DA_18_Leona": {
+   "nom": "Leona",
+   "nom_en": "Leona",
+   "cout": 1,
+   "traits": [
+    "DA_18_Solar",
+    "DA_18_Defender"
+   ]
+  },
+  "DA_18_Kayle": {
+   "nom": "Kayle",
+   "nom_en": "Kayle",
+   "cout": 2,
+   "traits": [
+    "DA_18_Solar",
+    "DA_18_Rapidfire"
+   ]
+  },
+  "DA_18_Sejuani": {
+   "nom": "Sejuani",
+   "nom_en": "Sejuani",
+   "cout": 2,
+   "traits": [
+    "DA_18_Solar",
+    "DA_Juggernaut18"
+   ]
+  },
+  "DA_18_KhaZix": {
+   "nom": "Kha'Zix",
+   "nom_en": "Kha'Zix",
+   "cout": 3,
+   "traits": [
+    "DA_18_Rival"
+   ]
+  },
+  "DA_18_Rengar": {
+   "nom": "Rengar",
+   "nom_en": "Rengar",
+   "cout": 3,
+   "traits": [
+    "DA_18_Rival"
+   ]
+  },
+  "DA_KogMaw18_AD": {
+   "nom": "Kog'Maw",
+   "nom_en": "Kog'Maw",
+   "cout": 3,
+   "traits": [
+    "DA_18_Caustic",
+    "DA_18_Adaptor",
+    "DA_18_Invoker"
+   ]
+  },
+  "DA_18_Zyra": {
+   "nom": "Zyra",
+   "nom_en": "Zyra",
+   "cout": 4,
+   "traits": [
+    "DA_18_ZyraUniqueTrait",
+    "DA_18_Summoner"
+   ]
+  },
+  "DA_Fiddlesticks18": {
+   "nom": "Fiddlesticks",
+   "nom_en": "Fiddlesticks",
+   "cout": 3,
+   "traits": [
+    "DA_FloraFatalis18",
+    "DA_18_Defender",
+    "DA_18_Spellweaver"
+   ]
+  },
+  "DA_18_Soraka": {
+   "nom": "Soraka",
+   "nom_en": "Soraka",
+   "cout": 4,
+   "traits": [
+    "DA_FloraFatalis18",
+    "DA_18_Executioner"
+   ]
+  },
+  "DA_Taric18": {
+   "nom": "Taric",
+   "nom_en": "Taric",
+   "cout": 5,
+   "traits": [
+    "DA_Emerald18",
+    "DA_18_Vanguard"
+   ]
+  },
+  "DA_18_Ivern": {
+   "nom": "Ivern",
+   "nom_en": "Ivern",
+   "cout": 5,
+   "traits": [
+    "DA_18_Greenfather"
+   ]
+  },
+  "DA_Lux18_Base": {
+   "nom": "Lux",
+   "nom_en": "Lux",
+   "cout": 5,
+   "traits": [
+    "DA_18_LuxUniqueTrait"
+   ]
+  },
+  "DA_18_Alistar": {
+   "nom": "Alistar",
+   "nom_en": "Alistar",
+   "cout": 2,
+   "traits": [
+    "DA_18_Elderwood",
+    "DA_18_Brawler"
+   ]
+  },
+  "DA_Draven18": {
+   "nom": "Draven",
+   "nom_en": "Draven",
+   "cout": 5,
+   "traits": [
+    "DA_DravenUniqueTrait18"
+   ]
+  },
+  "DA_18_ElderDragon": {
+   "nom": "Dragon ancestral",
+   "nom_en": "Elder Dragon",
+   "cout": 5,
+   "traits": [
+    "DA_18_ApexPredator",
+    "DA_Riftbeast18"
+   ]
+  },
+  "DA_Karma18": {
+   "nom": "Karma",
+   "nom_en": "Karma",
+   "cout": 1,
+   "traits": [
+    "DA_18_Blossom",
+    "DA_18_Spellweaver"
+   ]
+  },
+  "DA_18_LeBlanc": {
+   "nom": "LeBlanc",
+   "nom_en": "LeBlanc",
+   "cout": 2,
+   "traits": [
+    "DA_18_Elderwood",
+    "DA_18_Spellweaver"
+   ]
+  },
+  "DA_18_MasterYi_AD": {
+   "nom": "Maître Yi",
+   "nom_en": "Master Yi",
+   "cout": 3,
+   "traits": [
+    "DA_18_Blossom",
+    "DA_18_Adaptor"
+   ]
+  },
+  "DA_18_Shen": {
+   "nom": "Shen",
+   "nom_en": "Shen",
+   "cout": 2,
+   "traits": [
+    "DA_18_Inferno",
+    "DA_18_Defender"
+   ]
+  },
+  "DA_18_Warwick": {
+   "nom": "Warwick",
+   "nom_en": "Warwick",
+   "cout": 2,
+   "traits": [
+    "DA_18_Blackthorn",
+    "DA_18_Slayer"
+   ]
+  },
+  "DA_18_Camille": {
+   "nom": "Camille",
+   "nom_en": "Camille",
+   "cout": 1,
+   "traits": [
+    "DA_18_Coven",
+    "DA_18_Slayer"
+   ]
+  },
+  "DA_Lux18_Blackthorn": {
+   "nom": "Lux (Ronce-obscure)",
+   "nom_en": "Lux (Blackthorn)",
+   "cout": 5,
+   "traits": [
+    "DA_18_Blackthorn",
+    "DA_18_LuxUniqueTrait"
+   ]
+  },
+  "DA_Lux18_Blossom": {
+   "nom": "Lux (Fleur spirituelle)",
+   "nom_en": "Lux (Blossom)",
+   "cout": 5,
+   "traits": [
+    "DA_18_Blossom",
+    "DA_18_LuxUniqueTrait"
+   ]
+  },
+  "DA_18_Lux_Coven": {
+   "nom": "Lux (Assemblée)",
+   "nom_en": "Lux (Coven)",
+   "cout": 5,
+   "traits": [
+    "DA_18_Coven",
+    "DA_18_LuxUniqueTrait"
+   ]
+  },
+  "DA_18_Lux_Elderwood": {
+   "nom": "Lux (Sylvestre)",
+   "nom_en": "Lux (Elderwood)",
+   "cout": 5,
+   "traits": [
+    "DA_18_Elderwood",
+    "DA_18_LuxUniqueTrait"
+   ]
+  },
+  "DA_18_Lux_Fae": {
+   "nom": "Lux (Fæ)",
+   "nom_en": "Lux (Fae)",
+   "cout": 5,
+   "traits": [
+    "DA_18_Fae",
+    "DA_18_LuxUniqueTrait"
+   ]
+  },
+  "DA_18_Lux_Inferno": {
+   "nom": "Lux (Infernal)",
+   "nom_en": "Lux (Inferno)",
+   "cout": 5,
+   "traits": [
+    "DA_18_Inferno",
+    "DA_18_LuxUniqueTrait"
+   ]
+  },
+  "DA_18_Lux_Moonbeam": {
+   "nom": "Lux (Lunaire)",
+   "nom_en": "Lux (Lunar)",
+   "cout": 5,
+   "traits": [
+    "DA_18_Lunar",
+    "DA_18_LuxUniqueTrait"
+   ]
+  },
+  "DA_18_Lux_Primal": {
+   "nom": "Lux (Primitif)",
+   "nom_en": "Lux (Primal)",
+   "cout": 5,
+   "traits": [
+    "DA_Primal18",
+    "DA_18_LuxUniqueTrait"
+   ]
+  },
+  "DA_18_Lux_Sunbeam": {
+   "nom": "Lux (Solaire)",
+   "nom_en": "Lux (Solar)",
+   "cout": 5,
+   "traits": [
+    "DA_18_Solar",
+    "DA_18_LuxUniqueTrait"
+   ]
+  },
+  "DA_CrimsonRaptor18": {
+   "nom": "Maman Raptor",
+   "nom_en": "Mama Beak",
+   "cout": 3,
+   "traits": [
+    "DA_Riftbeast18",
+    "DA_18_Summoner",
+    "DA_18_Rapidfire"
+   ]
+  }
+ },
+ "traits": {
+  "DA_18_Elderwood": {
+   "nom": "Sylvestre",
+   "nom_en": "Elderwood",
+   "paliers": [
+    3,
+    5,
+    7,
+    9,
+    11
+   ]
+  },
+  "DA_18_LuxUniqueTrait": {
+   "nom": "Avatar",
+   "nom_en": "Avatar",
+   "paliers": [
+    1
+   ]
+  },
+  "DA_18_Slayer": {
+   "nom": "Saccageur",
+   "nom_en": "Ravager",
+   "paliers": [
+    2,
+    4,
+    6
+   ]
+  },
+  "DA_DravenUniqueTrait18": {
+   "nom": "Chercheur de primes",
+   "nom_en": "Bounty Seeker",
+   "paliers": [
+    1
+   ]
+  },
+  "DA_18_Solar": {
+   "nom": "Solaire",
+   "nom_en": "Solar",
+   "paliers": [
+    3
+   ]
+  },
+  "DA_18_Sprykin": {
+   "nom": "Ami de la forêt",
+   "nom_en": "Sprykin",
+   "paliers": [
+    3,
+    5,
+    7
+   ]
+  },
+  "DA_18_Adaptor": {
+   "nom": "Adaptateur",
+   "nom_en": "Adaptor",
+   "paliers": [
+    2,
+    3,
+    4
+   ]
+  },
+  "DA_18_Coven": {
+   "nom": "Assemblée",
+   "nom_en": "Coven",
+   "paliers": [
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  "DA_18_Eclipse": {
+   "nom": "Éclipse",
+   "nom_en": "Eclipse",
+   "paliers": []
+  },
+  "DA_18_Hunter": {
+   "nom": "Chasseur",
+   "nom_en": "Hunter",
+   "paliers": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "DA_18_Maokai_UniqueTrait": {
+   "nom": "Forêt ancienne",
+   "nom_en": "Old Growth",
+   "paliers": [
+    1
+   ]
+  },
+  "DA_18_Battlemage": {
+   "nom": "Monolithe",
+   "nom_en": "Monolith",
+   "paliers": [
+    1
+   ]
+  },
+  "DA_Primal18": {
+   "nom": "Primitif",
+   "nom_en": "Primal",
+   "paliers": [
+    2,
+    4
+   ]
+  },
+  "DA_18_Greenfather": {
+   "nom": "Aîné de la forêt",
+   "nom_en": "Greenfather",
+   "paliers": [
+    1
+   ]
+  },
+  "DA_18_Invoker": {
+   "nom": "Incantateur",
+   "nom_en": "Invoker",
+   "paliers": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "DA_18_Rapidfire": {
+   "nom": "Ultrarapide",
+   "nom_en": "Rapidfire",
+   "paliers": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "DA_Juggernaut18": {
+   "nom": "Colosse",
+   "nom_en": "Juggernaut",
+   "paliers": [
+    2,
+    4,
+    6
+   ]
+  },
+  "DA_18_Inferno": {
+   "nom": "Infernal",
+   "nom_en": "Inferno",
+   "paliers": [
+    2,
+    3,
+    5,
+    7
+   ]
+  },
+  "DA_AluneUniqueTrait18": {
+   "nom": "Harmonisé",
+   "nom_en": "Attuned",
+   "paliers": [
+    1
+   ]
+  },
+  "DA_18_Rival": {
+   "nom": "Rival",
+   "nom_en": "Rival",
+   "paliers": [
+    1,
+    2
+   ]
+  },
+  "DA_18_Vanguard": {
+   "nom": "Initiateur",
+   "nom_en": "Vanguard",
+   "paliers": [
+    2,
+    4,
+    6
+   ]
+  },
+  "DA_18_Brawler": {
+   "nom": "Bagarreur",
+   "nom_en": "Brawler",
+   "paliers": [
+    2,
+    4,
+    6
+   ]
+  },
+  "DA_18_Blackthorn": {
+   "nom": "Ronce-obscure",
+   "nom_en": "Blackthorn",
+   "paliers": [
+    2,
+    4,
+    6
+   ]
+  },
+  "DA_18_Executioner": {
+   "nom": "Exécuteur",
+   "nom_en": "Executioner",
+   "paliers": [
+    2,
+    3,
+    4
+   ]
+  },
+  "DA_18_ApexPredator": {
+   "nom": "Prédateur",
+   "nom_en": "Apex Predator",
+   "paliers": [
+    1
+   ]
+  },
+  "DA_Riftbeast18": {
+   "nom": "Jungle",
+   "nom_en": "Riftbeast",
+   "paliers": [
+    3,
+    5,
+    7,
+    10
+   ]
+  },
+  "DA_18_Caustic": {
+   "nom": "Caustique",
+   "nom_en": "Caustic",
+   "paliers": [
+    1
+   ]
+  },
+  "DA_18_Fae": {
+   "nom": "Fæ",
+   "nom_en": "Fae",
+   "paliers": [
+    2,
+    4
+   ]
+  },
+  "DA_18_Lunar": {
+   "nom": "Lunaire",
+   "nom_en": "Lunar",
+   "paliers": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "DA_18_Defender": {
+   "nom": "Défenseur",
+   "nom_en": "Defender",
+   "paliers": [
+    2,
+    4,
+    6
+   ]
+  },
+  "DA_18_Spellweaver": {
+   "nom": "Tisseur de sorts",
+   "nom_en": "Spellweaver",
+   "paliers": [
+    2,
+    4,
+    6
+   ]
+  },
+  "DA_18_ZyraUniqueTrait": {
+   "nom": "Dame des ronces",
+   "nom_en": "Thornmaiden",
+   "paliers": [
+    1
+   ]
+  },
+  "DA_FloraFatalis18": {
+   "nom": "Flora fatalis",
+   "nom_en": "Flora Fatalis",
+   "paliers": [
+    1,
+    2
+   ]
+  },
+  "DA_18_Summoner": {
+   "nom": "Invocateur",
+   "nom_en": "Summoner",
+   "paliers": [
+    2,
+    3
+   ]
+  },
+  "DA_18_Blossom": {
+   "nom": "Fleur spirituelle",
+   "nom_en": "Blossom",
+   "paliers": [
+    3,
+    5,
+    7,
+    9,
+    11
+   ]
+  },
+  "DA_Emerald18": {
+   "nom": "Émeraude",
+   "nom_en": "Emerald Aspect",
+   "paliers": [
+    1
+   ]
+  }
+ },
+ "objets": {
+  "DA_18_EmblemBlackthorn": "Emblème de Ronce-obscure",
+  "DA_18_EmblemBlossom": "Emblème de Fleur spirituelle",
+  "DA_18_EmblemBrawler": "Emblème de Bagarreur",
+  "DA_18_EmblemCoven": "Emblème de l'Assemblée",
+  "DA_18_EmblemDefender": "Emblème de Défenseur",
+  "DA_18_EmblemElderwood": "Emblème de Sylvestre",
+  "DA_18_EmblemExecutioner": "Emblème d'Exécuteur",
+  "DA_18_EmblemFae": "Emblème de Fæ",
+  "DA_18_EmblemFloraFatalis": "Emblème de Flora fatalis",
+  "DA_18_EmblemFloraFatalisAugment": "Emblème de Flora fatalis",
+  "DA_18_EmblemHunter": "Emblème de Chasseur",
+  "DA_18_EmblemInferno": "Emblème d'Infernal",
+  "DA_18_EmblemInvoker": "Emblème d'Incantateur",
+  "DA_18_EmblemJuggernaut": "Emblème de Colosse",
+  "DA_18_EmblemLunar": "Emblème de Lunaire",
+  "DA_18_EmblemPrimal": "Emblème de Primitif",
+  "DA_18_EmblemRapidfire": "Emblème d'Ultrarapide",
+  "DA_18_EmblemSlayer": "Emblème de Saccageur",
+  "DA_18_EmblemSpellweaver": "Emblème de Tisseur de sorts",
+  "DA_18_EmblemSprykin": "Emblème d'Ami de la forêt",
+  "DA_18_EmblemVanguard": "Emblème d'Initiateur",
+  "DA_AdaptiveHelm": "Casque adaptatif",
+  "DA_AdaptiveHelm_Radiant": "Casque adaptatif de la lumière",
+  "DA_ArchangelsStaff": "Bâton de l'archange",
+  "DA_ArchangelsStaffRadiant": "Bâton de l'archange de la lumière",
+  "DA_Artifact_AegisOfDawn": "Égide de l'aube",
+  "DA_Artifact_AegisOfDusk": "Égide du crépuscule",
+  "DA_Artifact_BlightingJewel": "Joyau putréfiant",
+  "DA_Artifact_Dawncore": "Cœur de l'aube",
+  "DA_Artifact_EternalPact": "Pacte éternel",
+  "DA_Artifact_Fishbones": "Poiscaille",
+  "DA_Artifact_ForbiddenIdol": "Idole interdite",
+  "DA_Artifact_GamblersBlade": "Lame du parieur",
+  "DA_Artifact_GoldCollector": "Collecteur d'or",
+  "DA_Artifact_HellfireHatchet": "Hachette infernale",
+  "DA_Artifact_HorizonFocus": "Concentration lointaine",
+  "DA_Artifact_Hullcrusher": "Fracasse-coques",
+  "DA_Artifact_InfinityForce": "Force de l'infini",
+  "DA_Artifact_LichBane": "Fléau de liche",
+  "DA_Artifact_LightshieldCrest": "Blason des Lightshield",
+  "DA_Artifact_LudensTempest": "Tempête de Luden",
+  "DA_Artifact_Manazane": "Manazane",
+  "DA_Artifact_Mittens": "Moufles",
+  "DA_Artifact_MogulsMail": "Mailles du magnat",
+  "DA_Artifact_NavoriFlickerblade": "Tremblelames",
+  "DA_Artifact_RapidFireCannon": "Canon ultrarapide",
+  "DA_Artifact_SeekersArmguard": "Protège-bras du savant",
+  "DA_Artifact_SilvermereDawn": "Aube de Haut-Lac-d'Argent",
+  "DA_Artifact_StatikkShiv": "Poignard de Statikk",
+  "DA_Artifact_TheIndomitable": "L'indomptable",
+  "DA_Artifact_TitanicHydra": "Hydre titanesque",
+  "DA_Artifact_VoidGauntlet": "Gantelet du Néant",
+  "DA_Artifact_WitsEnd": "Au bout du rouleau",
+  "DA_Artifact_ZhonyasParadox": "Paradoxe de Zhonya",
+  "DA_Bloodthirster": "Soif-de-sang",
+  "DA_BloodthirsterRadiant": "Soif-de-sang de la lumière",
+  "DA_BlueBuff": "Buff bleu",
+  "DA_BlueBuffRadiant": "Buff bleu de la lumière",
+  "DA_BrambleVest": "Armure roncière",
+  "DA_BrambleVestRadiant": "Armure roncière de la lumière",
+  "DA_Component_BFSword": "BF Glaive",
+  "DA_Component_ChainVest": "Cotte de mailles",
+  "DA_Component_FryingPan": "Poêle à frire",
+  "DA_Component_GiantsBelt": "Ceinture du géant",
+  "DA_Component_NeedlesslyLargeRod": "Baguette trop grosse",
+  "DA_Component_NegatronCloak": "Manteau de Négatron",
+  "DA_Component_RecurveBow": "Arc courbe",
+  "DA_Component_SparringGloves": "Gants d'entraînement",
+  "DA_Component_Spatula": "Spatule",
+  "DA_Component_TearOfTheGoddess": "Larme de la déesse",
+  "DA_Crownguard": "Couronne de la reine",
+  "DA_CrownguardRadiant": "Couronne de la reine de la lumière",
+  "DA_Deathblade": "Lame funeste",
+  "DA_DeathbladeRadiant": "Lame funeste de la lumière",
+  "DA_DragonsClaw": "Griffe de dragon",
+  "DA_DragonsClawRadiant": "Griffe de dragon de la lumière",
+  "DA_EdgeOfNight": "Manteau de la nuit",
+  "DA_EdgeOfNightRadiant": "Manteau de la nuit de la lumière",
+  "DA_Evenshroud": "Linceul de la congruence",
+  "DA_EvenshroudRadiant": "Linceul de la congruence de la lumière",
+  "DA_GargoyleStoneplate": "Lithoplastron de gargouille",
+  "DA_GargoyleStoneplate_Radiant": "Lithoplastron de gargouille de la lumière",
+  "DA_GiantSlayer": "Tueur de géants",
+  "DA_GiantSlayer_Radiant": "Tueur de géants de la lumière",
+  "DA_GuinsoosRageblade": "Lame enragée de Guinsoo",
+  "DA_GuinsoosRagebladeRadiant": "Lame enragée de Guinsoo de la lumière",
+  "DA_HandOfJustice": "Main de la justice",
+  "DA_HandOfJusticeRadiant": "Main de la justice de la lumière",
+  "DA_HextechGunblade": "Pistolame Hextech",
+  "DA_HextechGunbladeRadiant": "Pistolame Hextech de la lumière",
+  "DA_InfinityEdge": "Lame d'infini",
+  "DA_InfinityEdgeRadiant": "Lame d'infini de la lumière",
+  "DA_IonicSpark": "Étincelle ionique",
+  "DA_IonicSparkRadiant": "Étincelle ionique de la lumière",
+  "DA_Item_Artifact_TalismanOfAscension": "Talisman de l'ascension",
+  "DA_JeweledGauntlet": "Gantelet précieux",
+  "DA_JeweledGauntletRadiant": "Gantelet précieux de la lumière",
+  "DA_KrakensFury": "Fureur du kraken",
+  "DA_KrakensFury_Radiant": "Fureur du kraken de la lumière",
+  "DA_LastWhisper": "Dernier souffle",
+  "DA_LastWhisperRadiant": "Dernier souffle de la lumière",
+  "DA_Morellonomicon": "Morellonomicon",
+  "DA_MorellonomiconRadiant": "Morellonomicon de la lumière",
+  "DA_NashorsTooth": "Dent de Nashor",
+  "DA_NashorsToothRadiant": "Dent de Nashor de la lumière",
+  "DA_ProtectorsVow": "Vœu du protecteur",
+  "DA_ProtectorsVowRadiant": "Vœu du protecteur de la lumière",
+  "DA_Quicksilver": "Mercure",
+  "DA_QuicksilverRadiant": "Mercure de la lumière",
+  "DA_RabadonsDeathcap": "Coiffe de Rabadon",
+  "DA_RabadonsDeathcap_Radiant": "Coiffe de Rabadon de la lumière",
+  "DA_RedBuff": "Buff rouge",
+  "DA_RedBuffRadiant": "Buff rouge de la lumière",
+  "DA_SpearOfShojin": "Lance de Shojin",
+  "DA_SpearOfShojinRadiant": "Lance de Shojin de la lumière",
+  "DA_SpiritVisage": "Visage spirituel",
+  "DA_SpiritVisage_Radiant": "Visage spirituel de la lumière",
+  "DA_SteadfastHeart": "Cœur intrépide",
+  "DA_SteadfastHeartRadiant": "Cœur intrépide de la lumière",
+  "DA_SteraksGage": "Gage de Sterak",
+  "DA_SteraksGageRadiant": "Gage de Sterak de la lumière",
+  "DA_StrikersFlail": "Fléau vengeur",
+  "DA_StrikersFlailRadiant": "Fléau vengeur de la lumière",
+  "DA_SunfireCape": "Cape solaire",
+  "DA_SunfireCape_Radiant": "Cape solaire de la lumière",
+  "DA_TacticiansCape": "Cape du Tacticien",
+  "DA_TacticiansCrown": "Couronne du Tacticien",
+  "DA_TacticiansShield": "Bouclier du Tacticien",
+  "DA_ThiefsGloves": "Gants de voleur",
+  "DA_ThiefsGlovesRadiant": "Gants de voleur de la lumière",
+  "DA_TitansResolve": "Détermination du titan",
+  "DA_TitansResolve_Radiant": "Détermination du titan de la lumière",
+  "DA_VoidStaff": "Bâton du vide",
+  "DA_VoidStaffRadiant": "Bâton du vide de la lumière",
+  "DA_WarmogsArmor": "Armure de Warmog",
+  "DA_WarmogsArmorRadiant": "Armure de Warmog de la lumière"
+ },
+ "hors_boutique": [
+  "TFT5_EmblemArmoryKey",
+  "TFT6_MercenaryChest",
+  "TFT9_SLIME_Crab",
+  "TFT_ArmoryKeyCompleted",
+  "TFT_ArmoryKeyComponent",
+  "TFT_ArmoryKeyOrnn",
+  "TFT_ArmoryKeySupport",
+  "TFT_BlueGolem",
+  "TFT_ElderDragon",
+  "TFT_Krug",
+  "TFT_Murkwolf",
+  "TFT_MurkwolfMini",
+  "TFT_Razorbeak",
+  "TFT_RazorbeakMini",
+  "TFT_RiftHerald",
+  "TFT_TrainingDummy",
+  "TFT_Voidspawn"
+ ],
+ "a_venir": null,
+ "a_venir_note": "Le PBE ne porte aucun set au-delà du Set 18 : le suivant n'y est pas encore.",
+ "note": "Coûts, traits, paliers et noms, lus dans les données de Riot. Aucune force, aucun classement : ce fichier dit ce que le jeu contient, pas ce qui gagne."
+}
