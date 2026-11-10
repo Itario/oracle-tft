@@ -157,7 +157,7 @@ def comparer(r1, r2, nmin=NMIN, silencieux=False):
         print(f"\n  ⚠ VOLUMES TRÈS INÉGAUX : {v['n_avant']:,} parties contre "
               f"{v['n_apres']:,}.".replace(",", " "))
         if v["unites_perdues"]:
-            noms = ", ".join(x.replace("DA_", "") for x in v["unites_perdues"][:6])
+            noms = ", ".join(M.nom_affichable(x) for x in v["unites_perdues"][:6])
             print(f"    {len(v['unites_perdues'])} unité(s) sous le seuil de "
                   f"{v['seuil']} parties sortent de la comparaison : {noms}"
                   + (" …" if len(v["unites_perdues"]) > 6 else ""))

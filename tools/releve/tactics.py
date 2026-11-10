@@ -34,6 +34,15 @@ import argparse, json, os, re, sys, urllib.error, urllib.request
 from datetime import date
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# La seule porte vers l'extérieur vit dans tools/lib/reseau.py : une définition,
+# et un mode rejeu qui permet de répéter le 1er décembre sans réseau.
+sys.path.insert(0, os.path.join(RACINE, "tools", "lib"))
+from reseau import lire as _lire
+
+
+def lire(url, **kw):
+    return _lire(url, quoi="relevé de méta", **kw)
+
 SORTIE = os.path.join(RACINE, "data", "releves-tt")
 # ⚠ RESTE À 1, ET C'EST DÉLIBÉRÉ.
 #
@@ -56,33 +65,8 @@ CDN  = "https://d3.tft.tools/stats2/general/1100/{code}/{rang}"
 
 RANGS = {0: "Master+", 1: "Diamant+", 2: "Émeraude+", 3: "Platine+", 4: "GM+"}
 
-# Le 02/11, la collecte Riot est restée bloquée deux semaines sur un 403
-# causé par l'absence de User-Agent : urllib s'annonce « Python-urllib/3.x »
-# et les bordures CDN rejettent cet agent. On ne refait pas l'erreur.
-EN_TETES = {
-    "User-Agent": "OracleTFT/1.0 (relevé de méta, usage personnel)",
-    "Accept": "application/json, text/html",
-}
 
 
-def lire(url, json_attendu=True):
-    req = urllib.request.Request(url, headers=EN_TETES)
-    try:
-        with urllib.request.urlopen(req, timeout=30) as r:
-            brut = r.read().decode("utf-8", "replace")
-    except urllib.error.HTTPError as e:
-        corps = ""
-        try:
-            corps = e.read(400).decode("utf-8", "replace").strip()
-        except Exception:
-            pass
-        sys.exit(f"HTTP {e.code} sur {url}\n  corps : {corps}")
-    except Exception as e:
-        sys.exit(f"Impossible de joindre {url}\n  {type(e).__name__}: {e}\n"
-                 "  (Depuis une session Claude, c'est normal : le proxy du "
-                 "conteneur bloque ce domaine. Ce script est fait pour le "
-                 "runner GitHub Actions.)")
-    return json.loads(brut) if json_attendu else brut
 
 
 def patch_courant():
@@ -112,7 +96,7 @@ def patch_courant():
 
 
 def construire(code, libelle, rang):
-    d = lire(CDN.format(code=code, rang=rang))
+    d = lire(CDN.format(code=code, rang=rang), json_attendu=True)
     unites = d.get("units") or {}
     if not unites:
         sys.exit(f"Aucune unité renvoyée pour le patch {libelle} (code {code}), "

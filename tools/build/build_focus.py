@@ -55,7 +55,9 @@ champion = M.champion
 def norm(s):
     s = unicodedata.normalize("NFD", str(s))
     s = "".join(c for c in s if unicodedata.category(c) != "Mn")
-    return re.sub(r"[^a-z]", "", s.lower().replace("da_", "").replace("18", ""))
+    # Passe par M.champion : le préfixe et le numéro de set s'y apprennent
+    # dans les relevés au lieu d'être retirés en dur (« da_ », « 18 »).
+    return re.sub(r"[^a-z]", "", M.champion(s))
 
 
 def parties_requises(ecart):
@@ -78,6 +80,9 @@ def main():
 
     mi = json.load(open(p_mi, encoding="utf-8"))
     rv = json.load(open(rel[-1], encoding="utf-8"))
+    sets = M.garde_de_set(mi, rv, SCHEMA, SORTIE, "le focus")
+    if sets is None:
+        return
     TOT = rv["n_parties"]
 
     # --- la méta, regroupée par champion (piège n°1)
@@ -93,6 +98,23 @@ def main():
         del a["somme"]
 
     lisibles = {k: a for k, a in agg.items() if a["n"] >= VOL_MIN}
+    if len(lisibles) < 8 or not mi.get("carries"):
+        # Premiers jours d'un set : le relevé n'a pas encore le volume, ou
+        # il n'a pas encore assez joué pour qu'une de ses lignes soit
+        # mesurable. Un état, pas une erreur — et pas le fichier d'avant.
+        M.ecrire(SORTIE, {
+            "schema_version": SCHEMA,
+            "genere_le": __import__("datetime").date.today().isoformat(),
+            "set": sets["meta"], "sets": sets, "etat": "trop_peu",
+            "message": (
+                f"Pas encore de quoi mesurer : {len(lisibles)} unités du "
+                f"relevé dépassent {VOL_MIN} parties, et tu as "
+                f"{len(mi.get('carries') or [])} ligne(s) jouée(s) au moins "
+                f"{mi.get('nmin', 12)} fois sur {mi.get('n_parties', 0)} "
+                "parties récoltées. Ce bloc se remplira de lui-même."),
+            "lignes": [], "fortes_peu_contestees": [], "tres_contestees": []})
+        print(f"écrit : {SORTIE}\n  trop peu de données pour un focus (état écrit)")
+        return
     q1 = sorted(a["avg"] for a in lisibles.values())[len(lisibles) // 4]
     pick_med = st.median(a["pick"] for a in lisibles.values())
 
@@ -127,6 +149,7 @@ def main():
     out = {
         "schema_version": SCHEMA,
         "genere_le": __import__("datetime").date.today().isoformat(),
+        "set": sets["meta"], "sets": sets, "etat": "ok",
         "releve": {"patch": rv["patch"], "rang": rv["rang"],
                    "source": rv["source"], "n_parties": TOT},
         "lui": {"parties": mi["n_parties"], "placement_moyen": mi["placement_moyen"],

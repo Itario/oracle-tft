@@ -14,7 +14,7 @@ C'est ce que ça révèle qui compte :
 
     tu es 2e du lobby en niveau mais 5e au classement
         -> tu obtiens les ressources, tu ne les convertis pas.
-           Le travail est sur le board : positionnement, objets, composition.
+           Le travail est sur le plateau : positionnement, objets, composition.
 
     tu es 6e en niveau mais 3e au classement
         -> tu joues au-dessus de tes ressources.
@@ -251,9 +251,9 @@ def rapport(L):
         print(f"\n  {label:18s} rang moyen {rmoy:.2f}  ·  placement moyen {moy:.2f}"
               f"  ·  écart {ecart:+.2f}")
         if ecart > 0.35:
-            print(f"     -> tu es MIEUX classé en {label.split()[0]} qu'au scoreboard.")
+            print(f"     -> tu es MIEUX classé en {label.split()[0]} qu'au tableau des scores.")
             print(f"        Tu obtiens les ressources sans les convertir : le travail")
-            print(f"        est sur le board (positionnement, objets, composition).")
+            print(f"        est sur le plateau (positionnement, objets, composition).")
         elif ecart < -0.35:
             print(f"     -> tu places MIEUX que tes ressources ne le laissent prévoir.")
             print(f"        Tu joues au-dessus de tes moyens : le travail est sur")

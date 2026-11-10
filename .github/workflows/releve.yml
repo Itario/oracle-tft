@@ -24,6 +24,17 @@ on:
     #
     # Minute 13 : les minutes rondes concentrent la charge des runners.
     - cron: "13 1,4,7,10,13,16,19,22 * * *"
+    # ── SEMAINE DE LANCEMENT D'UN SET : TOUTES LES HEURES ────────────────
+    # GitHub ne livre qu'une partie des créneaux planifiés : 13 exécutions
+    # en quatre jours pour 32 créneaux, mesuré du 05 au 09/11. À ce rythme,
+    # le premier relevé du Set 19 pourrait arriver huit heures après le
+    # patch — le jour où la méta bouge d'heure en heure. Du 30/11 au 07/12,
+    # un créneau par heure ; le script ne réécrit le relevé que s'il a mûri,
+    # donc un créneau de trop ne coûte qu'une lecture de page.
+    # À RETIRER après le 07/12 (sans conséquence si on l'oublie : il ne se
+    # redéclenchera qu'un an plus tard).
+    - cron: "43 * 30 11 *"
+    - cron: "43 * 1-7 12 *"
   workflow_dispatch:
     inputs:
       rang:
@@ -59,6 +70,14 @@ jobs:
             --rang "${{ github.event.inputs.rang || '0' }}" \
             ${{ github.event.inputs.forcer == 'true' && '--forcer' || '' }}
 
+      - name: Archiver le set qui se termine
+        # Ne fait rien, sauf le jour où le relevé ci-dessus vient de passer au
+        # set suivant : c'est la seule fenêtre où la position, la barre et les
+        # compos du set précédent sont encore sur le disque, juste avant que
+        # les étapes suivantes ne les réécrivent. Voir tools/build/cloture.py.
+        run: python3 tools/build/cloture.py
+        continue-on-error: true
+
       - name: Relever les compos
         # APRÈS tactics.py : il revérifie à chaque passage que la tranche de
         # rang des compos correspond bien à celle du relevé d'unités, au lieu
@@ -77,7 +96,16 @@ jobs:
       - name: Relever la barre de Challenger
         # La cible, mesurée plutôt que supposée. Tourne à chaque fois : le
         # classement bouge tous les jours, contrairement au patch.
+        #
+        # ⚠ TOLÉRÉE EN ÉCHEC DEPUIS LE 10/11. Elle ne l'était pas, et la
+        # répétition du 1er décembre a montré le résultat : un classement
+        # vide faisait sortir le script en erreur, donc mourir le job, donc
+        # disparaître la poussée — et avec elle le premier relevé du Set 19,
+        # qui avait pourtant réussi. Le script sait maintenant écrire un
+        # classement vide comme un état ; ceci est la seconde ceinture, pour
+        # le cas où la page changerait de forme ce jour-là.
         run: python3 tools/releve/barre.py --region euw
+        continue-on-error: true
 
       - name: Relever la position du joueur
         # APRÈS barre.py, qui n'est pas un détail : joueur.py lit
@@ -123,7 +151,7 @@ jobs:
           # d'après ne l'est pas.
           SUIVIS=""
           for p in data/releves-tt data/barre.json data/joueur.json \
-                   data/recettes.json data/compos.json; do
+                   data/recettes.json data/compos.json data/archive; do
             [ -e "$p" ] && SUIVIS="$SUIVIS $p"
           done
           if [ -z "$SUIVIS" ]; then
@@ -137,10 +165,14 @@ jobs:
           git config user.name  "Oracle TFT"
           git config user.email "noreply@anthropic.com"
           git add $SUIVIS
-          FICHIER=$(git diff --cached --name-only | head -1)
-          git commit -m "Relevé automatique : $(basename "$FICHIER" .json)
+          # Le titre dit CE QUI a changé. Jusqu'au 10/11 il ne nommait que le
+          # premier fichier de la liste : treize commits de suite titrés
+          # « barre », y compris ceux qui apportaient un patch neuf.
+          QUOI=$(git diff --cached --name-only | xargs -n1 basename \
+                 | sed 's/\.json$//' | paste -sd, - | sed 's/,/ · /g')
+          git commit -m "Relevé automatique : $QUOI
 
           Relevé pris sur tactics.tools par le workflow, sans navigateur.
-          Série parallèle à data/releves/ (MetaTFT) : voir l'en-tête de
-          tools/releve/tactics.py pour pourquoi les deux ne se mélangent pas."
+          C'est cette série (data/releves-tt/) qui dit quel set et quel patch
+          sont en ligne : voir tools/lib/mesures.py, set_courant()."
           git push

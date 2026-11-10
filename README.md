@@ -4,22 +4,26 @@ Outil d'analyse Teamfight Tactics. Trois briques qui se complètent, un site qui
 les présente.
 
 **Le site** → quatre onglets, selon les moments d'usage :
-`Avant` (quoi jouer) · `En partie` (le moteur de pivot) · `Après` (la review de tes
-parties) · `Suivi` (rotation, calendrier, outils).
+`Avant` (quoi jouer) · `Fiches` (les fiches de ligne, à lire avant de lancer) ·
+`Après` (la review de tes parties) · `Suivi` (position, rotation, calendrier).
 En ligne : <https://itario.github.io/oracle-tft>
-**L'Oracle** → référence consultable en partie, un fichier HTML autonome, hors ligne.
+**Les relevés** → pris tout seuls sur tactics.tools, plusieurs fois par jour.
 **Le Carnet** → garde la série des relevés, mesure la rotation d'un patch à l'autre.
 **Le Miroir** → analyse tes propres parties, le lobby servant de groupe de contrôle.
 
 ## Démarrer
 
 ```bash
-# après avoir ajouté un relevé dans data/releves/
 python3 tools/build/build_site.py      # données du site + copie locale
-python3 tools/build/build_oracle.py 18 # régénère site/oracle.html
+cd site && python3 -m http.server 8000 # puis http://localhost:8000
+```
 
-# regarder le site
-cd site && python3 -m http.server 8000   # puis http://localhost:8000
+Avant de toucher à la chaîne :
+
+```bash
+python3 tools/tests/test_socle.py      # les leçons du projet, exécutables
+python3 tools/tests/repetition.py      # la chaîne rejouée sur un changement de set
+python3 tools/tests/rendu.py           # les quatre onglets ouverts dans un navigateur
 ```
 
 ## Le Carnet
@@ -65,7 +69,10 @@ puuid des **sept adversaires** du lobby — de la donnée personnelle de tiers.
 ## Structure
 
 ```
-data/releves/      LA SOURCE DE VÉRITÉ — un relevé par patch, figé
+data/releves-tt/   LA SOURCE DE VÉRITÉ — un relevé par patch, pris tout seul.
+                   C'est lui qui dit quel set et quel patch sont en ligne.
+data/releves/      archive du Set 18 (MetaTFT, saisie à la main) — ne porte plus rien
+data/archive/      l'état de chaque set au jour où le suivant commence
 data/profil.json   identité et lecture — AUCUN chiffre mesuré
 data/miroir.json   les mesures de tes parties — produit par build_miroir.py
 data/calendrier.json
@@ -81,7 +88,7 @@ docs/              ARCHITECTURE.md : v1, v2, v3
 ```
 
 **Ce qui est généré, et donc non versionné :** `site/data/`, `site/oracle.html`,
-`data/meta/courant.json`. Tout descend de `data/releves/`. Le workflow les
+`data/meta/courant.json`. Tout descend de `data/releves-tt/`. Le workflow les
 régénère à chaque déploiement, ce qui garantit que le site publié ne peut pas
 diverger des relevés.
 
@@ -90,22 +97,24 @@ diverger des relevés.
 change. Si une donnée de jeu se retrouve écrite
 dans le HTML, la migration est déjà cassée — lire `docs/ARCHITECTURE.md`.
 
-## Ajouter un relevé
+## Les relevés
 
-1. Relever sur MetaTFT (filtre Ranked + patch courant + Master+).
-2. Écrire `data/releves/AAAA-MM-JJ_patch_rang.json` sur le modèle des existants,
-   avec `schema_version: 1`.
-3. `python3 tools/build/build_site.py`
-4. Pousser sur `main` — le site se republie seul.
+Personne ne les ajoute : `.github/workflows/releve.yml` les prend sur tactics.tools
+huit fois par jour (toutes les heures la semaine d'un lancement de set), et
+`deploy.yml` republie le site derrière. Un relevé est **cumulé depuis le début du
+patch** : il n'y en a qu'un par patch, et il mûrit — le script le réécrit tant
+qu'il porte plus de parties.
+
+Chaque fichier de `data/` dit de quel set il parle (`set`) et dans quel état il est
+(`etat`). Un script qui ne peut pas produire son fichier écrit pourquoi au lieu de
+sortir en erreur : le site affiche alors la raison, pas le fichier de la veille.
 
 Sur un dépôt recréé de zéro, une action manuelle est nécessaire **une fois** :
 Settings → Pages → Source : **GitHub Actions**. Le workflow ne peut pas l'activer
 lui-même (le GITHUB_TOKEN n'a pas le droit de créer le site Pages) ; la raison est
 écrite dans `.github/workflows/deploy.yml`.
 
-Un relevé est une photo datée : **on ne le réécrit jamais.** S'il est faux, on en
-ajoute un autre avec une note.
-
 ---
 
-Projet personnel, sans lien avec Riot Games. Données : MetaTFT.
+Projet personnel, sans lien avec Riot Games. Données : tactics.tools,
+CommunityDragon, et l'API de Riot pour ses propres parties.

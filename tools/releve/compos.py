@@ -54,29 +54,24 @@ import urllib.error, urllib.request
 from datetime import date
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# La seule porte vers l'extérieur vit dans tools/lib/reseau.py : une définition,
+# et un mode rejeu qui permet de répéter le 1er décembre sans réseau.
+sys.path.insert(0, os.path.join(RACINE, "tools", "lib"))
+from reseau import lire as _lire
+import mesures as M
+
+
+def lire(url, **kw):
+    return _lire(url, quoi="relevé de compos", **kw)
+
 SORTIE = os.path.join(RACINE, "data", "compos.json")
 RELEVES = os.path.join(RACINE, "data", "releves-tt")
 SCHEMA = 1
 PAGE = "https://tactics.tools/team-compositions"
 ECART_MAX = 0.15        # au-delà, les deux relevés ne décrivent plus la même population
 
-EN_TETES = {
-    "User-Agent": "OracleTFT/1.0 (relevé de compos, usage personnel)",
-    "Accept": "text/html",
-}
 
 
-def lire(url):
-    req = urllib.request.Request(url, headers=EN_TETES)
-    try:
-        with urllib.request.urlopen(req, timeout=40) as r:
-            return r.read().decode("utf-8", "replace")
-    except urllib.error.HTTPError as e:
-        sys.exit(f"HTTP {e.code} sur {url}")
-    except Exception as e:
-        sys.exit(f"Impossible de joindre {url}\n  {type(e).__name__}: {e}\n"
-                 "  (Normal depuis une session Claude : le proxy du conteneur "
-                 "bloque ce domaine. Ce script est fait pour le runner GitHub.)")
 
 
 def dernier_releve():
@@ -93,16 +88,23 @@ def paires(v, n=6):
 
 
 def main():
-    html = lire(PAGE)
+    html = lire(PAGE, delai=40)
     m = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', html, re.S)
     if not m:
         sys.exit("__NEXT_DATA__ introuvable : la page des compos a changé "
                  "de structure.")
     pp = json.loads(m.group(1)).get("props", {}).get("pageProps", {})
+    if "initialData" not in pp:
+        sys.exit("props.pageProps.initialData absent : la page des compos a "
+                 "changé de structure. Relevé non écrit.")
     d = pp.get("initialData") or {}
     groupes = d.get("groups") or []
-    if not groupes:
-        sys.exit("Aucun groupe de compos renvoyé. Relevé non écrit.")
+    # ⚠ ZÉRO GROUPE N'EST PAS UNE PANNE. Jusqu'au 10/11 ce script sortait ici
+    # sans rien écrire. L'étape est tolérée, donc le workflow continuait — en
+    # laissant en place le compos.json de la veille. Au soir d'un changement
+    # de set, la page n'a pas encore assez de parties pour former un groupe :
+    # le site aurait donc affiché les compos du Set 18 sous un bandeau Set 19.
+    # On écrit le fichier, vide, avec son état : c'est une information.
 
     # ⚠ Le patch se lit dans l'aperture, PAS dans le <title> : celui-ci
     # annonçait « Set 15 » le 04/11 alors que le patch était 18.5c. Un titre
@@ -113,6 +115,21 @@ def main():
     # ── La vérification de population, refaite à chaque exécution ────────
     rel, nom_rel = dernier_releve()
     pop = {"compos_count": d.get("count"), "rank_group": rank_group}
+
+    # ── De quel set parle cette page ? ───────────────────────────────────
+    # Elle donne un code de patch, pas un numéro de set. Le relevé d'unités
+    # porte les deux : on retrouve le set par le code. Un code inconnu de la
+    # série mais au moins égal au premier code du set courant est du set
+    # courant ; sinon on ne sait pas, et on l'écrit (None) plutôt que de
+    # deviner.
+    set_page = None
+    for r in M.serie():
+        if code_patch and r.get("patch_code") == code_patch:
+            set_page = r.get("set")
+    if set_page is None and code_patch:
+        cs = M.codes_du_set() or {}
+        if cs.get("premier_code") and code_patch >= cs["premier_code"]:
+            set_page = cs.get("set")
     if rel and rel.get("n_parties"):
         a, b = d.get("count") or 0, rel["n_parties"]
         ecart = abs(a - b) / b if b else 1
@@ -164,13 +181,28 @@ def main():
             "premieres_pct": round(100 * f["win"] / n, 1) if f.get("win") else None,
             # Le chiffre qui compte : ce que la compo RAPPORTE, pas où elle place.
             "lp_par_partie": round(f["lpDelta"], 2) if f.get("lpDelta") is not None else None,
-            "unites": [u for u in (f.get("units") or [])][:12],
+            # [unité, étoiles, parties, placement] — une entrée par couple
+            # (unité, étoiles). Vingt-quatre et non douze : à douze, les
+            # entrées « trois étoiles » des unités les moins fréquentes
+            # tombaient hors de la liste, et on ne pouvait plus dire quelle
+            # part des plateaux les joue en trois étoiles.
+            "unites": [u for u in (f.get("units") or [])][:24],
             # [trait, palier, parties, placement]
             "traits": [{"trait": t[0], "palier": t[1], "n": t[2],
                         "place": round(t[3], 3)}
                        for t in paires(f.get("traits"), 8) if len(t) >= 4],
-            # [unite, étoiles moyennes]
-            "porteurs": [{"unite": c[0], "etoiles_moy": round(c[1], 2)}
+            # [unité, nombre moyen d'objets portés]
+            # ⚠ CORRIGÉ LE 10/11 : ce champ s'appelait `etoiles_moy`, et
+            # c'était faux. La source ne documente pas la seconde valeur de
+            # `carryUnits` ; je l'avais prise pour une moyenne d'étoiles parce
+            # qu'elle valait 2.97 sur le porteur principal. Or `units` donne
+            # le même porteur en DEUX étoiles sur 90 % des plateaux. La valeur
+            # ne dépasse jamais 3, vaut ~3 sur le porteur et ~0.5 sur une
+            # unité d'appoint : c'est le nombre moyen d'OBJETS portés.
+            # L'erreur dormait depuis le 04/11 parce que rien ne lisait ce
+            # champ ; elle s'est vue le jour où une fiche a affiché « compo
+            # trois étoiles » au-dessus d'un jeton à deux étoiles.
+            "porteurs": [{"unite": c[0], "objets_moy": round(c[1], 2)}
                          for c in paires(f.get("carryUnits"), 5) if len(c) >= 2],
             # [[unités], [unités], parties, placement] — ce qui fait gagner
             "conditions_de_victoire": [
@@ -205,6 +237,12 @@ def main():
     out = {
         "schema_version": SCHEMA,
         "date": date.today().isoformat(),
+        "set": set_page,
+        "etat": "ok" if sortie else "vide",
+        "etat_note": None if sortie else (
+            "La page ne renvoie encore aucun groupe de compos pour ce patch : "
+            "trop peu de parties pour en former. Elles apparaîtront d'elles-"
+            "mêmes à un prochain relevé."),
         "patch_code": code_patch,
         "patch": (rel or {}).get("patch") if (pop.get("meme_population")) else None,
         "source": "tactics.tools/team-compositions",
@@ -224,8 +262,8 @@ def main():
               ensure_ascii=False, indent=1)
 
     print(f"écrit : {SORTIE}")
-    print(f"  {len(sortie)} compos · patch {code_patch} · "
-          f"{d.get('count'):,} parties".replace(",", " "))
+    print(f"  {len(sortie)} compos · set {set_page} · patch {code_patch} · "
+          f"{(d.get('count') or 0):,} parties".replace(",", " "))
     if pop.get("meme_population") is False:
         print(f"  ⚠ {pop.get('note')}")
     elif pop.get("meme_population"):
@@ -236,8 +274,7 @@ def main():
     for c in sortie[:3]:
         print(f"    {c['lp_par_partie']:+.2f} LP/partie · place {c['place']} · "
               f"{c['n']:,} parties · ".replace(",", " ")
-              + ", ".join(p["unite"].replace("DA_", "").replace("18", "")
-                          for p in c["porteurs"][:2]))
+              + ", ".join(M.nom_affichable(p["unite"]) for p in c["porteurs"][:2]))
 
 
 if __name__ == "__main__":

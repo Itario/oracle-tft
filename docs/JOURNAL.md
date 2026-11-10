@@ -1822,3 +1822,168 @@ jamais sorti. Il croise maintenant l'annonce avec l'observation.
 
 **Leçon n°40 — une prévision dont la date est passée devient un fait faux, en silence.**
 Tout calendrier doit se faire croiser avec ce qui a été observé.
+
+## 10/11/2026 — LA RÉPÉTITION GÉNÉRALE DU 1ᵉʳ DÉCEMBRE
+
+Demande de Clément, le 09/11 : « reprendre toutes mes requêtes précédentes et réfléchir à
+nouveau à notre outil Oracle, qu'il soit prêt pour le début du Set 19 ».
+
+**Constat de départ : tout ce que ce projet a construit depuis août n'a jamais vu autre
+chose que le Set 18 en régime de croisière.** Les 25 tests du socle vérifient des
+fichiers d'aujourd'hui. Aucun ne dit ce qui se passe le jour où le set change — et ce
+jour-là, on ne peut pas attendre pour le découvrir : c'est le jour où l'outil doit servir.
+
+### LA MÉTHODE : FABRIQUER LE MONDE AU LIEU DE L'ATTENDRE
+
+Deux pièces.
+
+`tools/lib/reseau.py` — la seule porte vers l'extérieur. Les cinq relevés portaient chacun
+leur copie de `lire()` ; il n'y en a plus qu'une, avec un **mode rejeu** : si
+`ORACLE_REJEU` désigne un dossier, `lire()` sert les réponses qui y sont rangées au lieu
+de toucher au réseau. Une URL non prévue fait échouer le script, exprès.
+
+`tools/tests/repetition.py` — copie le dépôt, fabrique les réponses d'un monde, et y fait
+tourner **les vrais scripts, dans l'ordre exact des deux workflows** (lu dans les YAML,
+pas recopié). Quatre mondes :
+
+| monde | ce qu'il représente |
+|---|---|
+| `controle` | aujourd'hui, rejoué à l'identique — pour prouver que le montage ne casse rien |
+| `jour_j` | le soir du changement de set : relevé à 2 % du volume, aucune compo, classement vide, lui non classé |
+| `semaine_1` | une semaine après : classement sans Challenger, lui en Diamant, ses parties récoltées encore du set précédent, **et un préfixe d'identifiants différent** |
+| `recolte` | le même, après sa première récolte : neuf parties, sous tous les seuils |
+
+Les mondes sont relatifs (set courant + 1), pas écrits « 19 » : la répétition restera une
+répétition après le 1ᵉʳ décembre.
+
+### CE QU'ELLE A TROUVÉ, AVANT TOUTE CORRECTION
+
+| | ce qui se serait passé |
+|---|---|
+| **le relevé entier meurt** | `barre.py` sortait en erreur sur un classement vide, puis plantait (`TypeError`) sur un classement sans Challenger. Étape non tolérée : le job s'arrête, **rien n'est poussé — pas même le premier relevé du Set 19, qui avait réussi.** Les deux cas sont certains dans la semaine d'un lancement. |
+| **le site reste au Set 18** | Bandeau, compos, rotation descendaient de `data/releves/` — la série MetaTFT **saisie à la main**. Au soir du 1ᵉʳ décembre : « patch 18.5b, 23/10 ». Elle avait déjà deux patchs de retard le 10/11, et personne ne le voyait. |
+| **trois blocs mentent en silence** | `compos.py` et `joueur.py` sortaient en erreur sans rien écrire ; étapes tolérées, donc le fichier de la veille restait en place. Le site aurait affiché « Master, 30 LP » et les compos du Set 18 sous un bandeau Set 19. Puis `build_objets`, `build_compos`, `build_fuites` croisaient ses carries du Set 18 avec la méta du Set 19 — sans erreur, puisque Ezreal existe dans les deux. |
+| **les tests eux-mêmes tuent la chaîne** | `test_socle.py` supposait partout le régime de croisière et sortait en `KeyError` sur un fichier qui disait « pas encore ». Il tourne dans le workflow de relevé, sans tolérance, avant la poussée. **La première version de la répétition ne l'a pas vu : elle écartait les tests de la chaîne qu'elle rejouait.** |
+| **toutes les unités portent le même nom** | `champion()` retirait « DA » en dur. Avec un autre préfixe, le premier jeton de chaque identifiant devient ce préfixe. |
+| **`null %` et `undefined parties`** | Sur une première récolte sans abandon ni rythme. Aucun test de données ne le voit : il faut ouvrir la page. |
+
+### CE QUI EST CORRIGÉ
+
+**Un set courant, une définition.** `mesures.set_courant()` : le set du dernier relevé
+*automatique*. Il y avait quatre réponses à « quel set est en ligne ? » — le dernier
+relevé manuel, le dernier automatique, le libellé de patch de `compos_lui.json`, et
+`calendrier.json`. Le jour du changement elles ne disaient pas la même chose.
+
+**Un fichier qui ne peut pas être produit écrit son état.** `barre.json` connaît
+`ferme`, `sans_challenger`, `classement_du_set_precedent` ; `joueur.json` connaît
+`non_classe` ; les croisements connaissent `sets_differents` et `trop_peu`. Plus aucun
+script ne sort en erreur en laissant derrière lui le fichier de la veille.
+
+**Tout fichier publié dit de quel set il parle**, et les fichiers croisés disent d'où
+viennent leurs deux côtés (`sets: {parties, meta}`). `mesures.garde_de_set()` est la seule
+porte : même set, on croise ; sinon on écrit le refus.
+
+**Le site parle du relevé automatique.** `build_site.py` ne lit plus la série manuelle.
+`meta/courant.json` porte un manifeste (set et état de chaque fichier), les noms
+affichables (calculés une fois, en Python), et les fiches.
+
+**Une garde physique sur la barre.** La page du classement ne dit pas son set. Personne ne
+joue plus de 40 parties par jour : si la médiane des Challengers dépasse ce que la durée
+du set autorise, ce classement est encore celui du set précédent. Elle ne s'applique que
+si la série a *vu* le set commencer.
+
+**La clôture d'un set.** `tools/build/cloture.py`, juste après `tactics.py` : le jour où la
+série passe au set suivant, la position, la barre et les compos de l'ancien sont encore
+sur le disque. C'est la seule fenêtre ; elles partent dans `data/archive/set<N>/`.
+
+**Le contrôle de rendu.** `tools/tests/rendu.py` ouvre les quatre onglets dans un vrai
+navigateur et cherche les erreurs, les « undefined », le bon set au bandeau.
+
+Dix contrôles (A à J), quatre mondes, zéro échec. 44 tests du socle, dont cinq validés par
+mutation — l'un d'eux passait sans rien vérifier (`comparer()` refuse deux sets : avec des
+identifiants différents des deux côtés, il renvoyait `None` faute d'unité commune, refus
+ou pas).
+
+### L'ONGLET « EN PARTIE » DEVIENT « FICHES »
+
+Le champ « les unités que tu as en main » est retiré. Deux raisons, qui se rejoignent :
+
+1. **La politique de Riot pour les outils TFT** interdit les recommandations fondées sur
+   l'état d'une partie en cours. Un champ rempli à la main avec son banc y entre. Le site
+   est public, et une demande de clé de production est en vue.
+2. Il reposait sur des compos saisies à la main avec leur plateau. Au Set 19, personne ne
+   les saisira le jour du patch.
+
+À la place : une **fiche de ligne** par compo relevée — porteurs, objets et leurs
+composants, composants à ramasser, niveau, ce qui la fait gagner, et ce qu'il en connaît
+déjà. Statique, identique pour tout le monde, aucune saisie. Un test du socle refuse tout
+`<input>` dans le site.
+
+⚠ Ce choix revient sur une décision de Clément du 02/11 (un onglet « Pendant la partie »).
+Il est signalé comme tel dans le compte rendu ; l'ancien code est à un commit.
+
+### UN CHAMP FAUX DEPUIS SIX JOURS, VU SUR UNE CAPTURE
+
+`compos.json` portait `porteurs[].etoiles_moy`. La source ne documente pas la seconde
+valeur de `carryUnits` ; je l'avais prise pour une moyenne d'étoiles parce qu'elle valait
+2.97 sur le porteur principal. **C'est le nombre moyen d'objets portés.** `units` donne le
+même porteur en deux étoiles sur 90 % des plateaux.
+
+Rien ne lisait ce champ, donc rien ne le contredisait. Il s'est vu le jour où une fiche a
+affiché « compo trois étoiles sur Brambleback » au-dessus d'un jeton à deux étoiles.
+Renommé `objets_moy` ; les étoiles se lisent dans `units`, et nulle part ailleurs.
+
+### LES COTES DE BOUTIQUE ÉTAIENT FAUSSES
+
+Trouvé en écrivant le livre 2, pas par ce projet. Niveaux 8 et 9 : 17/24/32/24/3 et
+15/18/25/30/12, une table d'avant le Set 16. Corrigé en **15/20/32/30/3** et
+**10/17/25/33/15**, concordant sur trois sources. Aucune ne les date explicitement du
+Set 18 : le contrôle final se fait en jeu.
+
+La page recopiait en plus la colonne des 4-coûts **en dur dans une phrase**
+(« 0 · 2 · 5 · 10 · 24 · 30 · 40 ») : la table aurait été corrigée et la phrase serait
+restée fausse. Elle se calcule maintenant depuis la table.
+
+### LA PRÉDICTION DU 18.6, REPRISE À MATURITÉ
+
+Posée le 03/11 : Spearman 0.82–0.90, déplacement médian 4 à 6 rangs. Mesurée le 05/11 à
+11 % du volume : 0.832 et 8 rangs, « 83 % réel » — avec la réserve que la mesure était
+contaminée. À 329 460 parties :
+
+| | prédit | à 11 % du volume | **à maturité** |
+|---|---|---|---|
+| Spearman | 0.82 – 0.90 | 0.832 | **0.985** |
+| déplacement médian | 4 – 6 rangs | 8 | **2** |
+| tête conservée | — | 0/8 | **7/8** |
+
+**La prédiction est fausse, et la mesure du 05/11 aussi.** Le 18.6 n'a presque pas bougé
+la méta : le plancher de bruit est à 0.995, et l'écart réel vaut 0.009. Le « 83 % réel »
+était l'artefact de volume annoncé, en plus grand qu'annoncé.
+
+### LES LEÇONS
+
+**Leçon n°41 — on ne teste pas le futur en l'attendant : on le fabrique.** Une chaîne
+validée sur le monde d'aujourd'hui est validée pour aujourd'hui. Tout événement daté et
+certain — un changement de set, une remise à zéro — se répète avant, sur un monde
+fabriqué, avec les vrais scripts.
+
+**Leçon n°42 — un script qui ne peut pas produire son fichier doit écrire pourquoi, pas
+sortir en erreur.** Une étape tolérée qui échoue laisse en place le fichier de la veille,
+et un fichier périmé qui se présente comme courant est pire qu'un fichier absent.
+« Vide » est une information sur le monde ; « structure changée » est une panne. Les deux
+ne se traitent pas pareil.
+
+**Leçon n°43 — une question à laquelle quatre fichiers peuvent répondre a quatre réponses
+le jour où ça compte.** « Quel set est en ligne » : une fonction, une source.
+
+**Leçon n°44 — les tests font partie de la chaîne qu'ils protègent.** S'ils tournent sans
+tolérance avant une publication, ils peuvent l'empêcher ; ils se répètent donc avec le
+reste. Et un test écrit pour le régime de croisière casse au premier état transitoire.
+
+**Leçon n°45 — un champ que rien ne lit n'est vérifié par rien.** Le nommer d'après une
+hypothèse, c'est graver l'hypothèse. Avant de nommer une valeur non documentée, la
+confronter à un champ voisin qui mesure la même chose autrement.
+
+**Leçon n°46 — une page se vérifie en l'ouvrant.** Un fichier juste peut s'afficher
+« undefined ». Et un nombre recopié dans une phrase survit à la correction de la table
+dont il vient.

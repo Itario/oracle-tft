@@ -78,6 +78,10 @@ jobs:
           # Il ne fait pas échouer le déploiement : sans bloc `objets` dans
           # le relevé (Set 19 au premier jour), il s'arrête proprement et le
           # reste du site se publie.
+          # build_focus.py n'était PAS reconstruit ici jusqu'au 10/11 : le
+          # focus publié était celui de la dernière fois qu'on l'avait lancé
+          # à la main (le 05/11), croisé avec un relevé vieux de cinq jours.
+          python3 tools/build/build_focus.py || echo "::warning::focus non reconstruit"
           python3 tools/build/build_objets.py || echo "::warning::objets non reconstruits"
           python3 tools/build/build_compos.py || echo "::warning::compos non croisées"
           python3 tools/build/build_fuites.py || echo "::warning::fuites non calculées"

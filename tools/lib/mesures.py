@@ -10,8 +10,18 @@ de ces calculs. Ils concordaient, mais rien ne le garantissait : toute
 correction aurait dû être faite deux fois, et la première divergence serait
 passée inaperçue. Un seul endroit, désormais.
 
-Règle : ce module ne lit que `data/releves/`. Il n'écrit rien, n'affiche rien,
-et ne connaît ni le site ni l'Oracle.
+Règle : ce module n'écrit rien dans data/, n'affiche rien, et ne connaît ni le
+site ni l'Oracle.
+
+DEUX SÉRIES, et depuis le 10/11 une seule fait foi pour « le set courant » :
+
+    data/releves-tt/   AUTOMATIQUE (tactics.tools, huit créneaux par jour).
+                       C'est elle qui dit quel set et quel patch sont en
+                       ligne : `releve_courant()`, `set_courant()`.
+    data/releves/      MANUELLE (MetaTFT, saisie au navigateur). Archive du
+                       Set 18. Personne ne la remplira le 1er décembre à
+                       l'heure du patch — c'est pour ça qu'elle ne peut plus
+                       porter le site.
 """
 
 import json, os, glob, random, re, statistics as st
@@ -23,7 +33,8 @@ SD_PLACEMENT = 2.3    # écart-type du placement en TFT, ~constant
 GRAINE = 1            # graine fixe : deux exécutions donnent le même chiffre
 
 DEPOT   = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-RELEVES = os.path.join(DEPOT, "data", "releves")
+RELEVES = os.path.join(DEPOT, "data", "releves")          # série manuelle (archive)
+RELEVES_TT = os.path.join(DEPOT, "data", "releves-tt")    # série automatique
 
 
 # ------------------------------------------------------------------ lecture
@@ -53,6 +64,130 @@ def par_date(releves, d):
     for r in releves:
         if r["date"] == d:
             return r
+    return None
+
+
+# ── LE SET COURANT ───────────────────────────────────────────────────────
+# Définition PARTAGÉE, pour la même raison que champion() : le 10/11, la
+# répétition générale du 1er décembre a montré QUATRE façons de répondre à
+# « quel set est en ligne ? » — le dernier relevé manuel (build_site,
+# build_oracle), le dernier relevé automatique (build_focus, build_objets),
+# le libellé de patch de compos_lui.json (le site), et calendrier.json. Le
+# jour du changement de set, elles ne répondent pas la même chose, et le site
+# reste au Set 18 pendant que le relevé est passé au 19.
+#
+# Une seule réponse : le set du dernier relevé AUTOMATIQUE. C'est la seule
+# source qui se met à jour sans personne.
+
+def serie(set_=None, dossier=None):
+    """La série automatique, du plus ancien au plus récent.
+       `set_` ne garde que les relevés de ce set."""
+    rs = charger(dossier or RELEVES_TT)
+    if set_ is not None:
+        rs = [r for r in rs if r.get("set") == set_]
+    return rs
+
+
+def releve_courant(dossier=None):
+    rs = serie(dossier=dossier)
+    return rs[-1] if rs else None
+
+
+def set_courant(dossier=None):
+    r = releve_courant(dossier)
+    return r.get("set") if r else None
+
+
+def debut_du_set(dossier=None):
+    """La date du premier relevé du set courant — SI on a vu le set commencer.
+
+    « Vu commencer » = la série contient un relevé d'un set antérieur. Sans
+    ça, le premier relevé du set n'est que le jour où la série a démarré
+    (le 03/11 pour le Set 18, sorti des mois plus tôt) et ne dit rien du
+    début du set : on renvoie None plutôt qu'une date fausse."""
+    rs = serie(dossier=dossier)
+    if not rs:
+        return None
+    courant = rs[-1].get("set")
+    if not any(r.get("set") is not None and r.get("set") != courant for r in rs):
+        return None
+    du_set = [r for r in rs if r.get("set") == courant]
+    return min((r.get("premier_releve") or r["date"]) for r in du_set)
+
+
+def codes_du_set(dossier=None):
+    """Le plus petit code de patch du set courant, pour dater une partie.
+
+    Une partie relevée sur la page d'un joueur porte un code de patch
+    (16220), pas un numéro de set. Tout code >= celui-ci est du set courant ;
+    tout code inférieur est d'un set passé. None si la série ne porte pas de
+    code (relevés antérieurs au 04/11)."""
+    rs = serie(dossier=dossier)
+    if not rs:
+        return None
+    courant = rs[-1].get("set")
+    codes = [r.get("patch_code") for r in rs
+             if r.get("set") == courant and r.get("patch_code")]
+    anciens = [r.get("patch_code") for r in rs
+               if r.get("set") != courant and r.get("patch_code")]
+    return {"set": courant, "premier_code": min(codes) if codes else None,
+            # Si on n'a PAS vu de set antérieur, le « premier code » n'est que
+            # le premier qu'on ait relevé : des parties plus anciennes du même
+            # set existent. On ne coupe alors rien.
+            "borne_fiable": bool(anciens)}
+
+
+def sets_croises(parties_set, meta_set):
+    """Le constat de set d'un fichier qui croise SES parties et la méta."""
+    return {"parties": parties_set, "meta": meta_set,
+            "meme_set": (parties_set is not None and parties_set == meta_set)}
+
+
+def refus_de_croiser(schema, sets, quoi):
+    """Le contenu d'un fichier croisé quand ses deux côtés ne sont pas du même
+    set : il dit pourquoi il est vide, au lieu d'être absent ou — pire —
+    rempli. Ezreal existe au Set 18 et au Set 19 ; ce n'est pas la même unité,
+    et un croisement par nom produirait une page fausse sans erreur."""
+    return {
+        "schema_version": schema,
+        "genere_le": date.today().isoformat(),
+        "set": sets["meta"],
+        "sets": {"parties": sets["parties"], "meta": sets["meta"]},
+        "etat": "sets_differents",
+        "message": (
+            f"Tes parties récoltées sont du Set {sets['parties']} et la méta "
+            f"relevée est celle du Set {sets['meta']} : {quoi} ne se calcule "
+            f"pas entre deux sets. Il reviendra à ta première récolte du Set "
+            f"{sets['meta']} (LANCER.bat)."
+            if sets["parties"] is not None else
+            f"Aucune partie récoltée ne dit de quel set elle est : {quoi} "
+            "n'est pas calculé."),
+    }
+
+
+def ecrire(chemin, contenu):
+    os.makedirs(os.path.dirname(chemin), exist_ok=True)
+    json.dump(contenu, open(chemin, "w", encoding="utf-8"),
+              ensure_ascii=False, indent=1)
+
+
+def garde_de_set(miroir, releve, schema, sortie, quoi):
+    """À appeler en tête de tout constructeur qui croise SES parties et la méta.
+
+    Même set : renvoie le constat {"parties", "meta"}, à recopier dans le
+    fichier produit. Sets différents : écrit le refus à la place du fichier,
+    le dit sur la console, et renvoie None — le constructeur s'arrête là,
+    en SUCCÈS. Ce n'est pas une panne, et surtout le fichier de la veille ne
+    doit pas rester en place : un croisement périmé qui reste publié est
+    exactement le mensonge silencieux que cette garde existe pour empêcher.
+    """
+    s = sets_croises((miroir or {}).get("set"), (releve or {}).get("set"))
+    if s["meme_set"]:
+        return {"parties": s["parties"], "meta": s["meta"]}
+    ecrire(sortie, refus_de_croiser(schema, s, quoi))
+    print(f"écrit : {sortie}")
+    print(f"  REFUS DE CROISER : ses parties sont du Set {s['parties']}, "
+          f"la méta du Set {s['meta']}. Fichier d'état écrit, sans contenu.")
     return None
 
 
@@ -99,7 +234,15 @@ def plancher_bruit(ua, ub, com, tirages=400, graine=GRAINE):
 
 
 def comparer(avant, apres, nmin=NMIN, avec_bruit=True):
-    """Tout ce qu'on sait dire de l'écart entre deux relevés."""
+    """Tout ce qu'on sait dire de l'écart entre deux relevés.
+
+    None si les deux relevés ne sont pas du même set : une rotation de méta
+    n'a de sens qu'à l'intérieur d'un set. Entre deux sets il n'y a rien à
+    comparer — les unités ne sont pas les mêmes, même quand elles portent le
+    même nom."""
+    sa, sb = avant.get("set"), apres.get("set")
+    if sa is not None and sb is not None and sa != sb:
+        return None
     ga, ua = classement(avant, nmin)
     gb, ub = classement(apres, nmin)
     com = sorted(set(ga) & set(gb))
@@ -210,12 +353,66 @@ def tete_stable(releves, n=8, nmin=NMIN):
 # MetaTFT n'en voit qu'une. Sans regroupement, chaque variante compte pour
 # une unité distincte et la contestation devient illisible.
 
-def champion(ident):
-    """Le champion seul : sans variante, sans numéro de set, sans préfixe."""
-    toks = [re.sub(r"\d+", "", t) for t in str(ident).split("_")
-            if t and t != "DA"]
+
+# ⚠ LE PRÉFIXE N'EST PAS UNE CONSTANTE. Jusqu'au 10/11, cette fonction
+# retirait « DA » en dur. Si le Set 19 arrive avec un autre préfixe, le
+# premier jeton de CHAQUE identifiant devient ce préfixe, et toutes les
+# unités du set se réduisent au même « champion ». Aucune erreur : juste un
+# site où tout le monde s'appelle pareil.
+#
+# Le préfixe s'apprend donc dans les relevés : c'est le premier jeton que
+# (presque) toutes les unités d'un relevé partagent.
+_PREFIXES_SOCLE = {"da", "tft", "set"}
+_prefixes_cache = {}
+
+
+def prefixes(dossier=None):
+    cle = dossier or RELEVES_TT
+    if cle in _prefixes_cache:
+        return _prefixes_cache[cle]
+    out = set(_PREFIXES_SOCLE)
+    for f in glob.glob(os.path.join(cle, "*.json")):
+        try:
+            ids = list(json.load(open(f, encoding="utf-8")).get("unites") or {})
+        except Exception:
+            continue
+        if len(ids) < 10:
+            continue
+        premiers = [re.sub(r"\d+", "", i.split("_")[0]).lower() for i in ids]
+        for p in set(premiers):
+            if p and premiers.count(p) >= 0.8 * len(ids):
+                out.add(p)
+    _prefixes_cache[cle] = out
+    return out
+
+
+def _jetons(ident, dossier=None):
+    """Les jetons utiles d'un identifiant : sans préfixe, sans numéro de set."""
+    pre = prefixes(dossier)
+    toks = [re.sub(r"\d+", "", t) for t in str(ident).split("_") if t]
     toks = [t for t in toks if t]
+    while len(toks) > 1 and toks[0].lower() in pre:
+        toks = toks[1:]
+    return toks
+
+
+def champion(ident, dossier=None):
+    """Le champion seul : sans variante, sans numéro de set, sans préfixe."""
+    toks = _jetons(ident, dossier)
     return toks[0].lower() if toks else ""
+
+
+def nom_affichable(ident, dossier=None):
+    """« DA_18_ElderDragon » -> « Elder Dragon » ; « DA_Lux18_Base » ->
+    « Lux (Base) ». UNE définition, côté Python, servie au site dans
+    meta/courant.json : le site retirait « 18 » en dur dans une expression
+    régulière, ce qui aurait affiché « Ezreal19 » le 1er décembre."""
+    toks = _jetons(ident, dossier)
+    if not toks:
+        return str(ident)
+    espace = lambda t: re.sub(r"(?<=[a-z])(?=[A-Z])", " ", t)
+    tete = espace(toks[0])
+    return tete + (f" ({' '.join(espace(t) for t in toks[1:])})" if toks[1:] else "")
 
 
 # ── CE QU'IL JOUE ────────────────────────────────────────────────────────

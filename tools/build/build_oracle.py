@@ -87,8 +87,12 @@ def set_courant():
     appelait `build_oracle.py 18`, donc au Set 19 le site aurait publié
     en silence un Oracle du Set 18, sans la moindre erreur pour le dire.
     """
-    sets = [r.get("set") for r in M.charger() if r.get("set") is not None]
-    return str(sets[-1]) if sets else None
+    # Depuis le 10/11 : la série AUTOMATIQUE fait foi (M.set_courant). La
+    # série manuelle ne recevra aucun relevé le 1er décembre, donc lue ici
+    # elle aurait répondu « 18 » indéfiniment — le même piège, une troisième
+    # fois, trouvé cette fois par la répétition générale.
+    s = M.set_courant()
+    return str(s) if s is not None else None
 
 
 def construire(num=None):
@@ -111,8 +115,14 @@ def construire(num=None):
     # parmi d'autres. On prévient, on passe.
     if not os.path.exists(fige_p):
         print(f"::warning::{os.path.basename(fige_p)} absent — "
-              f"l'Oracle du Set {num} n'est pas régénéré. "
-              "Écrire les fiches du set pour le rétablir.")
+              f"l'ancien moteur n'est pas publié pour le Set {num}.")
+        # Ne pas laisser traîner celui du set précédent : une page du Set 18
+        # servie sans étiquette sous un site passé au Set 19. Le site lit
+        # `oracle.disponible` dans meta/courant.json et retire son lien.
+        vieux = os.path.join(SORTIE, "oracle.html")
+        if os.path.exists(vieux):
+            os.remove(vieux)
+            print("  site/oracle.html du set précédent retiré.")
         return None
 
     moteur = io.open(moteur_p, encoding="utf-8").read()

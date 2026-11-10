@@ -1,0 +1,35 @@
+name: Répétition du changement de set
+
+# Rejoue la chaîne entière — relevé puis déploiement, dans l'ordre exact des
+# deux workflows — sur quatre mondes fabriqués : aujourd'hui, le jour d'un
+# changement de set, une semaine après, et après la première récolte.
+# Voir l'en-tête de tools/tests/repetition.py.
+#
+# ⚠ ELLE NE BLOQUE RIEN, exprès. Elle tourne à part, sur les changements de
+# code, et son échec s'affiche en rouge dans l'onglet Actions sans empêcher
+# ni un relevé ni un déploiement. Un contrôle qui bloquerait la publication
+# le jour où le monde change vraiment ferait exactement ce qu'il est censé
+# prévenir.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tools/**"
+      - "site/index.html"
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repeter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Rejouer les quatre mondes
+        run: python3 tools/tests/repetition.py

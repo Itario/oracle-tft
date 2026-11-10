@@ -6,19 +6,41 @@ CONSTRUCTEUR DU SITE — data/ -> data/meta/courant.json
 Le site ne contient AUCUNE donnée en dur. Il lit `data/meta/courant.json`,
 que ce script produit à partir des relevés.
 
-C'est le point de couture qui rend la v2 possible : le jour où les données
-viennent d'une base au lieu de fichiers, seul ce script change. Le site, lui,
-continue de lire le même JSON au même endroit.
-
     python3 tools/build/build_site.py
 
-Produit :
-    data/meta/courant.json   tout ce dont le site a besoin, en un seul appel
+─── CE QUI A CHANGÉ LE 10/11, ET POURQUOI ─────────────────────────────────
+Jusque-là ce script lisait `data/releves/` : la série MetaTFT, saisie à la
+main au navigateur. Son dernier relevé datait du 23 octobre (18.5b) pendant
+que la série automatique en était à 18.6 mûr — le bandeau du site avait donc
+deux patchs de retard, et personne ne le voyait parce que rien ne plantait.
 
-À relancer après chaque nouveau relevé. La tâche planifiée du jeudi le fait.
+La répétition générale du 1er décembre (tools/tests/repetition.py) a montré
+la suite : au soir du changement de set, le relevé automatique passe au
+Set 19, et le site reste sur « Set 18 · 18.5b · 23/10 » jusqu'à ce que
+quelqu'un ouvre un navigateur pour saisir un relevé. Le jour exact où le site
+doit servir.
+
+Désormais TOUT vient de la série automatique :
+
+    data/releves-tt/   le relevé d'unités, de traits et d'objets
+    data/compos.json   les compos, avec leur LP par partie
+    data/recettes.json les composants de chaque objet
+
+La série manuelle reste dans le dépôt comme archive du Set 18. Elle ne porte
+plus rien.
+
+─── LES FICHES DE LIGNE ───────────────────────────────────────────────────
+Chaque compo relevée devient une FICHE : ce qu'on prépare AVANT de lancer une
+partie. Porteurs, niveau auquel on la joue, objets à viser et composants à
+ramasser, ce qui la fait gagner. Les fiches sont statiques et identiques pour
+tout le monde : elles ne prennent aucune entrée sur la partie en cours. C'est
+la limite que fixe la politique de Riot pour les outils TFT (pas de
+recommandation fondée sur l'état d'une partie), et c'est aussi la bonne
+façon de travailler — on choisit ses lignes avant, pas pendant.
 """
 
-import json, os, sys
+import json, os, shutil, sys
+from collections import Counter
 from datetime import date
 
 # Le socle de mesure est partagé avec carnet.py : une seule implémentation.
@@ -28,131 +50,357 @@ import mesures as M
 
 RACINE  = M.DEPOT
 SORTIE  = os.path.join(RACINE, "data", "meta", "courant.json")
-SCHEMA  = M.SCHEMA
-
-charger_releves = M.charger
-classement      = M.classement
-spearman        = lambda a, b: M.spearman(a, b)[0]
+SCHEMA  = 2            # 2 : série automatique, fiches de ligne, manifeste
+TROIS_ETOILES = 0.5    # part des plateaux où un porteur est en trois étoiles
+                       # au-delà de laquelle la ligne est une « compo trois
+                       # étoiles » : c'est alors ce qu'on y fait le plus souvent
+PORTEUR = 1.0          # nombre moyen d'objets à partir duquel une unité
+                       # PORTE la ligne (en dessous, c'est une unité d'appoint)
 
 # Champs internes au socle : utiles aux outils, inutiles au site.
-# On les écarte pour ne pas gonfler la charge utile servie au navigateur.
 _INTERNES = ("rangs_avant", "rangs_apres", "unites_avant", "unites_apres",
              "spearman_exact")
+
+
+def charger(nom):
+    try:
+        return json.load(open(os.path.join(RACINE, "data", nom), encoding="utf-8"))
+    except Exception:
+        return None
+
 
 def diff(avant, apres):
     d = M.comparer(avant, apres)
     if d is None:
         return None
     d = {k: v for k, v in d.items() if k not in _INTERNES}
-    d["montees"] = d["montees"][:5]
-    d["chutes"]  = d["chutes"][:5]
+    for cle in ("montees", "chutes"):
+        d[cle] = [{**x, "id": x["nom"], "nom": M.nom_affichable(x["nom"])}
+                  for x in d[cle][:5]]
+    for cle in ("entres_top8", "sortis_top8"):
+        d[cle] = [M.nom_affichable(x) for x in d[cle]]
+    d["volume"]["unites_perdues"] = [M.nom_affichable(x)
+                                     for x in d["volume"]["unites_perdues"]]
+    d["volume"]["unites_gagnees"] = [M.nom_affichable(x)
+                                     for x in d["volume"]["unites_gagnees"]]
     return d
 
 
-def modes(compos):
-    """Le même jeu de compos, classé selon trois enjeux différents."""
-    def tri(cle, decroissant, filtre=None):
-        src = [c for c in compos if (filtre is None or c.get(filtre) is not None)]
-        return sorted(src, key=lambda c: c[cle], reverse=decroissant)[:5]
+# ══ LES FICHES ═══════════════════════════════════════════════════════════
+
+def fiche(c, total, recettes, composants_fr):
+    """Une compo relevée -> une fiche de ligne. Rien n'est inventé : chaque
+    champ est une lecture directe de compos.json ou de recettes.json."""
+    n = c.get("n") or 0
+    nom = M.nom_affichable
+
+    # Le plateau : la source donne une entrée par (unité, étoiles). On garde,
+    # par unité, sa présence totale et la répartition de ses étoiles.
+    par_unite = {}
+    for u in (c.get("unites") or []):
+        if not (isinstance(u, list) and len(u) >= 3):
+            continue
+        e = par_unite.setdefault(u[0], {"n": 0, "etoiles": Counter()})
+        e["n"] += u[2] or 0
+        e["etoiles"][u[1]] += u[2] or 0
+
+    def part_3(ident):
+        e = par_unite.get(ident)
+        return round(e["etoiles"][3] / e["n"], 2) if (e and e["n"]) else None
+
+    # Un porteur est une unité qui porte des objets : `objets_moy` est le
+    # nombre moyen d'objets sur elle (voir compos.py pour la façon dont ce
+    # champ a été mal lu jusqu'au 10/11). Les étoiles, elles, se lisent dans
+    # `unites`, et nulle part ailleurs.
+    def objets_moy(p):
+        return p.get("objets_moy", p.get("etoiles_moy")) or 0
+    porteurs = [{"id": p["unite"], "nom": nom(p["unite"]),
+                 "objets_moy": objets_moy(p),
+                 "part_trois_etoiles": part_3(p["unite"]),
+                 "trois_etoiles": (part_3(p["unite"]) or 0) >= TROIS_ETOILES}
+                for p in (c.get("porteurs") or [])
+                if objets_moy(p) >= PORTEUR]
+    plateau = sorted(
+        ({"id": k, "nom": nom(k), "part": round(min(1.0, v["n"] / n), 2) if n else None,
+          "etoiles": v["etoiles"].most_common(1)[0][0]}
+         for k, v in par_unite.items()),
+        key=lambda x: -(x["part"] or 0))
+
+    # Les objets, par porteur, avec leur recette : c'est elle qui transforme
+    # « tel objet » en « tels composants à ramasser ».
+    ids_porteurs = [p["id"] for p in porteurs]
+    objets, besoins = {}, Counter()
+    for o in (c.get("objets_par_unite") or []):
+        if o.get("unite") not in ids_porteurs:
+            continue
+        r = recettes.get(o.get("objet")) or {}
+        de = [composants_fr.get(x, nom(x)) for x in r.get("de", [])]
+        liste = objets.setdefault(o["unite"], [])
+        if len(liste) >= 3:
+            continue                      # trois objets par unité, pas plus
+        liste.append({"id": o["objet"], "nom": r.get("nom") or nom(o["objet"]),
+                      "composants": de, "n": o.get("n"), "place": o.get("place")})
+        for x in de:
+            besoins[x] += 1
+
+    def cond(w):
+        us = []
+        for u in (w.get("unites") or []):
+            ident, _, et = str(u).rpartition("-")
+            us.append({"nom": nom(ident or u), "etoiles": int(et) if et.isdigit() else None})
+        return {"unites": us, "n": w.get("n"), "place": w.get("place")}
+
+    niv_tot = sum(x.get("n") or 0 for x in (c.get("niveaux") or []))
+    niveaux = sorted(({"niveau": x["niveau"],
+                       "part": round((x.get("n") or 0) / niv_tot, 2) if niv_tot else None}
+                      for x in (c.get("niveaux") or [])),
+                     key=lambda x: -(x["part"] or 0))
+
+    dist = c.get("distribution") or []
+    sd = sum(dist)
+    trois = [p for p in porteurs if p["trois_etoiles"]]
+    traits = [{"nom": nom(t["trait"]), "palier": t.get("palier"),
+               "part": round(min(1.0, (t.get("n") or 0) / n), 2) if n else None}
+              for t in (c.get("traits") or [])]
+
+    titre = " · ".join(x for x in (
+        traits[0]["nom"] if traits else None,
+        porteurs[0]["nom"] if porteurs else None) if x)
+
+    return {
+        "code": c.get("code"),
+        "nom": titre or "Compo sans nom",
+        "n": n,
+        # `total` compte des PLATEAUX (une partie = huit plateaux) : le pick
+        # d'un 4-coûts populaire y vaut ~10 %, ce qui n'a de sens qu'ainsi.
+        # 8 × la part des plateaux = le nombre moyen de joueurs par lobby.
+        "par_lobby": round(8 * n / total, 2) if total else None,
+        "place": c.get("place"), "top4": c.get("top4_pct"),
+        "premieres": c.get("premieres_pct"), "lp": c.get("lp_par_partie"),
+        "bas_pct": round(100 * sum(dist[6:8]) / sd, 1) if (sd and len(dist) >= 8) else None,
+        "type": "trois_etoiles" if trois else "niveau",
+        "type_libelle": (
+            "compo trois étoiles sur " + ", ".join(p["nom"] for p in trois)
+            if trois else
+            f"montée de niveau (jouée au niveau {niveaux[0]['niveau']})"
+            if niveaux else "montée de niveau"),
+        "niveaux": niveaux[:3],
+        "porteurs": porteurs,
+        "plateau": plateau,
+        "objets": objets,
+        "composants": [{"composant": k, "fois": v} for k, v in besoins.most_common()],
+        "victoire": [cond(w) for w in (c.get("conditions_de_victoire") or [])
+                     if (w.get("n") or 0) >= 300][:3],
+        "traits": traits[:6],
+        "variantes": [{"unites": [nom(u) for u in (v.get("unites") or [])],
+                       "n": v.get("n"), "place": v.get("place")}
+                      for v in (c.get("variantes") or [])[:3]],
+    }
+
+
+def modes(fiches):
+    """Le même jeu de fiches, classé selon trois enjeux différents."""
+    def tri(cle, decroissant):
+        src = [f for f in fiches if f.get(cle) is not None]
+        return [f["code"] for f in sorted(src, key=lambda f: f[cle],
+                                          reverse=decroissant)]
     return {
         "ladder": {
-            "critere": "placement moyen", "cle": "avg", "unite": "",
-            "pourquoi": "Le LP suit le placement moyen : à partir de la 4e on ne perd "
-                        "plus, à partir de la 5e on ne gagne plus. À moyenne égale, la "
-                        "variance est à peu près neutre.",
-            "classement": tri("avg", False)},
+            "critere": "LP gagné par partie", "cle": "lp", "unite": " LP",
+            "pourquoi": "L'objectif est un classement, et le classement se "
+                        "compte en LP : c'est la mesure directe, là où le "
+                        "placement moyen n'en est qu'une approximation.",
+            "classement": tri("lp", True)},
         "cumule": {
-            "critere": "taux de top 4", "cle": "t4", "unite": " %",
-            "pourquoi": "Chaque bas de tableau coûte directement des points sur le "
-                        "cumul. La régularité prime sur le coup d'éclat.",
-            "classement": tri("t4", True, "t4")},
+            "critere": "taux de top 4", "cle": "top4", "unite": " %",
+            "pourquoi": "Chaque bas de tableau coûte directement des points "
+                        "sur le cumul. La régularité prime sur le coup d'éclat.",
+            "classement": tri("top4", True)},
         "checkmate": {
-            "critere": "taux de 1re place", "cle": "wr", "unite": " %",
-            "pourquoi": "Seule la 1re place qualifie. Une 7e ne coûte rien de plus "
-                        "qu'une 5e, donc le placement moyen ne veut plus rien dire.",
-            "classement": tri("wr", True)},
+            "critere": "taux de 1re place", "cle": "premieres", "unite": " %",
+            "pourquoi": "Seule la 1re place qualifie. Une 7e ne coûte rien de "
+                        "plus qu'une 5e, donc le placement moyen ne veut plus "
+                        "rien dire.",
+            "classement": tri("premieres", True)},
     }
+
+
+# ══ LE MANIFESTE ═════════════════════════════════════════════════════════
+
+ATTENDUS = ("profil.json", "calendrier.json", "miroir.json",
+            "focus.json", "barre.json", "joueur.json",
+            "objets.json", "recettes.json",
+            "compos.json", "compos_lui.json",
+            "fuites.json", "contestation.json")
+
+
+def manifeste(set_courant):
+    """Pour chaque fichier publié : de quel set il parle, et dans quel état.
+
+    Le site s'en sert pour décider, bloc par bloc, s'il affiche, s'il étiquette
+    « archive du Set N », ou s'il explique pourquoi le bloc est vide. Sans ça
+    il n'avait que deux états — présent ou absent — et ne distinguait pas
+    « rien à signaler » de « pas de données » de « données d'un autre set »."""
+    out = {}
+    for f in ATTENDUS:
+        d = charger(f)
+        if d is None:
+            out[f] = {"present": False}
+            continue
+        s = d.get("set")
+        out[f] = {"present": True, "set": s,
+                  "du_set_courant": (s == set_courant) if s is not None else None,
+                  "etat": d.get("etat"),
+                  "date": d.get("genere_le") or d.get("date")}
+    return out
 
 
 def main():
-    rs = charger_releves()
+    rs = M.serie()
     if not rs:
-        sys.exit(f"Aucun relevé dans {RELEVES}")
+        sys.exit(f"Aucun relevé dans {M.RELEVES_TT} — lance tools/releve/tactics.py.")
     courant = rs[-1]
-    print(f"relevé courant : {courant['date']} ({courant.get('patch')}, {courant.get('rang')})")
+    setn = courant.get("set")
+    du_set = [r for r in rs if r.get("set") == setn]
+    print(f"relevé courant : {courant['date']} (Set {setn}, {courant.get('patch')}, "
+          f"{courant.get('rang')}, {courant.get('n_parties'):,} parties)".replace(",", " "))
 
-    # le diff le plus informatif : le dernier couple à MÊME tranche d'elo
-    d = None
-    for i in range(len(rs) - 1, 0, -1):
-        cand = diff(rs[i - 1], rs[i])
-        if cand and cand["meme_elo"]:
-            d = cand
-            break
-    if d is None and len(rs) >= 2:
-        d = diff(rs[-2], rs[-1])
-        print("  (aucun couple à elo constant : diff à elo différent, signalé comme tel)")
+    # ── La rotation : le patch précédent DU MÊME SET, à même tranche ─────
+    d, d_raison = None, None
+    if len(du_set) < 2:
+        d_raison = (f"Premier patch relevé du Set {setn} : il n'y a pas encore "
+                    "de patch précédent auquel le comparer.")
+    else:
+        for i in range(len(du_set) - 1, 0, -1):
+            cand = diff(du_set[i - 1], du_set[i])
+            if cand and cand["meme_elo"]:
+                d = cand
+                break
+        if d is None:
+            d_raison = ("Aucune paire de relevés comparables dans ce set "
+                        "(tranches de rang différentes ou aucune unité commune).")
 
-    # stabilité de la tête sur toute la série
-    tops = []
-    for r in rs:
-        g, _ = classement(r)
-        tops.append([k for k in sorted(g, key=lambda x: g[x])[:8]])
-    tete_commune = sorted(set(tops[0]).intersection(*[set(t) for t in tops[1:]])) if len(tops) > 1 else tops[0]
-
-    g, u = classement(courant)
+    g, u = M.classement(courant)
     ordre = sorted(g, key=lambda k: g[k])
+    tete = M.tete_stable(du_set) if len(du_set) >= 2 else None
+    if tete:
+        tete = {**tete, "unites": [{"id": k, "nom": M.nom_affichable(k)}
+                                   for k in tete["unites"]],
+                "premiere_chaque_fois": (M.nom_affichable(tete["premiere_chaque_fois"])
+                                         if tete.get("premiere_chaque_fois") else None)}
 
+    # ── Les compos : seulement si elles sont du même set que le relevé ───
+    co = charger("compos.json") or {}
+    rec = charger("recettes.json") or {}
+    rec_ok = rec.get("set") == setn
+    recettes = (rec.get("recettes") or {}) if rec_ok else {}
+    comp_fr = ({k: v.get("fr") or v.get("nom") or k
+                for k, v in (rec.get("composants") or {}).items()} if rec_ok else {})
+    fiches, compos_etat = [], None
+    if not co:
+        compos_etat = "Les compos n'ont pas encore été relevées."
+    elif co.get("set") != setn:
+        compos_etat = (f"Les compos relevées sont celles du Set {co.get('set')} ; "
+                       f"le relevé courant est du Set {setn}. Elles ne sont pas "
+                       "affichées.")
+    elif not co.get("compos"):
+        compos_etat = co.get("etat_note") or "Aucune compo dans le relevé."
+    else:
+        fiches = [fiche(c, co.get("n_parties"), recettes, comp_fr)
+                  for c in co["compos"]]
+
+    # ── Le volume : un patch qui vient de sortir ne se lit pas comme un mûr
+    precedent = du_set[-2] if len(du_set) >= 2 else None
+    n_cour = courant.get("n_parties") or 0
+    n_prec = (precedent or {}).get("n_parties") or 0
+    frais = bool((n_prec and n_cour < 0.5 * n_prec) or len(ordre) < 20)
+
+    # Tous les noms dont le site a besoin, calculés ICI et nulle part ailleurs.
+    ids = set(courant.get("unites") or {}) | set(courant.get("objets") or {})
+    ids |= {t.get("trait") for t in (courant.get("traits") or {}).values() if t.get("trait")}
+    for c in (co.get("compos") or []):
+        ids |= {x[0] for x in (c.get("unites") or []) if isinstance(x, list)}
+        ids |= {p["unite"] for p in (c.get("porteurs") or [])}
+        ids |= {t["trait"] for t in (c.get("traits") or [])}
+    noms = {i: M.nom_affichable(i) for i in sorted(i for i in ids if i)}
+
+    fige = os.path.join(RACINE, "tools", "build", f"data_set{setn}_fige.js")
     out = {
         "schema_version": SCHEMA,
         "genere_le": date.today().isoformat(),
+        "set": setn,
         "releve": {
             "date": courant["date"], "patch": courant.get("patch"),
             "rang": courant.get("rang"), "source": courant.get("source"),
-            "n_parties": courant.get("n_parties"), "fenetre": courant.get("fenetre"),
-            "set": courant.get("set"), "note": courant.get("note"),
+            "n_parties": n_cour, "fenetre": courant.get("fenetre"),
+            "set": setn,
+            "premier_releve": courant.get("premier_releve"),
+            "n_mises_a_jour": courant.get("n_mises_a_jour"),
         },
-        "diff": d,
-        "tete_stable": {
-            "unites": tete_commune,
-            "n_releves": len(rs),
-            "depuis": rs[0]["date"],
-            "premiere_chaque_fois": tops[0][0] if all(t[0] == tops[0][0] for t in tops) else None,
+        "volume": {
+            "frais": frais,
+            "n_unites_classees": len(ordre),
+            "n_unites_relevees": len(courant.get("unites") or {}),
+            "seuil_par_unite": M.NMIN,
+            "patch_precedent": (precedent or {}).get("patch"),
+            "n_parties_patch_precedent": n_prec or None,
+            "note": (
+                f"{n_cour:,} parties : ".replace(",", " ")
+                + (f"{len(ordre)} unités sur {len(courant.get('unites') or {})} "
+                   f"dépassent le seuil de {M.NMIN} parties. " if len(ordre) < 20 else "")
+                + "Le patch vient de sortir, les classements bougent encore. "
+                  "Le relevé se met à jour tout seul à mesure qu'il mûrit."
+            ) if frais else None,
         },
-        "unites": [{"nom": k, "rang": g[k], "avg": u[k]["avg"],
-                    "wr": u[k]["wr"], "n": u[k]["n"]} for k in ordre],
-        "compos": courant.get("compos", []),
-        "modes": modes(courant.get("compos", [])),
+        "diff": d, "diff_raison": d_raison,
+        "tete_stable": tete,
+        "unites": [{"id": k, "nom": M.nom_affichable(k), "rang": g[k],
+                    "avg": u[k]["avg"], "wr": u[k]["wr"], "t4": u[k].get("t4"),
+                    "n": u[k]["n"]} for k in ordre],
+        "compos": fiches,
+        "compos_etat": compos_etat,
+        "compos_source": ({"date": co.get("date"), "n_parties": co.get("n_parties"),
+                           "limite": co.get("limite"),
+                           "population": (co.get("population") or {}).get("meme_population")}
+                          if fiches else None),
+        "modes": modes(fiches),
+        "noms": noms,
         "serie": [{"date": r["date"], "patch": r.get("patch"), "rang": r.get("rang"),
-                   "n_parties": r.get("n_parties")} for r in rs],
+                   "set": r.get("set"), "n_parties": r.get("n_parties"),
+                   "premier_releve": r.get("premier_releve"),
+                   "n_mises_a_jour": r.get("n_mises_a_jour")} for r in rs],
+        "fichiers": manifeste(setn),
+        "oracle": {"set": setn, "disponible": os.path.exists(fige),
+                   "note": None if os.path.exists(fige) else
+                           f"Les fiches figées du Set {setn} ne sont pas écrites : "
+                           "l'ancien moteur n'est pas publié pour ce set."},
     }
 
-    os.makedirs(os.path.dirname(SORTIE), exist_ok=True)
-    json.dump(out, open(SORTIE, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    M.ecrire(SORTIE, out)
 
     # Copie vers site/data/ pour le développement local. En production, le
     # workflow de déploiement fait la même chose — site/data/ n'est donc pas
     # versionné : la source reste data/.
-    import shutil
     cible = os.path.join(RACINE, "site", "data")
     os.makedirs(os.path.join(cible, "meta"), exist_ok=True)
     shutil.copy(SORTIE, os.path.join(cible, "meta", "courant.json"))
-    # ⚠ CETTE LISTE DOIT SUIVRE `SOURCES` DANS site/index.html.
+    # ⚠ `ATTENDUS` DOIT SUIVRE `SOURCES` DANS site/index.html.
     # Un fichier oublié ici ne provoque aucune erreur : le site reçoit un 404,
     # le bloc concerné ne s'affiche pas, et rien ne dit pourquoi. On annonce
     # donc les manquants à voix haute plutôt que de les laisser passer.
-    attendus = ("profil.json", "calendrier.json", "miroir.json",
-                "focus.json", "barre.json", "joueur.json",
-                "objets.json", "recettes.json",
-                "compos.json", "compos_lui.json",
-                "fuites.json", "contestation.json")
     copies, manquants = [], []
-    for f in attendus:
+    for f in ATTENDUS:
         src = os.path.join(RACINE, "data", f)
         if os.path.exists(src):
             shutil.copy(src, os.path.join(cible, f))
             copies.append(f)
         else:
             manquants.append(f)
+            # Un fichier absent de data/ ne doit pas survivre dans site/data/
+            # d'une construction précédente.
+            vieux = os.path.join(cible, f)
+            if os.path.exists(vieux):
+                os.remove(vieux)
     # Les fichiers de référence vivent dans data/reference/ : ils sont écrits
     # à la main, pas produits par un script, et ce dossier les distingue.
     src_ref = os.path.join(RACINE, "data", "reference")
@@ -164,18 +412,25 @@ def main():
                 shutil.copy(os.path.join(src_ref, f), os.path.join(dst_ref, f))
                 copies.append("reference/" + f)
 
-    print(f"copié vers site/data/ : {len(copies)}/{len(attendus)} "
-          f"({', '.join(copies)})")
+    print(f"copié vers site/data/ : {len(copies)} fichiers")
     if manquants:
-        print(f"  ⚠ absents de data/ : {', '.join(manquants)} — le site "
-              f"affichera ces blocs vides, sans message d'erreur.")
+        print(f"  ⚠ absents de data/ : {', '.join(manquants)}")
+    autres = [f"{f} (Set {m['set']})" for f, m in out["fichiers"].items()
+              if m.get("du_set_courant") is False]
+    if autres:
+        print(f"  ⚠ ne parlent pas du Set {setn} : {', '.join(autres)} — "
+              "le site les étiquette ou les masque.")
     taille = os.path.getsize(SORTIE)
     print(f"écrit : {SORTIE} ({taille:,} octets)".replace(",", " "))
+    print(f"  {len(ordre)} unités classées · {len(fiches)} fiches de ligne"
+          + (f" · {compos_etat}" if compos_etat else ""))
     if d:
-        print(f"  diff {d['de']['patch']} -> {d['a']['patch']} : "
+        print(f"  rotation {d['de']['patch']} -> {d['a']['patch']} : "
               f"Spearman {d['spearman']} · bruit {d['plancher_bruit']} · "
-              f"{d['part_reelle_pct']} % réel")
-    print(f"  tête stable sur {len(rs)} relevés : {len(tete_commune)} unités")
+              f"{d['part_reelle_pct']} % réel"
+              + ("" if d["volume"]["comparable"] else " · ⚠ volumes inégaux"))
+    elif d_raison:
+        print(f"  pas de rotation : {d_raison}")
 
 
 if __name__ == "__main__":

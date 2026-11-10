@@ -4,25 +4,36 @@
  "_nature": "⚠ CE FICHIER N'EST PAS MESURÉ. Tout le reste de data/ vient d'un relevé ou d'une collecte : des nombres qu'on a comptés, avec un seuil de bruit. Ceci vient d'un guide, et se lit comme un guide. Le site DOIT le présenter autrement que le mesuré — sans quoi on aura, d'ici trois semaines, oublié lequel est lequel.",
  "set": 18,
  "_set": "⚠ PÉRIME AU SET 19. Les cotes de boutique et les timings changent à chaque set, et parfois dans un set. Le site compare ce numéro à celui du relevé courant et refuse d'afficher le bloc s'ils diffèrent : mieux vaut un bloc absent qu'un bloc faux.",
- "releve_le": "2026-11-04",
+ "releve_le": "2026-11-10",
  "sources": [
   {
    "nom": "BunnyMuffins — Leveling & Econ Guide",
    "url": "https://bunnymuffins.lol/tft-leveling-guide/",
-   "porte": ["cotes_boutique", "taille_pool", "timings", "spikes", "points_de_vie"]
+   "porte": ["taille_pool", "timings", "spikes", "points_de_vie"]
+  },
+  {
+   "nom": "West Games — calculateur de cotes",
+   "url": "https://west-games.com/tft-roll-odds-calculator/",
+   "porte": ["cotes_boutique"]
+  },
+  {
+   "nom": "Metabot — relancer ou monter",
+   "url": "https://metabot.gg/en/TFT/guides/tft-when-to-roll-vs-level-up-shop-odds",
+   "porte": ["cotes_boutique"]
   }
  ],
 
  "cotes_boutique": {
-  "_note": "Probabilité, en %, que chaque emplacement de boutique propose une unité de ce coût. C'est la seule chose qui rende un roll calculable : à 8, un 4-coûts sort une fois sur quatre par emplacement ; à 7, une fois sur dix.",
+  "_note": "Probabilité, en %, que chaque emplacement de boutique propose une unité de ce coût. C'est la seule chose qui rende une relance calculable : à 8, un 4-coûts sort trois fois sur dix par emplacement ; à 7, une fois sur dix.",
+  "_correction": "⚠ CORRIGÉ LE 10/11. Les lignes 8 et 9 portaient 17/24/32/24/3 et 15/18/25/30/12 : une table d'avant le Set 16, recopiée d'un guide qui ne l'avait pas mise à jour. La faute a été trouvée en écrivant le livre 2, pas par ce projet. Les valeurs actuelles (15/20/32/30/3 et 10/17/25/33/15) concordent sur trois sources indépendantes, mais aucune ne les date explicitement du Set 18 : le contrôle définitif se fait en jeu, où la boutique affiche ses cotes au survol du niveau.",
   "colonnes": ["1 coût", "2 coûts", "3 coûts", "4 coûts", "5 coûts"],
   "par_niveau": {
    "4":  [55, 30, 15, 0, 0],
    "5":  [45, 33, 20, 2, 0],
    "6":  [30, 40, 25, 5, 0],
    "7":  [19, 30, 40, 10, 1],
-   "8":  [17, 24, 32, 24, 3],
-   "9":  [15, 18, 25, 30, 12],
+   "8":  [15, 20, 32, 30, 3],
+   "9":  [10, 17, 25, 33, 15],
    "10": [5, 10, 20, 40, 25]
   }
  },
@@ -50,11 +61,11 @@
   },
   "reroll_1_cout": {
    "_quand": "On cherche un 1-coût en 3 étoiles",
-   "_regle": "Ne pas monter tant que le 1-coût n'est pas en 3 étoiles. Roll jusqu'à ~32 or en 3-1, puis agressivement en 3-5."
+   "_regle": "Ne pas monter tant que le 1-coût n'est pas en 3 étoiles. Relancer jusqu'à ~32 or en 3-1, puis agressivement en 3-5."
   },
   "reroll_2_couts": {
    "montees": {"2-1": 4, "2-5": 5, "3-2": 6, "4-5": 7, "5-2": 8},
-   "_condition": "Monter en 2-1 seulement si le plateau est fort, avec une copie de l'unité cherchée et un objet slammable."
+   "_condition": "Monter en 2-1 seulement si le plateau est fort, avec une copie de l'unité cherchée et un objet à assembler tout de suite."
   },
   "reroll_3_couts": {
    "montees": {"2-1": 4, "2-5": 5, "3-2": 6, "3-5 ou 4-1": 7, "5+": 8, "6+": 9},

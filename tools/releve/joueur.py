@@ -49,6 +49,16 @@ import urllib.error, urllib.request
 from datetime import date, datetime, timezone
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# La seule porte vers l'extérieur vit dans tools/lib/reseau.py : une définition,
+# et un mode rejeu qui permet de répéter le 1er décembre sans réseau.
+sys.path.insert(0, os.path.join(RACINE, "tools", "lib"))
+from reseau import lire as _lire
+import mesures as M
+
+
+def lire(url, **kw):
+    return _lire(url, quoi="relevé de position", **kw)
+
 SORTIE = os.path.join(RACINE, "data", "joueur.json")
 BARRE  = os.path.join(RACINE, "data", "barre.json")
 MIROIR = os.path.join(RACINE, "data", "miroir.json")
@@ -58,24 +68,31 @@ PAGE   = "https://tactics.tools/player/{region}/{nom}/{tag}"
 # Au-dessus de Master, une seule échelle continue. En dessous, les divisions
 # remettent le compteur à zéro : les LP n'y sont pas sur la même règle.
 HAUT = ("MASTER", "GRANDMASTER", "CHALLENGER")
-
-EN_TETES = {
-    "User-Agent": "OracleTFT/1.0 (relevé de position, usage personnel)",
-    "Accept": "text/html",
-}
+# Sous Master : sept paliers de quatre divisions, 100 LP par division.
+PALIERS = ("IRON", "BRONZE", "SILVER", "GOLD", "PLATINUM", "EMERALD", "DIAMOND")
+DIVISIONS = {"IV": 0, "III": 1, "II": 2, "I": 3}
 
 
-def lire(url):
-    req = urllib.request.Request(url, headers=EN_TETES)
-    try:
-        with urllib.request.urlopen(req, timeout=30) as r:
-            return r.read().decode("utf-8", "replace")
-    except urllib.error.HTTPError as e:
-        sys.exit(f"HTTP {e.code} sur {url}")
-    except Exception as e:
-        sys.exit(f"Impossible de joindre {url}\n  {type(e).__name__}: {e}\n"
-                 "  (Normal depuis une session Claude : le proxy du conteneur "
-                 "bloque ce domaine. Ce script est fait pour le runner GitHub.)")
+def lp_jusqu_a_master(palier, lp):
+    """Combien de LP séparent ce rang de Master 0 LP.
+
+    Diamant II 55 LP : il reste 45 LP pour finir la division, puis les
+    100 LP de Diamant I. Les LP en trop sont reportés à la promotion et TFT
+    n'a pas de série de promotion : le compte est exact, à la protection de
+    rétrogradation près (qui ne joue qu'à la baisse).
+
+    None si le palier est déjà Master ou plus, ou s'il est illisible."""
+    mots = str(palier or "").split(" ")
+    if mots[0] in HAUT or mots[0] not in PALIERS:
+        return None
+    div = DIVISIONS.get(mots[1] if len(mots) > 1 else "", None)
+    if div is None:
+        return None
+    divisions_restantes = (len(PALIERS) - 1 - PALIERS.index(mots[0])) * 4 + (3 - div)
+    return divisions_restantes * 100 + (100 - (lp or 0))
+
+
+
 
 
 def charger_json(chemin):
@@ -139,17 +156,27 @@ def table(points):
             for k, v in sorted(par.items())}
 
 
-def extraire(data):
+def extraire(data, premier_code=None):
     """Les parties exploitables pour le barème, et celles qu'on écarte.
+
+    `premier_code` : le plus petit code de patch du set courant. Toute partie
+    d'un code inférieur est d'un set PASSÉ et sort du barème — la page du
+    joueur garde ses vieilles parties, et au lendemain d'un changement de set
+    elles sont majoritaires. Un barème de Master du Set 18 ne dit rien des
+    gains d'un joueur reclassé en Diamant au Set 19, où le MMR dépasse
+    largement le rang affiché et où chaque place rapporte davantage.
 
     Une partie n'entre dans le barème que si :
       - elle est classée (queueId 1100) et porte un lpDiff non nul ;
       - la perte n'a pas été tronquée par la protection de rétrogradation,
         c'est-à-dire qu'elle ne s'arrête pas pile à 0 LP.
     """
-    bons, censurees, hautes = [], 0, []
+    bons, censurees, hautes, anciennes = [], 0, [], 0
     for m in data.get("matches") or []:
         if m.get("queueId") != 1100:
+            continue
+        if premier_code and (m.get("patch") or 0) < premier_code:
+            anciennes += 1
             continue
         pl = (m.get("info") or {}).get("placement")
         lp = m.get("lpDiff")
@@ -164,7 +191,7 @@ def extraire(data):
         bons.append((float(pl), float(lp)))
         if str(avant[0] or "").split(" ")[0] in HAUT:
             hautes.append((float(pl), float(lp)))
-    return bons, hautes, censurees
+    return bons, hautes, censurees, anciennes
 
 
 def main():
@@ -184,8 +211,28 @@ def main():
          .get("pageProps", {}).get("initialData") or {})
     pi = d.get("playerInfo") or {}
     rl = pi.get("rankedLeague") or [None, None]
-    if not rl[0]:
-        sys.exit("Aucun palier classé sur la page : profil vide ou non joué.")
+    if not pi and not d.get("matches"):
+        # Ni joueur ni parties : la page n'a plus la forme attendue. Ça, c'est
+        # une panne, et on ne touche pas au fichier de la veille.
+        sys.exit("playerInfo et matches absents : la page du joueur a changé "
+                 "de structure.")
+
+    # ── LE SET, D'ABORD ──────────────────────────────────────────────────
+    # Ce fichier décrit une position dans UN classement, celui du set en
+    # ligne. Tout ce qu'il croise (la barre, ses parties récoltées, les
+    # parties de la page) doit être du même set, ou être écarté en le disant.
+    set_courant = M.set_courant()
+    codes = M.codes_du_set() or {}
+    premier_code = codes.get("premier_code") if codes.get("borne_fiable") else None
+
+    # ── NON CLASSÉ N'EST PAS UNE PANNE ───────────────────────────────────
+    # Jusqu'au 10/11, ce script sortait en erreur quand la page ne portait
+    # aucun palier. L'étape est tolérée dans le workflow, donc rien ne
+    # cassait — et c'était pire : data/joueur.json de la veille restait en
+    # place, et le site affichait « Master, 30 LP » au soir d'un changement
+    # de set où tout le monde est remis à zéro. Un fichier périmé qui se
+    # présente comme courant est la faute que ce projet a le plus commise.
+    classe = bool(rl[0])
 
     # ── POSITION ──────────────────────────────────────────────────────────
     # Le puuid est présent sur la page ; il ne sort pas d'ici. Le dépôt est
@@ -225,7 +272,7 @@ def main():
     }
 
     # ── LE BARÈME ─────────────────────────────────────────────────────────
-    tous, hautes, censurees = extraire(d)
+    tous, hautes, censurees, anciennes = extraire(d, premier_code)
     aj_tous   = ajustement(tous)
     aj_hautes = ajustement(hautes)
     # On préfère le barème mesuré en Master+ dès qu'il tient debout : c'est
@@ -237,6 +284,7 @@ def main():
 
     bareme = {
         "parties_retenues": len(tous),
+        "parties_d_un_set_passe_ecartees": anciennes,
         "parties_master_plus": len(hautes),
         "censurees_exclues": censurees,
         "assiette_utilisee": assiette,
@@ -255,19 +303,41 @@ def main():
     # ── L'ÉCART À LA BARRE, EN PARTIES ────────────────────────────────────
     barre  = charger_json(BARRE) or {}
     miroir = charger_json(MIROIR) or {}
-    seuil  = barre.get("seuil_challenger_lp")
+    # La barre ne vaut que si elle est du set courant ET ouverte. Un seuil du
+    # set précédent, ou un classement sans Challenger, ne donne aucun écart.
+    barre_valide = (barre.get("etat", "ouvert") == "ouvert"
+                    and barre.get("set", set_courant) == set_courant)
+    seuil  = barre.get("seuil_challenger_lp") if barre_valide else None
     palier_haut = str(rl[0] or "").split(" ")[0] in HAUT
-    manquants = (seuil - rl[1]) if (seuil is not None and palier_haut) else None
+    sous_master = lp_jusqu_a_master(rl[0], rl[1]) if classe else None
+    if not classe or seuil is None:
+        manquants = None
+    elif palier_haut:
+        manquants = seuil - rl[1]
+    elif sous_master is not None:
+        manquants = sous_master + seuil
+    else:
+        manquants = None
+
+    # Ses parties récoltées (miroir) ne servent que si elles sont du même set.
+    if miroir.get("set") != set_courant:
+        miroir = {}
 
     projection = None
-    if aj and manquants is not None and manquants > 0:
+    # Le LP attendu par partie ne dépend PAS de la barre : il vient du barème
+    # et du placement. Jusqu'au 10/11 il n'était calculé que si un écart à la
+    # barre existait — donc pas du tout en début de set, quand Challenger
+    # n'est pas encore ouvert, alors que c'est le chiffre dont build_fuites a
+    # besoin. Seul le nombre de parties jusqu'à la barre dépend d'elle.
+    a_un_ecart = manquants is not None and manquants > 0
+    if aj:
         # Le placement sur lequel on projette : celui du Miroir (nettoyé) de
         # préférence, sinon celui de la saison (qui inclut les parties lâchées
         # et sous-estime donc son niveau).
         pm = miroir.get("placement_moyen")
         src = "miroir (parties lâchées retirées)"
         if pm is None:
-            pm = ss.get("avgPlace")
+            pm = ss.get("avgPlace") if (ss.get("games") or 0) >= 10 else None
             src = "tactics.tools (parties lâchées incluses)"
         if pm:
             attendu = aj["_a"] + aj["_b"] * pm
@@ -315,14 +385,14 @@ def main():
                             "volume de parties qui resserre la fourchette.",
                 },
                 "solide": bool(err and abs(attendu) >= 2 * err),
-                "lp_manquants": round(manquants, 1),
+                "lp_manquants": round(manquants, 1) if a_un_ecart else None,
                 "parties_estimees": (round(manquants / attendu)
-                                     if attendu > 0 else None),
+                                     if (a_un_ecart and attendu > 0) else None),
                 # La fourchette, parce qu'un seul nombre serait un mensonge.
                 "parties_fourchette": (
                     [round(manquants / (attendu + 2 * err)),
                      round(manquants / (attendu - 2 * err))]
-                    if (err and attendu - 2 * err > 0) else None),
+                    if (a_un_ecart and err and attendu - 2 * err > 0) else None),
                 "avertissement":
                     "OPTIMISTE PAR CONSTRUCTION. Deux effets non modélisés "
                     "poussent dans le même sens : les gains de LP se "
@@ -331,7 +401,13 @@ def main():
                     "À lire comme une vitesse maximale, pas comme un "
                     "calendrier.",
             }
-        if projection and projection["parties_estimees"] is None:
+        if projection and not a_un_ecart:
+            projection["avertissement"] = (
+                "Pas d'écart à la barre à convertir en parties ("
+                + ("déjà au-dessus du seuil" if (manquants is not None and manquants <= 0)
+                   else "aucun seuil de Challenger valide pour ce set")
+                + ") : seul le LP attendu par partie est donné.")
+        elif projection and projection["parties_estimees"] is None:
             projection["avertissement"] = (
                 "LP par partie négatif ou nul au placement projeté : à ce "
                 "rythme la barre ne se rapproche pas. Ce n'est pas un volume "
@@ -381,7 +457,7 @@ def main():
                     "seule à chaque relevé.",
         }
 
-    n_ch = (barre.get("paliers") or {}).get("CHALLENGER")
+    n_ch = (barre.get("paliers") or {}).get("CHALLENGER") if barre_valide else None
     rang = None
     if loc[0] and n_ch:
         rang = {
@@ -399,6 +475,15 @@ def main():
         "schema_version": SCHEMA,
         "genere_le": date.today().isoformat(),
         "source": "tactics.tools",
+        # Le set dont cette position parle, et si elle existe. Le site lit
+        # ces deux champs avant tout le reste.
+        "set": set_courant,
+        "etat": "classe" if classe else "non_classe",
+        "etat_note": None if classe else (
+            "Aucun palier classé sur la page : la saison vient de commencer "
+            "et aucune partie classée n'est encore comptée, ou le profil "
+            "n'a pas été rafraîchi. Il n'y a pas de position à afficher — "
+            "et surtout pas celle du set précédent."),
         "page": url,
         "joueur": {"nom": pi.get("name"), "tag": pi.get("tag"),
                    "region": pi.get("region")},
@@ -410,9 +495,20 @@ def main():
             "source_seuil": f"data/barre.json du {barre.get('genere_le')}"
                             if barre else None,
             "lp_manquants": round(manquants, 1) if manquants is not None else None,
-            "note": None if palier_haut else
-                    "Sous Master, les divisions remettent les LP à zéro : "
-                    "l'écart à la barre ne s'exprime pas en LP depuis ici.",
+            "dont_jusqu_a_master": sous_master,
+            "raison_si_absent": (
+                None if manquants is not None else
+                "non classé" if not classe else
+                barre.get("etat_note") if (barre and not barre_valide
+                                           and barre.get("etat", "ouvert") != "ouvert") else
+                "la barre relevée est celle d'un autre set" if (barre and not barre_valide) else
+                "barre non relevée"),
+            "note": None if (palier_haut or not classe) else
+                    "Sous Master, l'écart additionne les divisions restantes "
+                    "(100 LP chacune, sans série de promotion) et le seuil de "
+                    "Challenger. Les gains y sont plus généreux qu'en Master : "
+                    "cette partie du chemin va plus vite que la droite ne le "
+                    "dit une fois en haut.",
         },
         "projection": projection,
         "contre_epreuve": contre,
@@ -428,15 +524,20 @@ def main():
               ensure_ascii=False, indent=1)
 
     print(f"écrit : {SORTIE}")
-    print(f"  {position['palier']} · {position['lp']} LP · "
-          f"{position['rang_region']}e {str(pi.get('region') or '').upper()} "
-          f"(top {position['percentile_region']} %)")
+    print(f"  set {set_courant} · {out['etat']}"
+          + (f" · {anciennes} parties d'un set passé écartées" if anciennes else ""))
+    if classe:
+        print(f"  {position['palier']} · {position['lp']} LP · "
+              f"{position['rang_region']}e {str(pi.get('region') or '').upper()} "
+              f"(top {position['percentile_region']} %)")
+    else:
+        print(f"  {out['etat_note']}")
     if aj:
         print(f"  barème : {aj['pente_lp_par_place']} LP par place, "
               f"neutre à la {aj['place_neutre']}e · R² {aj['r2']} "
               f"({aj['n']} parties, assiette {assiette}, "
               f"{censurees} écrêtées exclues)")
-    if projection:
+    if projection and projection["lp_manquants"] is not None:
         p = projection
         fr = (f" (fourchette {p['parties_fourchette'][0]}–"
               f"{p['parties_fourchette'][1]})" if p["parties_fourchette"] else "")

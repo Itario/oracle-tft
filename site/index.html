@@ -453,6 +453,20 @@ footer{border-top:1px solid var(--trait);margin-top:3.5rem;padding-top:1.3rem;
   font-size:.84rem;color:var(--faible)}
 .vide{color:var(--faible);font-style:italic;padding:1.4rem 0}
 
+/* ---------------------------------------------- fiches de ligne */
+.fiche-d{display:grid;grid-template-columns:10.5rem 1fr;gap:.5rem 1rem;
+         margin:.9rem 0 0;padding-top:.8rem;border-top:1px solid rgba(31,71,102,.6)}
+.fiche-d dt{color:var(--or);font-family:var(--titre);font-weight:700;font-size:.9rem}
+.fiche-d dd{margin:0;color:var(--doux);font-size:.93rem;line-height:1.55}
+.fiche-d dd b{color:var(--texte)}
+.fiche-d .cmp{color:var(--faible)}
+@media(max-width:560px){.fiche-d{grid-template-columns:1fr;gap:.15rem 0}
+  .fiche-d dd{margin-bottom:.55rem}}
+.puce .et{color:var(--or);font-size:.8em;margin-left:.2rem;letter-spacing:-.05em}
+.archive{border-left:3px solid var(--faible);background:rgba(110,131,153,.08);
+         padding:.8rem 1.1rem;margin:0 0 1.4rem;color:var(--doux)}
+.archive b{color:var(--texte)}
+
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -466,7 +480,7 @@ footer{border-top:1px solid var(--trait);margin-top:3.5rem;padding-top:1.3rem;
     </div>
     <nav role="tablist" aria-label="Sections">
       <button role="tab" data-vue="avant"   aria-selected="true">Avant</button>
-      <button role="tab" data-vue="pendant" aria-selected="false">En partie</button>
+      <button role="tab" data-vue="fiches"  aria-selected="false">Fiches</button>
       <button role="tab" data-vue="apres"   aria-selected="false">Après</button>
       <button role="tab" data-vue="suivi"   aria-selected="false">Suivi</button>
     </nav>
@@ -475,11 +489,11 @@ footer{border-top:1px solid var(--trait);margin-top:3.5rem;padding-top:1.3rem;
 
 <main>
   <section class="vue" id="v-avant"></section>
-  <section class="vue" id="v-pendant" hidden></section>
+  <section class="vue" id="v-fiches" hidden></section>
   <section class="vue" id="v-apres" hidden></section>
   <section class="vue" id="v-suivi" hidden></section>
   <footer>
-    <p class="faible" id="pied">Données : MetaTFT. Projet personnel, sans lien avec Riot Games.</p>
+    <p class="faible" id="pied">Données : tactics.tools. Projet personnel, sans lien avec Riot Games.</p>
   </footer>
 </main>
 
@@ -520,6 +534,53 @@ const nb = n => (n ?? 0).toLocaleString("fr-FR").replace(/ | /g, " ");
 const fdate = iso => { if(!iso) return "—";
   const [a,m,j] = iso.split("-"); return `${j}/${m}/${a}`; };
 
+/* ══ LE SET COURANT, LES NOMS, LA GARDE ═══════════════════════════════════
+ * Trois choses que chaque bloc refaisait à sa façon jusqu'au 10/11, et que
+ * la répétition générale du 1er décembre a prises en défaut :
+ *
+ *   le set courant   se lisait dans le libellé de patch de compos_lui.json,
+ *                    avec repli sur le relevé manuel. Le jour d'un changement
+ *                    de set, l'un et l'autre répondaient « 18 ».
+ *   les noms         retiraient « DA_ » et « 18 » dans une expression
+ *                    régulière : « Ezreal19 » le 1er décembre.
+ *   l'absence        un bloc sans données ne rendait rien du tout — et un bloc
+ *                    aux données d'un AUTRE set rendait tout, sans étiquette.
+ *
+ * Tout passe désormais par meta/courant.json, que build_site.py construit à
+ * partir du dernier relevé automatique. */
+function setCourant(){ return D.meta?.set ?? null; }
+
+const nomU = id => esc(D.meta?.noms?.[id]
+  ?? String(id ?? "").replace(/^[A-Za-z]{2,4}\d*_/, "").replace(/\d+/g, "")
+       .replace(/_/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2").trim());
+
+/* « DIAMOND II » est le code brut de la source : on affiche le palier. */
+const PALIERS_FR = {IRON:"Fer", BRONZE:"Bronze", SILVER:"Argent", GOLD:"Or",
+  PLATINUM:"Platine", EMERALD:"Émeraude", DIAMOND:"Diamant", MASTER:"Master",
+  GRANDMASTER:"Grandmaster", CHALLENGER:"Challenger"};
+function palierFr(brut){
+  const [t, d] = String(brut || "").split(" ");
+  if(!PALIERS_FR[t]) return esc(brut || "");
+  // Au-dessus de Diamant il n'y a qu'une division : le « I » n'apprend rien.
+  return PALIERS_FR[t] + (d && !["MASTER","GRANDMASTER","CHALLENGER"].includes(t) ? " " + d : "");
+}
+
+/* Un bloc n'a rien à montrer pour trois raisons, et elles ne se disent pas
+ * pareil. Renvoie le HTML à afficher À LA PLACE du bloc, ou null si le bloc
+ * peut s'afficher normalement. */
+const ETATS_SAINS = ["ok", "ouvert", "classe"];
+function garde(o, titre, siAbsent){
+  const sc = setCourant();
+  if(!o) return siAbsent ? `<h2>${titre}</h2><div class="vide">${siAbsent}</div>` : "";
+  if(o.etat && !ETATS_SAINS.includes(o.etat) && (o.message || o.etat_note))
+    return `<h2>${titre}</h2><div class="note">${esc(o.message || o.etat_note)}</div>`;
+  if(o.set != null && sc != null && o.set !== sc)
+    return `<h2>${titre}</h2><div class="note">Ce bloc date du <b>Set ${o.set}</b> ;
+      le relevé courant est celui du Set ${sc}. Il n'est pas affiché : il reviendra
+      de lui-même quand ses données seront du set en cours.</div>`;
+  return null;
+}
+
 /* -------------------------------------------------- chargement */
 async function charger(){
   const res = {};
@@ -548,72 +609,92 @@ function ligneMouvement(m, sens){
     <span class="bar"><i style="width:${pct}%"></i></span></div>`;
 }
 
-function carteCompo(c, mode, premier){
+/* ══ LA FICHE DE LIGNE ════════════════════════════════════════════════════
+ * Ce qu'on prépare AVANT de lancer une partie : les porteurs, le niveau, les
+ * objets à viser et donc les composants à ramasser, ce qui la fait gagner.
+ *
+ * ⚠ Jusqu'au 10/11 cet onglet s'appelait « En partie » et portait un champ
+ * « les unités que tu as en main », qui classait les lignes accessibles. Il a
+ * été retiré, pour deux raisons qui se rejoignent :
+ *
+ *   1. La politique de Riot pour les outils TFT interdit les recommandations
+ *      fondées sur l'état d'une partie en cours. Un champ qu'on remplit à la
+ *      main avec son banc y entre de plein droit — et ce site est public, avec
+ *      une demande de clé de production en vue.
+ *   2. Il reposait sur des compos saisies à la main avec leur plateau. Au
+ *      Set 19 personne ne les saisira le jour du patch.
+ *
+ * Une fiche est statique et identique pour tout le monde : elle ne prend
+ * aucune entrée. C'est un document de préparation, pas un assistant. */
+function ficheLigne(f, mode, premier){
   const M = D.meta.modes[mode];
-  const val = c[M.cle];
-  const ros = (c.roster || []).map(x =>
-    x.endsWith("*") ? `<span class="puce carry">${esc(x.slice(0,-1))}</span>`
-                    : `<span class="puce">${esc(x)}</span>`).join("");
-  const conteste = c.pr >= 0.45
-    ? ` <span style="color:var(--rouille)">— très contestée</span>`
-    : (c.pr <= 0.12 ? ` <span style="color:var(--cyan)">— peu contestée</span>` : "");
+  const val = f[M.cle];
+  const porteurs = new Set((f.porteurs || []).map(p => p.id));
+  const etoiles = n => n ? `<span class="et">${"★".repeat(n)}</span>` : "";
+
+  // Le plateau : les unités présentes sur au moins un plateau sur trois.
+  const plateau = (f.plateau || []).filter(u => (u.part ?? 0) >= .33).map(u =>
+    `<span class="puce${porteurs.has(u.id) ? " carry" : ""}">${esc(u.nom)}${
+      u.etoiles >= 3 || porteurs.has(u.id) ? etoiles(u.etoiles) : ""}</span>`).join("");
+
+  const conteste = f.par_lobby == null ? ""
+    : f.par_lobby >= .45 ? ` <span style="color:var(--sang)">— très contestée</span>`
+    : f.par_lobby <= .12 ? ` <span style="color:var(--hextech)">— peu contestée</span>` : "";
   const sv = (k, t) => k === M.cle ? `<u>${t}</u>` : t;
+
+  const objets = (f.porteurs || []).filter(p => f.objets?.[p.id]?.length).map(p =>
+    `<b>${esc(p.nom)}</b> : ${f.objets[p.id].map(o =>
+      `${esc(o.nom)}${o.composants?.length
+        ? ` <span class="cmp">(${esc(o.composants.join(" + "))})</span>` : ""}`).join(", ")}`
+  ).join("<br>");
+  const composants = (f.composants || []).map(c =>
+    c.fois > 1 ? `${esc(c.composant)} ×${c.fois}` : esc(c.composant)).join(" · ");
+  const trois = (f.porteurs || []).filter(p => (p.part_trois_etoiles ?? 0) >= .2).map(p =>
+    `<b>${esc(p.nom)}</b> en ★★★ sur ${Math.round(100 * p.part_trois_etoiles)} % des plateaux`
+  ).join(" · ");
+  const niveaux = (f.niveaux || []).filter(n => (n.part ?? 0) >= .1).map(n =>
+    `niveau <b>${n.niveau}</b> (${Math.round(100 * n.part)} %)`).join(", ");
+  const victoire = (f.victoire || []).map(w =>
+    `${w.unites.map(u => `<b>${esc(u.nom)}</b>${u.etoiles ? " " + "★".repeat(u.etoiles) : ""}`).join(" + ")}
+     — place ${w.place} sur ${nb(w.n)} parties`).join("<br>");
+
+  // Ce que LUI en connaît, si ses parties sont du même set que le relevé.
+  const L = (D.compos_lui?.etat ?? "ok") === "ok" && D.compos_lui?.set === setCourant()
+    ? (D.compos_lui.compos || []).find(x => x.code === f.code) : null;
+  const toi = !L ? "" : [
+    L.porteurs_reguliers?.length ? `tu joues ${L.porteurs_reguliers.map(nomU).join(", ")}` : "",
+    L.porteurs_occasionnels?.length ? `déjà sorti ${L.porteurs_occasionnels.map(nomU).join(", ")}` : "",
+    L.porteurs_jamais_joues?.length ? `jamais joué ${L.porteurs_jamais_joues.map(nomU).join(", ")}` : "",
+  ].filter(Boolean).join(" · ");
+
+  const dl = [
+    ["Porteurs et objets", objets],
+    ["Composants à ramasser", composants],
+    ["Niveau", niveaux],
+    ["Trois étoiles", trois],
+    ["Ce qui la fait gagner", victoire],
+    ["Traits", (f.traits || []).slice(0, 4).map(t => `${esc(t.nom)} ${t.palier ?? ""}`).join(" · ")],
+    ["Toi", toi ? toi.charAt(0).toUpperCase() + toi.slice(1) + "." : ""],
+  ].filter(([, v]) => v).map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
+
   return `<article class="compo${premier ? " top" : ""}">
     <div class="ligne1">
-      <span class="n">${esc(c.n)}</span>
-      <span class="val">${val == null ? "—" : val.toFixed(val < 10 ? 2 : 1)}${M.unite}</span>
-      <span class="lvl">${esc(c.lvl || "")}</span>
+      <span class="n">${esc(f.nom)}</span>
+      <span class="val">${val == null ? "—" : (M.cle === "lp" && val > 0 ? "+" : "")
+        + val.toFixed(M.cle === "lp" ? 2 : 1)}${M.unite}</span>
+      <span class="lvl">${esc(f.type_libelle || "")}</span>
     </div>
-    <div class="ros">${ros}</div>
+    <div class="ros">${plateau}</div>
     <div class="stats">
-      ${sv("avg", `placement <b>${c.avg.toFixed(2)}</b>`)} ·
-      ${c.t4 != null ? sv("t4", `top 4 <b>${c.t4.toFixed(1)} %</b>`) + " · " : ""}
-      ${sv("wr", `victoires <b>${c.wr.toFixed(1)} %</b>`)} ·
-      pick ${c.pr}${conteste}
+      ${f.lp != null ? sv("lp", `<b>${f.lp > 0 ? "+" : ""}${f.lp} LP</b> par partie`) + " · " : ""}
+      placement <b>${f.place ?? "—"}</b> ·
+      ${f.top4 != null ? sv("top4", `top 4 <b>${f.top4} %</b>`) + " · " : ""}
+      ${f.premieres != null ? sv("premieres", `1<sup>res</sup> <b>${f.premieres} %</b>`) + " · " : ""}
+      ${f.par_lobby != null ? `${String(f.par_lobby).replace(".", ",")} joueur par lobby${conteste} · ` : ""}
+      ${nb(f.n)} parties
     </div>
-    ${c.note ? `<div class="txt">${esc(c.note)}</div>` : ""}
+    ${dl ? `<dl class="fiche-d">${dl}</dl>` : ""}
   </article>`;
-}
-
-
-function norm(s){
-  return String(s).toLowerCase().normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"").replace(/['’.\-\s]/g,"");
-}
-function pivot(saisie){
-  const m = D.meta;
-  const mots = saisie.split(/[\s,;]+/).filter(Boolean).map(norm);
-  if(!mots.length) return "";
-  const noms = new Set();
-  m.compos.forEach(c => (c.roster||[]).forEach(r => noms.add(r.replace(/\*$/,""))));
-  const connus = [...noms].filter(n => mots.includes(norm(n)));
-  if(!connus.length) return `<div class="vide">Aucune de ces unités n'apparaît dans
-    les compos du relevé. Toutes ne définissent pas une ligne : certaines sont des
-    pièces d'appoint, d'autres des unités flexibles.</div>`;
-
-  const res = m.compos.map(c => {
-    const ros = (c.roster||[]).map(r => r.replace(/\*$/,""));
-    const ont = ros.filter(r => connus.some(k => norm(k) === norm(r)));
-    const manq = ros.filter(r => !ont.includes(r));
-    const aCarry = ont.some(r => norm(r) === norm(c.carry));
-    return {c, ont, manq, aCarry, score: ont.length/ros.length + (aCarry ? .35 : 0)};
-  }).filter(p => p.ont.length).sort((a,b) => b.score - a.score);
-
-  return `<p class="faible">Avec <b>${connus.map(esc).join(" · ")}</b> —
-    ${res.length} ligne${res.length > 1 ? "s" : ""} accessible${res.length > 1 ? "s" : ""}.</p>` + res.map(p => `
-    <article class="compo${p.aCarry ? " top" : ""}">
-      <div class="ligne1"><span class="n">${esc(p.c.n)}</span>
-        <span class="val">${p.ont.length}/${p.ont.length + p.manq.length}</span>
-        <span class="lvl">${esc(p.c.lvl || "")}</span></div>
-      <div class="ros">${p.ont.map(x => `<span class="puce${norm(x) === norm(p.c.carry) ? " carry" : ""}">${esc(x)}</span>`).join("")}${p.manq.map(x => `<span class="puce miss">${esc(x)}</span>`).join("")}</div>
-      <div class="txt">${p.aCarry
-        ? "<b>Tu tiens le carry.</b> C'est le pivot le moins cher."
-        : (p.ont.length/(p.ont.length+p.manq.length) >= .5
-            ? "Moitié du board en place, mais <b>pas le carry</b> — c'est lui qui décide."
-            : "Pivot lointain : il manque l'essentiel.")}</div>
-      <div class="stats">placement <b>${p.c.avg.toFixed(2)}</b> ·
-        victoires <b>${p.c.wr.toFixed(1)} %</b> · pick ${p.c.pr}</div>
-    </article>`).join("");
 }
 
 
@@ -639,7 +720,8 @@ const LIBMODE = {ladder:"Ladder", cumule:"Points cumulés", checkmate:"Checkmate
    « voilà ce qu'il faudrait pour savoir ». */
 function blocFocus(){
   const f = D.focus;
-  if(!f) return "";
+  const g = garde(f, "Sur quoi te concentrer");
+  if(g !== null) return g;
   const L = f.lignes || [];
   const jamais = (f.fortes_peu_contestees || []).filter(x => !x.il_la_joue);
   const solides = L.filter(l => l.solide);
@@ -647,7 +729,7 @@ function blocFocus(){
   const ligne = l => {
     const sens = l.ecart_corrige < 0 ? "pl" : "mo";
     return `<div class="ligne-focus">
-      <span class="nom">${esc(l.nom)}</span>
+      <span class="nom">${nomU(l.nom)}</span>
       <span class="ec ${sens}">${l.ecart_corrige > 0 ? "+" : "−"}${Math.abs(l.ecart_corrige).toFixed(2)}</span>
       <span class="det">${l.n} parties · pick ${l.pick} % du ladder</span>
       <span class="verdict">${l.solide ? "hors du bruit"
@@ -672,7 +754,7 @@ function blocFocus(){
       la ligne la moins contestée gagne.</p>
     <div class="cal">${(f.fortes_peu_contestees || []).map(x => `<div class="evt${x.il_la_joue ? " prochain" : ""}">
       <span class="dt">${x.avg.toFixed(2)}</span>
-      <span class="nm">${esc(x.nom)} <span class="faible">— pick ${x.pick} %</span></span>
+      <span class="nm">${nomU(x.nom)} <span class="faible">— pick ${x.pick} %</span></span>
       <span class="tag${x.il_la_joue ? " ok" : ""}">${x.il_la_joue ? "tu la joues" : "jamais jouée"}</span>
     </div>`).join("")}</div>
     ${jamais.length === 0 ? `<p class="faible"><b>Tu les joues déjà toutes.</b>
@@ -689,10 +771,13 @@ function blocFocus(){
  * et c'est le classement qui est l'objectif. */
 function blocCompos(){
   const C = D.compos_lui;
+  const g = garde(C, "Les compos, par ce qu'elles rapportent");
+  if(g !== null) return g;
   if(!C?.compos?.length) return "";
 
-  const nom = u => esc(String(u).replace(/^DA_/, "").replace(/_?18_?/g, "")
-                                .replace(/_/g, " "));
+  // Les identifiants de victoire portent leurs étoiles (« …Krug-3 »).
+  const nom = u => { const [id, et] = String(u).split(/-(?=\d$)/);
+                     return nomU(id) + (et ? " " + "★".repeat(+et) : ""); };
 
   const cartes = C.compos.map(c => {
     const part = Math.round(100 * (c.part_porteurs_connus || 0));
@@ -750,9 +835,11 @@ function blocCompos(){
  * Un objet fini ne se choisit pas, il se fabrique : on ramasse des composants
  * et on décide quoi en faire. Un classement d'objets finis par taux de
  * victoire ne répond à aucune décision réelle. Ce bloc répond aux deux qui
- * existent : que prendre au carrousel, et quel slam ne coûte rien. */
+ * existent : que prendre au carrousel, et quel objet assembler sans rien perdre. */
 function blocObjets(){
   const o = D.objets;
+  const g = garde(o, "Les objets, en composants");
+  if(g !== null) return g;
   if(!o?.carries?.length) return "";
 
   const car = (o.carrousel || []).slice(0, 6);
@@ -784,7 +871,7 @@ function blocObjets(){
           (eff).toFixed(3)}</span>` : ""}</li>`;
     }).join("");
     return `<div class="carte">
-      <h3 style="margin:0 0 .3rem">${esc(c.carry)}</h3>
+      <h3 style="margin:0 0 .3rem">${nomU(c.carry)}</h3>
       <p class="faible" style="margin:0 0 .7rem">Tu la sors ${c.n_parties_lui} fois
         (place ${c.sa_place}) · le ladder ${c.place_ladder} sur
         ${nb(c.n_ladder)} parties${c.etoile3
@@ -797,7 +884,7 @@ function blocObjets(){
   return `<h2>Les objets, en composants</h2>
     <p class="doux">Un objet fini ne se choisit pas, il se fabrique. Les deux seules
       décisions qui existent sont <b>quel composant prendre au carrousel</b> et
-      <b>quand slammer plutôt que garder</b> — alors c'est à celles-là que ce bloc
+      <b>quand assembler plutôt que garder</b> — alors c'est à celles-là que ce bloc
       répond. Patch ${esc(o.patch)}, ${esc(o.rang)},
       ${nb(o.n_parties_ladder)} parties.</p>
 
@@ -810,9 +897,9 @@ function blocObjets(){
         <div class="dist">${barres}</div>
       </div>
       <div class="carte">
-        <h3 style="margin:0 0 .8rem">Les slams qui ne coûtent rien</h3>
+        <h3 style="margin:0 0 .8rem">À assembler sans rien perdre</h3>
         <p class="faible" style="margin:0 0 .8rem">Ces objets sont déjà au BiS d'un
-          de tes carries : les monter tôt ne gâche rien. <b>Tout le reste est un
+          de tes carries : les assembler tôt ne gâche rien. <b>Tout le reste est un
           vrai arbitrage</b>, et il dépend de tes PV et de ton tempo — pas de la
           donnée.</p>
         <div class="dist">${slams}</div>
@@ -833,77 +920,107 @@ function vueAvant(){
   const m = D.meta;
   if(!m) return `<div class="note warn"><b>Données indisponibles.</b>
     Relance <code>python3 tools/build/build_site.py</code>.</div>`;
-  const M = m.modes[MODE];
+  const top = (m.compos || []).slice(0, 3);
 
   return `<h1>Ce que tu joues ce patch</h1>
-    ${blocFocus()}
-    ${blocCompos()}
-    ${blocObjets()}
+    ${m.volume?.frais && m.volume.note
+      ? `<div class="note warn"><b>Patch ${esc(m.releve.patch)}, encore frais.</b>
+          ${esc(m.volume.note)}</div>` : ""}
+    ${(() => {
+      // Les trois blocs croisent SES parties et la méta. Quand ses parties
+      // sont d'un autre set, ils refusent tous les trois pour la même raison :
+      // on le dit une fois, pas trois.
+      const croises = [D.focus, D.compos_lui, D.objets];
+      if(croises.every(o => o?.etat === "sets_differents"))
+        return `<div class="note"><b>Tes parties récoltées sont du Set
+          ${D.focus.sets?.parties}, la méta relevée est celle du Set ${m.set}.</b>
+          Le focus, les compos par familiarité et les objets de tes carries
+          croisent les deux : ils ne se calculent pas entre deux sets, et
+          reviendront à ta première récolte du Set ${m.set}
+          (<code>LANCER.bat</code>, après quelques parties classées).
+          En attendant, les fiches et le classement ci-dessous ne dépendent
+          pas de toi : ils sont à jour.</div>`;
+      return blocFocus() + blocCompos() + blocObjets();
+    })()}
 
-    <h2>Les compos du patch</h2>
-    <p class="doux">La même question a trois réponses : ce qu'il faut jouer dépend
-      de l'enjeu, pas seulement du patch.</p>
+    ${top.length ? `<h2>Les lignes qui rapportent</h2>
+      <p class="doux">Les ${top.length} premières du relevé, par LP gagné par partie.
+        Chacune a sa fiche complète — objets, composants, niveau — dans
+        l'onglet <a href="#fiches">Fiches</a>.</p>
+      <div class="cal">${top.map(f => `<div class="evt">
+        <span class="dt">${f.lp != null ? (f.lp > 0 ? "+" : "") + f.lp : "—"}</span>
+        <span class="nm">${esc(f.nom)} <span class="faible">— ${esc(f.type_libelle || "")}</span></span>
+        <span class="tag">place ${f.place ?? "—"}</span></div>`).join("")}</div>` : ""}
+
+    <details class="pourquoi">
+      <summary>Le classement complet des unités</summary>
+      <p class="faible">Ce tableau porte un <b>biais de survie</b> : il décrit des
+        plateaux finaux. Avoir une unité à 5 coûts sur son plateau veut surtout dire
+        que la partie se passait bien. Il sert à repérer un mouvement, pas à choisir
+        quoi jouer — c'est à ça que servent les fiches.</p>
+      ${m.unites?.length ? `<div class="tbl"><table>
+        <thead><tr><th>#</th><th>Unité</th><th class="num">Placement</th>
+          <th class="num">1<sup>res</sup></th><th class="num">Parties</th></tr></thead>
+        <tbody>${m.unites.map(u => `<tr>
+          <td class="rang">${u.rang}</td><td>${esc(u.nom)}</td>
+          <td class="num">${u.avg.toFixed(2)}</td>
+          <td class="num">${u.wr.toFixed(1)} %</td>
+          <td class="num">${nb(u.n)}</td></tr>`).join("")}</tbody>
+      </table></div>`
+      : `<div class="vide">Aucune unité ne dépasse encore
+          ${nb(m.volume?.seuil_par_unite)} parties sur ce patch
+          (${nb(m.releve.n_parties)} parties relevées en tout). Le classement
+          apparaîtra de lui-même.</div>`}
+    </details>`;
+}
+
+/* -------------------------------------------------- LES FICHES */
+/* Se lit avant de lancer une partie. Aucune saisie : voir ficheLigne(). */
+function vueFiches(){
+  const m = D.meta;
+  if(!m) return `<div class="note warn">Données indisponibles.</div>`;
+  const M = m.modes[MODE];
+  const t = m.tete_stable;
+  const parId = Object.fromEntries((m.unites || []).map(u => [u.id, u]));
+  const parCode = Object.fromEntries((m.compos || []).map(f => [f.code, f]));
+  const src = m.compos_source;
+
+  return `<h1>Tes fiches de ligne</h1>
+    <p class="doux">Une fiche se lit <b>avant</b> de lancer une partie : on choisit
+      ses deux ou trois lignes, on retient leurs porteurs et les composants qu'elles
+      demandent, et on entre en partie avec un plan. Elles sont les mêmes pour tout
+      le monde — rien ici ne dépend de ce qui se passe dans ta partie.
+      ${src ? `Patch ${esc(m.releve.patch)}, ${nb(src.n_parties)} parties
+        (${esc(m.releve.rang)}), relevé du ${fdate(src.date)}.` : ""}</p>
+
+    ${m.compos?.length ? `
     <div class="seg" role="group" aria-label="Enjeu">
       ${Object.keys(m.modes).map(k => `<button data-mode="${k}"
         aria-pressed="${k === MODE}">${LIBMODE[k]}</button>`).join("")}
     </div>
     <div class="note"><b>${LIBMODE[MODE]}</b> — classé par ${esc(M.critere)}.
       ${esc(M.pourquoi)}</div>
-
-    ${M.classement.length
-      ? M.classement.map((c,i) => carteCompo(c, MODE, i === 0)).join("")
-      : `<div class="vide">Aucune compo ne porte cette mesure dans le relevé courant.</div>`}
-
-    <details class="pourquoi">
-      <summary>Le classement complet des unités</summary>
-      <p class="faible">Ce tableau porte un <b>biais de survie</b> : il décrit des
-        boards finaux. Avoir une unité à 5 coûts sur son board veut surtout dire que
-        la partie se passait bien. Il sert à repérer un mouvement, pas à choisir
-        quoi jouer — c'est à ça que servent les compos ci-dessus.</p>
-      <div class="tbl"><table>
-        <thead><tr><th>#</th><th>Unité</th><th class="num">Placement</th>
-          <th class="num">Victoires</th><th class="num">Parties</th></tr></thead>
-        <tbody>${m.unites.map(u => `<tr>
-          <td class="rang">${u.rang}</td><td>${esc(u.nom)}</td>
-          <td class="num">${u.avg.toFixed(2)}</td>
-          <td class="num">${u.wr.toFixed(1)} %</td>
-          <td class="num">${nb(u.n)}</td></tr>`).join("")}</tbody>
-      </table></div>
-    </details>`;
-}
-
-/* -------------------------------------------------- PENDANT la partie */
-/* Un seul geste possible, en haut, et rien au-dessus. Cette vue se
-   consulte au téléphone, entre deux manches : tout ce qui n'aide pas
-   à décider en trois secondes en a été retiré. */
-function vuePendant(){
-  const m = D.meta;
-  if(!m) return `<div class="note warn">Données indisponibles.</div>`;
-  const t = m.tete_stable;
-  const parNom = Object.fromEntries((m.unites || []).map(u => [u.nom, u]));
-
-  return `<h1>Où je peux aller ?</h1>
-    <div class="rech rech-grande">
-      <input id="pivot" type="text" autocomplete="off" spellcheck="false"
-        inputmode="search" enterkeyhint="search"
-        placeholder="les unités que tu as en main">
-    </div>
-    <div id="pivot-res"></div>
-    <p class="faible">Classement par proximité, et <b>le carry compte double</b> :
-      tenir trois pièces de façade ne vaut pas tenir la pièce qui décide.</p>
+    ${M.classement.map((code, i) => ficheLigne(parCode[code], MODE, i === 0)).join("")}
+    ${m.volume?.frais ? `<div class="note warn">Patch encore frais : l'ordre des
+      objets et des lignes peut bouger d'un relevé à l'autre.</div>` : ""}
+    <p class="faible">⚠ ${esc(src?.limite || "")} Les objets listés sont les plus
+      <b>portés</b> sur chaque porteur — une fréquence, pas un effet mesuré. Une
+      compo est dite « trois étoiles » quand un de ses porteurs est en trois
+      étoiles sur plus de la moitié des plateaux relevés.</p>`
+    : `<div class="note">${esc(m.compos_etat || "Aucune compo dans le relevé courant.")}</div>`}
 
     ${t && t.unites.length ? `
     <h2>Toujours bonnes</h2>
-    <p class="faible">Ces ${t.unites.length} unités occupent la tête depuis
-      ${t.n_releves} relevés, quel que soit le patch. En cas de doute, elles ne
-      sont jamais un mauvais choix.</p>
+    <p class="faible">Ces ${t.unites.length} unités occupent la tête sur les
+      ${t.n_releves} patchs relevés de ce set. Une ligne construite autour d'elles
+      vieillit mieux qu'une autre.</p>
     <div class="ruche">${[...t.unites]
-      .sort((a,b) => (parNom[a]?.rang ?? 99) - (parNom[b]?.rang ?? 99))
-      .map(nom => {
-        const u = parNom[nom];
+      .sort((a,b) => (parId[a.id]?.rang ?? 99) - (parId[b.id]?.rang ?? 99))
+      .map(x => {
+        const u = parId[x.id];
         return `<div class="hex">
           <span class="r">${u ? u.rang : "—"}</span>
-          <span class="u">${esc(nom)}</span>
+          <span class="u">${esc(x.nom)}</span>
           <span class="a">${u ? u.avg.toFixed(2) : ""}</span>
         </div>`;
       }).join("")}</div>` : ""}
@@ -920,16 +1037,15 @@ function vuePendant(){
  * Les deux dernières s'affichent en .ref : fond, bordure et bandeau distincts.
  * Sans ça, dans trois semaines, personne ne saura plus lequel est lequel. */
 
-/* Le set du relevé courant, pour périmer ce qui doit l'être. */
-function setCourant(){
-  const s = D.compos_lui?.patch || D.meta?.releve?.patch;
-  const n = parseInt(String(s || "").split(".")[0], 10);
-  return Number.isFinite(n) ? n : null;
-}
-
 function enTeteRef(o, titre, sousTitre){
   const sc = setCourant();
-  if(o?.set && sc && o.set !== sc) return null;   // périmé : on n'affiche pas
+  // Périmé : on n'affiche pas le contenu — mais on DIT qu'il existe et
+  // pourquoi il manque. Un bloc qui disparaît sans un mot le jour du
+  // changement de set, c'est une question que personne ne pensera à poser.
+  if(o?.set && sc && o.set !== sc) return {perime: `<h2>${titre}</h2>
+    <div class="note">Cette référence a été transcrite pour le <b>Set ${o.set}</b>.
+      Elle est masquée tant qu'elle n'a pas été revérifiée sur le Set ${sc} :
+      mieux vaut un bloc absent qu'un chiffre faux.</div>`};
   const lib = o?.nature === "raisonnement" ? "raisonnement, pas mesure"
             : "guide transcrit, pas mesure";
   return `<h2>${titre}</h2>
@@ -940,10 +1056,11 @@ function enTeteRef(o, titre, sousTitre){
 function blocFondamentaux(){
   const o = D.fondamentaux;
   const tete = enTeteRef(o, "Les chiffres du jeu",
-    `Les cotes de boutique rendent un roll calculable, et les timings donnent des
+    `Les cotes de boutique rendent une relance calculable, et les timings donnent des
      repères. <b>Rien ici ne vient de tes parties</b> — ce sont des constantes du
      set ${o?.set ?? ""}, transcrites depuis un guide.`);
   if(!tete) return "";
+  if(tete.perime) return tete.perime;
 
   const c = o.cotes_boutique;
   const lignes = Object.entries(c.par_niveau).map(([niv, v]) =>
@@ -958,8 +1075,9 @@ function blocFondamentaux(){
   // victoires » s'affichait sans accent. Les libellés sont écrits.
   const LIBT = {
     serie_de_victoires: "Série de victoires", serie_de_defaites: "Série de défaites",
-    serie_mixte: "Série mixte", reroll_1_cout: "Reroll 1-coût",
-    reroll_2_couts: "Reroll 2-coûts", reroll_3_couts: "Reroll 3-coûts"};
+    serie_mixte: "Série mixte", reroll_1_cout: "Compo trois étoiles, 1-coût",
+    reroll_2_couts: "Compo trois étoiles, 2-coûts",
+    reroll_3_couts: "Compo trois étoiles, 3-coûts"};
   const tim = Object.entries(o.timings)
     .filter(([k]) => !k.startsWith("_"))
     .map(([k, t]) => {
@@ -980,11 +1098,13 @@ function blocFondamentaux(){
           ${lignes}
         </table>
         <p class="faible" style="margin:.7rem 0 0"><b>Lis la colonne des
-          4-coûts :</b> 0 · 2 · 5 · 10 · <b>24</b> · 30 · 40. Le saut au niveau 8
-          est toute la raison d'être du « 8 rapide » — en dessous, on cherche une
-          unité qui sort une fois sur dix.</p>
+          4-coûts :</b> ${Object.entries(c.par_niveau).map(([niv, v]) =>
+            niv === "8" ? `<b>${v[3]}</b>` : v[3]).join(" · ")}. Le saut entre le
+          niveau 7 (${c.par_niveau["7"]?.[3]} %) et le niveau 8
+          (${c.par_niveau["8"]?.[3]} %) est toute la raison d'être du « 8 rapide ».</p>
         <p class="faible" style="margin:.5rem 0 0">Exemplaires de chaque unité dans
           le pool partagé : ${Object.entries(o.taille_pool)
+            .filter(([k]) => !k.startsWith("_"))
             .map(([k, v]) => `${k}c → ${v}`).join(" · ")}. C'est ce qui rend une
           unité contestée.</p>
       </div>
@@ -1006,6 +1126,7 @@ function blocAugments(){
   const tete = enTeteRef(o, "Les augments",
     "Aucun chiffre n'existe, pour personne. Ce qui suit est un cadre de décision.");
   if(!tete) return "";
+  if(tete.perime) return tete.perime;
   const p = o.pourquoi_pas_de_chiffres || {};
   // Le compteur vient du relevé, lui : c'est la seule partie MESURÉE du bloc.
   const n = D.compos_lui?.augments?.entrees_trouvees;
@@ -1135,6 +1256,17 @@ function vueApres(){
     Lance <code>LANCER.bat</code>, puis
     <code>python3 tools/build/build_miroir.py &lt;csv&gt; &lt;résumé&gt;</code>.</div>`;
 
+  // Ses parties ne périment pas comme la méta : ses habitudes de jeu se
+  // lisent encore d'un set à l'autre. Mais elles se lisent comme une
+  // archive, et la page le dit en tête plutôt que de laisser croire que ce
+  // sont les parties du set en cours.
+  const scA = setCourant();
+  const archive = (mi.set != null && scA != null && mi.set !== scA)
+    ? `<div class="archive"><b>Archive du Set ${mi.set}.</b> Tes parties du
+        Set ${scA} n'ont pas encore été récoltées : tout ce qui suit décrit ton
+        jeu au set précédent. Lance <code>LANCER.bat</code> après quelques
+        parties classées pour le remplacer.</div>` : "";
+
   const S = mi.seuil_solide ?? 2;
   const ec = mi.ecarts || {};
   const libEc = {top2:"Top 2", top4:"Top 4",
@@ -1161,15 +1293,17 @@ function vueApres(){
         de ta moyenne à ce volume.</p>
       <div class="carte">${solides.map(t => `
         <div class="mv ${t.ecart < 0 ? "up" : "dn"}">
-          <span class="nom">${esc(t.nom)}</span>
+          <span class="nom">${nomU(t.nom)}</span>
           <span class="rg">${t.n} parties · placement ${t.placement.toFixed(2)}</span>
           <span class="d">${t.ecart > 0 ? "+" : "−"}${Math.abs(t.ecart).toFixed(2)}</span>
         </div>`).join("")}</div>
-      <div class="note warn"><b>Ne pas en tirer « joue plus Alune ».</b>
-        Ces mesures portent sur des <b>boards finaux</b> : avoir le trait unique d'une
-        unité à 5 coûts veut d'abord dire que la partie se passait bien. Le biais
+      <div class="note warn"><b>Ne pas en tirer « joue plus ${nomU(solides[0].nom)} ».</b>
+        Ces mesures portent sur des <b>plateaux finaux</b> : un trait qui demande des
+        unités chères veut d'abord dire que la partie se passait bien. Le biais
         gonfle ce qui est en tête. Le côté résistant au biais serait un trait présent
-        quand tu fais <i>moins</i> bien — et aucun ne franchit le seuil.</div>`
+        quand tu fais <i>moins</i> bien${solides.some(t => t.ecart > 0)
+          ? " : regarde ceux dont l'écart est positif."
+          : " — et aucun ne franchit le seuil."}</div>`
     : `<div class="note">Aucun trait ne sort du bruit sur ${mi.n_parties} parties.</div>`}
     ${autres ? `<p class="faible">${autres} autres traits mesurés, tous dans le
       bruit — leur écart est plus petit que l'incertitude de mesure.</p>` : ""}
@@ -1194,6 +1328,7 @@ function vueApres(){
 
   const ind = Object.entries(mi.indisponible || {});
   return `<h1>Ce que disent tes parties</h1>
+    ${archive}
     <p class="doux">${mi.n_parties} parties du Set ${mi.set}, du
       ${fdate(mi.fenetre.de)} au ${fdate(mi.fenetre.a)}${
       p?.lecture?.rang_mesure ? `. ${esc(p.lecture.rang_mesure)}` : ""}.</p>
@@ -1227,7 +1362,7 @@ function vueApres(){
         `<p class="faible"><b>${esc(k)}</b> — ${esc(v)}</p>`).join("")}
       <p class="faible" style="margin-bottom:0">Et tout ce qui relève du <b>refusé</b>
         — unité non achetée, augment écarté — est hors de portée par nature : l'API ne
-        livre que des boards finaux.</p></div>` : ""}
+        livre que des plateaux finaux.</p></div>` : ""}
 
     ${p?.lecture ? `<details class="pourquoi">
       <summary>Les réserves sur ces chiffres</summary>
@@ -1255,9 +1390,12 @@ function vueApres(){
  * et Challenger, et personne ne peut le publier : il demande SES lobbies. */
 function blocContestation(){
   const C = D.contestation;
+  if(!C) return "";
+  const gC = garde(C, "Quand ta ligne est contestée");
+  if(gC !== null) return gC;
   if(!C?.par_champion?.length) return "";
   const g = C.global;
-  const nom = u => esc(String(u).charAt(0).toUpperCase() + String(u).slice(1));
+  const nom = u => { const t = nomU(u); return t.charAt(0).toUpperCase() + t.slice(1); };
 
   const verdict = !g ? "" : (g.solide
     ? `<div class="regle"><div class="regle-b">mesuré sur tes lobbies</div>
@@ -1323,15 +1461,53 @@ function blocContestation(){
  * qui reste, et c'est la seule règle de décision que le projet ait produite. */
 function blocFuites(){
   const F = D.fuites;
+  const gF = garde(F, "Ce qui te coûte des LP sans faute de jeu");
+  if(gF !== null) return gF;
   if(!F?.abandons) return "";
-  const A = F.abandons, R = F.rythme;
+  const A = F.abandons, R = F.rythme || {};
+  const v = x => x != null;          // « présent », zéro compris
+
+  // Chaque carte ne s'affiche que si ses chiffres existent. Une récolte de
+  // début de set n'a ni abandon, ni écart à la barre, ni rythme mesurable :
+  // la première version de ce bloc y affichait « null % » et « undefined
+  // parties » — trouvé par le contrôle de rendu, pas par un test de données.
+  const cartes = [
+    A.n > 0 && v(A.cout_total_au_rang_actuel) ? `<div class="carte">
+        <div class="chiffre">${nb(A.cout_total_au_rang_actuel)}</div>
+        <div class="unite">LP, tes ${A.n} abandons à ton rang d'aujourd'hui</div>
+        <p class="faible" style="margin:.8rem 0 0">${v(A.part_de_l_ecart_a_la_barre_pct)
+          ? `<b>${A.part_de_l_ecart_a_la_barre_pct} % de l'écart à Challenger</b>, pour `
+          : ""}${A.part_des_parties_pct} % de tes parties.</p>
+      </div>` : "",
+    v(R.jours_actifs_requis) ? `<div class="carte">
+        <div class="chiffre">${R.jours_actifs_requis}</div>
+        <div class="unite">jours de jeu jusqu'à la barre</div>
+        <p class="faible" style="margin:.8rem 0 0">À ton rythme réel
+          (${R.parties_par_jour_actif} parties les jours où tu joues) et à
+          ${F.lp_par_partie_attendu} LP la partie, soit
+          <b>${R.lp_par_jour_actif > 0 ? "+" : ""}${R.lp_par_jour_actif} LP par
+          jour joué</b>.</p>
+      </div>`
+    : v(R.lp_par_jour_actif) ? `<div class="carte">
+        <div class="chiffre sm">${R.lp_par_jour_actif > 0 ? "+" : ""}${R.lp_par_jour_actif} LP</div>
+        <div class="unite">par jour joué</div>
+        <p class="faible" style="margin:.8rem 0 0">${R.parties_par_jour_actif}
+          parties les jours où tu joues, à ${F.lp_par_partie_attendu} LP la
+          partie.</p>
+      </div>` : "",
+    v(R.jours_sans_jouer) && v(R.etendue_jours) ? `<div class="carte">
+        <div class="chiffre sm">${R.jours_sans_jouer}<span class="faible" style="font-size:.5em">/${R.etendue_jours}</span></div>
+        <div class="unite">jours sans jouer sur la période</div>
+        <p class="faible" style="margin:.8rem 0 0">Un taux de change, pas un
+          reproche : à toi de décider. Un travail et des enfants ne se négocient
+          pas contre des LP.</p>
+      </div>` : "",
+  ].filter(Boolean).join("");
 
   return `<h2>Ce qui te coûte des LP sans faute de jeu</h2>
-    <p class="doux">Aucun de tes agrégats ne montre de faiblesse technique :
-      tu montes de niveau mieux que ton lobby, tu convertis au-dessus de ton
-      niveau, tu ne thésaurises pas. <b>Il n'y a rien à corriger dans ton
-      jeu.</b> Reste ce que la donnée montre sans ambiguïté.</p>
+    <p class="doux">${esc(F.pourquoi || "")}</p>
 
+    ${v(A.cout_d_un_abandon_maintenant) && v(F.lp_par_partie_attendu) ? `
     <div class="regle"><div class="regle-b">règle, tirée du barème</div>
       <p style="margin:0"><b>Ne pas lancer une partie coûte 0 LP. En lancer une
         et l'abandonner en coûte ${Math.abs(Math.round(F.bareme.lp_8e_place))}</b>
@@ -1340,34 +1516,11 @@ function blocFuites(){
         par abandon.</b> Ce n'est pas de la discipline, c'est une asymétrie :
         si tu risques d'être interrompu, la file d'attente est le mauvais choix
         — pas le jeu.</p>
-    </div>
+    </div>` : ""}
 
-    <div class="grille">
-      <div class="carte">
-        <div class="chiffre">${nb(A.cout_total_au_rang_actuel)}</div>
-        <div class="unite">LP, tes ${A.n} abandons à ton rang d'aujourd'hui</div>
-        <p class="faible" style="margin:.8rem 0 0"><b>${A.part_de_l_ecart_a_la_barre_pct} %
-          de l'écart à Challenger</b>, pour ${A.part_des_parties_pct} % de tes
-          parties.</p>
-      </div>
-      <div class="carte">
-        <div class="chiffre">${R.jours_actifs_requis}</div>
-        <div class="unite">jours de jeu jusqu'à la barre</div>
-        <p class="faible" style="margin:.8rem 0 0">À ton rythme réel
-          (${R.parties_par_jour_actif} parties les jours où tu joues) et à
-          ${R.lp_par_partie_attendu ?? F.lp_par_partie_attendu} LP la partie, soit
-          <b>${R.lp_par_jour_actif > 0 ? "+" : ""}${R.lp_par_jour_actif} LP par
-          jour joué</b>.</p>
-      </div>
-      <div class="carte">
-        <div class="chiffre sm">${R.jours_sans_jouer}<span class="faible" style="font-size:.5em">/${R.etendue_jours}</span></div>
-        <div class="unite">jours sans jouer sur la période</div>
-        <p class="faible" style="margin:.8rem 0 0">Un taux de change, pas un
-          reproche : à toi de décider. Un travail et des enfants ne se négocient
-          pas contre des LP.</p>
-      </div>
-    </div>
+    ${cartes ? `<div class="grille">${cartes}</div>` : ""}
 
+    ${A.n > 0 ? `
     <h3 style="margin-top:1.6rem">Les parties lâchées</h3>
     <div class="dist">${(A.detail || []).map(d => `
       <div class="ol" style="grid-template-columns:6.5rem 1fr 5.5rem">
@@ -1379,9 +1532,11 @@ function blocFuites(){
     <p class="faible">L'or non dépensé est la signature : qui lâche arrête
       d'acheter et de monter. ${A.zone_grise_signalee} autre(s) partie(s)
       ressemblent à des abandons sans en porter la signature complète — elles
-      sont signalées mais <b>jamais retirées d'office</b>.</p>
+      sont signalées mais <b>jamais retirées d'office</b>.</p>` : `
+    <div class="note"><b>Aucune partie lâchée</b> sur les ${nb(F.n_parties ?? 0)}
+      récoltées. Rien à reprendre de ce côté.</div>`}
 
-    <div class="note">${esc(A.reserve)} ${esc(F.decroissance.note)}</div>`;
+    <div class="note">${A.n > 0 ? esc(A.reserve) + " " : ""}${esc(F.decroissance?.note || "")}</div>`;
 }
 
 /* La distance à Challenger, en parties.
@@ -1393,9 +1548,29 @@ function blocFuites(){
  * LP se compriment en montant, le placement dérive vers 4.50). */
 function blocProjection(){
   const j = D.joueur;
-  if(!j?.projection || !j.position) return "";
+  // Non classé, ou position d'un autre set : le paragraphe de position, plus
+  // bas dans la vue, le dit déjà. Inutile de le répéter ici.
+  if(!j || j.etat === "non_classe") return "";
+  if(j.set != null && setCourant() != null && j.set !== setCourant()) return "";
+  if(!j?.position) return "";
+  if(!j.projection || j.projection.lp_manquants == null){
+    // Une position, mais pas d'écart à convertir : barème pas encore
+    // ajustable, ou pas de seuil de Challenger valide pour ce set.
+    const E = j.ecart_a_la_barre || {}, P = j.projection;
+    return `<h2>Combien de parties</h2>
+      <div class="note"><b>${palierFr(j.position.palier)}, ${nb(j.position.lp)} LP.</b>
+        ${P ? `Au placement mesuré (${P.placement_projete}), une partie rapporte
+          <b>${P.lp_par_partie_attendu > 0 ? "+" : ""}${P.lp_par_partie_attendu} LP</b>
+          en moyenne. ` : `Pas encore assez de parties classées ce set pour ajuster
+          ton barème de LP : ${nb(j.bareme_lp?.parties_retenues)} retenue(s), il en
+          faut six. `}
+        Le nombre de parties jusqu'à Challenger n'est pas calculé :
+        ${esc(String(E.raison_si_absent || "aucun écart à la barre").replace(/\.$/, ""))}.</div>`;
+  }
   const pr = j.position, p = j.projection, e = p.erreur_decomposee || {};
   const fo = p.parties_fourchette;
+  const haut = /^(MASTER|GRANDMASTER|CHALLENGER)/.test(String(pr.palier || ""));
+  const sousM = j.ecart_a_la_barre?.dont_jusqu_a_master;
 
   // Jours sans jouer : la décroissance ne pardonne pas à Master, et c'est le
   // seul chiffre de cette page qui se périme tout seul.
@@ -1403,7 +1578,7 @@ function blocProjection(){
   if(pr.derniere_partie_connue){
     const d = Math.floor((Date.now() - Date.parse(pr.derniere_partie_connue))
                          / 86400000);
-    if(d >= 3) dormance = `<div class="note warn"><b>${d} jours sans partie
+    if(d >= 3 && haut) dormance = `<div class="note warn"><b>${d} jours sans partie
       classée.</b> À Master, les 14 parties en banque s'épuisent à une par
       jour, puis c'est −50 LP par jour. L'inaction coûte des LP que le
       placement devra regagner.</div>`;
@@ -1413,7 +1588,11 @@ function blocProjection(){
     <p class="doux">Au-dessus de Master il n'y a plus de division ni de série de
       promotion : de Master 0 LP jusqu'à Challenger, c'est <b>une seule échelle
       continue</b>. C'est ce qui permet de convertir un écart de LP en nombre de
-      parties — et de répondre enfin à la question du projet.</p>
+      parties — et de répondre enfin à la question du projet.
+      ${sousM != null ? `<b>Tu n'y es pas encore :</b> ${nb(sousM)} des
+        ${nb(p.lp_manquants)} LP qui manquent sont des divisions à remonter jusqu'à
+        Master, où chaque place rapporte plus qu'en haut. Cette partie du chemin
+        ira plus vite que le chiffre ne le dit.` : ""}</p>
 
     <div class="grille">
       <div class="carte">
@@ -1484,8 +1663,23 @@ function blocProjection(){
 }
 
 function blocBarre(){
-  const b = D.barre, mi = D.miroir, p = D.profil?.joueurs?.[0];
-  if(!b || !b.challenger_derniers_25) return "";
+  const b = D.barre, p = D.profil?.joueurs?.[0];
+  // Ses chiffres ne se comparent à la barre que s'ils sont du même set.
+  const mi = (D.miroir && D.miroir.set === setCourant()) ? D.miroir : null;
+  if(!b) return "";
+  if(b.etat === "sans_challenger" && b.haut_du_classement){
+    const H = b.haut_du_classement;
+    return `<h2>Où tu en es</h2>
+      <div class="note"><b>Challenger n'est pas encore ouvert.</b>
+        ${esc(b.etat_note || "")} Le 1<sup>er</sup> du classement
+        ${esc(String(b.region || "").toUpperCase())} est à <b>${nb(H.lp_premier)} LP</b>${
+        H.lp_250e != null ? `, le 250<sup>e</sup> à <b>${nb(H.lp_250e)} LP</b>` : ""}
+        après ${nb(H.parties_mediane_top_250)} parties (médiane des 250 premiers).
+        Relevé le ${fdate(b.genere_le)}.</div>`;
+  }
+  const gB = garde(b, "Où tu en es");
+  if(gB !== null) return gB;
+  if(!b.challenger_derniers_25) return "";
   const B = b.challenger_derniers_25;
 
   const ligne = (nom, sien, cible, unite, compare) => {
@@ -1546,16 +1740,25 @@ function vueSuivi(){
         <p class="faible" style="margin:.8rem 0 0">Si rien n'avait changé, le seul
           hasard donnerait ${d.plancher_bruit}.</p></div>
     </div>
+    ${d.volume && !d.volume.comparable ? `<div class="note warn"><b>Volumes
+      inégaux.</b> ${esc(d.volume.avertissement || "")}</div>` : ""}
     ${!d.meme_elo ? `<div class="note warn"><b>Tranches d'elo différentes</b>
       (${esc(d.de.rang)} puis ${esc(d.a.rang)}) : une part du mouvement vient du
       changement de population, pas des patchs.</div>` : ""}
     <h2>Ce qui monte</h2>
     <div class="carte">${d.montees.map(x => ligneMouvement(x, "up")).join("")}</div>
     <h2>Ce qui tombe</h2>
-    <div class="carte">${d.chutes.map(x => ligneMouvement(x, "dn")).join("")}</div>` : "";
+    <div class="carte">${d.chutes.map(x => ligneMouvement(x, "dn")).join("")}</div>`
+    : (m?.diff_raison ? `<h2>La rotation du dernier patch</h2>
+        <div class="note">${esc(m.diff_raison)}</div>` : "");
 
   const evts = [];
-  (c?.patchs || []).forEach(x => evts.push({...x, type:"patch"}));
+  // Un patch est « relevé » si la série automatique le contient. Le drapeau
+  // `releve` de calendrier.json est saisi à la main : il annonçait 18.6
+  // « non relevé » alors que la série en portait 329 000 parties.
+  const vus = new Set((m?.serie || []).map(r => r.patch));
+  (c?.patchs || []).forEach(x => evts.push({...x, type:"patch",
+    releve: x.releve || vus.has(x.nom)}));
   (c?.jalons || []).forEach(x => evts.push({...x, type:"jalon"}));
   evts.sort((a,b) => a.date.localeCompare(b.date));
   const prochain = evts.find(e => e.date > auj);
@@ -1567,9 +1770,16 @@ function vueSuivi(){
     ${blocBarre()}
     ${(() => {
       const J = D.joueur;
+      const sc = setCourant();
+      if(J && J.set != null && sc != null && J.set !== sc)
+        return `<div class="note">Ta position relevée est celle du Set ${J.set} ;
+          elle n'est pas affichée comme courante.</div>`;
+      if(J?.etat === "non_classe")
+        return `<div class="note"><b>Pas encore classé au Set ${J.set ?? sc}.</b>
+          ${esc(J.etat_note || "")}</div>`;
       if(J?.position){
         const q = J.position;
-        return `<p class="doux"><b>${esc(q.palier)}, ${q.lp} LP</b> —
+        return `<p class="doux"><b>${palierFr(q.palier)}, ${q.lp} LP</b> —
           relevé automatiquement le ${fdate(J.genere_le)}, dernière partie
           connue le ${fdate((q.derniere_partie_connue || "").slice(0,10))}.
           ${p ? `Objectif : ${esc(p.objectif)}. ${esc(p.riot_id)},
@@ -1594,14 +1804,16 @@ function vueSuivi(){
           : (e.releve ? "relevé" : (passe ? "non relevé" : "à venir"))}</span></div>`;
     }).join("")}</div>
     ${prochain ? `<p class="faible" style="margin-top:1rem">Prochaine échéance :
-      <b>${esc(prochain.nom)}</b>, dans
-      ${Math.round((Date.parse(prochain.date) - Date.parse(auj)) / 864e5)} jours.</p>` : ""}
+      <b>${esc(prochain.nom)}</b>, ${(() => {
+        const n = Math.round((Date.parse(prochain.date) - Date.parse(auj)) / 864e5);
+        return n <= 1 ? "demain" : `dans ${n} jours`; })()}.</p>` : ""}
 
     <h2>Les outils</h2>
     <div class="grille">
-      <div class="carte"><h3>L'Oracle hors ligne</h3>
-        <p class="faible">Un fichier HTML autonome, consultable sans réseau.</p>
-        <p><a href="oracle.html">Ouvrir</a></p></div>
+      ${m?.oracle?.disponible ? `<div class="carte"><h3>L'ancien moteur</h3>
+        <p class="faible">Les fiches écrites à la main du Set ${m.oracle.set},
+          dans un fichier HTML autonome.</p>
+        <p><a href="oracle.html">Ouvrir</a></p></div>` : ""}
       <div class="carte"><h3>Le Carnet</h3>
         <p class="faible">Série des relevés, rotation d'un patch à l'autre, et le
           plancher de bruit avant toute conclusion.</p>
@@ -1615,25 +1827,18 @@ function vueSuivi(){
 }
 
 /* -------------------------------------------------- rendu */
-const VUES = {avant: vueAvant, pendant: vuePendant, apres: vueApres, suivi: vueSuivi};
+const VUES = {avant: vueAvant, fiches: vueFiches, apres: vueApres, suivi: vueSuivi};
+// L'onglet s'appelait « pendant » jusqu'au 10/11 : un vieux lien y mène encore.
+const ALIAS = {pendant: "fiches"};
 let vueActive = "avant";
 
 function rendre(){
   $("#v-" + vueActive).innerHTML = VUES[vueActive]();
-  if(vueActive === "avant")   brancherModes();
-  if(vueActive === "pendant") brancherPivot();
+  if(vueActive === "fiches") brancherModes();
 }
 function brancherModes(){
   document.querySelectorAll("[data-mode]").forEach(b =>
     b.addEventListener("click", () => { MODE = b.dataset.mode; rendre(); }));
-}
-function brancherPivot(){
-  const inp = $("#pivot");
-  if(!inp) return;
-  inp.addEventListener("input", () => {
-    $("#pivot-res").innerHTML = inp.value.trim() ? pivot(inp.value) : "";
-  });
-  if(matchMedia("(min-width:700px)").matches) inp.focus();
 }
 function aller(v){
   vueActive = v;
@@ -1648,8 +1853,13 @@ function aller(v){
 }
 document.querySelectorAll("nav button").forEach(b =>
   b.addEventListener("click", () => aller(b.dataset.vue)));
+const cible = () => { const h = (location.hash || "").slice(1); return ALIAS[h] || h; };
 addEventListener("popstate", () => {
-  const h = (location.hash || "").slice(1);
+  const h = cible();
+  if(VUES[h] && h !== vueActive) aller(h);
+});
+addEventListener("hashchange", () => {
+  const h = cible();
   if(VUES[h] && h !== vueActive) aller(h);
 });
 
@@ -1657,23 +1867,22 @@ charger().then(() => {
   const m = D.meta;
   // ⚠ L'ÂGE DU RELEVÉ NE SE DÉDUIT PAS, IL S'AFFICHE.
   //
-  // Le bandeau portait la date du relevé, et c'était tout : « 23/10/2026 »
-  // à côté d'un patch, lu douze jours plus tard, ne saute pas aux yeux. Or
-  // le bandeau, la rotation et « ce qui monte » descendent de data/releves/
-  // (MetaTFT, déposé à la main), pas de data/releves-tt/ (automatique).
-  // Une méta périmée qui a l'air courante est pire qu'une méta absente.
+  // Le relevé est automatique et tourne plusieurs fois par jour : au-delà de
+  // deux jours sans mise à jour, quelque chose est cassé en amont (le
+  // workflow, la source), et le bandeau doit le dire en rouge. Une méta
+  // périmée qui a l'air courante est pire qu'une méta absente.
   const jours = m?.releve?.date
     ? Math.floor((Date.now() - Date.parse(m.releve.date)) / 86400000) : null;
   $("#hsub").textContent = m
-    ? `patch ${m.releve.patch} · ${m.releve.rang} · ${fdate(m.releve.date)}`
-      + (jours >= 7 ? `  ·  relevé il y a ${jours} jours` : "")
+    ? `Set ${m.set} · patch ${m.releve.patch} · ${m.releve.rang} · ${fdate(m.releve.date)}`
+      + (jours >= 2 ? `  ·  relevé il y a ${jours} jours` : "")
     : "données indisponibles";
-  if(jours >= 7) $("#hsub").classList.add("perime");
+  if(jours >= 2) $("#hsub").classList.add("perime");
   if(m) $("#pied").innerHTML =
-    `Méta : ${esc(m.releve.source || "MetaTFT")} — ${nb(m.releve.n_parties)} parties,
-     ${esc(m.releve.fenetre || "")}. Généré le ${fdate(m.genere_le)}.
+    `Méta : ${esc(m.releve.source || "tactics.tools")} — ${nb(m.releve.n_parties)} parties,
+     ${esc(m.releve.rang || "")}. Généré le ${fdate(m.genere_le)}.
      Projet personnel, sans lien avec Riot Games.`;
-  const h = (location.hash || "").slice(1);
+  const h = cible();
   aller(VUES[h] ? h : "avant");
 });
 </script>

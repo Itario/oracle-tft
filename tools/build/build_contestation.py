@@ -56,10 +56,15 @@ def main(chemin_resume):
         sys.exit(f"Résumé illisible : {chemin_resume}\n  {e}")
 
     rel = dernier_releve()
+    # Le repère de présence (7 × pick) vient du relevé : il ne vaut que si
+    # ses parties et le relevé sont du même set. Sinon on garde SES chiffres
+    # bruts — ils ne croisent rien — et on retire seulement le repère.
+    sets = {"parties": r.get("set"), "meta": (rel or {}).get("set")}
+    meme_set = sets["parties"] is not None and sets["parties"] == sets["meta"]
     # Part des plateaux du ladder portant chaque champion, variantes
     # regroupées — tactics.tools éclate Lux en dix entrées.
     pick = {}
-    if rel and rel.get("n_parties"):
+    if rel and rel.get("n_parties") and meme_set:
         tot = rel["n_parties"]
         for uid, u in (rel.get("unites") or {}).items():
             c = M.champion(uid)
@@ -89,8 +94,14 @@ def main(chemin_resume):
         "schema_version": SCHEMA,
         "genere_le": date.today().isoformat(),
         "set": r.get("set"),
+        "sets": sets,
+        "etat": "ok" if meme_set else "sans_repere",
+        "message": None if meme_set else (
+            f"Ces parties sont du Set {sets['parties']} et le relevé courant "
+            f"du Set {sets['meta']} : la présence attendue n'est pas calculée. "
+            "Les chiffres bruts restent ceux de tes parties."),
         "n_parties": r.get("n_parties"),
-        "patch_releve": (rel or {}).get("patch"),
+        "patch_releve": (rel or {}).get("patch") if meme_set else None,
         "adversaires": ADVERSAIRES,
         "definitions": r.get("definitions"),
         # ⭐ Le test de la croyance que la charte porte depuis le début :

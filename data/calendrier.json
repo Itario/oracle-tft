@@ -1,6 +1,5 @@
 {
  "schema_version": 1,
- "set_courant": 18,
  "patchs": [
   {
    "date": "2026-10-21",
@@ -44,10 +43,27 @@
  ],
  "jalons": [
   {
-   "date": "2026-11-15",
+   "date": "2026-11-13",
+   "nom": "Tactician's Crown (13–15/11)",
+   "note": "Mondial du Set 18. La révélation du Set 19 l'accompagne d'habitude."
+  },
+  {
+   "date": "2026-11-14",
+   "nom": "Révélation du Set 19",
+   "certain": false,
+   "note": "Estimation : entre le 12 et le 15/11. Non annoncée."
+  },
+  {
+   "date": "2026-11-17",
    "nom": "PBE Set 19",
    "certain": false,
-   "note": "Estimation : 2 à 3 semaines avant le live. Non annoncé."
+   "note": "Estimation : 16 ou 17/11, deux semaines avant le live. Non annoncé."
+  },
+  {
+   "date": "2026-11-30",
+   "nom": "Clôture du Set 18",
+   "note": "Dernière récolte de tes parties (LANCER.bat) avant la remise à zéro : après, l'historique du Set 18 n'est plus récupérable au même endroit."
   }
- ]
+ ],
+ "_note": "Ce fichier ne dit PAS quel set est en ligne : c'est le dernier relevé automatique qui le dit (tools/lib/mesures.py, set_courant). Il ne porte que des dates annoncées."
 }

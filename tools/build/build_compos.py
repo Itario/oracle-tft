@@ -60,9 +60,22 @@ def main():
 
     # ⚠ Le relevé de compos porte son propre verdict de population. S'il dit
     # que les tranches divergent, on ne croise pas : on le dit et on s'arrête.
+    # compos.json porte son propre set (retrouvé par le code de patch) : c'est
+    # lui le côté « méta » de ce croisement, pas le dernier relevé d'unités.
+    sets = M.garde_de_set(mi, co, SCHEMA, SORTIE, "le croisement des compos")
+    if sets is None:
+        return
+
     pop = co.get("population") or {}
     if pop.get("meme_population") is False:
-        sys.exit(f"Croisement refusé : {pop.get('note')}")
+        # Refus motivé, ÉCRIT : sortir en erreur laissait en place le fichier
+        # de la veille, c'est-à-dire un croisement que plus rien ne garantit.
+        M.ecrire(SORTIE, {
+            "schema_version": SCHEMA, "genere_le": date.today().isoformat(),
+            "set": sets["meta"], "sets": sets, "etat": "populations_differentes",
+            "message": pop.get("note"), "compos": []})
+        print(f"écrit : {SORTIE}\n  croisement refusé : {pop.get('note')}")
+        return
 
     # ⚠ DÉFINITION PARTAGÉE avec build_focus.py, via le socle.
     #
@@ -84,7 +97,12 @@ def main():
 
     sortie = []
     for comp in (co.get("compos") or []):
-        unites = comp.get("unites") or []
+        # ⚠ `unites` est une liste de LISTES ([identifiant, étoiles, parties,
+        # placement]) depuis le 04/11. Passée telle quelle à champion(), une
+        # liste devient sa propre représentation en texte — et « combien
+        # d'unités connaît-il » comptait n'importe quoi, sans erreur.
+        unites = sorted({u[0] if isinstance(u, list) else u
+                         for u in (comp.get("unites") or [])})
         porteurs = [p["unite"] for p in (comp.get("porteurs") or [])]
 
         # Deux recouvrements, et ils ne disent pas la même chose.
@@ -108,6 +126,7 @@ def main():
                     if poids else None)
 
         sortie.append({
+            "unites_distinctes": unites,
             **{k: comp[k] for k in ("code", "n", "place", "top4_pct",
                                     "premieres_pct", "lp_par_partie",
                                     "unites", "traits", "porteurs",
@@ -136,6 +155,9 @@ def main():
     out = {
         "schema_version": SCHEMA,
         "genere_le": date.today().isoformat(),
+        "set": sets["meta"], "sets": sets,
+        "etat": "ok" if sortie else "vide",
+        "message": None if sortie else co.get("etat_note"),
         "patch": co.get("patch") or co.get("patch_code"),
         "n_parties_ladder": co.get("n_parties"),
         "population": pop,
@@ -166,7 +188,7 @@ def main():
         p = c["part_porteurs_connus"]
         print(f"    {int(100*(p or 0)):>3} % des porteurs connus · "
               f"{c['lp_par_partie']:+.2f} LP/partie · "
-              + ", ".join(u.replace("DA_", "").replace("18", "")
+              + ", ".join(M.nom_affichable(u)
                           for u in c["porteurs_reguliers"][:3] or ["aucun"])
             + (f" (+{len(c['porteurs_occasionnels'])} occasionnels)"
                if c["porteurs_occasionnels"] else ""))

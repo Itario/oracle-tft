@@ -49,6 +49,8 @@ import json, math, os, sys
 from datetime import date
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(RACINE, "tools", "lib"))
+import mesures as M
 SORTIE = os.path.join(RACINE, "data", "fuites.json")
 SCHEMA = 1
 
@@ -65,8 +67,33 @@ def main():
     jo = charger("joueur.json")
     if not mi:
         sys.exit("data/miroir.json absent — lance build_miroir.py.")
-    if not jo or not jo.get("bareme_lp", {}).get("droite"):
-        sys.exit("data/joueur.json sans barème — lance tools/releve/joueur.py.")
+    # ── CE FICHIER CROISE SES PARTIES (miroir) ET SON BARÈME (joueur) ────
+    # Les deux doivent être du même set : six abandons du Set 18 chiffrés au
+    # barème d'un joueur reclassé au Set 19 ne sont le coût de rien. Et
+    # quand le croisement n'est pas possible, on ÉCRIT pourquoi : sortir en
+    # erreur laissait le fichier de la veille en place, étape tolérée oblige.
+    sets = {"parties": mi.get("set"), "bareme": (jo or {}).get("set")}
+    def etat(nom, message):
+        M.ecrire(SORTIE, {"schema_version": SCHEMA,
+                          "genere_le": date.today().isoformat(),
+                          "set": mi.get("set"), "sets": sets,
+                          "etat": nom, "message": message})
+        print(f"écrit : {SORTIE}\n  {nom} : {message}")
+    if not jo:
+        return etat("pas_de_position", "Aucune position relevée : le coût "
+                    "d'un abandon ne se chiffre pas sans barème.")
+    if sets["parties"] != sets["bareme"]:
+        return etat("sets_differents",
+                    f"Tes parties récoltées sont du Set {sets['parties']} et "
+                    f"ta position relevée du Set {sets['bareme']} : le coût "
+                    "des abandons ne se calcule pas entre deux sets. Il "
+                    "reviendra à ta première récolte du set en cours "
+                    "(LANCER.bat).")
+    if not (jo.get("bareme_lp") or {}).get("droite"):
+        return etat("pas_de_bareme",
+                    "Pas encore assez de parties classées ce set pour ajuster "
+                    "ton barème de LP (il en faut six). Le chiffrage des "
+                    "abandons reviendra de lui-même.")
 
     dr = jo["bareme_lp"]["droite"]
     a, b = dr["ordonnee"], dr["pente_lp_par_place"]
@@ -113,10 +140,17 @@ def main():
             f"renoncer aux {attendu:.0f} qu'une partie ordinaire rapporte. "
             f"L'écart est de {abs(cout_unitaire):.0f} LP par partie abandonnée."
             if (attendu is not None and cout_unitaire is not None) else None),
-        "reserve": ("Les six abandons datent de septembre-octobre, entre Silver "
-                    "et Diamant, où l'échelle de LP n'était pas la même. Ce "
-                    "chiffre n'additionne PAS des pertes passées : il projette "
-                    "ce que le même comportement coûte à son rang ACTUEL."),
+        # Cette réserve portait, écrits en dur, « six abandons de septembre-
+        # octobre, entre Silver et Diamant » : vrai le 05/11, faux dès la
+        # récolte suivante. Un constructeur ne cite que ce qu'il a compté.
+        "reserve": ((f"Ces {len(lach)} abandons vont du "
+                     f"{min(x['date'] for x in lach)} au "
+                     f"{max(x['date'] for x in lach)}. Ils n'ont pas tous été "
+                     "joués au rang actuel, où l'échelle de LP n'est pas la "
+                     "même : ce chiffre n'additionne PAS des pertes passées, "
+                     "il projette ce que le même comportement coûte à son "
+                     "rang ACTUEL.") if lach else
+                    "Aucune partie lâchée dans la fenêtre récoltée."),
     }
 
     # ── 2. LE RYTHME, COMME TAUX DE CHANGE ───────────────────────────────
@@ -127,7 +161,8 @@ def main():
         "lp_par_jour_actif": (round(par_jour_actif * attendu, 1)
                               if (par_jour_actif and attendu is not None) else None),
         "jours_actifs_requis": (math.ceil(manquants / (par_jour_actif * attendu))
-                                if (manquants and par_jour_actif and attendu) else None),
+                                if (manquants and manquants > 0 and par_jour_actif
+                                    and attendu and attendu > 0) else None),
         "lecture": ("Un taux de change, pas un reproche : voilà ce qu'une "
                     "journée de jeu rapporte en moyenne, pour qu'il décide "
                     "lui-même. Un travail et des enfants ne se négocient pas "
@@ -148,6 +183,8 @@ def main():
     out = {
         "schema_version": SCHEMA,
         "genere_le": date.today().isoformat(),
+        "set": mi.get("set"), "sets": sets, "etat": "ok",
+        "n_parties": n_tot,
         "lp_manquants": manquants,
         "lp_par_partie_attendu": attendu,
         "bareme": {"pente": b, "ordonnee": a,
@@ -158,13 +195,17 @@ def main():
         "abandons": abandons,
         "rythme": rythme,
         "decroissance": decroissance,
-        "pourquoi": ("Tous les autres fichiers cherchent une faiblesse "
-                     "technique et répondent non : rang de niveau 3.91/8, "
-                     "conversion +0.40, or restant médian 2, deux traits sur "
-                     "24 hors du bruit, aucun carry sur 12. Il n'y a pas de "
-                     "fuite technique dans les agrégats. Celui-ci chiffre ce "
-                     "qui reste : des LP perdus sans rapport avec la qualité "
-                     "du jeu."),
+        # Même correction : les chiffres cités ici étaient écrits en dur.
+        "pourquoi": (
+            "Les autres fichiers cherchent une faiblesse technique dans les "
+            f"agrégats : rang de niveau {mi.get('rang_niveau_moyen')}/8, or "
+            f"restant médian {mi.get('or_restant_median')}, "
+            f"{sum(1 for t in (mi.get('traits') or []) if t.get('solide'))} "
+            f"trait(s) sur {len(mi.get('traits') or [])} hors du bruit, "
+            f"{sum(1 for c in (mi.get('carries') or []) if c.get('solide'))} "
+            f"carry sur {len(mi.get('carries') or [])}. Celui-ci chiffre ce "
+            "qui ne relève pas de la qualité du jeu : des LP perdus par "
+            "abandon, et ce que rapporte une journée jouée."),
     }
 
     os.makedirs(os.path.dirname(SORTIE), exist_ok=True)
@@ -173,7 +214,7 @@ def main():
 
     print(f"écrit : {SORTIE}")
     print(f"  barème : 8e place = {out['bareme']['lp_8e_place']} LP · "
-          f"partie ordinaire = {attendu:+} LP")
+          f"partie ordinaire = {attendu if attendu is None else format(attendu, '+')} LP")
     print(f"  {abandons['n']} parties lâchées "
           f"({abandons['part_des_parties_pct']} % de ses parties)")
     print(f"  coût d'un abandon au rang actuel : "
