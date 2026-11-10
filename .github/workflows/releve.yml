@@ -93,6 +93,13 @@ jobs:
         run: python3 tools/releve/recettes.py
         continue-on-error: true
 
+      - name: Relever les données du jeu
+        # Coûts, traits, paliers et noms français, lus dans les données de
+        # Riot — et, sur le canal du PBE, le set qui arrive dès que Riot le
+        # publie. Une fois par jour au plus : voir tools/releve/jeu.py.
+        run: python3 tools/releve/jeu.py
+        continue-on-error: true
+
       - name: Relever la barre de Challenger
         # La cible, mesurée plutôt que supposée. Tourne à chaque fois : le
         # classement bouge tous les jours, contrairement au patch.
@@ -151,7 +158,8 @@ jobs:
           # d'après ne l'est pas.
           SUIVIS=""
           for p in data/releves-tt data/barre.json data/joueur.json \
-                   data/recettes.json data/compos.json data/archive; do
+                   data/recettes.json data/compos.json data/jeu.json \
+                   data/archive; do
             [ -e "$p" ] && SUIVIS="$SUIVIS $p"
           done
           if [ -z "$SUIVIS" ]; then

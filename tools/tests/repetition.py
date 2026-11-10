@@ -59,6 +59,11 @@ CE QUI EST VÉRIFIÉ, dans chaque monde :
     J  le set qui finit est gardé    sa position, sa barre et ses compos sont
                                      copiées dans data/archive/ avant d'être
                                      réécrites par celles du nouveau set
+    K  le jeu est du bon set         data/jeu.json (coûts, traits, noms) est du
+                                     set courant ou absent — jamais celui du
+                                     set d'avant sous le numéro du nouveau.
+                                     Et quand le PBE porte le set suivant, le
+                                     site l'annonce (monde `controle`)
     I  rien de personnel ne sort     la page du joueur fabriquée porte un
                                      identifiant ; il ne doit se retrouver
                                      dans aucun fichier produit
@@ -77,6 +82,9 @@ URL_UNITES   = "https://tactics.tools/units"
 URL_CDN      = "https://d3.tft.tools/stats2/general/1100/{code}/0"
 URL_COMPOS   = "https://tactics.tools/team-compositions"
 URL_CDRAGON  = "https://raw.communitydragon.org/latest/cdragon/tft/en_us.json"
+URL_CDR_FR   = "https://raw.communitydragon.org/latest/cdragon/tft/fr_fr.json"
+URL_PBE      = "https://raw.communitydragon.org/pbe/cdragon/tft/en_us.json"
+URL_PBE_FR   = "https://raw.communitydragon.org/pbe/cdragon/tft/fr_fr.json"
 URL_BARRE    = "https://tactics.tools/leaderboards/euw"
 URL_JOUEUR   = "https://tactics.tools/player/euw/Itario/EUW"
 
@@ -181,6 +189,62 @@ def brut_cdragon(racine, ancien=None, nouveau=None):
     return {"items": items, "sets": {}}
 
 
+def bloc_de_set(rel, ancien=None, nouveau=None, fr=False):
+    """Le bloc `sets[N]` de CommunityDragon, fabriqué à partir du relevé :
+    une unité par champion du relevé, un coût de 1 à 5, deux traits. Plus
+    deux entrées hors boutique, parce que le vrai fichier en est plein."""
+    r = (lambda x: vers_set(x, ancien, nouveau)) if nouveau else (lambda x: x)
+    noms_traits = sorted({t["trait"] for t in (rel.get("traits") or {}).values() if t.get("trait")})
+    traits = [{"apiName": r(t), "name": ("Trait " if not fr else "Trait fr ") + str(i),
+               "effects": [{"minUnits": 2}, {"minUnits": 4}, {"minUnits": 6}]}
+              for i, t in enumerate(noms_traits)]
+    champions = []
+    for i, ident in enumerate(sorted(rel.get("unites") or {})):
+        champions.append({
+            "apiName": r(ident), "cost": 1 + i % 5,
+            "name": ("Nom " if not fr else "Nom fr ") + str(i),
+            "traits": [traits[i % len(traits)]["name"],
+                       traits[(i * 7 + 3) % len(traits)]["name"]] if traits else []})
+    champions += [{"apiName": "Mannequin", "name": "Target Dummy", "cost": 1, "traits": []},
+                  {"apiName": "Invocation", "name": "Summon", "cost": 11, "traits": []}]
+    return {"name": "Set fabriqué", "champions": champions, "traits": traits}
+
+
+def fichiers_du_jeu(racine, rel, monde, ancien, setn):
+    """Les quatre fichiers de CommunityDragon pour un monde.
+
+    controle   `latest` porte le set en ligne, et le PBE porte DÉJÀ le
+               suivant : c'est le monde des deux semaines avant un lancement.
+    jour_j     le relevé est passé au set suivant, mais `latest` est en
+               retard de quelques heures : il ne porte encore que l'ancien.
+    ensuite    `latest` porte le nouveau set, le PBE aussi, rien au-delà."""
+    def fichier(sets, fr=False, renommer=None):
+        base = brut_cdragon(racine, *(renommer or (None, None)))
+        if fr:
+            for it in base["items"]:
+                it["name"] = f"{it['name']} (fr)"
+        base["sets"] = sets(fr)
+        return json.dumps(base)
+    if monde == "controle":
+        ici = lambda fr: {str(setn): bloc_de_set(rel, fr=fr)}
+        pbe = lambda fr: {str(setn): bloc_de_set(rel, fr=fr),
+                          str(setn + 1): bloc_de_set(rel, setn, setn + 1, fr=fr)}
+        return {URL_CDRAGON: fichier(ici), URL_CDR_FR: fichier(ici, True),
+                URL_PBE: fichier(pbe), URL_PBE_FR: fichier(pbe, True)}
+    if monde == "jour_j":
+        vieux = lambda fr: {str(ancien): bloc_de_set(rel, fr=fr)}
+        neuf = lambda fr: {str(setn): bloc_de_set(rel, ancien, setn, fr=fr)}
+        return {URL_CDRAGON: fichier(vieux, renommer=(ancien, setn)),
+                URL_CDR_FR: fichier(vieux, True, (ancien, setn)),
+                URL_PBE: fichier(neuf, renommer=(ancien, setn)),
+                URL_PBE_FR: fichier(neuf, True, (ancien, setn))}
+    neuf = lambda fr: {str(setn): bloc_de_set(rel, ancien, setn, fr=fr)}
+    return {URL_CDRAGON: fichier(neuf, renommer=(ancien, setn)),
+            URL_CDR_FR: {"panne": "français indisponible ce jour-là"},
+            URL_PBE: fichier(neuf, renommer=(ancien, setn)),
+            URL_PBE_FR: fichier(neuf, True, (ancien, setn))}
+
+
 def brut_barre(mode):
     """mode : 'plein' (300 Challengers), 'sans_challenger', 'vide'."""
     if mode == "vide":
@@ -274,7 +338,7 @@ def fabriquer(racine, monde):
                              {"props": {"pageProps": {"aperture": {"patch": {"_0": code}}}}}),
             URL_CDN.format(code=code): json.dumps(cdn),
             URL_COMPOS: page("TFT Meta Stats", brut_compos(racine, code, int(cdn["totalEntries"] * .985))),
-            URL_CDRAGON: json.dumps(brut_cdragon(racine)),
+            **fichiers_du_jeu(racine, rel, monde, setn, setn),
             URL_BARRE: page("Leaderboards", brut_barre("plein")),
             URL_JOUEUR: page("Itario", brut_joueur("master18", code18=code, setn=setn + 1)),
         }
@@ -302,7 +366,7 @@ def fabriquer(racine, monde):
                          {"props": {"pageProps": {"aperture": {"patch": {"_0": code}}}}}),
         URL_CDN.format(code=code): json.dumps(cdn),
         URL_COMPOS: page("TFT Meta Stats", compos),
-        URL_CDRAGON: json.dumps(brut_cdragon(racine, ancien, setn)),
+        **fichiers_du_jeu(racine, rel, monde, ancien, setn),
         URL_BARRE: page("Leaderboards", barre),
         URL_JOUEUR: page("Itario", joueur),
     }
@@ -352,6 +416,9 @@ def jouer(monde, garder=False):
     os.makedirs(rejeu)
     index = {}
     for i, (url, contenu) in enumerate(reponses.items()):
+        if isinstance(contenu, dict):          # {"http": 404} ou {"panne": "…"}
+            index[url] = contenu
+            continue
         nom = f"r{i}.txt"
         open(os.path.join(rejeu, nom), "w", encoding="utf-8").write(contenu)
         index[url] = nom
@@ -491,6 +558,34 @@ def verifier(res):
         c("J", f"le set {W - 1} est archivé avant d'être écrasé",
           all(v == W - 1 for v in etat.values()),
           " · ".join(f"{k} : {v}" for k, v in etat.items()))
+
+    # K — les données du jeu : du bon set, et le set à venir quand il existe
+    try:
+        meta = json.load(open(os.path.join(copie, "site", "data", "meta", "courant.json"),
+                              encoding="utf-8"))
+        jp = os.path.join(copie, "data", "jeu.json")
+        jeu = json.load(open(jp, encoding="utf-8")) if os.path.exists(jp) else None
+        if monde == "jour_j":
+            # `latest` est en retard : jeu.json ne doit PAS avoir été réécrit
+            # pour le nouveau set, et le site ne doit pas s'en servir.
+            c("K", "un jeu en retard d'un set n'est pas utilisé",
+              (jeu is None or jeu.get("set") != W) and not meta["jeu"]["du_set"],
+              f"jeu.json : set {(jeu or {}).get('set')} · utilisé par le site : {meta['jeu']['du_set']}")
+        else:
+            c("K", f"les données du jeu sont du set {W}",
+              bool(jeu) and jeu.get("set") == W and meta["jeu"]["du_set"]
+              and len(jeu.get("unites") or {}) >= 20 and "Mannequin" not in jeu["unites"],
+              f"set {(jeu or {}).get('set')} · {len((jeu or {}).get('unites') or {})} unités")
+        if monde == "controle":
+            a = meta.get("a_venir") or {}
+            c("K", f"le set {W + 1}, vu au PBE, est annoncé par le site",
+              a.get("set") == W + 1 and a.get("n_unites", 0) >= 20 and len(a.get("par_cout") or []) == 5,
+              f"a_venir : set {a.get('set')}, {a.get('n_unites')} unités")
+        else:
+            c("K", "aucun set à venir n'est inventé", not meta.get("a_venir"),
+              f"a_venir : {meta.get('a_venir') and meta['a_venir'].get('set')}")
+    except Exception as e:
+        c("K", "les données du jeu se vérifient", False, f"{type(e).__name__} : {e}")
 
     # I — l'identifiant de la page du joueur ne sort nulle part
     fuites_id = []

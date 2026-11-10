@@ -466,6 +466,13 @@ footer{border-top:1px solid var(--trait);margin-top:3.5rem;padding-top:1.3rem;
 .archive{border-left:3px solid var(--faible);background:rgba(110,131,153,.08);
          padding:.8rem 1.1rem;margin:0 0 1.4rem;color:var(--doux)}
 .archive b{color:var(--texte)}
+.puce .ct{color:var(--faible);font-size:.78em;margin-right:.3rem;
+          font-variant-numeric:tabular-nums}
+.puce.carry .ct{color:var(--or)}
+.avenir{display:grid;grid-template-columns:4.2rem 1fr;gap:.55rem 1rem;align-items:start}
+.avenir dt{font-family:var(--titre);font-weight:700;color:var(--or)}
+.avenir dd{margin:0;display:flex;flex-wrap:wrap;gap:.35rem}
+.avenir .puce small{color:var(--faible);margin-left:.35rem;font-size:.82em}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -634,7 +641,8 @@ function ficheLigne(f, mode, premier){
 
   // Le plateau : les unités présentes sur au moins un plateau sur trois.
   const plateau = (f.plateau || []).filter(u => (u.part ?? 0) >= .33).map(u =>
-    `<span class="puce${porteurs.has(u.id) ? " carry" : ""}">${esc(u.nom)}${
+    `<span class="puce${porteurs.has(u.id) ? " carry" : ""}">${
+      u.cout ? `<span class="ct" title="coût">${u.cout}</span>` : ""}${esc(u.nom)}${
       u.etoiles >= 3 || porteurs.has(u.id) ? etoiles(u.etoiles) : ""}</span>`).join("");
 
   const conteste = f.par_lobby == null ? ""
@@ -962,7 +970,8 @@ function vueAvant(){
         <thead><tr><th>#</th><th>Unité</th><th class="num">Placement</th>
           <th class="num">1<sup>res</sup></th><th class="num">Parties</th></tr></thead>
         <tbody>${m.unites.map(u => `<tr>
-          <td class="rang">${u.rang}</td><td>${esc(u.nom)}</td>
+          <td class="rang">${u.rang}</td><td>${esc(u.nom)}${
+            u.cout ? ` <span class="faible">· ${u.cout}</span>` : ""}</td>
           <td class="num">${u.avg.toFixed(2)}</td>
           <td class="num">${u.wr.toFixed(1)} %</td>
           <td class="num">${nb(u.n)}</td></tr>`).join("")}</tbody>
@@ -1719,6 +1728,41 @@ function blocBarre(){
     </div>`;
 }
 
+/* LE SET QUI ARRIVE — relevé sur le PBE par tools/releve/jeu.py.
+ *
+ * Des faits de composition seulement : qui coûte combien, qui porte quoi, à
+ * combien un trait s'active. C'est ce qu'on étudie avant un lancement. Aucune
+ * force n'est affichée, parce qu'aucune n'existe : le PBE change tous les
+ * jours, et sa population n'est pas celle du classé. */
+function blocAVenir(){
+  const a = D.meta?.a_venir;
+  if(!a) return "";
+  return `<h2>Le Set ${a.set} est au PBE</h2>
+    <p class="doux"><b>${a.n_unites} unités et ${a.n_traits} traits</b>, lus dans les
+      données de Riot le ${fdate(a.releve_le)} (apparus le
+      ${fdate(a.vu_la_premiere_fois)}). Ce sont des faits de composition — coûts,
+      traits, paliers — pas des forces : <b>rien ici ne dit ce qui gagnera</b>, et
+      le PBE change tous les jours jusqu'à la sortie.</p>
+    <div class="carte">
+      <h3 style="margin:0 0 .9rem">Les unités, par coût</h3>
+      <dl class="avenir">${(a.par_cout || []).map(g => `
+        <dt>${g.cout}-coût</dt>
+        <dd>${g.unites.map(u => `<span class="puce">${esc(u.nom)}<small>${
+          esc((u.traits || []).join(" · "))}</small></span>`).join("")}</dd>`).join("")}
+      </dl>
+    </div>
+    <details class="pourquoi">
+      <summary>Les ${a.n_traits} traits et leurs paliers</summary>
+      <div class="tbl"><table>
+        <thead><tr><th>Trait</th><th>Paliers</th><th>Unités</th></tr></thead>
+        <tbody>${(a.traits || []).map(t => `<tr>
+          <td>${esc(t.nom)}</td>
+          <td>${esc((t.paliers || []).join(" / "))}</td>
+          <td class="faible">${esc((t.unites || []).join(", "))}</td></tr>`).join("")}</tbody>
+      </table></div>
+    </details>`;
+}
+
 function vueSuivi(){
   const m = D.meta, p = D.profil?.joueurs?.[0], c = D.calendrier;
   const d = m?.diff;
@@ -1764,6 +1808,7 @@ function vueSuivi(){
   const prochain = evts.find(e => e.date > auj);
 
   return `<h1>Suivi</h1>
+    ${blocAVenir()}
     ${blocProjection()}
     ${blocFuites()}
     ${blocContestation()}

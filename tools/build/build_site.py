@@ -69,19 +69,92 @@ def charger(nom):
         return None
 
 
+# ══ LES NOMS ET LES COÛTS ════════════════════════════════════════════════
+# data/jeu.json (tools/releve/jeu.py) porte les noms français, les coûts et
+# les traits, lus dans les données de Riot. Il ne sert que s'il est du set du
+# relevé ; sinon — premier jour d'un set, source en retard — on retombe sur
+# le nom déduit de l'identifiant, et le site s'affiche quand même.
+JEU = {"unites": {}, "traits": {}, "objets": {}, "par_champion": {}}
+
+
+def brancher_jeu(setn):
+    j = charger("jeu.json")
+    if not j or j.get("set") != setn:
+        return j
+    JEU["unites"] = j.get("unites") or {}
+    JEU["traits"] = j.get("traits") or {}
+    JEU["objets"] = j.get("objets") or {}
+    # Le relevé éclate certaines unités en variantes (Lux en dix entrées) que
+    # les données du jeu ne connaissent que sous un nom : repli par champion.
+    JEU["par_champion"] = {M.champion(k): v for k, v in JEU["unites"].items()}
+    return j
+
+
+def nommer(ident):
+    """Le nom à afficher : celui des données du jeu, sinon celui qu'on déduit
+    de l'identifiant. UNE définition, servie au site dans `noms`."""
+    if ident in JEU["unites"]:
+        return JEU["unites"][ident]["nom"]
+    if ident in JEU["traits"]:
+        return JEU["traits"][ident]["nom"]
+    if ident in JEU["objets"]:
+        return JEU["objets"][ident]
+    deduit = M.nom_affichable(ident)
+    u = JEU["par_champion"].get(M.champion(ident))
+    if u:                                 # variante : nom du jeu + (variante)
+        return u["nom"] + (" " + deduit[deduit.index("("):] if "(" in deduit else "")
+    return deduit
+
+
+def cout(ident):
+    u = JEU["unites"].get(ident) or JEU["par_champion"].get(M.champion(ident))
+    return u.get("cout") if u else None
+
+
+def a_venir(j):
+    """Le set qui arrive, tel que le PBE le montre : unités par coût, traits
+    et paliers. Des faits de composition, aucune force."""
+    a = (j or {}).get("a_venir")
+    if not a:
+        return None
+    U, T = a.get("unites") or {}, a.get("traits") or {}
+    nom_trait = lambda t: (T.get(t) or {}).get("nom") or t
+    par_cout = {}
+    for u in U.values():
+        par_cout.setdefault(u["cout"], []).append(
+            {"nom": u["nom"], "traits": [nom_trait(t) for t in u.get("traits") or []]})
+    porteurs = {}
+    for u in U.values():
+        for t in u.get("traits") or []:
+            porteurs.setdefault(t, []).append((u["cout"], u["nom"]))
+    return {
+        "set": a.get("set"), "nom": a.get("nom"),
+        "vu_la_premiere_fois": a.get("vu_la_premiere_fois"),
+        "releve_le": a.get("releve_le"), "note": a.get("note"),
+        "n_unites": len(U), "n_traits": len(T),
+        "par_cout": [{"cout": c, "unites": sorted(par_cout[c], key=lambda x: x["nom"])}
+                     for c in sorted(par_cout)],
+        "traits": sorted(
+            ({"nom": v.get("nom") or k, "paliers": v.get("paliers") or [],
+              "unites": [n for _, n in sorted(porteurs.get(k, []))]}
+             for k, v in T.items() if porteurs.get(k)),
+            key=lambda x: (-len(x["unites"]), x["nom"])),
+    }
+
+
 def diff(avant, apres):
     d = M.comparer(avant, apres)
     if d is None:
         return None
     d = {k: v for k, v in d.items() if k not in _INTERNES}
     for cle in ("montees", "chutes"):
-        d[cle] = [{**x, "id": x["nom"], "nom": M.nom_affichable(x["nom"])}
+        d[cle] = [{**x, "id": x["nom"], "nom": nommer(x["nom"])}
                   for x in d[cle][:5]]
     for cle in ("entres_top8", "sortis_top8"):
-        d[cle] = [M.nom_affichable(x) for x in d[cle]]
-    d["volume"]["unites_perdues"] = [M.nom_affichable(x)
+        d[cle] = [nommer(x) for x in d[cle]]
+    d["volume"]["unites_perdues"] = [nommer(x)
                                      for x in d["volume"]["unites_perdues"]]
-    d["volume"]["unites_gagnees"] = [M.nom_affichable(x)
+    d["volume"]["unites_gagnees"] = [nommer(x)
                                      for x in d["volume"]["unites_gagnees"]]
     return d
 
@@ -92,7 +165,7 @@ def fiche(c, total, recettes, composants_fr):
     """Une compo relevée -> une fiche de ligne. Rien n'est inventé : chaque
     champ est une lecture directe de compos.json ou de recettes.json."""
     n = c.get("n") or 0
-    nom = M.nom_affichable
+    nom = nommer
 
     # Le plateau : la source donne une entrée par (unité, étoiles). On garde,
     # par unité, sa présence totale et la répartition de ses étoiles.
@@ -115,13 +188,14 @@ def fiche(c, total, recettes, composants_fr):
     def objets_moy(p):
         return p.get("objets_moy", p.get("etoiles_moy")) or 0
     porteurs = [{"id": p["unite"], "nom": nom(p["unite"]),
-                 "objets_moy": objets_moy(p),
+                 "objets_moy": objets_moy(p), "cout": cout(p["unite"]),
                  "part_trois_etoiles": part_3(p["unite"]),
                  "trois_etoiles": (part_3(p["unite"]) or 0) >= TROIS_ETOILES}
                 for p in (c.get("porteurs") or [])
                 if objets_moy(p) >= PORTEUR]
     plateau = sorted(
-        ({"id": k, "nom": nom(k), "part": round(min(1.0, v["n"] / n), 2) if n else None,
+        ({"id": k, "nom": nom(k), "cout": cout(k),
+          "part": round(min(1.0, v["n"] / n), 2) if n else None,
           "etoiles": v["etoiles"].most_common(1)[0][0]}
          for k, v in par_unite.items()),
         key=lambda x: -(x["part"] or 0))
@@ -180,7 +254,8 @@ def fiche(c, total, recettes, composants_fr):
         "bas_pct": round(100 * sum(dist[6:8]) / sd, 1) if (sd and len(dist) >= 8) else None,
         "type": "trois_etoiles" if trois else "niveau",
         "type_libelle": (
-            "compo trois étoiles sur " + ", ".join(p["nom"] for p in trois)
+            "compo trois étoiles sur " + ", ".join(
+                p["nom"] + (f" ({p['cout']}-coût)" if p.get("cout") else "") for p in trois)
             if trois else
             f"montée de niveau (jouée au niveau {niveaux[0]['niveau']})"
             if niveaux else "montée de niveau"),
@@ -227,7 +302,7 @@ def modes(fiches):
 
 # ══ LE MANIFESTE ═════════════════════════════════════════════════════════
 
-ATTENDUS = ("profil.json", "calendrier.json", "miroir.json",
+ATTENDUS = ("profil.json", "calendrier.json", "miroir.json", "jeu.json",
             "focus.json", "barre.json", "joueur.json",
             "objets.json", "recettes.json",
             "compos.json", "compos_lui.json",
@@ -262,6 +337,7 @@ def main():
     courant = rs[-1]
     setn = courant.get("set")
     du_set = [r for r in rs if r.get("set") == setn]
+    jeu = brancher_jeu(setn)
     print(f"relevé courant : {courant['date']} (Set {setn}, {courant.get('patch')}, "
           f"{courant.get('rang')}, {courant.get('n_parties'):,} parties)".replace(",", " "))
 
@@ -284,9 +360,9 @@ def main():
     ordre = sorted(g, key=lambda k: g[k])
     tete = M.tete_stable(du_set) if len(du_set) >= 2 else None
     if tete:
-        tete = {**tete, "unites": [{"id": k, "nom": M.nom_affichable(k)}
+        tete = {**tete, "unites": [{"id": k, "nom": nommer(k)}
                                    for k in tete["unites"]],
-                "premiere_chaque_fois": (M.nom_affichable(tete["premiere_chaque_fois"])
+                "premiere_chaque_fois": (nommer(tete["premiere_chaque_fois"])
                                          if tete.get("premiere_chaque_fois") else None)}
 
     # ── Les compos : seulement si elles sont du même set que le relevé ───
@@ -322,7 +398,7 @@ def main():
         ids |= {x[0] for x in (c.get("unites") or []) if isinstance(x, list)}
         ids |= {p["unite"] for p in (c.get("porteurs") or [])}
         ids |= {t["trait"] for t in (c.get("traits") or [])}
-    noms = {i: M.nom_affichable(i) for i in sorted(i for i in ids if i)}
+    noms = {i: nommer(i) for i in sorted(i for i in ids if i)}
 
     fige = os.path.join(RACINE, "tools", "build", f"data_set{setn}_fige.js")
     out = {
@@ -354,7 +430,7 @@ def main():
         },
         "diff": d, "diff_raison": d_raison,
         "tete_stable": tete,
-        "unites": [{"id": k, "nom": M.nom_affichable(k), "rang": g[k],
+        "unites": [{"id": k, "nom": nommer(k), "cout": cout(k), "rang": g[k],
                     "avg": u[k]["avg"], "wr": u[k]["wr"], "t4": u[k].get("t4"),
                     "n": u[k]["n"]} for k in ordre],
         "compos": fiches,
@@ -365,6 +441,9 @@ def main():
                           if fiches else None),
         "modes": modes(fiches),
         "noms": noms,
+        "jeu": {"du_set": bool(JEU["unites"]), "n_unites": len(JEU["unites"]),
+                "francais": bool((jeu or {}).get("francais")) if JEU["unites"] else None},
+        "a_venir": a_venir(jeu),
         "serie": [{"date": r["date"], "patch": r.get("patch"), "rang": r.get("rang"),
                    "set": r.get("set"), "n_parties": r.get("n_parties"),
                    "premier_releve": r.get("premier_releve"),
