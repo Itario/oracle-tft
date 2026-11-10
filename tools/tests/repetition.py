@@ -412,6 +412,15 @@ def jouer(monde, garder=False):
         ".git", "parties", "__pycache__", "node_modules"))
     setn, reponses = fabriquer(copie, monde)
 
+    # Les relevés qui ne se refont qu'une fois par jour (jeu.py) ne
+    # tourneraient pas dans une répétition lancée le jour d'un vrai relevé :
+    # on vieillit leur fichier d'un jour. Le monde rejoué est « demain ».
+    jp = os.path.join(copie, "data", "jeu.json")
+    if os.path.exists(jp):
+        j = json.load(open(jp, encoding="utf-8"))
+        j["genere_le"] = "2000-01-01"
+        json.dump(j, open(jp, "w", encoding="utf-8"), ensure_ascii=False)
+
     rejeu = os.path.join(tmp, "rejeu")
     os.makedirs(rejeu)
     index = {}
