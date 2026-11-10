@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "genere_le": "2026-11-09",
+ "genere_le": "2026-11-10",
  "source": "tactics.tools",
  "page": "https://tactics.tools/player/euw/Itario/EUW",
  "joueur": {
@@ -10,12 +10,12 @@
  },
  "position": {
   "palier": "MASTER I",
-  "lp": 30,
-  "rang_region": 3871,
-  "percentile_region": 0.53,
-  "rang_monde": 48470,
-  "percentile_monde": 0.963,
-  "derniere_partie_connue": "2026-11-08T21:20+00:00"
+  "lp": 20,
+  "rang_region": 4277,
+  "percentile_region": 0.585,
+  "rang_monde": 52382,
+  "percentile_monde": 1.04,
+  "derniere_partie_connue": "2026-11-09T20:25+00:00"
  },
  "saison": {
   "parties": 123,
@@ -79,9 +79,9 @@
   "note_assiette": "Pas encore assez de parties en Master+ pour un barème propre : ajusté sur tous les paliers. Les gains y sont plus généreux qu'en haut de l'échelle, donc la projection est optimiste."
  },
  "ecart_a_la_barre": {
-  "seuil_challenger_lp": 742,
-  "source_seuil": "data/barre.json du 2026-11-09",
-  "lp_manquants": 712,
+  "seuil_challenger_lp": 734,
+  "source_seuil": "data/barre.json du 2026-11-10",
+  "lp_manquants": 714,
   "note": null
  },
  "projection": {
@@ -98,7 +98,7 @@
    "note": "Le terme dominant est le placement, pas le barème. Il décroît en 1/racine(n) : c'est le volume de parties qui resserre la fourchette."
   },
   "solide": true,
-  "lp_manquants": 712,
+  "lp_manquants": 714,
   "parties_estimees": 54,
   "parties_fourchette": [
    37,
@@ -115,9 +115,9 @@
   "note": "Mesure brute, sans barème : la somme des LP de ses parties en Master+, divisée par leur nombre. Tant que `exploitable` est faux, elle ne tranche rien — mais c'est elle qui tranchera, et elle s'accumule toute seule à chaque relevé."
  },
  "rang": {
-  "rang_region": 3871,
+  "rang_region": 4277,
   "challengers_region": 300,
-  "joueurs_a_depasser": 3571,
+  "joueurs_a_depasser": 3977,
   "note": "Challenger est le top N de la région. Un rang se compare SANS hypothèse — c'est sa force contre la projection en LP, qui en demande une (que le rythme actuel tienne). Quand les deux racontent des histoires différentes, croire le rang."
  },
  "echelle": "Au-dessus de Master il n'y a plus de division ni de série de promotion : de Master 0 LP à Challenger, c'est une seule échelle continue. C'est ce qui rend un LP/partie mesuré en Master directement projetable jusqu'à la barre."
