@@ -131,6 +131,31 @@ r2 = M.comparer(faux_releve("2026-01-01", "A", mur, 500000),
 verifier("volumes comparables : pas de fausse alerte",
          r2["volume"]["comparable"] is True)
 
+# 12/11 : la routine de patch (« le 18.7 et tes lignes »). Premier essai :
+# Aphelios « tombait » de 0.04 place, seuil de hasard 0.027 — réel, et sans
+# aucune importance. À 400 000 parties tout sort du bruit : un verdict doit
+# AUSSI peser des LP. Un écart réel n'est pas un écart qui compte.
+sys.path.insert(0, os.path.join(RACINE, "tools", "build"))
+import build_site as BS
+
+def _rel(avg, patch):
+    u = {"DA_Alpha": {"avg": avg, "n": 400000, "objets": ["DA_A", "DA_B", "DA_C"]}}
+    u.update({f"DA_Rempli{i}": {"avg": 4.5, "n": 400000} for i in range(5)})
+    return {**faux_releve("2026-01-01", patch, u, 3200000), "set": 99}
+
+mi_ = {"set": 99, "carries": [{"nom": "Alpha"}], "parties": []}
+petit = BS.ses_lignes_au_patch(_rel(4.40, "A"), _rel(4.43, "B"), mi_, 99, None)
+grand = BS.ses_lignes_au_patch(_rel(4.40, "A"), _rel(4.60, "B"), mi_, 99, None)
+verifier("routine de patch : un écart réel mais minuscule ne fait pas bouger une ligne",
+         petit["lignes"][0]["verdict"] == "stable",
+         f"0.03 place à 400 000 parties : verdict {petit['lignes'][0]['verdict']}")
+verifier("routine de patch : un écart qui pèse des LP fait bouger la ligne",
+         grand["lignes"][0]["verdict"] == "tombe",
+         f"0.20 place : verdict {grand['lignes'][0]['verdict']}")
+verifier("routine de patch : rien ne se compare entre deux sets",
+         BS.ses_lignes_au_patch(_rel(4.40, "A"), _rel(4.60, "B"),
+                                {**mi_, "set": 98}, 99, None) is None)
+
 
 # ══ CE QUI EST PUBLIÉ ════════════════════════════════════════════════════
 print("\nCE QUI EST PUBLIÉ")

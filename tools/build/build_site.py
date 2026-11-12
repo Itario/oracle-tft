@@ -159,6 +159,135 @@ def diff(avant, apres):
     return d
 
 
+# ══ LA ROUTINE DE PATCH : CE QUE LE PATCH CHANGE POUR SES LIGNES ═════════
+#
+# Le bloc « rotation » dit ce qui bouge sur tout le ladder : 74 unités, dont
+# la plupart qu'il ne joue jamais. La question qu'il se pose le jour d'un
+# patch est plus étroite — c'est la « routine de patch » du livre 2 : « mes
+# lignes ont-elles bougé, et dois-je changer quelque chose ? ».
+#
+# Pour chacune de ses lignes régulières : son placement sur le ladder avant et
+# après, et si l'écart sort du bruit. Le seuil est calculé, pas choisi :
+# l'écart-type d'un placement sur huit places vaut ~2.29, donc deux moyennes
+# sur na et nb parties diffèrent par hasard de 2 × 2.29 × √(1/na + 1/nb) au
+# plus, 19 fois sur 20. À 30 000 parties de chaque côté, ~0.04 place ; à
+# 3 000, ~0.12. Un patch frais ne tranche donc presque rien, et le bloc le dit.
+#
+# ⚠ MAIS À 400 000 PARTIES, TOUT SORT DU BRUIT. Premier essai, 18.5c -> 18.6 :
+# Aphelios « tombe » de 0.04 place, avec un seuil à 0.027. Vrai, et sans
+# aucune importance. Un écart réel n'est pas un écart qui compte : le verdict
+# demande AUSSI que l'écart pèse au moins 1.5 LP par partie à son barème
+# (−15.4 LP par place, soit ~0.1 place). Les deux seuils sont affichés.
+
+ECART_TYPE_PLACEMENT = 2.29
+LP_QUI_COMPTE = 1.5          # LP par partie en deçà desquels on ne change rien
+PENTE_PAR_DEFAUT = -15.4     # LP par place, si joueur.json n'est pas du set
+
+
+def _par_champion(releve):
+    """Les variantes d'un même champion (Lux en dix entrées) réunies, pondérées
+    par leur volume. Le BiS est celui de la variante la plus jouée."""
+    out = {}
+    for ident, v in (releve.get("unites") or {}).items():
+        c = M.champion(ident)
+        if not c or not v.get("n"):
+            continue
+        e = out.setdefault(c, {"n": 0, "somme": 0.0, "ident": ident, "n_max": 0})
+        e["n"] += v["n"]
+        e["somme"] += v["n"] * v["avg"]
+        if v["n"] > e["n_max"]:
+            e.update(n_max=v["n"], ident=ident, objets=(v.get("objets") or [])[:3])
+    for e in out.values():
+        e["avg"] = e["somme"] / e["n"]
+    classes = sorted((c for c, e in out.items() if e["n"] >= M.NMIN),
+                     key=lambda c: out[c]["avg"])
+    for i, c in enumerate(classes):
+        out[c]["rang"] = i + 1
+    return out, len(classes)
+
+
+def ses_lignes_au_patch(avant, apres, miroir, setn, d):
+    if not (avant and apres and miroir):
+        return None
+    if not (avant.get("set") == apres.get("set") == miroir.get("set") == setn):
+        return None
+    jouees = M.unites_jouees(miroir)
+    regulieres = [c for c, s in jouees.items() if s == "regulier"]
+    if not regulieres:
+        return None
+    A, na = _par_champion(avant)
+    B, nb = _par_champion(apres)
+    jo = charger("joueur.json") or {}
+    pente = (((jo.get("bareme_lp") or {}).get("droite") or {}).get("pente_lp_par_place")
+             if jo.get("set") == setn else None) or PENTE_PAR_DEFAUT
+    lignes = []
+    for c in regulieres:
+        a, b = A.get(c), B.get(c)
+        base = (b or a or {}).get("ident")
+        nom = nommer(base).split(" (")[0] if base else c
+        if not (a and b):
+            lignes.append({"champion": c, "nom": nom, "verdict": "absente",
+                           "detail": "absente d'un des deux relevés"})
+            continue
+        delta = b["avg"] - a["avg"]
+        seuil = 2 * ECART_TYPE_PLACEMENT * (1 / a["n"] + 1 / b["n"]) ** 0.5
+        lp = -delta * abs(pente)      # placement qui baisse = LP gagnés
+        reel = abs(delta) > seuil
+        compte = abs(lp) >= LP_QUI_COMPTE
+        bis_a = [nommer(x) for x in a.get("objets") or []]
+        bis_b = [nommer(x) for x in b.get("objets") or []]
+        lignes.append({
+            "champion": c, "nom": nom,
+            "avg_avant": round(a["avg"], 2), "avg_apres": round(b["avg"], 2),
+            "n_avant": a["n"], "n_apres": b["n"],
+            # Un placement qui BAISSE est un progrès : 4.10 vaut mieux que 4.30.
+            "delta": round(delta, 3), "seuil": round(seuil, 3),
+            "lp_par_partie": round(lp, 1),
+            "verdict": ("stable" if not (reel and compte)
+                        else "monte" if delta < 0 else "tombe"),
+            "detail": (None if (reel and compte) else
+                       "dans le bruit" if not reel else
+                       f"réel, mais moins de {LP_QUI_COMPTE} LP par partie"),
+            "rang_avant": a.get("rang"), "rang_apres": b.get("rang"),
+            "bis_avant": bis_a, "bis_apres": bis_b,
+            # Le relevé donne les objets dans l'ordre de fréquence, sans les
+            # fréquences : un 3ᵉ et un 4ᵉ à égalité permutent par hasard. On ne
+            # signale donc qu'un vrai déplacement — un objet des DEUX premiers
+            # qui n'était pas dans les trois premiers de l'autre relevé.
+            "bis_entre": [x for x in bis_b[:2] if x not in bis_a] if (bis_a and bis_b) else [],
+            "bis_sort": [x for x in bis_a[:2] if x not in bis_b] if (bis_a and bis_b) else [],
+        })
+    ordre = {"tombe": 0, "monte": 1, "stable": 2, "absente": 3}
+    for x in lignes:
+        x["bis_change"] = bool(x.get("bis_entre") or x.get("bis_sort"))
+    lignes.sort(key=lambda x: (ordre[x["verdict"]], -abs(x.get("delta") or 0)))
+    n_bouge = sum(1 for x in lignes if x["verdict"] in ("monte", "tombe"))
+    comparable = (d or {}).get("volume", {}).get("comparable", True)
+    return {
+        "de": avant.get("patch"), "a": apres.get("patch"),
+        "set": setn,
+        "n_classes": {"avant": na, "apres": nb},
+        "volumes": {"avant": avant.get("n_parties"), "apres": apres.get("n_parties")},
+        "comparable": comparable,
+        "lignes": lignes,
+        "n_bouge": n_bouge,
+        "pente_lp_par_place": pente,
+        "lp_qui_compte": LP_QUI_COMPTE,
+        "lecture": (
+            f"Aucune de tes {len(lignes)} lignes n'a bougé assez pour compter "
+            f"(au moins {LP_QUI_COMPTE} LP par partie, au-delà du hasard) : rien "
+            "à changer à ton répertoire pour ce patch."
+            if n_bouge == 0 else
+            f"{n_bouge} de tes {len(lignes)} lignes ont bougé assez pour compter. "
+            "Une ligne qui tombe n'est pas à abandonner : c'est à revoir dans "
+            "la fiche, et à ne plus forcer."),
+        "reserve": None if comparable else (
+            "Le patch vient de sortir : les volumes des deux relevés sont trop "
+            "inégaux pour que ces verdicts tiennent. Ils se stabilisent à "
+            "mesure que le relevé mûrit, dans les jours qui suivent."),
+    }
+
+
 # ══ LES FICHES ═══════════════════════════════════════════════════════════
 
 def fiche(c, total, recettes, composants_fr):
@@ -343,7 +472,7 @@ def main():
           f"{courant.get('rang')}, {courant.get('n_parties'):,} parties)".replace(",", " "))
 
     # ── La rotation : le patch précédent DU MÊME SET, à même tranche ─────
-    d, d_raison = None, None
+    d, d_raison, paire = None, None, (None, None)
     if len(du_set) < 2:
         d_raison = (f"Premier patch relevé du Set {setn} : il n'y a pas encore "
                     "de patch précédent auquel le comparer.")
@@ -352,6 +481,7 @@ def main():
             cand = diff(du_set[i - 1], du_set[i])
             if cand and cand["meme_elo"]:
                 d = cand
+                paire = (du_set[i - 1], du_set[i])
                 break
         if d is None:
             d_raison = ("Aucune paire de relevés comparables dans ce set "
@@ -437,6 +567,8 @@ def main():
             ) if frais else None,
         },
         "diff": d, "diff_raison": d_raison,
+        "ses_lignes": ses_lignes_au_patch(paire[0], paire[1],
+                                          charger("miroir.json"), setn, d),
         "tete_stable": tete,
         "unites": [{"id": k, "nom": nommer(k), "cout": cout(k), "rang": g[k],
                     "avg": u[k]["avg"], "wr": u[k]["wr"], "t4": u[k].get("t4"),

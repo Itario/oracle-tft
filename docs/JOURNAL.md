@@ -1991,3 +1991,43 @@ confronter à un champ voisin qui mesure la même chose autrement.
 **Leçon n°48 — une page se vérifie en l'ouvrant.** Un fichier juste peut s'afficher
 « undefined ». Et un nombre recopié dans une phrase survit à la correction de la table
 dont il vient.
+
+## 12/11/2026 — LA ROUTINE DE PATCH, AVANT LE 18.7
+
+### LE 18.7 N'EST PAS ENCORE DANS LES DONNÉES
+
+Annoncé pour le 11/11. Le 12/11 à 08h45 UTC, un relevé lancé à la main voit toujours le
+18.6 comme patch courant, et son volume monte au rythme habituel (454 283 → 467 757
+parties en six heures, ~54 000 par jour) : on joue encore massivement sur le 18.6. Le
+18.6 avait mis environ un jour à apparaître chez tactics.tools. Rien à faire : le relevé
+l'attrapera seul, et le calendrier du site le marque « non relevé » tant qu'il ne l'a pas
+vu (leçon n°40).
+
+### « LE 18.x ET TES LIGNES »
+
+Le bloc « rotation » de Suivi parle de tout le ladder : 74 unités, dont la plupart qu'il ne
+joue jamais. La question du jour de patch est plus étroite — c'est la routine de patch du
+livre 2 : *mes lignes ont-elles bougé, et dois-je changer quelque chose ?* Nouveau bloc en
+tête de l'onglet Avant : pour chacune de ses lignes régulières, le placement du ladder
+avant et après le dernier patch, converti en LP par partie à son barème, et le BiS s'il a
+réellement changé.
+
+**Premier essai, 18.5c → 18.6 : quatre lignes sur douze « bougeaient ».** Aphelios
+tombait de 0.04 place, pour un seuil de hasard à 0.027. Vrai — et sans aucune importance :
+0.6 LP par partie. À 400 000 parties de chaque côté, presque tout sort du bruit. Le
+verdict demande maintenant aussi que l'écart pèse **au moins 1.5 LP par partie** (~0.1
+place). Résultat : aucune de ses lignes n'a bougé au 18.6, ce qui concorde avec la
+rotation mesurée à maturité (Spearman 0.985).
+
+Même piège sur le BiS : le relevé donne les objets dans l'ordre de fréquence, sans les
+fréquences. Deux des trois lignes « dont le BiS changeait » n'avaient qu'un 3ᵉ et un 4ᵉ
+objet qui permutaient. On ne signale plus qu'un objet des deux premiers qui n'était pas
+dans les trois premiers de l'autre relevé : il reste Kennen (Soif-de-sang entre).
+
+Trois tests du socle, dont un validé par mutation (retirer la condition en LP le fait
+échouer). 47 tests ; répétition : 0 échec sur quatre mondes.
+
+**Leçon n°49 — un écart réel n'est pas un écart qui compte.** Le seuil de hasard dit si un
+écart existe ; il ne dit pas s'il justifie de changer quoi que ce soit. À gros volume,
+tout existe. Un verdict qui mène à une décision a besoin d'un second seuil, exprimé dans
+l'unité de la décision — ici, des LP.

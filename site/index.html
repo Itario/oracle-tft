@@ -927,6 +927,50 @@ function blocObjets(){
       à côté — un nombre négatif veut dire meilleur placement.</p>`;
 }
 
+/* La routine de patch : ses lignes, avant et après le dernier patch. Le
+ * bloc « rotation » de Suivi parle du ladder entier ; celui-ci ne parle que
+ * de ce qu'il joue. Deux seuils : réel (au-delà du hasard) ET qui compte
+ * (au moins 1.5 LP par partie à son barème). */
+function blocSesLignes(){
+  const s = D.meta?.ses_lignes;
+  if(!s || !s.lignes?.length) return "";
+  const bouge = s.lignes.filter(l => l.verdict === "monte" || l.verdict === "tombe");
+  const bis = s.lignes.filter(l => l.bis_change);
+  const signe = v => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(1);
+  const ligne = l => `<div class="evt${l.verdict === "monte" ? " prochain" : ""}">
+      <span class="dt">${l.lp_par_partie != null ? signe(l.lp_par_partie) + " LP" : "—"}</span>
+      <span class="nm">${esc(l.nom)} <span class="faible">— ${
+        l.avg_avant != null
+          ? `placement ${l.avg_avant.toFixed(2)} → ${l.avg_apres.toFixed(2)}${
+              l.rang_avant && l.rang_apres ? `, ${l.rang_avant}ᵉ → ${l.rang_apres}ᵉ` : ""}`
+          : esc(l.detail || "")}</span></span>
+      <span class="tag${l.verdict === "monte" ? " ok" : ""}">${
+        l.verdict === "monte" ? "monte" : l.verdict === "tombe" ? "tombe"
+        : l.verdict === "absente" ? "absente" : esc(l.detail || "stable")}</span></div>`;
+
+  return `<h2>Le ${esc(s.a)} et tes lignes</h2>
+    <p class="doux">Tes lignes régulières sur le ladder, entre le ${esc(s.de)} et le
+      ${esc(s.a)}. ${esc(s.lecture)}</p>
+    ${s.reserve ? `<div class="note warn"><b>Patch frais.</b> ${esc(s.reserve)}</div>` : ""}
+    ${bouge.length ? `<div class="cal">${bouge.map(ligne).join("")}</div>` : ""}
+    ${bis.length ? `<p class="doux"><b>Le BiS a changé</b> pour ${bis.map(l => {
+        const parts = [];
+        if(l.bis_entre.length) parts.push(`${l.bis_entre.map(esc).join(", ")} entre`);
+        if(l.bis_sort.length) parts.push(`${l.bis_sort.map(esc).join(", ")} sort`);
+        return `${esc(l.nom)} (${parts.join(", ")})`; }).join(" ; ")}.
+        Ce sont les composants à ramasser qui changent : voir la fiche de la ligne.</p>` : ""}
+    <details class="pourquoi">
+      <summary>Toutes tes lignes, et comment on tranche</summary>
+      <div class="cal">${s.lignes.map(ligne).join("")}</div>
+      <p class="faible">Le chiffre de gauche convertit l'écart de placement en LP
+        par partie à ton barème (${String(s.pente_lp_par_place).replace("-", "−")} LP
+        par place). Une ligne ne « monte » ou ne « tombe » que si l'écart dépasse le
+        hasard <b>et</b> pèse au moins ${s.lp_qui_compte} LP par partie : à plusieurs
+        centaines de milliers de parties, presque tout dépasse le hasard, et un
+        dixième de place ne justifie pas de changer de ligne.</p>
+    </details>`;
+}
+
 function vueAvant(){
   const m = D.meta;
   if(!m) return `<div class="note warn"><b>Données indisponibles.</b>
@@ -937,6 +981,7 @@ function vueAvant(){
     ${m.volume?.frais && m.volume.note
       ? `<div class="note warn"><b>Patch ${esc(m.releve.patch)}, encore frais.</b>
           ${esc(m.volume.note)}</div>` : ""}
+    ${blocSesLignes()}
     ${(() => {
       // Les trois blocs croisent SES parties et la méta. Quand ses parties
       // sont d'un autre set, ils refusent tous les trois pour la même raison :
