@@ -1,51 +1,51 @@
 {
  "schema_version": 1,
- "genere_le": "2026-11-11",
+ "genere_le": "2026-11-12",
  "region": "EUW",
  "source": "tactics.tools",
  "set": 18,
  "etat": "ouvert",
  "etat_note": null,
- "date_classement": "Wed, 11 Nov 2026 20:08:26 +0000",
+ "date_classement": "Thu, 12 Nov 2026 02:54:39 +0000",
  "entrees_lues": 1000,
  "paliers": {
   "CHALLENGER": 300,
-  "GRANDMASTER": 582,
-  "MASTER": 118
+  "GRANDMASTER": 599,
+  "MASTER": 101
  },
- "seuil_challenger_lp": 729,
+ "seuil_challenger_lp": 730,
  "seuil_estimateurs": {
-  "par_rang": 729,
+  "par_rang": 730,
   "percentile_10": 753,
-  "min_etiquette": 508,
+  "min_etiquette": 729,
   "note": "min_etiquette est VOLATILE : statistique d'ordre sur un seul joueur, et les étiquettes de palier sont réattribuées avec du retard. Mesurée 447, 740 puis 677 LP en 24 h alors que la médiane des 25 derniers ne bougeait pas. Ne pas l'afficher."
  },
  "challenger": {
   "n_joueurs": 300,
-  "lp_median": 894,
-  "lp_min": 508,
-  "parties_mediane": 443,
+  "lp_median": 892,
+  "lp_min": 729,
+  "parties_mediane": 442,
   "parties_min": 105,
-  "top4_pct_median": 56.2,
+  "top4_pct_median": 56.3,
   "premieres_pct_median": 16.0
  },
  "challenger_derniers_25": {
   "n_joueurs": 25,
-  "lp_median": 737,
-  "lp_min": 508,
-  "parties_mediane": 485,
-  "parties_min": 199,
-  "top4_pct_median": 54.7,
-  "premieres_pct_median": 13.4
+  "lp_median": 741,
+  "lp_min": 729,
+  "parties_mediane": 370,
+  "parties_min": 173,
+  "top4_pct_median": 55.6,
+  "premieres_pct_median": 14.2
  },
  "grandmaster": {
-  "n_joueurs": 582,
-  "lp_median": 500,
-  "lp_min": 339,
-  "parties_mediane": 347,
+  "n_joueurs": 599,
+  "lp_median": 486,
+  "lp_min": 361,
+  "parties_mediane": 340,
   "parties_min": 85,
   "top4_pct_median": 54.9,
-  "premieres_pct_median": 14.9
+  "premieres_pct_median": 15.0
  },
  "haut_du_classement": null,
  "reserve": "Le taux de top 4 d'un Challenger est mesuré dans des lobbies Challenger. Celui d'un joueur Master l'est dans des lobbies Master. Les deux ne décrivent pas la même difficulté, et les comparer directement flatte celui du bas. Le nombre de parties, lui, se compare sans réserve : c'est un compte."
