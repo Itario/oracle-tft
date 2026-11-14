@@ -400,6 +400,25 @@ if fo_:
                  if "cotes_boutique" in x.get("porte", [])) >= 2,
              "une table recopiée d'une seule source a déjà été fausse une fois.")
 
+# 14/11 : les champions à débloquer reviennent au Set 19. Au Set 16, six
+# d'entre eux coûtaient 7. Le filtre « coût de 1 à 5 » de jeu.py les aurait
+# rangés parmi les mannequins et les monstres — sans erreur, juste un set
+# avec six champions de moins.
+sys.path.insert(0, os.path.join(RACINE, "tools", "releve"))
+import jeu as JEU_
+_b = {"traits": [{"apiName": "T_A", "name": "A", "effects": [{"minUnits": 2}]}],
+      "champions": [
+          {"apiName": "X_Un", "name": "Un", "cost": 1, "traits": ["A"], "role": "ADCarry"},
+          {"apiName": "X_Sept", "name": "Sept", "cost": 7, "traits": ["A"]},
+          {"apiName": "X_Mannequin", "name": "Mannequin", "cost": 1, "traits": []}]}
+_u, _t, _autres = JEU_.decrire(_b, None)
+verifier("un champion à 7 coûts reste une unité jouable",
+         "X_Sept" in _u and "X_Sept" not in _autres,
+         f"unités : {sorted(_u)} · hors boutique : {_autres}")
+verifier("le rôle publié par Riot est conservé",
+         _u.get("X_Un", {}).get("role") == "ADCarry")
+verifier("un mannequin sans trait reste hors boutique", "X_Mannequin" in _autres)
+
 print(f"\n{'─' * 60}")
 print(f"{PASSES} passés · {len(ECHECS)} échec(s)")
 if ECHECS:

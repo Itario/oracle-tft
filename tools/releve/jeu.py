@@ -118,13 +118,28 @@ def decrire(b_en, b_fr):
             continue
         # Le fichier mélange les unités jouables et tout ce qui peut se
         # trouver sur un plateau (mannequins, invocations, monstres de
-        # tour). Une unité de boutique coûte de 1 à 5 et porte des traits.
-        if not (isinstance(cout, int) and 1 <= cout <= 5 and c.get("traits")):
+        # tour). Une unité jouable a un coût et porte des traits.
+        #
+        # ⚠ Le coût n'est PAS borné à 5. Au Set 16, six champions à débloquer
+        # coûtaient 7. Les champions à débloquer reviennent au Set 19 : un
+        # filtre « 1 à 5 » les aurait rangés parmi les mannequins, en silence.
+        if not (isinstance(cout, int) and 1 <= cout <= 10 and c.get("traits")):
             autres.append(ident)
             continue
-        unites[ident] = {"nom": fr_unites.get(ident) or c.get("name") or ident,
-                         "nom_en": c.get("name"), "cout": cout,
-                         "traits": [par_nom.get(n, n) for n in c.get("traits")]}
+        u = {"nom": fr_unites.get(ident) or c.get("name") or ident,
+             "nom_en": c.get("name"), "cout": cout,
+             "traits": [par_nom.get(n, n) for n in c.get("traits")]}
+        # Le rôle (porteur AD, AP, tank…) s'il est publié : c'est ce qui
+        # permet de ranger un set inconnu dans la grille des archétypes. Et
+        # tout champ qui parle de déblocage, tel quel : on ne sait pas encore
+        # comment Riot le marquera au Set 19, donc on ne devine pas son nom.
+        if isinstance(c.get("role"), str) and c["role"]:
+            u["role"] = c["role"]
+        debloc = {k: v for k, v in c.items()
+                  if "unlock" in k.lower() and isinstance(v, (str, int, float, bool))}
+        if debloc:
+            u["deblocage"] = debloc
+        unites[ident] = u
     return unites, traits, autres
 
 
@@ -138,8 +153,14 @@ def main():
     if not forcer and os.path.exists(SORTIE):
         try:
             a = json.load(open(SORTIE, encoding="utf-8"))
+            # Une fois par jour SUFFIT — à condition que la lecture ait réussi.
+            # Le 14/11, le canal PBE a répondu HTTP 522 au seul passage du
+            # jour, et `a_venir` restait vide jusqu'au lendemain : en pleine
+            # semaine de PBE, c'est une journée de perdue. Si le PBE n'a pas
+            # été lu, le relevé suivant réessaie.
             if (a.get("set") == setn and a.get("patch") == rel.get("patch")
-                    and a.get("genere_le") == date.today().isoformat()):
+                    and a.get("genere_le") == date.today().isoformat()
+                    and a.get("pbe_lu", True)):
                 print(f"jeu.json déjà relevé aujourd'hui pour {rel.get('patch')} "
                       "— rien à faire (--forcer pour refaire).")
                 return
@@ -178,6 +199,17 @@ def main():
     pbe = tenter("pbe", "en_us")
     if pbe is None:
         a_venir_note = "Canal PBE illisible à ce relevé."
+        # Un PBE illisible ne fait pas disparaître ce qu'on en savait : le
+        # bloc d'hier reste, daté, au lieu que le site le retire un jour sur
+        # deux au gré des pannes de la source.
+        try:
+            hier = json.load(open(SORTIE, encoding="utf-8")).get("a_venir") or {}
+            if isinstance(setn, int) and (hier.get("set") or 0) > setn:
+                a_venir = {**hier, "repris": True}
+                a_venir_note = (f"Canal PBE illisible à ce relevé : bloc repris du "
+                                f"relevé du {hier.get('releve_le')}.")
+        except Exception:
+            pass
     else:
         suivants = [n for n in numeros(pbe) if isinstance(setn, int) and n > setn]
         if not suivants:
@@ -224,6 +256,7 @@ def main():
         "hors_boutique": sorted(autres),
         "a_venir": a_venir,
         "a_venir_note": a_venir_note,
+        "pbe_lu": pbe is not None,
         "note": ("Coûts, traits, paliers et noms, lus dans les données de Riot. "
                  "Aucune force, aucun classement : ce fichier dit ce que le jeu "
                  "contient, pas ce qui gagne."),
