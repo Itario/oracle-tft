@@ -160,7 +160,12 @@ def main():
             # été lu, le relevé suivant réessaie.
             if (a.get("set") == setn and a.get("patch") == rel.get("patch")
                     and a.get("genere_le") == date.today().isoformat()
-                    and a.get("pbe_lu", True)):
+                    and a.get("pbe_lu", True)
+                    # Tant que le set suivant n'est pas apparu au PBE, on
+                    # le guette à CHAQUE passage : le 15/11, ses unités
+                    # circulaient déjà quand le seul passage du jour, à
+                    # 7 h 48, avait conclu « pas encore » pour 24 heures.
+                    and a.get("a_venir")):
                 print(f"jeu.json déjà relevé aujourd'hui pour {rel.get('patch')} "
                       "— rien à faire (--forcer pour refaire).")
                 return
