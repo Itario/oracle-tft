@@ -2068,3 +2068,26 @@ Trois tests (50), dont un validé par mutation. Répétition : 0 échec.
 **Leçon n°50 — un filtre qui encode une règle du jeu est une hypothèse sur le set suivant.**
 « Un coût va de 1 à 5 » était vrai au Set 18 ; la mécanique qui revient le casse en silence.
 Et un patch annoncé par une seule source, jamais observé, n'est pas un patch.
+
+## 15/11/2026 — LA RÉVÉLATION DU SET 19, ET LES PREMIÈRES COMPOS EN LIGNE
+
+**Demande de Clément** : « Tu as toutes les units sur MetaTFT. » La page de révélation
+(https://www.metatft.com/new-set) donne les 93 champions du Set 19, dont 31 à débloquer
+(quatre 7-coûts : Baron Nashor, Rakan, Smeech, Sona), les traits et leurs paliers, le PBE
+le mardi 17/11 et la sortie le **mercredi 2/12**, pas le 1ᵉʳ.
+
+**Hors du dépôt** : 19 compos construites avec la grille, au moins deux par case (compos
+trois étoiles 1, 2 et 3 coûts, niveau 8 AD et AP, niveau 9, trait vertical), chacune avec son
+champion à débloquer et la condition résumée. Publiées sur tacticaloracle.com/#predictions
+en cinq langues. Confiance « moyenne » ou « spéculative » partout : les rôles sont déduits
+des descriptions, aucun chiffre n'est publié, rien n'est classé par force avant le PBE.
+
+**Dans le dépôt** : le calendrier prend la date du 2/12, le PBE du 17/11 devient certain, la
+clôture du Set 18 passe au 1/12. La sonde d'un jour (`.github/workflows/sonde.yml`), qui
+servait à lire MetaTFT depuis GitHub faute de navigateur, est retirée : le navigateur de
+Clément a pris le relais.
+
+**Leçon n°51 — une liste sans source avait 8 noms justes sur 10.** La liste « confirmée »
+du 11/11 (The Game Haus) nommait Shen et Maokai, absents du set. Assez juste pour inspirer
+confiance, assez fausse pour construire deux compos mortes. La règle « pas de source, pas
+de compo » a coûté quatre jours d'attente et évité ces deux-là.
