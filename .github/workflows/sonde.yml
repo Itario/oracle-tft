@@ -1,0 +1,31 @@
+# Sonde ponctuelle (15/11) : lire une page publique depuis le runner, quand la
+# session ne peut pas l'atteindre. Lancée à la main, n'écrit rien dans data/.
+name: Sonde ponctuelle
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Adresse publique à lire"
+        required: true
+permissions:
+  contents: read
+jobs:
+  sonde:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lire
+        env:
+          URL: ${{ github.event.inputs.url }}
+        run: |
+          curl -sS -L --max-time 60 -A "Mozilla/5.0 (X11; Linux x86_64) OracleTFT/1.0" "$URL" -o page.txt -w "HTTP %{http_code} · %{size_download} octets\n"
+          echo "── scripts et données référencés"
+          grep -oE '(src|href)="[^"]+\.(js|json)[^"]*"' page.txt | head -60 || true
+          grep -oE 'https?://[a-zA-Z0-9.-]*metatft[a-zA-Z0-9./_-]*' page.txt | sort -u | head -60 || true
+          echo "── début"
+          head -c 3000 page.txt; echo
+          echo "── mentions Set 19 / TFTSet19"
+          grep -oE '.{0,80}(TFTSet19|TFT19_|Set ?19)[^"]{0,80}' page.txt | head -40 || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: page
+          path: page.txt
