@@ -1011,7 +1011,7 @@ function vueAvant(){
     <details class="pourquoi">
       <summary>Le classement complet des unités</summary>
       <p class="faible">Ce tableau porte un <b>biais de survie</b> : il décrit des
-        plateaux finaux. Avoir une unité à 5 coûts sur son plateau veut surtout dire
+        plateaux finaux. Avoir un 5 cost sur son plateau veut surtout dire
         que la partie se passait bien. Il sert à repérer un mouvement, pas à choisir
         quoi jouer — c'est à ça que servent les fiches.</p>
       ${m.unites?.length ? `<div class="tbl"><table>
@@ -1132,9 +1132,9 @@ function blocFondamentaux(){
   // victoires » s'affichait sans accent. Les libellés sont écrits.
   const LIBT = {
     serie_de_victoires: "Série de victoires", serie_de_defaites: "Série de défaites",
-    serie_mixte: "Série mixte", reroll_1_cout: "Compo trois étoiles, 1-coût",
-    reroll_2_couts: "Compo trois étoiles, 2-coûts",
-    reroll_3_couts: "Compo trois étoiles, 3-coûts"};
+    serie_mixte: "Série mixte", reroll_1_cout: "Compo trois étoiles, 1 cost",
+    reroll_2_couts: "Compo trois étoiles, 2 costs",
+    reroll_3_couts: "Compo trois étoiles, 3 costs"};
   const tim = Object.entries(o.timings)
     .filter(([k]) => !k.startsWith("_"))
     .map(([k, t]) => {
@@ -1151,11 +1151,11 @@ function blocFondamentaux(){
         <h3 style="margin:0 0 .6rem">Cotes de boutique</h3>
         <table class="cotes">
           <tr><th>niv.</th>${c.colonnes.map(x =>
-            `<th>${esc(x.replace(" coûts", "c").replace(" coût", "c"))}</th>`).join("")}</tr>
+            `<th>${esc(x.replace(/ (coûts?|costs?)$/, "c"))}</th>`).join("")}</tr>
           ${lignes}
         </table>
         <p class="faible" style="margin:.7rem 0 0"><b>Lis la colonne des
-          4-coûts :</b> ${Object.entries(c.par_niveau).map(([niv, v]) =>
+          4 costs :</b> ${Object.entries(c.par_niveau).map(([niv, v]) =>
             niv === "8" ? `<b>${v[3]}</b>` : v[3]).join(" · ")}. Le saut entre le
           niveau 7 (${c.par_niveau["7"]?.[3]} %) et le niveau 8
           (${c.par_niveau["8"]?.[3]} %) est toute la raison d'être du « 8 rapide ».</p>
@@ -1794,7 +1794,7 @@ function blocAVenir(){
     <div class="carte">
       <h3 style="margin:0 0 .9rem">Les unités, par coût</h3>
       <dl class="avenir">${(a.par_cout || []).map(g => `
-        <dt>${g.cout}-coût</dt>
+        <dt>${g.cout} cost${g.cout > 1 ? "s" : ""}</dt>
         <dd>${g.unites.map(u => `<span class="puce">${esc(u.nom)}<small>${
           esc((u.traits || []).join(" · "))}</small></span>`).join("")}</dd>`).join("")}
       </dl>

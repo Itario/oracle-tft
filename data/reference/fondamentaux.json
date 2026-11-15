@@ -24,9 +24,9 @@
  ],
 
  "cotes_boutique": {
-  "_note": "Probabilité, en %, que chaque emplacement de boutique propose une unité de ce coût. C'est la seule chose qui rende une relance calculable : à 8, un 4-coûts sort trois fois sur dix par emplacement ; à 7, une fois sur dix.",
+  "_note": "Probabilité, en %, que chaque emplacement de boutique propose une unité de ce coût. C'est la seule chose qui rende une relance calculable : à 8, un 4 cost sort trois fois sur dix par emplacement ; à 7, une fois sur dix.",
   "_correction": "⚠ CORRIGÉ LE 10/11. Les lignes 8 et 9 portaient 17/24/32/24/3 et 15/18/25/30/12 : une table d'avant le Set 16, recopiée d'un guide qui ne l'avait pas mise à jour. La faute a été trouvée en écrivant le livre 2, pas par ce projet. Les valeurs actuelles (15/20/32/30/3 et 10/17/25/33/15) concordent sur trois sources indépendantes, mais aucune ne les date explicitement du Set 18 : le contrôle définitif se fait en jeu, où la boutique affiche ses cotes au survol du niveau.",
-  "colonnes": ["1 coût", "2 coûts", "3 coûts", "4 coûts", "5 coûts"],
+  "colonnes": ["1 cost", "2 costs", "3 costs", "4 costs", "5 costs"],
   "par_niveau": {
    "4":  [55, 30, 15, 0, 0],
    "5":  [45, 33, 20, 2, 0],
@@ -39,7 +39,7 @@
  },
 
  "taille_pool": {
-  "_note": "Exemplaires de CHAQUE unité dans le pool partagé des huit joueurs. C'est ce qui rend une unité contestée : si trois joueurs cherchent le même 4-coûts, il y a dix copies pour trois personnes.",
+  "_note": "Exemplaires de CHAQUE unité dans le pool partagé des huit joueurs. C'est ce qui rend une unité contestée : si trois joueurs cherchent le même 4 cost, il y a dix copies pour trois personnes.",
   "1": 30, "2": 25, "3": 18, "4": 10, "5": 9
  },
 
@@ -60,8 +60,8 @@
    "montees": {"2-1 ou 2-3": 4, "2-5 ou 3-1": 5, "3-2": 6, "3-5 ou 4-1": 7, "4-2 ou 4-5": 8, "5-2": 9}
   },
   "reroll_1_cout": {
-   "_quand": "On cherche un 1-coût en 3 étoiles",
-   "_regle": "Ne pas monter tant que le 1-coût n'est pas en 3 étoiles. Relancer jusqu'à ~32 or en 3-1, puis agressivement en 3-5."
+   "_quand": "On cherche un 1 cost en 3 étoiles",
+   "_regle": "Ne pas monter tant que le 1 cost n'est pas en 3 étoiles. Relancer jusqu'à ~32 or en 3-1, puis agressivement en 3-5."
   },
   "reroll_2_couts": {
    "montees": {"2-1": 4, "2-5": 5, "3-2": 6, "4-5": 7, "5-2": 8},

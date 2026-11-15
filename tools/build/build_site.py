@@ -385,7 +385,7 @@ def fiche(c, total, recettes, composants_fr):
         "type": "trois_etoiles" if trois else "niveau",
         "type_libelle": (
             "compo trois étoiles sur " + ", ".join(
-                p["nom"] + (f" ({p['cout']}-coût)" if p.get("cout") else "") for p in trois)
+                p["nom"] + (f" ({p['cout']} cost{'s' if p['cout'] > 1 else ''})" if p.get("cout") else "") for p in trois)
             if trois else
             f"montée de niveau (jouée au niveau {niveaux[0]['niveau']})"
             if niveaux else "montée de niveau"),
