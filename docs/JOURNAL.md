@@ -2031,3 +2031,40 @@ Trois tests du socle, dont un validé par mutation (retirer la condition en LP l
 écart existe ; il ne dit pas s'il justifie de changer quoi que ce soit. À gros volume,
 tout existe. Un verdict qui mène à une décision a besoin d'un second seuil, exprimé dans
 l'unité de la décision — ici, des LP.
+
+## 14/11/2026 — SE PRÉPARER AUX FUITES DU SET 19
+
+**Demande de Clément** : être prêt dès les premiers jours du PBE — compiler les fuites des
+champions dès qu'elles tombent et construire des hypothèses de compos solides, sur le
+savoir des sets précédents (compos trois étoiles, niveau 8 AD et AP, niveau 9, unités de
+transition), en intégrant les **champions à débloquer**, sa mécanique préférée, qui revient
+au Set 19 (« Prismatic Tour », nom annoncé le 13/11).
+
+**Hors du dépôt** (projet claude.ai) : une grille des archétypes calibrée sur le Set 18
+mesuré (`claude/archetypes-set19.md`), un registre des fuites où chaque fait porte sa source
+(`claude/fuites-set19.md`), un document d'hypothèses de compos (`claude/compos-hypotheses-set19.md`),
+et une tâche programmée qui les tient à jour trois fois par jour jusqu'au 30/11.
+
+**Dans le dépôt** — trois choses que la préparation a fait apparaître :
+
+1. **Le PBE pouvait être perdu pour une journée.** Le 14/11, le canal PBE de CommunityDragon
+   a répondu HTTP 522 au seul passage quotidien de `jeu.py`. Un PBE non lu ne compte plus
+   comme « relevé du jour » : le passage suivant réessaie. Un PBE illisible garde le bloc de
+   la veille, daté, au lieu de le faire disparaître du site.
+2. **Les champions à débloquer auraient disparu.** `jeu.py` ne gardait que les unités de
+   coût 1 à 5. Au Set 16, six des champions à débloquer coûtaient 7. Ils auraient été rangés
+   avec les mannequins et les monstres, sans erreur. Borne relâchée ; le rôle publié par
+   Riot et tout champ de déblocage sont gardés tels quels.
+3. **Le 18.7 n'a jamais existé.** Annoncé pour le 11/11 par une seule source, jamais vu par
+   le relevé (le 18.6 dépassait 600 000 parties le 14/11, au même rythme), absent du
+   calendrier de Riot repris par tft.ninja. Retiré du calendrier.
+
+Calibration de la grille, mesurée au 18.6 (Master+) : signature trois étoiles (≥ 40 % des
+apparitions en trois étoiles) chez 7 unités à 1 coût, 6 à 2, 4 à 3 ; placement une fois en
+trois étoiles de 4.3–4.6 (1 coût) à 3.7–3.8 (3 coûts) ; 7 porteurs sur 14 à 4 coûts.
+
+Trois tests (50), dont un validé par mutation. Répétition : 0 échec.
+
+**Leçon n°50 — un filtre qui encode une règle du jeu est une hypothèse sur le set suivant.**
+« Un coût va de 1 à 5 » était vrai au Set 18 ; la mécanique qui revient le casse en silence.
+Et un patch annoncé par une seule source, jamais observé, n'est pas un patch.
