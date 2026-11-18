@@ -1,11 +1,11 @@
 {
  "schema_version": 1,
- "date": "2026-11-17",
+ "date": "2026-11-18",
  "set": 18,
  "etat": "ok",
  "etat_note": null,
  "patch_code": 16220,
- "patch": "18.6",
+ "patch": null,
  "source": "tactics.tools/team-compositions",
  "n_parties": 627532,
  "place_lobby": 4.4926,
@@ -13,11 +13,11 @@
   "compos_count": 627532,
   "rank_group": 1,
   "releve_unites": "2026-11-05_18.6_r0.json",
-  "unites_count": 720068,
+  "unites_count": 760513,
   "unites_rang": "Master+",
-  "ecart_relatif": 0.1285,
-  "meme_population": true,
-  "note": "Les deux relevés décrivent la même tranche : on peut croiser compos et unités."
+  "ecart_relatif": 0.1749,
+  "meme_population": false,
+  "note": "⚠ LES VOLUMES DIVERGENT. La page des compos numérote ses tranches autrement que celle des unités. NE PAS croiser les deux tant que ce n'est pas élucidé."
  },
  "augments": {
   "champs": [
