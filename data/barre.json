@@ -1,51 +1,51 @@
 {
  "schema_version": 1,
- "genere_le": "2026-11-18",
+ "genere_le": "2026-11-19",
  "region": "EUW",
  "source": "tactics.tools",
  "set": 18,
  "etat": "ouvert",
  "etat_note": null,
- "date_classement": "Wed, 18 Nov 2026 21:22:40 +0000",
- "entrees_lues": 1000,
+ "date_classement": "Thu, 19 Nov 2026 03:13:46 +0000",
+ "entrees_lues": 999,
  "paliers": {
   "CHALLENGER": 300,
-  "GRANDMASTER": 593,
-  "MASTER": 107
+  "GRANDMASTER": 599,
+  "MASTER": 100
  },
- "seuil_challenger_lp": 731,
+ "seuil_challenger_lp": 723,
  "seuil_estimateurs": {
-  "par_rang": 731,
-  "percentile_10": 758,
-  "min_etiquette": 533,
+  "par_rang": 723,
+  "percentile_10": 760,
+  "min_etiquette": 721,
   "note": "min_etiquette est VOLATILE : statistique d'ordre sur un seul joueur, et les étiquettes de palier sont réattribuées avec du retard. Mesurée 447, 740 puis 677 LP en 24 h alors que la médiane des 25 derniers ne bougeait pas. Ne pas l'afficher."
  },
  "challenger": {
   "n_joueurs": 300,
-  "lp_median": 878,
-  "lp_min": 533,
-  "parties_mediane": 447,
+  "lp_median": 870,
+  "lp_min": 721,
+  "parties_mediane": 436,
   "parties_min": 112,
   "top4_pct_median": 56.2,
-  "premieres_pct_median": 16.1
+  "premieres_pct_median": 16.3
  },
  "challenger_derniers_25": {
   "n_joueurs": 25,
-  "lp_median": 746,
-  "lp_min": 533,
-  "parties_mediane": 380,
+  "lp_median": 750,
+  "lp_min": 721,
+  "parties_mediane": 334,
   "parties_min": 155,
-  "top4_pct_median": 56.0,
-  "premieres_pct_median": 14.2
+  "top4_pct_median": 57.6,
+  "premieres_pct_median": 15.2
  },
  "grandmaster": {
-  "n_joueurs": 593,
-  "lp_median": 475,
-  "lp_min": 324,
-  "parties_mediane": 368,
+  "n_joueurs": 599,
+  "lp_median": 463,
+  "lp_min": 315,
+  "parties_mediane": 366,
   "parties_min": 74,
   "top4_pct_median": 54.7,
-  "premieres_pct_median": 14.9
+  "premieres_pct_median": 14.8
  },
  "haut_du_classement": null,
  "reserve": "Le taux de top 4 d'un Challenger est mesuré dans des lobbies Challenger. Celui d'un joueur Master l'est dans des lobbies Master. Les deux ne décrivent pas la même difficulté, et les comparer directement flatte celui du bas. Le nombre de parties, lui, se compare sans réserve : c'est un compte."
