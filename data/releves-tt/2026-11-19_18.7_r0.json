@@ -1,139 +1,25 @@
 {
  "schema_version": 1,
- "date": "2026-11-19",
+ "date": "2026-11-20",
  "patch": "18.7",
  "patch_code": 16230,
  "rang": "Master+",
  "rang_code": 0,
  "source": "tactics.tools",
- "n_parties": 57827,
+ "n_parties": 62976,
  "fenetre": "cumul depuis le début du patch",
  "set": 18,
- "maj_source": 1795120552,
+ "maj_source": 1795143081,
  "note": "Série PARALLÈLE à data/releves/ (MetaTFT) : mêmes chiffres à 0.982 de corrélation, mais découpage des unités différent (Lux éclatée en variantes) et libellés de patch différents. NE JAMAIS comparer un relevé de cette série à un relevé MetaTFT sans agréger les variantes.",
  "unites": {
-  "DA_18_Warwick": {
-   "avg": 4.64,
-   "wr": 8.19,
-   "t4": 51.05,
-   "n": 525,
-   "objets": [
-    "DA_SpearOfShojin",
-    "DA_SteraksGage",
-    "DA_InfinityEdge",
-    "DA_TitansResolve",
-    "DA_GuinsoosRageblade"
-   ],
-   "etoile3": {
-    "n": 299,
-    "avg": 4.3,
-    "t4": 57.53,
-    "wr": 7.02
-   }
-  },
-  "DA_18_MasterYi_AD": {
-   "avg": 4.3,
-   "wr": 12.3,
-   "t4": 53.51,
-   "n": 2439,
-   "objets": [
-    "DA_TitansResolve",
-    "DA_EdgeOfNight",
-    "DA_GuinsoosRageblade",
-    "DA_InfinityEdge",
-    "DA_Bloodthirster"
-   ],
-   "etoile3": {
-    "n": 1674,
-    "avg": 3.65,
-    "t4": 67.2,
-    "wr": 15.05
-   }
-  },
-  "DA_Nidalee18_AP": {
-   "avg": 4.41,
-   "wr": 9.22,
-   "t4": 52.72,
-   "n": 6963,
-   "objets": [
-    "DA_EdgeOfNight",
-    "DA_SteraksGage",
-    "DA_Bloodthirster",
-    "DA_InfinityEdge",
-    "DA_GiantSlayer"
-   ],
-   "etoile3": {
-    "n": 44,
-    "avg": 1.68,
-    "t4": 95.45,
-    "wr": 72.73
-   }
-  },
-  "DA_18_LeBlanc": {
-   "avg": 4.44,
-   "wr": 12.93,
-   "t4": 50.8,
-   "n": 9869,
-   "objets": [
-    "DA_SpearOfShojin",
-    "DA_VoidStaff",
-    "DA_RedBuff",
-    "DA_GiantSlayer",
-    "DA_NashorsTooth"
-   ],
-   "etoile3": {
-    "n": 5044,
-    "avg": 3.8,
-    "t4": 63.32,
-    "wr": 16.12
-   }
-  },
-  "DA_18_Leona": {
-   "avg": 4.4,
-   "wr": 11.69,
-   "t4": 52.74,
-   "n": 6909,
+  "DA_Taric18": {
+   "avg": 3.97,
+   "wr": 20.75,
+   "t4": 59.19,
+   "n": 18099,
    "objets": [
     "DA_WarmogsArmor",
     "DA_ThiefsGloves"
-   ],
-   "etoile3": {
-    "n": 4443,
-    "avg": 4.21,
-    "t4": 56.49,
-    "wr": 13.1
-   }
-  },
-  "DA_18_Xayah": {
-   "avg": 4.48,
-   "wr": 12.99,
-   "t4": 49.98,
-   "n": 6797,
-   "objets": [
-    "DA_GiantSlayer",
-    "DA_StrikersFlail",
-    "DA_InfinityEdge",
-    "DA_GuinsoosRageblade",
-    "DA_KrakensFury"
-   ],
-   "etoile3": {
-    "n": 1094,
-    "avg": 4.49,
-    "t4": 50.73,
-    "wr": 12.71
-   }
-  },
-  "DA_18_Ashe": {
-   "avg": 3.88,
-   "wr": 19.2,
-   "t4": 61.17,
-   "n": 3907,
-   "objets": [
-    "DA_GiantSlayer",
-    "DA_RedBuff",
-    "DA_StrikersFlail",
-    "DA_SpearOfShojin",
-    "DA_HextechGunblade"
    ],
    "etoile3": {
     "n": 7,
@@ -142,616 +28,122 @@
     "wr": 100.0
    }
   },
-  "DA_18_Varus": {
-   "avg": 4.81,
-   "wr": 5.77,
-   "t4": 45.58,
-   "n": 3311,
+  "DA_18_Sentry": {
+   "avg": 4.49,
+   "wr": 9.58,
+   "t4": 50.63,
+   "n": 8447,
    "objets": [
-    "DA_GiantSlayer",
     "DA_StrikersFlail",
+    "DA_VoidStaff",
+    "DA_HextechGunblade",
+    "DA_GiantSlayer",
+    "DA_SpearOfShojin"
+   ],
+   "etoile3": {
+    "n": 866,
+    "avg": 4.07,
+    "t4": 59.7,
+    "wr": 9.93
+   }
+  },
+  "DA_18_Akali_AD": {
+   "avg": 4.81,
+   "wr": 6.98,
+   "t4": 45.4,
+   "n": 1991,
+   "objets": [
     "DA_InfinityEdge",
-    "DA_SpearOfShojin",
-    "DA_RedBuff"
-   ],
-   "etoile3": {
-    "n": 1363,
-    "avg": 4.68,
-    "t4": 48.35,
-    "wr": 5.87
-   }
-  },
-  "DA_18_Cassiopeia": {
-   "avg": 4.81,
-   "wr": 10.72,
-   "t4": 44.25,
-   "n": 3424,
-   "objets": [
-    "DA_HextechGunblade",
-    "DA_RedBuff",
-    "DA_SpearOfShojin",
-    "DA_VoidStaff",
-    "DA_StrikersFlail"
-   ],
-   "etoile3": {
-    "n": 750,
-    "avg": 3.68,
-    "t4": 66.0,
-    "wr": 15.87
-   }
-  },
-  "DA_18_Ornn": {
-   "avg": 4.51,
-   "wr": 12.46,
-   "t4": 49.38,
-   "n": 9658,
-   "objets": [
-    "DA_WarmogsArmor",
-    "DA_ThiefsGloves"
-   ],
-   "etoile3": {
-    "n": 4120,
-    "avg": 4.41,
-    "t4": 51.53,
-    "wr": 11.65
-   }
-  },
-  "DA_18_Camille": {
-   "avg": 5.2,
-   "wr": 5.07,
-   "t4": 39.92,
-   "n": 1676,
-   "objets": [
-    "DA_Bloodthirster",
+    "DA_StrikersFlail",
+    "DA_GiantSlayer",
     "DA_EdgeOfNight",
-    "DA_SteraksGage",
-    "DA_GiantSlayer",
-    "DA_InfinityEdge"
+    "DA_Bloodthirster"
    ],
    "etoile3": {
-    "n": 1246,
-    "avg": 4.69,
-    "t4": 48.31,
-    "wr": 5.38
-   }
-  },
-  "DA_18_Soraka": {
-   "avg": 4.43,
-   "wr": 11.35,
-   "t4": 52.05,
-   "n": 6098,
-   "objets": [
-    "DA_VoidStaff",
-    "DA_SpearOfShojin",
-    "DA_NashorsTooth",
-    "DA_GiantSlayer",
-    "DA_StrikersFlail"
-   ],
-   "etoile3": {
-    "n": 35,
-    "avg": 1.29,
-    "t4": 100.0,
-    "wr": 80.0
-   }
-  },
-  "DA_18_Rakan": {
-   "avg": 4.65,
-   "wr": 11.91,
-   "t4": 47.45,
-   "n": 12315,
-   "objets": [
-    "DA_WarmogsArmor",
-    "DA_ThiefsGloves"
-   ],
-   "etoile3": {
-    "n": 1017,
-    "avg": 4.41,
-    "t4": 50.93,
-    "wr": 14.16
-   }
-  },
-  "DA_18_Ahri": {
-   "avg": 4.52,
-   "wr": 11.22,
-   "t4": 49.97,
-   "n": 7478,
-   "objets": [
-    "DA_StrikersFlail",
-    "DA_NashorsTooth",
-    "DA_SpearOfShojin",
-    "DA_GiantSlayer",
-    "DA_HextechGunblade"
-   ],
-   "etoile3": {
-    "n": 35,
-    "avg": 1.2,
-    "t4": 100.0,
-    "wr": 88.57
-   }
-  },
-  "DA_18_Teemo": {
-   "avg": 4.47,
-   "wr": 7.79,
-   "t4": 51.55,
-   "n": 2669,
-   "objets": [
-    "DA_StrikersFlail",
-    "DA_SpearOfShojin",
-    "DA_NashorsTooth",
-    "DA_HextechGunblade",
-    "DA_GiantSlayer"
-   ],
-   "etoile3": {
-    "n": 1771,
-    "avg": 4.18,
-    "t4": 57.43,
-    "wr": 7.74
+    "n": 1377,
+    "avg": 4.73,
+    "t4": 47.42,
+    "wr": 5.59
    }
   },
   "DA_18_Lillia": {
    "avg": 4.46,
-   "wr": 13.68,
-   "t4": 50.45,
-   "n": 13874,
+   "wr": 13.72,
+   "t4": 50.58,
+   "n": 15129,
    "objets": [
     "DA_WarmogsArmor",
     "DA_ThiefsGloves"
    ],
    "etoile3": {
-    "n": 19,
-    "avg": 1.74,
-    "t4": 94.74,
-    "wr": 57.89
+    "n": 25,
+    "avg": 1.72,
+    "t4": 96.0,
+    "wr": 60.0
    }
   },
-  "DA_18_Alune": {
-   "avg": 3.86,
-   "wr": 22.02,
-   "t4": 61.21,
-   "n": 7348,
-   "objets": [
-    "DA_StrikersFlail",
-    "DA_VoidStaff",
-    "DA_GiantSlayer",
-    "DA_SpearOfShojin",
-    "DA_NashorsTooth"
-   ],
-   "etoile3": {
-    "n": 6,
-    "avg": 1.0,
-    "t4": 100.0,
-    "wr": 100.0
-   }
-  },
-  "DA_Cinderling18": {
-   "avg": 4.93,
-   "wr": 6.12,
-   "t4": 42.52,
-   "n": 2321,
-   "objets": [
-    "DA_SpearOfShojin",
-    "DA_InfinityEdge",
-    "DA_StrikersFlail",
-    "DA_LastWhisper",
-    "DA_GiantSlayer"
-   ],
-   "etoile3": {
-    "n": 357,
-    "avg": 4.27,
-    "t4": 56.3,
-    "wr": 8.96
-   }
-  },
-  "DA_18_Kobuko": {
-   "avg": 4.59,
-   "wr": 10.29,
-   "t4": 48.11,
-   "n": 2586,
-   "objets": [
-    "DA_SteraksGage",
-    "DA_WarmogsArmor",
-    "DA_ThiefsGloves"
-   ],
-   "etoile3": {
-    "n": 783,
-    "avg": 4.42,
-    "t4": 51.98,
-    "wr": 6.13
-   }
-  },
-  "DA_18_KhaZix": {
-   "avg": 4.88,
-   "wr": 7.53,
-   "t4": 44.03,
-   "n": 611,
-   "objets": [
-    "DA_StrikersFlail",
-    "DA_NashorsTooth",
-    "DA_Bloodthirster",
-    "DA_EdgeOfNight",
-    "DA_SpearOfShojin"
-   ],
-   "etoile3": {
-    "n": 413,
-    "avg": 4.23,
-    "t4": 55.93,
-    "wr": 9.2
-   }
-  },
-  "DA_18_Elise": {
-   "avg": 5.73,
-   "wr": 8.74,
-   "t4": 28.37,
-   "n": 2083,
-   "objets": [
-    "DA_TitansResolve",
-    "DA_GuinsoosRageblade",
-    "DA_WarmogsArmor",
-    "DA_ThiefsGloves"
-   ],
-   "etoile3": {
-    "n": 363,
-    "avg": 4.97,
-    "t4": 42.98,
-    "wr": 8.54
-   }
-  },
-  "DA_18_Rammus": {
-   "avg": 4.49,
-   "wr": 12.01,
-   "t4": 50.24,
-   "n": 3322,
-   "objets": [
-    "DA_WarmogsArmor"
-   ],
-   "etoile3": {
-    "n": 1439,
-    "avg": 3.76,
-    "t4": 64.49,
-    "wr": 15.91
-   }
-  },
-  "DA_18_RekSai": {
-   "avg": 4.49,
-   "wr": 11.03,
-   "t4": 50.22,
-   "n": 3827,
-   "objets": [
-    "DA_SteraksGage",
-    "DA_WarmogsArmor",
-    "DA_ThiefsGloves"
-   ],
-   "etoile3": {
-    "n": 2350,
-    "avg": 4.27,
-    "t4": 53.53,
-    "wr": 13.79
-   }
-  },
-  "DA_Lux18_Base": {
-   "avg": 3.01,
-   "wr": 37.57,
-   "t4": 74.81,
-   "n": 905,
-   "objets": [
-    "DA_SpearOfShojin",
-    "DA_VoidStaff"
-   ],
-   "etoile3": null
-  },
-  "DA_18_GnarSmall": {
-   "avg": 3.72,
-   "wr": 9.36,
-   "t4": 66.9,
-   "n": 1154,
-   "objets": [
-    "DA_Bloodthirster",
-    "DA_SteraksGage",
-    "DA_TitansResolve",
-    "DA_ThiefsGloves"
-   ],
-   "etoile3": {
-    "n": 1,
-    "avg": 1.0,
-    "t4": 100.0,
-    "wr": 100.0
-   }
-  },
-  "DA_Murkwolf18": {
-   "avg": 4.47,
-   "wr": 9.37,
-   "t4": 51.35,
-   "n": 6853,
-   "objets": [
-    "DA_SteraksGage",
-    "DA_EdgeOfNight",
-    "DA_Bloodthirster",
-    "DA_GiantSlayer",
-    "DA_InfinityEdge"
-   ],
-   "etoile3": {
-    "n": 441,
-    "avg": 3.98,
-    "t4": 62.81,
-    "wr": 10.88
-   }
-  },
-  "DA_18_Ezreal": {
-   "avg": 4.45,
-   "wr": 15.62,
-   "t4": 49.86,
-   "n": 8343,
-   "objets": [
-    "DA_StrikersFlail",
-    "DA_InfinityEdge",
-    "DA_LastWhisper",
-    "DA_RedBuff",
-    "DA_GiantSlayer"
-   ],
-   "etoile3": {
-    "n": 33,
-    "avg": 1.61,
-    "t4": 93.94,
-    "wr": 72.73
-   }
-  },
-  "DA_KogMaw18_AD": {
-   "avg": 4.48,
-   "wr": 8.54,
-   "t4": 51.63,
-   "n": 6533,
-   "objets": [
-    "DA_InfinityEdge",
-    "DA_RedBuff",
-    "DA_GiantSlayer",
-    "DA_SpearOfShojin",
-    "DA_GuinsoosRageblade"
-   ],
-   "etoile3": {
-    "n": 653,
-    "avg": 3.52,
-    "t4": 69.22,
-    "wr": 17.3
-   }
-  },
-  "DA_18_Ivern": {
-   "avg": 3.95,
-   "wr": 23.02,
-   "t4": 58.75,
-   "n": 13434,
-   "objets": [
-    "DA_SpearOfShojin",
-    "DA_GuinsoosRageblade",
-    "DA_RedBuff",
-    "DA_NashorsTooth",
-    "DA_VoidStaff"
-   ],
-   "etoile3": {
-    "n": 8,
-    "avg": 1.0,
-    "t4": 100.0,
-    "wr": 100.0
-   }
-  },
-  "DA_18_Yunara": {
-   "avg": 4.41,
-   "wr": 12.73,
-   "t4": 52.08,
-   "n": 5042,
-   "objets": [
-    "DA_SpearOfShojin",
-    "DA_StrikersFlail",
-    "DA_GiantSlayer",
-    "DA_LastWhisper",
-    "DA_HextechGunblade"
-   ],
-   "etoile3": {
-    "n": 3341,
-    "avg": 3.94,
-    "t4": 61.12,
-    "wr": 15.68
-   }
-  },
-  "DA_Sentinel18": {
-   "avg": 4.42,
-   "wr": 13.12,
-   "t4": 51.45,
-   "n": 25432,
+  "DA_18_Hecarim": {
+   "avg": 4.5,
+   "wr": 12.89,
+   "t4": 49.75,
+   "n": 12813,
    "objets": [
     "DA_WarmogsArmor",
     "DA_ThiefsGloves"
    ],
    "etoile3": {
-    "n": 19,
-    "avg": 1.32,
-    "t4": 100.0,
-    "wr": 78.95
+    "n": 1689,
+    "avg": 3.51,
+    "t4": 70.63,
+    "wr": 15.63
    }
-  },
-  "DA_Brambleback18": {
-   "avg": 4.45,
-   "wr": 9.59,
-   "t4": 51.65,
-   "n": 7204,
-   "objets": [
-    "DA_TitansResolve",
-    "DA_Bloodthirster",
-    "DA_GiantSlayer",
-    "DA_EdgeOfNight",
-    "DA_SteraksGage"
-   ],
-   "etoile3": {
-    "n": 135,
-    "avg": 1.05,
-    "t4": 100.0,
-    "wr": 95.56
-   }
-  },
-  "DA_18_Aphelios": {
-   "avg": 4.36,
-   "wr": 11.53,
-   "t4": 52.84,
-   "n": 5691,
-   "objets": [
-    "DA_KrakensFury",
-    "DA_GiantSlayer",
-    "DA_InfinityEdge",
-    "DA_StrikersFlail",
-    "DA_LastWhisper"
-   ],
-   "etoile3": {
-    "n": 50,
-    "avg": 1.04,
-    "t4": 100.0,
-    "wr": 96.0
-   }
-  },
-  "DA_18_Sivir": {
-   "avg": 4.57,
-   "wr": 11.08,
-   "t4": 48.86,
-   "n": 6310,
-   "objets": [
-    "DA_GiantSlayer",
-    "DA_InfinityEdge",
-    "DA_SpearOfShojin",
-    "DA_StrikersFlail",
-    "DA_RedBuff"
-   ],
-   "etoile3": {
-    "n": 76,
-    "avg": 1.17,
-    "t4": 98.68,
-    "wr": 90.79
-   }
-  },
-  "DA_18_Lux_Elderwood": {
-   "avg": 3.49,
-   "wr": 27.17,
-   "t4": 67.33,
-   "n": 1564,
-   "objets": [
-    "DA_NashorsTooth",
-    "DA_HextechGunblade",
-    "DA_GiantSlayer",
-    "DA_VoidStaff",
-    "DA_RedBuff"
-   ],
-   "etoile3": null
   },
   "DA_18_Malphite": {
    "avg": 4.56,
-   "wr": 9.31,
-   "t4": 49.97,
-   "n": 3254,
+   "wr": 9.08,
+   "t4": 50.14,
+   "n": 3556,
    "objets": [
     "DA_WarmogsArmor",
     "DA_SteraksGage"
    ],
    "etoile3": {
-    "n": 31,
-    "avg": 1.35,
-    "t4": 96.77,
-    "wr": 80.65
+    "n": 33,
+    "avg": 1.39,
+    "t4": 96.97,
+    "wr": 78.79
    }
   },
-  "DA_18_Shen": {
-   "avg": 4.56,
-   "wr": 10.39,
-   "t4": 49.74,
-   "n": 4580,
+  "DA_18_Soraka": {
+   "avg": 4.41,
+   "wr": 11.59,
+   "t4": 52.53,
+   "n": 6610,
    "objets": [
-    "DA_ThiefsGloves",
-    "DA_WarmogsArmor"
-   ],
-   "etoile3": {
-    "n": 174,
-    "avg": 3.98,
-    "t4": 59.2,
-    "wr": 16.09
-   }
-  },
-  "DA_18_Alistar": {
-   "avg": 4.44,
-   "wr": 12.91,
-   "t4": 50.5,
-   "n": 11686,
-   "objets": [
-    "DA_WarmogsArmor",
-    "DA_ThiefsGloves"
-   ],
-   "etoile3": {
-    "n": 2686,
-    "avg": 3.92,
-    "t4": 61.36,
-    "wr": 12.62
-   }
-  },
-  "DA_18_Lux_Coven": {
-   "avg": 4.8,
-   "wr": 20.42,
-   "t4": 44.76,
-   "n": 382,
-   "objets": [
+    "DA_NashorsTooth",
+    "DA_GiantSlayer",
+    "DA_StrikersFlail",
     "DA_SpearOfShojin",
-    "DA_VoidStaff",
-    "DA_RedBuff",
-    "DA_StrikersFlail",
-    "DA_NashorsTooth"
+    "DA_VoidStaff"
    ],
    "etoile3": {
-    "n": 4,
-    "avg": 1.0,
+    "n": 41,
+    "avg": 1.27,
     "t4": 100.0,
-    "wr": 100.0
+    "wr": 80.49
    }
   },
-  "DA_18_Azir": {
-   "avg": 4.06,
-   "wr": 13.96,
-   "t4": 59.74,
-   "n": 5618,
+  "DA_18_Ashe": {
+   "avg": 3.88,
+   "wr": 19.07,
+   "t4": 61.21,
+   "n": 4243,
    "objets": [
-    "DA_GuinsoosRageblade",
-    "DA_HextechGunblade",
     "DA_RedBuff",
-    "DA_GiantSlayer",
-    "DA_NashorsTooth"
-   ],
-   "etoile3": {
-    "n": 840,
-    "avg": 3.37,
-    "t4": 71.67,
-    "wr": 20.12
-   }
-  },
-  "DA_18_Akali_AD": {
-   "avg": 4.83,
-   "wr": 6.91,
-   "t4": 45.18,
-   "n": 1837,
-   "objets": [
-    "DA_InfinityEdge",
     "DA_StrikersFlail",
     "DA_GiantSlayer",
-    "DA_Bloodthirster",
-    "DA_EdgeOfNight"
-   ],
-   "etoile3": {
-    "n": 1275,
-    "avg": 4.73,
-    "t4": 47.53,
-    "wr": 5.57
-   }
-  },
-  "DA_18_Maokai": {
-   "avg": 4.26,
-   "wr": 20.07,
-   "t4": 52.71,
-   "n": 9415,
-   "objets": [
-    "DA_WarmogsArmor",
-    "DA_ThiefsGloves"
+    "DA_HextechGunblade",
+    "DA_SpearOfShojin"
    ],
    "etoile3": {
     "n": 7,
@@ -760,136 +152,82 @@
     "wr": 100.0
    }
   },
-  "DA_18_Kayle": {
-   "avg": 4.21,
-   "wr": 12.55,
-   "t4": 56.15,
-   "n": 6118,
+  "DA_18_Lux_Inferno": {
+   "avg": 3.63,
+   "wr": 27.12,
+   "t4": 65.31,
+   "n": 542,
    "objets": [
-    "DA_RedBuff",
-    "DA_GuinsoosRageblade",
-    "DA_VoidStaff",
-    "DA_GiantSlayer",
-    "DA_HextechGunblade"
-   ],
-   "etoile3": {
-    "n": 1579,
-    "avg": 3.7,
-    "t4": 65.93,
-    "wr": 18.81
-   }
-  },
-  "DA_18_ElderDragon": {
-   "avg": 4.22,
-   "wr": 16.72,
-   "t4": 54.94,
-   "n": 9637,
-   "objets": [
-    "DA_SteraksGage",
-    "DA_RedBuff",
-    "DA_InfinityEdge",
-    "DA_StrikersFlail",
-    "DA_LastWhisper"
-   ],
-   "etoile3": {
-    "n": 8,
-    "avg": 1.0,
-    "t4": 100.0,
-    "wr": 100.0
-   }
-  },
-  "DA_18_Diana": {
-   "avg": 4.58,
-   "wr": 13.44,
-   "t4": 48.46,
-   "n": 9525,
-   "objets": [
-    "DA_Bloodthirster",
-    "DA_SteraksGage",
-    "DA_ThiefsGloves",
-    "DA_EdgeOfNight",
-    "DA_WarmogsArmor"
-   ],
-   "etoile3": {
-    "n": 261,
-    "avg": 3.97,
-    "t4": 61.3,
-    "wr": 12.26
-   }
-  },
-  "DA_Amumu18": {
-   "avg": 4.5,
-   "wr": 13.94,
-   "t4": 49.66,
-   "n": 16417,
-   "objets": [
-    "DA_WarmogsArmor",
-    "DA_ThiefsGloves"
-   ],
-   "etoile3": {
-    "n": 13,
-    "avg": 1.62,
-    "t4": 92.31,
-    "wr": 76.92
-   }
-  },
-  "DA_18_Rengar": {
-   "avg": 4.41,
-   "wr": 11.89,
-   "t4": 51.33,
-   "n": 2482,
-   "objets": [
-    "DA_TitansResolve",
-    "DA_Bloodthirster",
-    "DA_GuinsoosRageblade",
-    "DA_EdgeOfNight",
-    "DA_GiantSlayer"
-   ],
-   "etoile3": {
-    "n": 1779,
-    "avg": 3.78,
-    "t4": 63.74,
-    "wr": 15.12
-   }
-  },
-  "DA_Gromp18_AP": {
-   "avg": 4.71,
-   "wr": 9.27,
-   "t4": 46.66,
-   "n": 1348,
-   "objets": [
-    "DA_VoidStaff",
-    "DA_SpearOfShojin",
-    "DA_GuinsoosRageblade",
-    "DA_RedBuff",
-    "DA_HextechGunblade"
-   ],
-   "etoile3": {
-    "n": 89,
-    "avg": 4.22,
-    "t4": 59.55,
-    "wr": 5.62
-   }
-  },
-  "DA_18_Lux_Fae": {
-   "avg": 3.62,
-   "wr": 25.97,
-   "t4": 65.88,
-   "n": 466,
-   "objets": [
-    "DA_SpearOfShojin",
-    "DA_VoidStaff",
-    "DA_RedBuff",
+    "DA_HextechGunblade",
     "DA_NashorsTooth",
-    "DA_HextechGunblade"
+    "DA_VoidStaff",
+    "DA_RedBuff",
+    "DA_GiantSlayer"
    ],
    "etoile3": null
   },
+  "DA_18_Ezreal": {
+   "avg": 4.44,
+   "wr": 15.88,
+   "t4": 50.13,
+   "n": 9103,
+   "objets": [
+    "DA_StrikersFlail",
+    "DA_InfinityEdge",
+    "DA_RedBuff",
+    "DA_LastWhisper",
+    "DA_GiantSlayer"
+   ],
+   "etoile3": {
+    "n": 34,
+    "avg": 1.62,
+    "t4": 94.12,
+    "wr": 70.59
+   }
+  },
+  "DA_18_Zyra": {
+   "avg": 4.34,
+   "wr": 11.06,
+   "t4": 54.09,
+   "n": 10531,
+   "objets": [
+    "DA_HextechGunblade",
+    "DA_SpearOfShojin",
+    "DA_GiantSlayer",
+    "DA_RedBuff",
+    "DA_VoidStaff"
+   ],
+   "etoile3": {
+    "n": 47,
+    "avg": 1.13,
+    "t4": 100.0,
+    "wr": 89.36
+   }
+  },
+  "DA_18_Teemo": {
+   "avg": 4.47,
+   "wr": 7.81,
+   "t4": 51.43,
+   "n": 2944,
+   "objets": [
+    "DA_StrikersFlail",
+    "DA_NashorsTooth",
+    "DA_SpearOfShojin",
+    "DA_HextechGunblade",
+    "DA_GiantSlayer"
+   ],
+   "etoile3": {
+    "n": 1949,
+    "avg": 4.18,
+    "t4": 57.31,
+    "wr": 7.64
+   }
+  },
   "DA_18_Kennen": {
    "avg": 4.08,
-   "wr": 20.36,
-   "t4": 56.65,
-   "n": 10412,
+   "wr": 20.32,
+   "t4": 56.66,
+   "n": 11311,
    "objets": [
     "DA_VoidStaff",
     "DA_EdgeOfNight",
@@ -904,319 +242,437 @@
     "wr": 100.0
    }
   },
-  "DA_18_Caitlyn": {
-   "avg": 5.67,
-   "wr": 6.39,
-   "t4": 30.3,
-   "n": 736,
+  "DA_Murkwolf18": {
+   "avg": 4.48,
+   "wr": 9.29,
+   "t4": 51.14,
+   "n": 7397,
    "objets": [
-    "DA_HextechGunblade",
-    "DA_KrakensFury",
-    "DA_GuinsoosRageblade",
+    "DA_SteraksGage",
+    "DA_EdgeOfNight",
+    "DA_Bloodthirster",
     "DA_InfinityEdge",
-    "DA_LastWhisper"
-   ],
-   "etoile3": {
-    "n": 295,
-    "avg": 4.42,
-    "t4": 49.49,
-    "wr": 7.8
-   }
-  },
-  "DA_CrimsonRaptor18": {
-   "avg": 4.46,
-   "wr": 9.98,
-   "t4": 51.1,
-   "n": 4368,
-   "objets": [
-    "DA_TitansResolve",
-    "DA_HextechGunblade",
-    "DA_GuinsoosRageblade",
-    "DA_KrakensFury",
     "DA_GiantSlayer"
    ],
    "etoile3": {
-    "n": 1728,
-    "avg": 3.59,
-    "t4": 68.98,
-    "wr": 14.76
+    "n": 475,
+    "avg": 3.96,
+    "t4": 62.74,
+    "wr": 10.95
    }
   },
-  "DA_Taric18": {
-   "avg": 3.96,
-   "wr": 20.78,
-   "t4": 59.34,
-   "n": 16686,
+  "DA_18_Varus": {
+   "avg": 4.8,
+   "wr": 5.92,
+   "t4": 45.67,
+   "n": 3595,
+   "objets": [
+    "DA_GiantSlayer",
+    "DA_StrikersFlail",
+    "DA_InfinityEdge",
+    "DA_RedBuff",
+    "DA_SpearOfShojin"
+   ],
+   "etoile3": {
+    "n": 1472,
+    "avg": 4.68,
+    "t4": 48.17,
+    "wr": 5.84
+   }
+  },
+  "DA_18_Maokai": {
+   "avg": 4.26,
+   "wr": 20.0,
+   "t4": 52.79,
+   "n": 10235,
    "objets": [
     "DA_WarmogsArmor",
     "DA_ThiefsGloves"
    ],
    "etoile3": {
-    "n": 6,
+    "n": 7,
     "avg": 1.0,
     "t4": 100.0,
     "wr": 100.0
    }
   },
-  "DA_Karma18": {
-   "avg": 4.47,
-   "wr": 12.45,
-   "t4": 50.54,
-   "n": 6306,
-   "objets": [
-    "DA_StrikersFlail",
-    "DA_NashorsTooth",
-    "DA_GiantSlayer",
-    "DA_SpearOfShojin",
-    "DA_HextechGunblade"
-   ],
-   "etoile3": {
-    "n": 3785,
-    "avg": 4.23,
-    "t4": 55.09,
-    "wr": 13.95
-   }
-  },
-  "DA_18_Hecarim": {
-   "avg": 4.5,
-   "wr": 12.84,
-   "t4": 49.73,
-   "n": 11696,
+  "DA_18_Sejuani": {
+   "avg": 4.44,
+   "wr": 11.73,
+   "t4": 51.79,
+   "n": 8414,
    "objets": [
     "DA_WarmogsArmor",
     "DA_ThiefsGloves"
    ],
    "etoile3": {
-    "n": 1527,
-    "avg": 3.5,
-    "t4": 71.12,
-    "wr": 15.52
+    "n": 4448,
+    "avg": 3.95,
+    "t4": 60.72,
+    "wr": 15.54
    }
+  },
+  "DA_Krug18": {
+   "avg": 4.43,
+   "wr": 9.92,
+   "t4": 51.98,
+   "n": 16381,
+   "objets": [
+    "DA_WarmogsArmor",
+    "DA_ThiefsGloves"
+   ],
+   "etoile3": {
+    "n": 2967,
+    "avg": 3.3,
+    "t4": 74.86,
+    "wr": 17.8
+   }
+  },
+  "DA_18_Ahri": {
+   "avg": 4.51,
+   "wr": 11.19,
+   "t4": 50.22,
+   "n": 8168,
+   "objets": [
+    "DA_StrikersFlail",
+    "DA_NashorsTooth",
+    "DA_SpearOfShojin",
+    "DA_GiantSlayer",
+    "DA_VoidStaff"
+   ],
+   "etoile3": {
+    "n": 37,
+    "avg": 1.19,
+    "t4": 100.0,
+    "wr": 89.19
+   }
+  },
+  "DA_18_Lux_Moonbeam": {
+   "avg": 3.32,
+   "wr": 30.56,
+   "t4": 71.07,
+   "n": 1227,
+   "objets": [
+    "DA_StrikersFlail",
+    "DA_SpearOfShojin",
+    "DA_GiantSlayer",
+    "DA_VoidStaff",
+    "DA_HextechGunblade"
+   ],
+   "etoile3": null
+  },
+  "DA_18_Yunara": {
+   "avg": 4.41,
+   "wr": 12.79,
+   "t4": 52.02,
+   "n": 5465,
+   "objets": [
+    "DA_SpearOfShojin",
+    "DA_StrikersFlail",
+    "DA_LastWhisper",
+    "DA_GiantSlayer",
+    "DA_HextechGunblade"
+   ],
+   "etoile3": {
+    "n": 3629,
+    "avg": 3.94,
+    "t4": 61.01,
+    "wr": 15.65
+   }
+  },
+  "DA_18_Rammus": {
+   "avg": 4.48,
+   "wr": 12.24,
+   "t4": 50.52,
+   "n": 3636,
+   "objets": [
+    "DA_WarmogsArmor"
+   ],
+   "etoile3": {
+    "n": 1573,
+    "avg": 3.74,
+    "t4": 64.91,
+    "wr": 16.34
+   }
+  },
+  "DA_18_Sivir": {
+   "avg": 4.57,
+   "wr": 10.97,
+   "t4": 48.95,
+   "n": 6872,
+   "objets": [
+    "DA_InfinityEdge",
+    "DA_GiantSlayer",
+    "DA_RedBuff",
+    "DA_SpearOfShojin",
+    "DA_StrikersFlail"
+   ],
+   "etoile3": {
+    "n": 83,
+    "avg": 1.16,
+    "t4": 98.8,
+    "wr": 91.57
+   }
+  },
+  "DA_18_Lux_Primal": {
+   "avg": 3.44,
+   "wr": 24.17,
+   "t4": 70.31,
+   "n": 1051,
+   "objets": [
+    "DA_VoidStaff",
+    "DA_GiantSlayer",
+    "DA_RedBuff",
+    "DA_SpearOfShojin",
+    "DA_NashorsTooth"
+   ],
+   "etoile3": null
   },
   "DA_Draven18": {
    "avg": 4.33,
    "wr": 21.99,
-   "t4": 50.83,
-   "n": 6748,
+   "t4": 50.85,
+   "n": 7325,
    "objets": [
-    "DA_RedBuff",
     "DA_KrakensFury",
-    "DA_InfinityEdge",
+    "DA_RedBuff",
+    "DA_GuinsoosRageblade",
     "DA_TitansResolve",
-    "DA_GuinsoosRageblade"
+    "DA_InfinityEdge"
    ],
    "etoile3": {
-    "n": 15,
-    "avg": 1.07,
+    "n": 16,
+    "avg": 1.06,
     "t4": 100.0,
-    "wr": 93.33
+    "wr": 93.75
    }
   },
-  "DA_Scuttlecrab18": {
-   "avg": 4.88,
-   "wr": 7.59,
-   "t4": 42.71,
-   "n": 5326,
+  "DA_18_Leona": {
+   "avg": 4.4,
+   "wr": 11.71,
+   "t4": 52.56,
+   "n": 7489,
    "objets": [
     "DA_WarmogsArmor",
     "DA_ThiefsGloves"
    ],
    "etoile3": {
-    "n": 608,
-    "avg": 4.07,
-    "t4": 58.06,
-    "wr": 8.88
+    "n": 4826,
+    "avg": 4.21,
+    "t4": 56.32,
+    "wr": 13.08
    }
   },
-  "DA_18_Lux_Inferno": {
-   "avg": 3.58,
-   "wr": 27.2,
-   "t4": 65.8,
-   "n": 500,
+  "DA_18_GnarSmall": {
+   "avg": 3.75,
+   "wr": 9.19,
+   "t4": 66.32,
+   "n": 1241,
    "objets": [
-    "DA_HextechGunblade",
-    "DA_NashorsTooth",
-    "DA_VoidStaff",
-    "DA_GiantSlayer",
-    "DA_SpearOfShojin"
-   ],
-   "etoile3": null
-  },
-  "DA_18_Veigar": {
-   "avg": 4.42,
-   "wr": 10.68,
-   "t4": 51.67,
-   "n": 5541,
-   "objets": [
-    "DA_HextechGunblade",
-    "DA_RedBuff",
-    "DA_GiantSlayer",
-    "DA_SpearOfShojin",
-    "DA_NashorsTooth"
-   ],
-   "etoile3": {
-    "n": 2954,
-    "avg": 4.33,
-    "t4": 52.4,
-    "wr": 12.12
-   }
-  },
-  "DA_Lux18_Blackthorn": {
-   "avg": 3.56,
-   "wr": 21.93,
-   "t4": 68.53,
-   "n": 807,
-   "objets": [
-    "DA_GiantSlayer",
-    "DA_HextechGunblade",
-    "DA_VoidStaff",
-    "DA_RedBuff",
-    "DA_NashorsTooth"
-   ],
-   "etoile3": null
-  },
-  "DA_18_Lux_Sunbeam": {
-   "avg": 3.19,
-   "wr": 28.62,
-   "t4": 73.36,
-   "n": 304,
-   "objets": [
-    "DA_VoidStaff",
-    "DA_RedBuff",
-    "DA_SpearOfShojin"
-   ],
-   "etoile3": null
-  },
-  "DA_Krug18": {
-   "avg": 4.43,
-   "wr": 9.93,
-   "t4": 51.91,
-   "n": 15019,
-   "objets": [
-    "DA_WarmogsArmor",
+    "DA_Bloodthirster",
+    "DA_SteraksGage",
+    "DA_TitansResolve",
     "DA_ThiefsGloves"
    ],
    "etoile3": {
-    "n": 2728,
-    "avg": 3.28,
-    "t4": 75.18,
-    "wr": 18.0
-   }
-  },
-  "DA_18_Sejuani": {
-   "avg": 4.43,
-   "wr": 11.69,
-   "t4": 51.92,
-   "n": 7758,
-   "objets": [
-    "DA_WarmogsArmor",
-    "DA_ThiefsGloves"
-   ],
-   "etoile3": {
-    "n": 4090,
-    "avg": 3.95,
-    "t4": 60.83,
-    "wr": 15.55
-   }
-  },
-  "DA_18_Zyra": {
-   "avg": 4.35,
-   "wr": 11.12,
-   "t4": 53.82,
-   "n": 9618,
-   "objets": [
-    "DA_HextechGunblade",
-    "DA_SpearOfShojin",
-    "DA_GiantSlayer",
-    "DA_RedBuff",
-    "DA_VoidStaff"
-   ],
-   "etoile3": {
-    "n": 46,
-    "avg": 1.13,
+    "n": 1,
+    "avg": 1.0,
     "t4": 100.0,
-    "wr": 89.13
+    "wr": 100.0
    }
-  },
-  "DA_18_Sentry": {
-   "avg": 4.49,
-   "wr": 9.65,
-   "t4": 50.78,
-   "n": 7794,
-   "objets": [
-    "DA_StrikersFlail",
-    "DA_VoidStaff",
-    "DA_HextechGunblade",
-    "DA_GiantSlayer",
-    "DA_RedBuff"
-   ],
-   "etoile3": {
-    "n": 795,
-    "avg": 4.1,
-    "t4": 59.5,
-    "wr": 9.69
-   }
-  },
-  "DA_Vi18": {
-   "avg": 4.61,
-   "wr": 10.56,
-   "t4": 47.85,
-   "n": 8691,
-   "objets": [
-    "DA_WarmogsArmor",
-    "DA_ThiefsGloves"
-   ],
-   "etoile3": {
-    "n": 1399,
-    "avg": 3.52,
-    "t4": 69.48,
-    "wr": 17.8
-   }
-  },
-  "DA_18_Lux_Primal": {
-   "avg": 3.45,
-   "wr": 24.32,
-   "t4": 69.96,
-   "n": 962,
-   "objets": [
-    "DA_VoidStaff",
-    "DA_GiantSlayer",
-    "DA_RedBuff",
-    "DA_NashorsTooth",
-    "DA_SpearOfShojin"
-   ],
-   "etoile3": null
   },
   "DA_18_Tristana": {
    "avg": 4.59,
-   "wr": 12.65,
-   "t4": 48.45,
-   "n": 2578,
+   "wr": 12.32,
+   "t4": 48.43,
+   "n": 2833,
    "objets": [
-    "DA_LastWhisper",
     "DA_GiantSlayer",
+    "DA_LastWhisper",
     "DA_KrakensFury",
     "DA_GuinsoosRageblade",
     "DA_HextechGunblade"
    ],
    "etoile3": {
-    "n": 466,
-    "avg": 3.91,
-    "t4": 60.52,
-    "wr": 18.67
+    "n": 502,
+    "avg": 3.96,
+    "t4": 59.56,
+    "wr": 17.73
+   }
+  },
+  "DA_Brambleback18": {
+   "avg": 4.46,
+   "wr": 9.51,
+   "t4": 51.37,
+   "n": 7785,
+   "objets": [
+    "DA_TitansResolve",
+    "DA_Bloodthirster",
+    "DA_GiantSlayer",
+    "DA_EdgeOfNight",
+    "DA_GuinsoosRageblade"
+   ],
+   "etoile3": {
+    "n": 144,
+    "avg": 1.05,
+    "t4": 100.0,
+    "wr": 95.83
+   }
+  },
+  "DA_18_Diana": {
+   "avg": 4.59,
+   "wr": 13.5,
+   "t4": 48.25,
+   "n": 10385,
+   "objets": [
+    "DA_Bloodthirster",
+    "DA_SteraksGage",
+    "DA_EdgeOfNight",
+    "DA_ThiefsGloves",
+    "DA_WarmogsArmor"
+   ],
+   "etoile3": {
+    "n": 277,
+    "avg": 3.97,
+    "t4": 60.65,
+    "wr": 12.27
+   }
+  },
+  "DA_18_Veigar": {
+   "avg": 4.42,
+   "wr": 10.64,
+   "t4": 51.49,
+   "n": 6081,
+   "objets": [
+    "DA_HextechGunblade",
+    "DA_GiantSlayer",
+    "DA_NashorsTooth",
+    "DA_SpearOfShojin",
+    "DA_ThiefsGloves"
+   ],
+   "etoile3": {
+    "n": 3232,
+    "avg": 4.33,
+    "t4": 52.23,
+    "wr": 11.97
+   }
+  },
+  "DA_Amumu18": {
+   "avg": 4.49,
+   "wr": 13.84,
+   "t4": 49.77,
+   "n": 17842,
+   "objets": [
+    "DA_WarmogsArmor",
+    "DA_ThiefsGloves"
+   ],
+   "etoile3": {
+    "n": 15,
+    "avg": 1.6,
+    "t4": 93.33,
+    "wr": 73.33
+   }
+  },
+  "DA_18_Camille": {
+   "avg": 5.22,
+   "wr": 5.04,
+   "t4": 39.42,
+   "n": 1824,
+   "objets": [
+    "DA_Bloodthirster",
+    "DA_EdgeOfNight",
+    "DA_SteraksGage",
+    "DA_GiantSlayer",
+    "DA_TitansResolve"
+   ],
+   "etoile3": {
+    "n": 1344,
+    "avg": 4.7,
+    "t4": 48.14,
+    "wr": 5.36
+   }
+  },
+  "DA_18_Rengar": {
+   "avg": 4.4,
+   "wr": 11.87,
+   "t4": 51.61,
+   "n": 2695,
+   "objets": [
+    "DA_TitansResolve",
+    "DA_Bloodthirster",
+    "DA_GuinsoosRageblade",
+    "DA_EdgeOfNight",
+    "DA_GiantSlayer"
+   ],
+   "etoile3": {
+    "n": 1930,
+    "avg": 3.76,
+    "t4": 64.25,
+    "wr": 15.23
+   }
+  },
+  "DA_Fiddlesticks18": {
+   "avg": 4.49,
+   "wr": 12.39,
+   "t4": 50.34,
+   "n": 15974,
+   "objets": [
+    "DA_TitansResolve",
+    "DA_WarmogsArmor",
+    "DA_ThiefsGloves"
+   ],
+   "etoile3": {
+    "n": 770,
+    "avg": 3.3,
+    "t4": 73.64,
+    "wr": 21.43
+   }
+  },
+  "DA_18_RekSai": {
+   "avg": 4.49,
+   "wr": 10.94,
+   "t4": 50.1,
+   "n": 4176,
+   "objets": [
+    "DA_SteraksGage",
+    "DA_WarmogsArmor",
+    "DA_ThiefsGloves"
+   ],
+   "etoile3": {
+    "n": 2555,
+    "avg": 4.27,
+    "t4": 53.35,
+    "wr": 13.66
+   }
+  },
+  "DA_18_Sett": {
+   "avg": 4.51,
+   "wr": 10.37,
+   "t4": 50.13,
+   "n": 11772,
+   "objets": [
+    "DA_WarmogsArmor",
+    "DA_SteraksGage",
+    "DA_ThiefsGloves"
+   ],
+   "etoile3": {
+    "n": 44,
+    "avg": 1.09,
+    "t4": 100.0,
+    "wr": 90.91
    }
   },
   "DA_Lux18_Blossom": {
-   "avg": 3.52,
-   "wr": 23.17,
-   "t4": 67.17,
-   "n": 600,
+   "avg": 3.57,
+   "wr": 22.71,
+   "t4": 66.62,
+   "n": 656,
    "objets": [
+    "DA_HextechGunblade",
     "DA_VoidStaff",
     "DA_GiantSlayer",
     "DA_RedBuff",
-    "DA_StrikersFlail",
-    "DA_NashorsTooth"
+    "DA_SpearOfShojin"
    ],
    "etoile3": {
     "n": 3,
@@ -1225,59 +681,350 @@
     "wr": 100.0
    }
   },
-  "DA_18_Sett": {
-   "avg": 4.51,
-   "wr": 10.34,
-   "t4": 49.98,
-   "n": 10789,
+  "DA_Scuttlecrab18": {
+   "avg": 4.87,
+   "wr": 7.63,
+   "t4": 43.01,
+   "n": 5796,
    "objets": [
     "DA_WarmogsArmor",
-    "DA_SteraksGage",
     "DA_ThiefsGloves"
    ],
    "etoile3": {
-    "n": 40,
-    "avg": 1.08,
-    "t4": 100.0,
-    "wr": 92.5
+    "n": 676,
+    "avg": 4.05,
+    "t4": 58.28,
+    "wr": 8.58
    }
   },
-  "DA_Fiddlesticks18": {
-   "avg": 4.49,
-   "wr": 12.31,
-   "t4": 50.28,
-   "n": 14661,
+  "DA_18_Alistar": {
+   "avg": 4.44,
+   "wr": 12.98,
+   "t4": 50.55,
+   "n": 12800,
+   "objets": [
+    "DA_WarmogsArmor",
+    "DA_ThiefsGloves"
+   ],
+   "etoile3": {
+    "n": 2966,
+    "avg": 3.91,
+    "t4": 61.36,
+    "wr": 12.54
+   }
+  },
+  "DA_CrimsonRaptor18": {
+   "avg": 4.45,
+   "wr": 10.06,
+   "t4": 51.16,
+   "n": 4781,
    "objets": [
     "DA_TitansResolve",
+    "DA_HextechGunblade",
+    "DA_GuinsoosRageblade",
+    "DA_KrakensFury",
+    "DA_GiantSlayer"
+   ],
+   "etoile3": {
+    "n": 1909,
+    "avg": 3.59,
+    "t4": 68.88,
+    "wr": 15.09
+   }
+  },
+  "DA_18_Kobuko": {
+   "avg": 4.59,
+   "wr": 10.07,
+   "t4": 48.15,
+   "n": 2860,
+   "objets": [
+    "DA_SteraksGage",
     "DA_WarmogsArmor",
     "DA_ThiefsGloves"
    ],
    "etoile3": {
-    "n": 696,
-    "avg": 3.33,
-    "t4": 72.56,
-    "wr": 20.98
+    "n": 858,
+    "avg": 4.41,
+    "t4": 52.21,
+    "wr": 6.06
    }
   },
-  "DA_18_Lux_Moonbeam": {
-   "avg": 3.32,
-   "wr": 30.17,
-   "t4": 71.24,
-   "n": 1137,
+  "DA_Cinderling18": {
+   "avg": 4.91,
+   "wr": 6.15,
+   "t4": 42.82,
+   "n": 2520,
+   "objets": [
+    "DA_SpearOfShojin",
+    "DA_StrikersFlail",
+    "DA_InfinityEdge",
+    "DA_LastWhisper",
+    "DA_GiantSlayer"
+   ],
+   "etoile3": {
+    "n": 401,
+    "avg": 4.23,
+    "t4": 56.11,
+    "wr": 9.23
+   }
+  },
+  "DA_18_LeBlanc": {
+   "avg": 4.44,
+   "wr": 12.98,
+   "t4": 50.84,
+   "n": 10754,
+   "objets": [
+    "DA_SpearOfShojin",
+    "DA_VoidStaff",
+    "DA_RedBuff",
+    "DA_GiantSlayer",
+    "DA_NashorsTooth"
+   ],
+   "etoile3": {
+    "n": 5490,
+    "avg": 3.8,
+    "t4": 63.13,
+    "wr": 15.94
+   }
+  },
+  "DA_18_Elise": {
+   "avg": 5.74,
+   "wr": 8.69,
+   "t4": 28.13,
+   "n": 2279,
+   "objets": [
+    "DA_TitansResolve",
+    "DA_GuinsoosRageblade",
+    "DA_WarmogsArmor",
+    "DA_ThiefsGloves"
+   ],
+   "etoile3": {
+    "n": 404,
+    "avg": 4.92,
+    "t4": 43.56,
+    "wr": 8.66
+   }
+  },
+  "DA_18_Ivern": {
+   "avg": 3.94,
+   "wr": 23.13,
+   "t4": 58.78,
+   "n": 14646,
+   "objets": [
+    "DA_SpearOfShojin",
+    "DA_GuinsoosRageblade",
+    "DA_RedBuff",
+    "DA_NashorsTooth",
+    "DA_VoidStaff"
+   ],
+   "etoile3": {
+    "n": 9,
+    "avg": 1.0,
+    "t4": 100.0,
+    "wr": 100.0
+   }
+  },
+  "DA_18_Ornn": {
+   "avg": 4.5,
+   "wr": 12.63,
+   "t4": 49.52,
+   "n": 10479,
+   "objets": [
+    "DA_WarmogsArmor",
+    "DA_ThiefsGloves"
+   ],
+   "etoile3": {
+    "n": 4476,
+    "avg": 4.41,
+    "t4": 51.34,
+    "wr": 11.68
+   }
+  },
+  "DA_18_Azir": {
+   "avg": 4.06,
+   "wr": 13.86,
+   "t4": 59.95,
+   "n": 6140,
+   "objets": [
+    "DA_GuinsoosRageblade",
+    "DA_HextechGunblade",
+    "DA_RedBuff",
+    "DA_GiantSlayer",
+    "DA_NashorsTooth"
+   ],
+   "etoile3": {
+    "n": 925,
+    "avg": 3.35,
+    "t4": 71.24,
+    "wr": 20.86
+   }
+  },
+  "DA_18_Alune": {
+   "avg": 3.88,
+   "wr": 21.93,
+   "t4": 60.84,
+   "n": 8026,
    "objets": [
     "DA_StrikersFlail",
-    "DA_SpearOfShojin",
-    "DA_GiantSlayer",
     "DA_VoidStaff",
-    "DA_RedBuff"
+    "DA_GiantSlayer",
+    "DA_SpearOfShojin",
+    "DA_NashorsTooth"
+   ],
+   "etoile3": {
+    "n": 6,
+    "avg": 1.0,
+    "t4": 100.0,
+    "wr": 100.0
+   }
+  },
+  "DA_18_ElderDragon": {
+   "avg": 4.23,
+   "wr": 16.62,
+   "t4": 54.72,
+   "n": 10339,
+   "objets": [
+    "DA_StrikersFlail",
+    "DA_SteraksGage",
+    "DA_InfinityEdge",
+    "DA_RedBuff",
+    "DA_LastWhisper"
+   ],
+   "etoile3": {
+    "n": 8,
+    "avg": 1.0,
+    "t4": 100.0,
+    "wr": 100.0
+   }
+  },
+  "DA_18_Xayah": {
+   "avg": 4.46,
+   "wr": 13.25,
+   "t4": 50.18,
+   "n": 7429,
+   "objets": [
+    "DA_GiantSlayer",
+    "DA_StrikersFlail",
+    "DA_InfinityEdge",
+    "DA_GuinsoosRageblade",
+    "DA_HextechGunblade"
+   ],
+   "etoile3": {
+    "n": 1185,
+    "avg": 4.5,
+    "t4": 50.3,
+    "wr": 12.83
+   }
+  },
+  "DA_18_Lux_Coven": {
+   "avg": 4.81,
+   "wr": 20.43,
+   "t4": 44.47,
+   "n": 416,
+   "objets": [
+    "DA_SpearOfShojin",
+    "DA_VoidStaff",
+    "DA_RedBuff",
+    "DA_StrikersFlail",
+    "DA_NashorsTooth"
+   ],
+   "etoile3": {
+    "n": 4,
+    "avg": 1.0,
+    "t4": 100.0,
+    "wr": 100.0
+   }
+  },
+  "DA_18_Lux_Sunbeam": {
+   "avg": 3.17,
+   "wr": 28.97,
+   "t4": 73.52,
+   "n": 321,
+   "objets": [
+    "DA_VoidStaff",
+    "DA_RedBuff",
+    "DA_SpearOfShojin"
    ],
    "etoile3": null
   },
+  "DA_18_Kayle": {
+   "avg": 4.22,
+   "wr": 12.52,
+   "t4": 55.85,
+   "n": 6638,
+   "objets": [
+    "DA_RedBuff",
+    "DA_GuinsoosRageblade",
+    "DA_VoidStaff",
+    "DA_GiantSlayer",
+    "DA_HextechGunblade"
+   ],
+   "etoile3": {
+    "n": 1714,
+    "avg": 3.72,
+    "t4": 65.23,
+    "wr": 18.79
+   }
+  },
+  "DA_Gromp18_AP": {
+   "avg": 4.68,
+   "wr": 9.25,
+   "t4": 47.07,
+   "n": 1470,
+   "objets": [
+    "DA_VoidStaff",
+    "DA_SpearOfShojin",
+    "DA_GuinsoosRageblade",
+    "DA_RedBuff",
+    "DA_HextechGunblade"
+   ],
+   "etoile3": {
+    "n": 101,
+    "avg": 4.15,
+    "t4": 59.41,
+    "wr": 5.94
+   }
+  },
+  "DA_18_Yorick": {
+   "avg": 4.46,
+   "wr": 11.28,
+   "t4": 51.26,
+   "n": 14427,
+   "objets": [
+    "DA_WarmogsArmor",
+    "DA_ThiefsGloves"
+   ],
+   "etoile3": {
+    "n": 4003,
+    "avg": 4.13,
+    "t4": 57.06,
+    "wr": 14.39
+   }
+  },
+  "DA_Nidalee18_AP": {
+   "avg": 4.4,
+   "wr": 9.31,
+   "t4": 52.83,
+   "n": 7613,
+   "objets": [
+    "DA_EdgeOfNight",
+    "DA_SteraksGage",
+    "DA_Bloodthirster",
+    "DA_InfinityEdge",
+    "DA_GiantSlayer"
+   ],
+   "etoile3": {
+    "n": 49,
+    "avg": 1.78,
+    "t4": 93.88,
+    "wr": 69.39
+   }
+  },
   "DA_18_Morgana": {
-   "avg": 4.45,
-   "wr": 15.15,
-   "t4": 50.71,
-   "n": 7493,
+   "avg": 4.47,
+   "wr": 15.06,
+   "t4": 50.27,
+   "n": 8235,
    "objets": [
     "DA_VoidStaff",
     "DA_HextechGunblade",
@@ -1286,799 +1033,1052 @@
     "DA_SpearOfShojin"
    ],
    "etoile3": {
-    "n": 72,
-    "avg": 1.35,
-    "t4": 97.22,
-    "wr": 80.56
+    "n": 79,
+    "avg": 1.32,
+    "t4": 97.47,
+    "wr": 82.28
    }
   },
-  "DA_18_Yorick": {
-   "avg": 4.46,
-   "wr": 11.38,
-   "t4": 51.13,
-   "n": 13234,
+  "DA_18_Lux_Elderwood": {
+   "avg": 3.48,
+   "wr": 27.42,
+   "t4": 67.55,
+   "n": 1692,
+   "objets": [
+    "DA_NashorsTooth",
+    "DA_HextechGunblade",
+    "DA_GiantSlayer",
+    "DA_VoidStaff",
+    "DA_SpearOfShojin"
+   ],
+   "etoile3": null
+  },
+  "DA_18_Lux_Fae": {
+   "avg": 3.61,
+   "wr": 25.9,
+   "t4": 66.14,
+   "n": 502,
+   "objets": [
+    "DA_SpearOfShojin",
+    "DA_VoidStaff",
+    "DA_RedBuff",
+    "DA_NashorsTooth",
+    "DA_HextechGunblade"
+   ],
+   "etoile3": null
+  },
+  "DA_KogMaw18_AD": {
+   "avg": 4.47,
+   "wr": 8.61,
+   "t4": 51.8,
+   "n": 7099,
+   "objets": [
+    "DA_RedBuff",
+    "DA_GiantSlayer",
+    "DA_InfinityEdge",
+    "DA_SpearOfShojin",
+    "DA_GuinsoosRageblade"
+   ],
+   "etoile3": {
+    "n": 726,
+    "avg": 3.49,
+    "t4": 69.56,
+    "wr": 17.36
+   }
+  },
+  "DA_18_MasterYi_AD": {
+   "avg": 4.28,
+   "wr": 12.5,
+   "t4": 53.9,
+   "n": 2681,
+   "objets": [
+    "DA_TitansResolve",
+    "DA_EdgeOfNight",
+    "DA_GuinsoosRageblade",
+    "DA_InfinityEdge",
+    "DA_Bloodthirster"
+   ],
+   "etoile3": {
+    "n": 1845,
+    "avg": 3.64,
+    "t4": 67.26,
+    "wr": 15.07
+   }
+  },
+  "DA_Karma18": {
+   "avg": 4.48,
+   "wr": 12.37,
+   "t4": 50.52,
+   "n": 6862,
+   "objets": [
+    "DA_StrikersFlail",
+    "DA_NashorsTooth",
+    "DA_GiantSlayer",
+    "DA_SpearOfShojin",
+    "DA_HextechGunblade"
+   ],
+   "etoile3": {
+    "n": 4109,
+    "avg": 4.23,
+    "t4": 55.0,
+    "wr": 13.92
+   }
+  },
+  "DA_18_Cassiopeia": {
+   "avg": 4.82,
+   "wr": 10.62,
+   "t4": 43.89,
+   "n": 3766,
+   "objets": [
+    "DA_HextechGunblade",
+    "DA_SpearOfShojin",
+    "DA_RedBuff",
+    "DA_VoidStaff",
+    "DA_NashorsTooth"
+   ],
+   "etoile3": {
+    "n": 824,
+    "avg": 3.68,
+    "t4": 66.5,
+    "wr": 15.66
+   }
+  },
+  "DA_Sentinel18": {
+   "avg": 4.42,
+   "wr": 13.08,
+   "t4": 51.38,
+   "n": 27615,
    "objets": [
     "DA_WarmogsArmor",
     "DA_ThiefsGloves"
    ],
    "etoile3": {
-    "n": 3686,
-    "avg": 4.12,
-    "t4": 57.3,
-    "wr": 14.46
+    "n": 22,
+    "avg": 1.27,
+    "t4": 100.0,
+    "wr": 81.82
+   }
+  },
+  "DA_18_KhaZix": {
+   "avg": 4.94,
+   "wr": 7.21,
+   "t4": 42.94,
+   "n": 666,
+   "objets": [
+    "DA_StrikersFlail",
+    "DA_NashorsTooth",
+    "DA_Bloodthirster",
+    "DA_EdgeOfNight",
+    "DA_SpearOfShojin"
+   ],
+   "etoile3": {
+    "n": 446,
+    "avg": 4.26,
+    "t4": 55.16,
+    "wr": 8.97
+   }
+  },
+  "DA_18_Warwick": {
+   "avg": 4.66,
+   "wr": 7.73,
+   "t4": 50.52,
+   "n": 582,
+   "objets": [
+    "DA_SpearOfShojin",
+    "DA_SteraksGage",
+    "DA_InfinityEdge",
+    "DA_TitansResolve",
+    "DA_EdgeOfNight"
+   ],
+   "etoile3": {
+    "n": 328,
+    "avg": 4.3,
+    "t4": 57.32,
+    "wr": 7.01
+   }
+  },
+  "DA_Lux18_Base": {
+   "avg": 2.99,
+   "wr": 37.06,
+   "t4": 75.69,
+   "n": 1012,
+   "objets": [
+    "DA_SpearOfShojin",
+    "DA_VoidStaff"
+   ],
+   "etoile3": null
+  },
+  "DA_18_Shen": {
+   "avg": 4.56,
+   "wr": 10.34,
+   "t4": 49.83,
+   "n": 4983,
+   "objets": [
+    "DA_ThiefsGloves",
+    "DA_WarmogsArmor"
+   ],
+   "etoile3": {
+    "n": 192,
+    "avg": 4.03,
+    "t4": 58.33,
+    "wr": 15.1
+   }
+  },
+  "DA_Lux18_Blackthorn": {
+   "avg": 3.57,
+   "wr": 21.92,
+   "t4": 68.38,
+   "n": 876,
+   "objets": [
+    "DA_StrikersFlail",
+    "DA_HextechGunblade",
+    "DA_VoidStaff",
+    "DA_RedBuff",
+    "DA_NashorsTooth"
+   ],
+   "etoile3": null
+  },
+  "DA_18_Caitlyn": {
+   "avg": 5.6,
+   "wr": 6.61,
+   "t4": 31.82,
+   "n": 817,
+   "objets": [
+    "DA_HextechGunblade",
+    "DA_KrakensFury",
+    "DA_GiantSlayer",
+    "DA_GuinsoosRageblade",
+    "DA_InfinityEdge"
+   ],
+   "etoile3": {
+    "n": 335,
+    "avg": 4.32,
+    "t4": 51.64,
+    "wr": 8.66
+   }
+  },
+  "DA_Vi18": {
+   "avg": 4.6,
+   "wr": 10.53,
+   "t4": 48.05,
+   "n": 9507,
+   "objets": [
+    "DA_WarmogsArmor",
+    "DA_ThiefsGloves"
+   ],
+   "etoile3": {
+    "n": 1529,
+    "avg": 3.51,
+    "t4": 69.65,
+    "wr": 17.79
+   }
+  },
+  "DA_18_Rakan": {
+   "avg": 4.66,
+   "wr": 11.84,
+   "t4": 47.34,
+   "n": 13461,
+   "objets": [
+    "DA_WarmogsArmor",
+    "DA_ThiefsGloves"
+   ],
+   "etoile3": {
+    "n": 1097,
+    "avg": 4.41,
+    "t4": 50.77,
+    "wr": 14.13
+   }
+  },
+  "DA_18_Aphelios": {
+   "avg": 4.36,
+   "wr": 11.82,
+   "t4": 52.98,
+   "n": 6193,
+   "objets": [
+    "DA_KrakensFury",
+    "DA_InfinityEdge",
+    "DA_GiantSlayer",
+    "DA_StrikersFlail",
+    "DA_LastWhisper"
+   ],
+   "etoile3": {
+    "n": 53,
+    "avg": 1.04,
+    "t4": 100.0,
+    "wr": 96.23
    }
   }
  },
  "objets": {
   "DA_TacticiansCape": {
-   "avg": 4.17,
-   "wr": 14.48,
-   "t4": 56.69,
-   "n": 815,
+   "avg": 4.18,
+   "wr": 14.51,
+   "t4": 56.26,
+   "n": 903,
    "porteurs": []
   },
   "DA_18_EmblemJuggernaut": {
    "avg": 4.17,
-   "wr": 15.76,
-   "t4": 55.43,
-   "n": 1631,
+   "wr": 15.61,
+   "t4": 55.44,
+   "n": 1755,
    "porteurs": [
     [
      "DA_18_Malphite",
-     -0.0055
+     0.0074
     ]
    ]
   },
   "DA_18_EmblemRapidfire": {
    "avg": 4.29,
-   "wr": 12.34,
-   "t4": 54.45,
-   "n": 1605,
+   "wr": 12.44,
+   "t4": 54.35,
+   "n": 1737,
    "porteurs": [
     [
      "DA_18_Zyra",
-     -0.0716
+     -0.0643
     ],
     [
      "DA_Brambleback18",
-     -0.0315
+     -0.0342
     ],
     [
      "DA_18_Ezreal",
-     -0.0255
+     -0.0184
     ]
    ]
   },
   "DA_GargoyleStoneplate_Radiant": {
-   "avg": 4.22,
-   "wr": 18.49,
-   "t4": 54.34,
-   "n": 265,
+   "avg": 4.26,
+   "wr": 18.34,
+   "t4": 53.98,
+   "n": 289,
    "porteurs": []
   },
   "DA_BrambleVest": {
-   "avg": 4.02,
-   "wr": 15.56,
-   "t4": 60.02,
-   "n": 8130,
+   "avg": 4.01,
+   "wr": 15.78,
+   "t4": 60.13,
+   "n": 8871,
    "porteurs": [
     [
-     "DA_18_Maokai",
-     -0.0703
-    ],
-    [
-     "DA_Krug18",
-     -0.069
-    ],
-    [
      "DA_18_Sett",
-     -0.0668
+     -0.0689
+    ],
+    [
+     "DA_18_Maokai",
+     -0.0651
     ],
     [
      "DA_18_Sejuani",
-     -0.0608
+     -0.0639
     ],
     [
      "DA_18_Alistar",
-     -0.0594
+     -0.0597
+    ],
+    [
+     "DA_Krug18",
+     -0.0513
     ]
    ]
   },
   "DA_ArchangelsStaff": {
-   "avg": 4.1,
-   "wr": 15.12,
-   "t4": 57.51,
-   "n": 8586,
+   "avg": 4.09,
+   "wr": 15.18,
+   "t4": 57.73,
+   "n": 9448,
    "porteurs": [
     [
      "DA_18_Zyra",
-     -0.099
+     -0.1064
     ],
     [
      "DA_18_Cassiopeia",
-     -0.0907
+     -0.0969
+    ],
+    [
+     "DA_Nidalee18_AP",
+     -0.0398
     ],
     [
      "DA_18_Ivern",
-     -0.0338
+     -0.038
     ],
     [
-     "DA_18_LeBlanc",
-     -0.0233
-    ],
-    [
-     "DA_18_Morgana",
-     -0.021
+     "DA_18_Alune",
+     -0.028
     ]
    ]
   },
   "DA_LastWhisper": {
-   "avg": 4.31,
-   "wr": 14.59,
-   "t4": 52.89,
-   "n": 15734,
+   "avg": 4.3,
+   "wr": 14.73,
+   "t4": 52.91,
+   "n": 17103,
    "porteurs": [
     [
      "DA_18_Yunara",
-     -0.0833
+     -0.0942
     ],
     [
      "DA_18_Tristana",
-     -0.0677
+     -0.0625
     ],
     [
      "DA_18_Ezreal",
-     -0.0328
+     -0.0353
     ],
     [
      "DA_Cinderling18",
-     -0.0264
+     -0.0306
     ],
     [
      "DA_18_ElderDragon",
-     -0.0183
+     -0.0143
     ]
    ]
   },
   "DA_Artifact_EternalPact": {
-   "avg": 4.16,
-   "wr": 14.24,
-   "t4": 56.67,
-   "n": 667,
+   "avg": 4.15,
+   "wr": 14.11,
+   "t4": 56.85,
+   "n": 730,
    "porteurs": [
     [
-     "DA_18_Veigar",
-     -0.067
+     "DA_Karma18",
+     -0.0652
     ],
     [
-     "DA_Karma18",
-     -0.0366
+     "DA_18_Veigar",
+     -0.0613
     ]
    ]
   },
   "DA_EdgeOfNight": {
-   "avg": 4.27,
-   "wr": 12.57,
-   "t4": 54.42,
-   "n": 13981,
+   "avg": 4.28,
+   "wr": 12.47,
+   "t4": 54.43,
+   "n": 15161,
    "porteurs": [
     [
      "DA_Nidalee18_AP",
-     -0.0988
+     -0.1006
     ],
     [
      "DA_18_Kennen",
-     -0.0503
+     -0.057
     ],
     [
      "DA_18_Rengar",
-     -0.0438
+     -0.0441
+    ],
+    [
+     "DA_18_MasterYi_AD",
+     -0.0425
     ],
     [
      "DA_Murkwolf18",
-     -0.0376
-    ],
-    [
-     "DA_18_Camille",
-     -0.0375
+     -0.04
     ]
    ]
   },
   "DA_TitansResolve_Radiant": {
-   "avg": 4.26,
-   "wr": 15.6,
-   "t4": 53.21,
-   "n": 109,
+   "avg": 4.24,
+   "wr": 16.26,
+   "t4": 53.66,
+   "n": 123,
    "porteurs": []
   },
   "DA_GiantSlayer_Radiant": {
-   "avg": 3.84,
-   "wr": 18.01,
-   "t4": 62.07,
-   "n": 261,
+   "avg": 3.85,
+   "wr": 18.12,
+   "t4": 61.67,
+   "n": 287,
    "porteurs": []
   },
   "DA_TacticiansShield": {
-   "avg": 3.64,
-   "wr": 26.96,
-   "t4": 61.76,
-   "n": 204,
+   "avg": 3.67,
+   "wr": 25.22,
+   "t4": 61.95,
+   "n": 226,
    "porteurs": []
   },
   "DA_18_EmblemCoven": {
-   "avg": 5.33,
-   "wr": 11.89,
-   "t4": 34.18,
-   "n": 471,
+   "avg": 5.25,
+   "wr": 12.69,
+   "t4": 35.77,
+   "n": 520,
    "porteurs": []
   },
   "DA_18_EmblemBlackthorn": {
-   "avg": 4.43,
-   "wr": 13.22,
-   "t4": 52.22,
-   "n": 1354,
+   "avg": 4.44,
+   "wr": 12.86,
+   "t4": 52.06,
+   "n": 1477,
    "porteurs": [
     [
      "DA_18_Soraka",
-     0.038
+     0.037
     ],
     [
      "DA_18_KhaZix",
-     0.0905
+     0.0914
     ],
     [
      "DA_18_Zyra",
-     0.1158
+     0.123
     ]
    ]
   },
   "DA_18_EmblemElderwood": {
-   "avg": 4.27,
-   "wr": 17.01,
-   "t4": 53.24,
-   "n": 3698,
+   "avg": 4.26,
+   "wr": 17.32,
+   "t4": 53.52,
+   "n": 4006,
    "porteurs": [
     [
      "DA_Draven18",
-     0.0134
+     0.0143
     ],
     [
      "DA_18_Kennen",
-     0.0334
+     0.0325
     ],
     [
      "DA_18_Aphelios",
-     0.0638
+     0.067
     ],
     [
      "DA_18_Soraka",
-     0.0844
+     0.0971
     ],
     [
      "DA_18_Lillia",
-     0.0993
+     0.1098
     ]
    ]
   },
   "DA_DragonsClawRadiant": {
-   "avg": 3.63,
-   "wr": 23.73,
-   "t4": 64.41,
-   "n": 59,
+   "avg": 3.74,
+   "wr": 24.62,
+   "t4": 63.08,
+   "n": 65,
    "porteurs": []
   },
   "DA_Artifact_LightshieldCrest": {
    "avg": 4.26,
-   "wr": 14.63,
-   "t4": 54.37,
-   "n": 916,
+   "wr": 14.53,
+   "t4": 54.21,
+   "n": 998,
    "porteurs": [
     [
      "DA_18_Ornn",
-     -0.1006
+     -0.1222
     ],
     [
      "DA_18_Malphite",
-     -0.0904
+     -0.1005
     ],
     [
      "DA_18_RekSai",
-     -0.0594
+     -0.0446
     ]
    ]
   },
   "DA_SteadfastHeart": {
    "avg": 4.09,
-   "wr": 15.4,
-   "t4": 57.98,
-   "n": 10276,
+   "wr": 15.22,
+   "t4": 57.82,
+   "n": 11206,
    "porteurs": [
     [
      "DA_Vi18",
-     -0.0734
+     -0.0682
     ],
     [
      "DA_18_Hecarim",
-     -0.066
+     -0.0675
     ],
     [
      "DA_Amumu18",
-     -0.0631
+     -0.0618
     ],
     [
      "DA_18_Maokai",
-     -0.0524
+     -0.0591
     ],
     [
      "DA_18_Alistar",
-     -0.0509
+     -0.0506
     ]
    ]
   },
   "DA_Artifact_ForbiddenIdol": {
-   "avg": 4.82,
-   "wr": 8.88,
-   "t4": 43.65,
-   "n": 394,
+   "avg": 4.86,
+   "wr": 8.51,
+   "t4": 43.03,
+   "n": 423,
    "porteurs": [
     [
      "DA_18_Ornn",
-     -0.0006
+     -0.0014
     ]
    ]
   },
   "DA_TitansResolve": {
-   "avg": 4.15,
-   "wr": 13.68,
-   "t4": 56.48,
-   "n": 6103,
+   "avg": 4.16,
+   "wr": 13.65,
+   "t4": 56.38,
+   "n": 6674,
    "porteurs": [
     [
-     "DA_CrimsonRaptor18",
-     -0.1683
+     "DA_18_Elise",
+     -0.1755
     ],
     [
-     "DA_18_Elise",
-     -0.1664
+     "DA_CrimsonRaptor18",
+     -0.1702
     ],
     [
      "DA_18_Rengar",
-     -0.0858
+     -0.0847
     ],
     [
      "DA_Brambleback18",
-     -0.0557
+     -0.0664
     ],
     [
      "DA_18_MasterYi_AD",
-     -0.0402
+     -0.0471
     ]
    ]
   },
   "DA_Artifact_HellfireHatchet": {
-   "avg": 4.25,
-   "wr": 12.5,
-   "t4": 54.25,
-   "n": 424,
+   "avg": 4.24,
+   "wr": 12.93,
+   "t4": 54.53,
+   "n": 464,
    "porteurs": [
     [
-     "DA_18_Camille",
-     -0.0466
+     "DA_18_MasterYi_AD",
+     -0.0685
     ],
     [
-     "DA_18_MasterYi_AD",
-     -0.045
+     "DA_18_Camille",
+     -0.0398
     ]
    ]
   },
   "DA_GiantSlayer": {
-   "avg": 4.13,
-   "wr": 15.28,
-   "t4": 57.12,
-   "n": 12517,
+   "avg": 4.12,
+   "wr": 15.29,
+   "t4": 57.18,
+   "n": 13649,
    "porteurs": [
     [
      "DA_18_Yunara",
-     -0.088
+     -0.0899
     ],
     [
      "DA_18_Sivir",
-     -0.0857
-    ],
-    [
-     "DA_18_Zyra",
-     -0.0734
+     -0.0868
     ],
     [
      "DA_18_Morgana",
-     -0.073
+     -0.071
+    ],
+    [
+     "DA_18_Zyra",
+     -0.0664
     ],
     [
      "DA_18_Soraka",
-     -0.0372
+     -0.0449
     ]
    ]
   },
   "DA_SpiritVisage_Radiant": {
-   "avg": 4.19,
-   "wr": 13.91,
-   "t4": 55.63,
-   "n": 151,
+   "avg": 4.15,
+   "wr": 12.88,
+   "t4": 56.44,
+   "n": 163,
    "porteurs": []
   },
   "DA_LastWhisperRadiant": {
-   "avg": 4.36,
-   "wr": 19.51,
-   "t4": 51.22,
-   "n": 123,
+   "avg": 4.4,
+   "wr": 18.75,
+   "t4": 50.0,
+   "n": 128,
    "porteurs": []
   },
   "DA_ThiefsGloves": {
    "avg": 4.07,
-   "wr": 16.37,
-   "t4": 57.85,
-   "n": 13849,
+   "wr": 16.21,
+   "t4": 57.74,
+   "n": 15063,
    "porteurs": [
     [
      "DA_18_Diana",
-     0.0328
+     0.0403
     ],
     [
      "DA_18_Ivern",
-     0.0671
+     0.0766
     ],
     [
      "DA_18_Kennen",
-     0.0839
+     0.0869
     ],
     [
      "DA_18_Sett",
-     0.0985
+     0.1118
     ],
     [
-     "DA_Vi18",
-     0.0993
+     "DA_Fiddlesticks18",
+     0.1138
     ]
    ]
   },
   "DA_Artifact_TheIndomitable": {
-   "avg": 4.44,
-   "wr": 11.84,
-   "t4": 50.31,
-   "n": 811,
+   "avg": 4.42,
+   "wr": 12.12,
+   "t4": 50.51,
+   "n": 891,
    "porteurs": [
     [
      "DA_18_Ornn",
-     0.0142
+     -0.0074
     ],
     [
      "DA_18_Malphite",
-     0.073
+     0.067
     ]
    ]
   },
   "DA_18_EmblemPrimal": {
-   "avg": 4.43,
-   "wr": 11.85,
-   "t4": 50.92,
-   "n": 1190,
+   "avg": 4.42,
+   "wr": 11.82,
+   "t4": 51.06,
+   "n": 1269,
    "porteurs": [
     [
      "DA_18_Tristana",
-     -0.01
+     -0.0053
     ],
     [
      "DA_18_Ashe",
-     0.0254
+     0.0359
     ],
     [
      "DA_KogMaw18_AD",
-     0.0695
+     0.0708
     ]
    ]
   },
   "DA_WarmogsArmorRadiant": {
-   "avg": 4.09,
-   "wr": 18.94,
-   "t4": 57.71,
-   "n": 227,
+   "avg": 4.14,
+   "wr": 18.37,
+   "t4": 55.92,
+   "n": 245,
    "porteurs": []
   },
   "DA_EvenshroudRadiant": {
-   "avg": 3.65,
-   "wr": 29.17,
-   "t4": 64.58,
-   "n": 48,
+   "avg": 3.75,
+   "wr": 26.92,
+   "t4": 63.46,
+   "n": 52,
    "porteurs": []
   },
   "DA_DragonsClaw": {
-   "avg": 4.15,
-   "wr": 15.16,
-   "t4": 56.9,
-   "n": 9728,
+   "avg": 4.16,
+   "wr": 15.03,
+   "t4": 56.78,
+   "n": 10686,
    "porteurs": [
     [
      "DA_18_Hecarim",
-     -0.0774
+     -0.0897
     ],
     [
      "DA_18_Maokai",
-     -0.0417
+     -0.0538
     ],
     [
      "DA_Amumu18",
-     -0.0398
+     -0.0405
     ],
     [
      "DA_Krug18",
-     -0.0337
+     -0.0247
     ],
     [
      "DA_Taric18",
-     -0.0239
+     -0.0234
     ]
    ]
   },
   "DA_Artifact_Fishbones": {
-   "avg": 4.46,
-   "wr": 8.56,
-   "t4": 52.5,
-   "n": 619,
+   "avg": 4.47,
+   "wr": 8.98,
+   "t4": 52.1,
+   "n": 668,
    "porteurs": [
     [
      "DA_18_Akali_AD",
-     -0.0619
+     -0.0702
     ],
     [
      "DA_18_Veigar",
-     -0.0576
-    ],
-    [
-     "DA_18_Aphelios",
-     -0.0334
+     -0.0522
     ],
     [
      "DA_18_MasterYi_AD",
-     -0.0279
+     -0.0286
+    ],
+    [
+     "DA_18_Aphelios",
+     -0.0176
     ],
     [
      "DA_18_Camille",
-     -0.0068
+     -0.0113
     ]
    ]
   },
   "DA_JeweledGauntlet": {
    "avg": 4.36,
-   "wr": 13.34,
-   "t4": 52.72,
-   "n": 21651,
+   "wr": 13.28,
+   "t4": 52.74,
+   "n": 23698,
    "porteurs": [
     [
      "DA_18_LeBlanc",
-     -0.0872
+     -0.0802
     ],
     [
      "DA_18_Ahri",
-     -0.063
+     -0.0679
     ],
     [
      "DA_18_Teemo",
-     -0.049
+     -0.0494
     ],
     [
      "DA_18_Morgana",
-     -0.0264
+     -0.0446
     ],
     [
      "DA_18_Veigar",
-     -0.0211
+     -0.0253
     ]
    ]
   },
   "DA_HextechGunblade": {
-   "avg": 4.18,
-   "wr": 14.36,
-   "t4": 56.02,
-   "n": 13953,
+   "avg": 4.17,
+   "wr": 14.34,
+   "t4": 56.11,
+   "n": 15205,
    "porteurs": [
     [
      "DA_CrimsonRaptor18",
-     -0.1568
+     -0.1657
     ],
     [
      "DA_18_Zyra",
-     -0.1111
+     -0.1186
     ],
     [
      "DA_18_Cassiopeia",
-     -0.0846
+     -0.0941
     ],
     [
      "DA_18_Morgana",
-     -0.0808
+     -0.08
     ],
     [
      "DA_18_Azir",
-     -0.068
+     -0.0718
     ]
    ]
   },
   "DA_Artifact_ZhonyasParadox": {
-   "avg": 4.43,
-   "wr": 10.58,
-   "t4": 53.24,
-   "n": 293,
+   "avg": 4.45,
+   "wr": 10.67,
+   "t4": 52.44,
+   "n": 328,
    "porteurs": [
     [
      "DA_18_Akali_AD",
-     -0.0333
+     -0.0154
     ]
    ]
   },
   "DA_CrownguardRadiant": {
-   "avg": 4.34,
-   "wr": 15.66,
-   "t4": 51.81,
-   "n": 83,
+   "avg": 4.46,
+   "wr": 14.61,
+   "t4": 48.31,
+   "n": 89,
    "porteurs": []
   },
   "DA_RabadonsDeathcap_Radiant": {
-   "avg": 3.9,
-   "wr": 20.54,
-   "t4": 59.82,
-   "n": 443,
+   "avg": 3.99,
+   "wr": 20.25,
+   "t4": 58.47,
+   "n": 484,
    "porteurs": []
   },
   "DA_BloodthirsterRadiant": {
-   "avg": 3.2,
-   "wr": 25.93,
-   "t4": 72.22,
-   "n": 54,
+   "avg": 3.32,
+   "wr": 23.73,
+   "t4": 69.49,
+   "n": 59,
    "porteurs": []
   },
   "DA_Item_Artifact_TalismanOfAscension": {
-   "avg": 4.11,
-   "wr": 12.34,
-   "t4": 59.57,
-   "n": 235,
+   "avg": 4.17,
+   "wr": 11.28,
+   "t4": 57.98,
+   "n": 257,
    "porteurs": []
   },
   "DA_18_EmblemFloraFatalisAugment": {
-   "avg": 4.47,
-   "wr": 12.41,
-   "t4": 49.43,
-   "n": 435,
+   "avg": 4.44,
+   "wr": 12.11,
+   "t4": 50.73,
+   "n": 479,
    "porteurs": [
     [
      "DA_18_Veigar",
-     -0.0193
+     -0.0066
     ]
    ]
   },
   "DA_18_EmblemSpellweaver": {
-   "avg": 4.29,
-   "wr": 15.12,
-   "t4": 53.64,
-   "n": 1799,
+   "avg": 4.28,
+   "wr": 15.33,
+   "t4": 53.95,
+   "n": 1963,
    "porteurs": [
     [
      "DA_18_Soraka",
-     -0.0359
+     -0.0311
     ],
     [
      "DA_18_Morgana",
-     -0.0219
+     -0.008
     ],
     [
      "DA_Lux18_Blossom",
-     0.0051
+     -0.0002
     ],
     [
      "DA_18_Lux_Moonbeam",
-     0.0184
+     0.0115
     ]
    ]
   },
   "DA_SunfireCape_Radiant": {
-   "avg": 3.95,
-   "wr": 18.03,
-   "t4": 60.66,
-   "n": 61,
+   "avg": 3.97,
+   "wr": 16.92,
+   "t4": 60.0,
+   "n": 65,
    "porteurs": []
   },
   "DA_GargoyleStoneplate": {
    "avg": 4.41,
-   "wr": 12.72,
-   "t4": 51.57,
-   "n": 38708,
+   "wr": 12.73,
+   "t4": 51.61,
+   "n": 42247,
    "porteurs": [
     [
      "DA_18_Sejuani",
-     -0.0802
+     -0.0832
     ],
     [
      "DA_18_Alistar",
-     -0.0758
+     -0.0797
     ],
     [
      "DA_18_Hecarim",
-     -0.0688
+     -0.0672
     ],
     [
      "DA_18_Malphite",
-     -0.0472
+     -0.0498
     ],
     [
      "DA_Taric18",
-     -0.0427
+     -0.0418
     ]
    ]
   },
   "DA_Artifact_RapidFireCannon": {
-   "avg": 4.37,
-   "wr": 12.1,
-   "t4": 52.55,
-   "n": 628,
+   "avg": 4.35,
+   "wr": 12.43,
+   "t4": 52.99,
+   "n": 668,
    "porteurs": [
     [
      "DA_18_Akali_AD",
-     -0.059
+     -0.0585
     ],
     [
      "DA_18_MasterYi_AD",
-     -0.0263
+     -0.0278
     ]
    ]
   },
   "DA_Crownguard": {
    "avg": 4.18,
-   "wr": 14.19,
+   "wr": 14.11,
    "t4": 56.25,
-   "n": 15425,
+   "n": 16732,
    "porteurs": [
     [
      "DA_18_Sejuani",
-     -0.0998
+     -0.0986
     ],
     [
      "DA_18_Alistar",
-     -0.0809
-    ],
-    [
-     "DA_18_Hecarim",
-     -0.0474
+     -0.077
     ],
     [
      "DA_18_Malphite",
-     -0.0462
+     -0.0497
+    ],
+    [
+     "DA_18_Hecarim",
+     -0.0495
     ],
     [
      "DA_18_Maokai",
-     -0.0323
+     -0.029
     ]
    ]
   },
   "DA_Artifact_HorizonFocus": {
-   "avg": 4.03,
-   "wr": 20.44,
-   "t4": 58.03,
-   "n": 274,
+   "avg": 4.08,
+   "wr": 19.6,
+   "t4": 57.14,
+   "n": 301,
    "porteurs": [
     [
      "DA_18_RekSai",
-     -0.0321
+     -0.0277
     ]
    ]
   },
   "DA_RabadonsDeathcap": {
    "avg": 4.13,
-   "wr": 15.39,
+   "wr": 15.28,
    "t4": 56.82,
-   "n": 12965,
+   "n": 14184,
    "porteurs": [
     [
      "DA_Karma18",
-     -0.1252
+     -0.1269
     ],
     [
      "DA_18_Azir",
@@ -2086,1403 +2086,1747 @@
     ],
     [
      "DA_18_Morgana",
-     -0.115
+     -0.1104
     ],
     [
      "DA_18_LeBlanc",
-     -0.0643
+     -0.0696
     ],
     [
      "DA_18_Ahri",
-     -0.0489
+     -0.0552
     ]
    ]
   },
   "DA_Bloodthirster": {
-   "avg": 4.03,
-   "wr": 14.85,
-   "t4": 59.1,
-   "n": 5002,
+   "avg": 4.04,
+   "wr": 14.79,
+   "t4": 58.94,
+   "n": 5436,
    "porteurs": [
     [
      "DA_Nidalee18_AP",
-     -0.0768
+     -0.0874
     ],
     [
      "DA_18_Rengar",
-     -0.0735
-    ],
-    [
-     "DA_Brambleback18",
-     -0.0476
+     -0.0626
     ],
     [
      "DA_18_Camille",
-     -0.046
+     -0.045
+    ],
+    [
+     "DA_Brambleback18",
+     -0.0412
     ],
     [
      "DA_18_GnarSmall",
-     -0.0358
+     -0.0387
     ]
    ]
   },
   "DA_KrakensFury_Radiant": {
-   "avg": 4.08,
-   "wr": 17.58,
-   "t4": 54.55,
-   "n": 165,
+   "avg": 4.17,
+   "wr": 16.76,
+   "t4": 52.51,
+   "n": 179,
    "porteurs": []
   },
   "DA_HextechGunbladeRadiant": {
-   "avg": 4.28,
-   "wr": 17.92,
-   "t4": 51.45,
-   "n": 173,
+   "avg": 4.19,
+   "wr": 19.35,
+   "t4": 53.23,
+   "n": 186,
    "porteurs": []
   },
   "DA_DeathbladeRadiant": {
-   "avg": 4.18,
-   "wr": 16.47,
-   "t4": 56.08,
-   "n": 255,
+   "avg": 4.21,
+   "wr": 15.27,
+   "t4": 54.91,
+   "n": 275,
    "porteurs": []
   },
   "DA_18_EmblemSlayer": {
    "avg": 4.52,
-   "wr": 9.46,
+   "wr": 9.63,
    "t4": 50.4,
-   "n": 1385,
+   "n": 1496,
    "porteurs": [
     [
      "DA_18_Elise",
-     -0.0598
+     -0.0595
     ],
     [
      "DA_Nidalee18_AP",
-     -0.0248
+     -0.0212
     ],
     [
      "DA_18_Rengar",
-     -0.0162
+     -0.0023
     ]
    ]
   },
   "DA_18_EmblemInvoker": {
    "avg": 4.4,
    "wr": 14.16,
-   "t4": 51.28,
-   "n": 2570,
+   "t4": 51.39,
+   "n": 2796,
    "porteurs": [
     [
      "DA_18_Ahri",
-     -0.0608
+     -0.0711
     ],
     [
      "DA_18_Lux_Coven",
-     0.0087
+     0.0092
     ],
     [
      "DA_18_Lux_Moonbeam",
-     0.0151
+     0.0253
     ],
     [
      "DA_18_Alune",
-     0.0589
+     0.058
     ]
    ]
   },
   "DA_18_EmblemInferno": {
-   "avg": 4.3,
-   "wr": 17.35,
-   "t4": 51.84,
-   "n": 1470,
+   "avg": 4.28,
+   "wr": 17.48,
+   "t4": 52.3,
+   "n": 1608,
    "porteurs": [
     [
      "DA_18_Ashe",
-     -0.0114
+     -0.0161
     ],
     [
      "DA_18_Sivir",
-     0.0768
+     0.0804
     ]
    ]
   },
   "DA_Artifact_LudensTempest": {
-   "avg": 3.74,
-   "wr": 20.29,
-   "t4": 64.06,
-   "n": 754,
+   "avg": 3.78,
+   "wr": 20.15,
+   "t4": 63.13,
+   "n": 819,
    "porteurs": [
     [
      "DA_18_Veigar",
-     -0.1948
+     -0.1915
     ],
     [
      "DA_18_KhaZix",
-     -0.0403
+     -0.0421
     ],
     [
      "DA_18_Akali_AD",
-     -0.0339
+     -0.0352
     ],
     [
      "DA_18_Ahri",
-     0.0085
+     0.0035
     ]
    ]
   },
   "DA_IonicSpark": {
    "avg": 4.06,
-   "wr": 16.05,
-   "t4": 57.81,
-   "n": 6530,
+   "wr": 15.87,
+   "t4": 57.96,
+   "n": 7125,
    "porteurs": [
     [
      "DA_Fiddlesticks18",
-     -0.0726
+     -0.0829
     ],
     [
      "DA_Taric18",
-     -0.0627
+     -0.0772
     ],
     [
      "DA_18_Yorick",
-     -0.0591
+     -0.0599
     ],
     [
      "DA_Amumu18",
-     -0.0267
+     -0.039
     ],
     [
-     "DA_18_RekSai",
-     -0.0167
+     "DA_18_Kennen",
+     -0.019
     ]
    ]
   },
   "DA_Artifact_LichBane": {
-   "avg": 4.22,
-   "wr": 12.5,
-   "t4": 55.36,
-   "n": 392,
+   "avg": 4.25,
+   "wr": 11.61,
+   "t4": 54.74,
+   "n": 422,
    "porteurs": [
     [
      "DA_18_Akali_AD",
-     -0.0094
+     -0.0186
+    ],
+    [
+     "DA_18_KhaZix",
+     0.0093
     ]
    ]
   },
   "DA_RedBuff": {
    "avg": 4.18,
-   "wr": 14.68,
-   "t4": 55.86,
-   "n": 16728,
+   "wr": 14.75,
+   "t4": 55.84,
+   "n": 18185,
    "porteurs": [
     [
      "DA_KogMaw18_AD",
-     -0.0727
-    ],
-    [
-     "DA_18_Zyra",
-     -0.0593
+     -0.0729
     ],
     [
      "DA_18_Sivir",
-     -0.0565
+     -0.0696
     ],
     [
      "DA_18_Ashe",
-     -0.0552
+     -0.0602
+    ],
+    [
+     "DA_18_Zyra",
+     -0.0494
     ],
     [
      "DA_18_Morgana",
-     -0.0449
+     -0.0488
     ]
    ]
   },
   "DA_Artifact_MogulsMail": {
-   "avg": 4.87,
-   "wr": 8.71,
-   "t4": 41.88,
-   "n": 425,
+   "avg": 4.79,
+   "wr": 8.89,
+   "t4": 44.03,
+   "n": 461,
    "porteurs": []
   },
   "DA_SteraksGage": {
-   "avg": 4.23,
-   "wr": 12.92,
-   "t4": 55.5,
-   "n": 11886,
+   "avg": 4.24,
+   "wr": 12.85,
+   "t4": 55.34,
+   "n": 12830,
    "porteurs": [
     [
      "DA_Nidalee18_AP",
-     -0.0942
+     -0.0999
     ],
     [
      "DA_18_Sett",
-     -0.052
+     -0.054
     ],
     [
      "DA_18_Rengar",
-     -0.033
-    ],
-    [
-     "DA_18_ElderDragon",
-     -0.0316
+     -0.0335
     ],
     [
      "DA_18_Camille",
-     -0.0275
+     -0.0332
+    ],
+    [
+     "DA_18_ElderDragon",
+     -0.0318
     ]
    ]
   },
   "DA_BlueBuffRadiant": {
-   "avg": 3.98,
-   "wr": 18.72,
-   "t4": 57.95,
-   "n": 390,
+   "avg": 4.03,
+   "wr": 18.14,
+   "t4": 56.98,
+   "n": 430,
    "porteurs": []
   },
   "DA_SpearOfShojinRadiant": {
-   "avg": 4.13,
-   "wr": 16.17,
-   "t4": 57.87,
-   "n": 235,
+   "avg": 4.15,
+   "wr": 15.38,
+   "t4": 57.69,
+   "n": 260,
    "porteurs": []
   },
   "DA_Quicksilver": {
    "avg": 4.34,
-   "wr": 11.58,
-   "t4": 53.33,
-   "n": 9704,
+   "wr": 11.51,
+   "t4": 53.24,
+   "n": 10467,
    "porteurs": [
     [
      "DA_Nidalee18_AP",
-     -0.0765
+     -0.0685
     ],
     [
      "DA_Murkwolf18",
-     -0.0299
+     -0.0327
     ],
     [
      "DA_Brambleback18",
-     -0.0276
-    ],
-    [
-     "DA_18_MasterYi_AD",
-     -0.0226
+     -0.0267
     ],
     [
      "DA_18_Rengar",
-     -0.0124
+     -0.0197
+    ],
+    [
+     "DA_18_MasterYi_AD",
+     -0.0153
     ]
    ]
   },
   "DA_Artifact_NavoriFlickerblade": {
-   "avg": 4.46,
-   "wr": 12.64,
-   "t4": 51.41,
-   "n": 815,
+   "avg": 4.41,
+   "wr": 12.99,
+   "t4": 52.43,
+   "n": 885,
    "porteurs": [
     [
      "DA_CrimsonRaptor18",
-     -0.0535
+     -0.0702
     ],
     [
      "DA_18_Kayle",
-     -0.0486
-    ],
-    [
-     "DA_Draven18",
-     -0.0293
+     -0.0532
     ],
     [
      "DA_18_MasterYi_AD",
-     -0.026
+     -0.0401
+    ],
+    [
+     "DA_Draven18",
+     -0.0266
     ],
     [
      "DA_18_Aphelios",
-     -0.0013
+     -0.0014
     ]
    ]
   },
   "DA_18_EmblemHunter": {
    "avg": 4.36,
-   "wr": 12.71,
-   "t4": 53.07,
-   "n": 1660,
+   "wr": 12.87,
+   "t4": 53.15,
+   "n": 1810,
    "porteurs": [
     [
      "DA_Nidalee18_AP",
-     -0.044
+     -0.0381
     ],
     [
      "DA_18_Rengar",
-     0.0783
+     0.0855
     ]
    ]
   },
   "DA_StrikersFlailRadiant": {
-   "avg": 4.01,
-   "wr": 19.1,
-   "t4": 60.8,
-   "n": 199,
+   "avg": 4.12,
+   "wr": 18.18,
+   "t4": 57.27,
+   "n": 220,
    "porteurs": []
   },
   "DA_QuicksilverRadiant": {
    "avg": 4.39,
-   "wr": 16.22,
-   "t4": 50.45,
-   "n": 111,
+   "wr": 15.79,
+   "t4": 50.0,
+   "n": 114,
    "porteurs": []
   },
   "DA_Artifact_Mittens": {
-   "avg": 4.34,
-   "wr": 11.84,
-   "t4": 53.07,
-   "n": 456,
+   "avg": 4.33,
+   "wr": 11.89,
+   "t4": 53.48,
+   "n": 488,
    "porteurs": [
     [
      "DA_18_Camille",
-     -0.0413
+     -0.0493
     ],
     [
      "DA_18_Rengar",
-     -0.0132
+     -0.0192
     ],
     [
      "DA_18_Akali_AD",
-     -0.0116
+     -0.0147
     ],
     [
      "DA_18_MasterYi_AD",
-     0.0289
+     0.0067
     ]
    ]
   },
   "DA_Evenshroud": {
    "avg": 4.14,
-   "wr": 15.62,
-   "t4": 56.44,
-   "n": 11719,
+   "wr": 15.6,
+   "t4": 56.5,
+   "n": 12719,
    "porteurs": [
     [
      "DA_Vi18",
-     -0.1018
+     -0.1045
     ],
     [
      "DA_18_Hecarim",
-     -0.0645
-    ],
-    [
-     "DA_Krug18",
      -0.0628
     ],
     [
+     "DA_Krug18",
+     -0.0607
+    ],
+    [
      "DA_18_Yorick",
-     -0.0529
+     -0.0486
     ],
     [
      "DA_Sentinel18",
-     -0.0349
+     -0.0436
     ]
    ]
   },
   "DA_Artifact_BlightingJewel": {
-   "avg": 4.62,
-   "wr": 13.19,
-   "t4": 45.96,
-   "n": 470,
+   "avg": 4.58,
+   "wr": 13.73,
+   "t4": 46.81,
+   "n": 517,
    "porteurs": [
     [
      "DA_18_Cassiopeia",
-     -0.0571
+     -0.0666
     ],
     [
      "DA_18_Morgana",
-     -0.0013
+     -0.0158
     ]
    ]
   },
   "DA_BlueBuff": {
    "avg": 4.16,
-   "wr": 14.98,
-   "t4": 56.37,
-   "n": 15067,
+   "wr": 15.04,
+   "t4": 56.3,
+   "n": 16394,
    "porteurs": [
     [
      "DA_18_Zyra",
-     -0.1136
+     -0.1146
     ],
     [
      "DA_Karma18",
-     -0.1027
+     -0.1016
     ],
     [
      "DA_18_Sivir",
-     -0.0952
+     -0.0963
     ],
     [
      "DA_18_LeBlanc",
-     -0.0811
+     -0.0737
     ],
     [
      "DA_18_Ezreal",
-     -0.0556
+     -0.0561
     ]
    ]
   },
   "DA_SpearOfShojin": {
    "avg": 4.28,
-   "wr": 14.58,
-   "t4": 54.1,
-   "n": 26586,
+   "wr": 14.6,
+   "t4": 54.13,
+   "n": 29062,
    "porteurs": [
     [
      "DA_18_Yunara",
-     -0.1262
+     -0.1404
     ],
     [
      "DA_18_Zyra",
-     -0.1042
-    ],
-    [
-     "DA_18_Sivir",
-     -0.0653
-    ],
-    [
-     "DA_18_Ivern",
-     -0.0653
+     -0.1106
     ],
     [
      "DA_18_LeBlanc",
-     -0.0594
+     -0.0645
+    ],
+    [
+     "DA_18_Sivir",
+     -0.0627
+    ],
+    [
+     "DA_18_Ivern",
+     -0.0588
     ]
    ]
   },
   "DA_Artifact_InfinityForce": {
-   "avg": 4.33,
-   "wr": 12.23,
-   "t4": 52.91,
-   "n": 327,
+   "avg": 4.3,
+   "wr": 12.54,
+   "t4": 53.56,
+   "n": 351,
    "porteurs": [
     [
-     "DA_18_Akali_AD",
-     -0.0378
-    ],
-    [
      "DA_18_Camille",
-     -0.0369
+     -0.0363
     ]
    ]
   },
   "DA_IonicSparkRadiant": {
-   "avg": 3.32,
-   "wr": 34.09,
-   "t4": 68.18,
-   "n": 44,
+   "avg": 3.26,
+   "wr": 34.04,
+   "t4": 70.21,
+   "n": 47,
    "porteurs": []
   },
   "DA_ArchangelsStaffRadiant": {
-   "avg": 4.13,
-   "wr": 18.8,
-   "t4": 56.41,
-   "n": 117,
+   "avg": 4.09,
+   "wr": 17.46,
+   "t4": 57.14,
+   "n": 126,
    "porteurs": []
   },
   "DA_Artifact_Dawncore": {
-   "avg": 3.93,
-   "wr": 17.89,
-   "t4": 60.67,
-   "n": 1157,
+   "avg": 3.91,
+   "wr": 18.49,
+   "t4": 61.2,
+   "n": 1255,
    "porteurs": [
     [
      "DA_18_Veigar",
-     -0.1799
+     -0.1863
     ],
     [
      "DA_18_Soraka",
-     -0.0956
+     -0.1255
     ],
     [
      "DA_18_Akali_AD",
-     -0.0496
-    ],
-    [
-     "DA_18_Alune",
-     0.0009
+     -0.0695
     ],
     [
      "DA_18_Teemo",
-     0.0082
+     0.0086
+    ],
+    [
+     "DA_18_Cassiopeia",
+     0.0343
     ]
    ]
   },
   "DA_SteraksGageRadiant": {
-   "avg": 4.46,
-   "wr": 13.33,
-   "t4": 50.83,
-   "n": 120,
+   "avg": 4.47,
+   "wr": 12.88,
+   "t4": 51.52,
+   "n": 132,
    "porteurs": []
   },
   "DA_Artifact_StatikkShiv": {
-   "avg": 3.99,
-   "wr": 16.33,
-   "t4": 56.63,
-   "n": 196,
+   "avg": 4.12,
+   "wr": 14.95,
+   "t4": 53.74,
+   "n": 214,
    "porteurs": []
   },
   "DA_18_EmblemDefender": {
-   "avg": 4.18,
-   "wr": 14.13,
-   "t4": 56.27,
-   "n": 1699,
+   "avg": 4.16,
+   "wr": 14.33,
+   "t4": 56.73,
+   "n": 1856,
    "porteurs": [
     [
      "DA_18_Rengar",
-     -0.0612
+     -0.0661
     ]
    ]
   },
   "DA_ThiefsGlovesRadiant": {
-   "avg": 3.7,
-   "wr": 27.66,
-   "t4": 62.77,
-   "n": 282,
+   "avg": 3.78,
+   "wr": 26.86,
+   "t4": 61.17,
+   "n": 309,
    "porteurs": []
   },
   "DA_HandOfJusticeRadiant": {
-   "avg": 4.38,
-   "wr": 14.2,
-   "t4": 51.48,
-   "n": 169,
+   "avg": 4.41,
+   "wr": 14.12,
+   "t4": 50.28,
+   "n": 177,
    "porteurs": [
     [
      "DA_18_KhaZix",
-     -0.032
+     -0.0339
     ]
    ]
   },
   "DA_SpiritVisage": {
-   "avg": 4.26,
-   "wr": 13.83,
-   "t4": 54.49,
-   "n": 22528,
+   "avg": 4.25,
+   "wr": 13.87,
+   "t4": 54.54,
+   "n": 24449,
    "porteurs": [
     [
      "DA_18_Alistar",
-     -0.0901
-    ],
-    [
-     "DA_18_Hecarim",
-     -0.0757
-    ],
-    [
-     "DA_18_Sejuani",
-     -0.0637
-    ],
-    [
-     "DA_Vi18",
-     -0.0604
-    ],
-    [
-     "DA_18_Maokai",
-     -0.0515
-    ]
-   ]
-  },
-  "DA_Artifact_SeekersArmguard": {
-   "avg": 4.63,
-   "wr": 9.66,
-   "t4": 49.72,
-   "n": 352,
-   "porteurs": [
-    [
-     "DA_18_Akali_AD",
-     -0.0115
-    ]
-   ]
-  },
-  "DA_ProtectorsVow": {
-   "avg": 4.23,
-   "wr": 14.32,
-   "t4": 55.25,
-   "n": 19486,
-   "porteurs": [
-    [
-     "DA_18_Lillia",
-     -0.0802
+     -0.0961
     ],
     [
      "DA_18_Hecarim",
      -0.0721
     ],
     [
+     "DA_18_Sejuani",
+     -0.0698
+    ],
+    [
+     "DA_Vi18",
+     -0.0684
+    ],
+    [
+     "DA_18_Sett",
+     -0.0586
+    ]
+   ]
+  },
+  "DA_Artifact_SeekersArmguard": {
+   "avg": 4.6,
+   "wr": 9.79,
+   "t4": 49.74,
+   "n": 378,
+   "porteurs": [
+    [
+     "DA_18_Akali_AD",
+     -0.0121
+    ]
+   ]
+  },
+  "DA_ProtectorsVow": {
+   "avg": 4.22,
+   "wr": 14.48,
+   "t4": 55.44,
+   "n": 21123,
+   "porteurs": [
+    [
+     "DA_18_Hecarim",
+     -0.0841
+    ],
+    [
+     "DA_18_Lillia",
+     -0.0823
+    ],
+    [
      "DA_Sentinel18",
-     -0.0678
+     -0.0692
     ],
     [
      "DA_18_Rakan",
-     -0.0502
+     -0.055
     ],
     [
      "DA_18_Ornn",
-     -0.0189
+     -0.0166
     ]
    ]
   },
   "DA_KrakensFury": {
-   "avg": 4.3,
-   "wr": 15.87,
-   "t4": 52.97,
-   "n": 9728,
+   "avg": 4.31,
+   "wr": 15.81,
+   "t4": 52.81,
+   "n": 10595,
    "porteurs": [
     [
      "DA_18_Caitlyn",
-     -0.0655
-    ],
-    [
-     "DA_CrimsonRaptor18",
-     -0.0554
+     -0.0653
     ],
     [
      "DA_18_Tristana",
-     -0.0485
+     -0.0544
+    ],
+    [
+     "DA_CrimsonRaptor18",
+     -0.0495
     ],
     [
      "DA_18_Aphelios",
-     -0.0431
+     -0.0464
     ],
     [
      "DA_Draven18",
-     -0.0326
+     -0.0372
     ]
    ]
   },
   "DA_Artifact_VoidGauntlet": {
    "avg": 4.46,
-   "wr": 12.27,
-   "t4": 49.33,
-   "n": 375,
+   "wr": 11.68,
+   "t4": 49.39,
+   "n": 411,
    "porteurs": []
   },
   "DA_MorellonomiconRadiant": {
-   "avg": 4.47,
-   "wr": 11.84,
-   "t4": 51.32,
-   "n": 76,
+   "avg": 4.45,
+   "wr": 11.9,
+   "t4": 51.19,
+   "n": 84,
    "porteurs": []
   },
   "DA_GuinsoosRagebladeRadiant": {
-   "avg": 3.97,
-   "wr": 21.38,
-   "t4": 58.43,
-   "n": 753,
+   "avg": 3.93,
+   "wr": 22.26,
+   "t4": 58.97,
+   "n": 831,
    "porteurs": [
     [
      "DA_CrimsonRaptor18",
-     -0.28
+     -0.2949
     ],
     [
      "DA_18_Caitlyn",
-     -0.0992
+     -0.0971
     ]
    ]
   },
   "DA_InfinityEdgeRadiant": {
-   "avg": 4.23,
-   "wr": 15.28,
-   "t4": 57.21,
-   "n": 229,
+   "avg": 4.27,
+   "wr": 14.06,
+   "t4": 56.63,
+   "n": 249,
    "porteurs": []
   },
   "DA_Artifact_WitsEnd": {
    "avg": 4.14,
-   "wr": 16.16,
-   "t4": 59.18,
-   "n": 365,
+   "wr": 16.33,
+   "t4": 58.93,
+   "n": 392,
    "porteurs": [
     [
      "DA_18_MasterYi_AD",
-     -0.1126
+     -0.1285
     ],
     [
      "DA_18_Akali_AD",
-     0.0009
+     -0.0148
     ]
    ]
   },
   "DA_TacticiansCrown": {
-   "avg": 4.01,
-   "wr": 18.42,
-   "t4": 56.85,
-   "n": 1395,
+   "avg": 4.0,
+   "wr": 18.39,
+   "t4": 57.24,
+   "n": 1506,
    "porteurs": []
   },
   "DA_18_EmblemBrawler": {
-   "avg": 4.12,
-   "wr": 14.59,
-   "t4": 56.75,
-   "n": 2502,
+   "avg": 4.1,
+   "wr": 14.84,
+   "t4": 56.86,
+   "n": 2749,
    "porteurs": [
     [
      "DA_18_MasterYi_AD",
-     -0.0171
+     -0.0143
     ],
     [
      "DA_18_Rengar",
-     0.0171
+     0.0026
     ]
    ]
   },
   "DA_18_EmblemVanguard": {
-   "avg": 4.06,
-   "wr": 17.44,
-   "t4": 57.49,
-   "n": 2082,
+   "avg": 4.07,
+   "wr": 17.66,
+   "t4": 57.36,
+   "n": 2254,
    "porteurs": [
     [
      "DA_18_Lillia",
-     -0.0953
+     -0.1021
     ],
     [
      "DA_18_Maokai",
-     -0.0493
+     -0.0397
     ],
     [
      "DA_18_Sett",
-     0.021
+     0.0257
     ]
    ]
   },
   "DA_18_EmblemBlossom": {
    "avg": 4.29,
-   "wr": 15.3,
-   "t4": 53.54,
-   "n": 1216,
+   "wr": 15.28,
+   "t4": 53.4,
+   "n": 1322,
    "porteurs": []
   },
   "DA_Artifact_SilvermereDawn": {
-   "avg": 4.22,
-   "wr": 13.86,
-   "t4": 56.43,
-   "n": 498,
+   "avg": 4.21,
+   "wr": 14.04,
+   "t4": 56.74,
+   "n": 534,
    "porteurs": [
     [
      "DA_Nidalee18_AP",
-     -0.0945
+     -0.105
     ],
     [
      "DA_18_Camille",
-     -0.0626
+     -0.0684
     ]
    ]
   },
   "DA_Morellonomicon": {
-   "avg": 4.18,
-   "wr": 15.26,
+   "avg": 4.19,
+   "wr": 15.08,
    "t4": 55.96,
-   "n": 13739,
+   "n": 14998,
    "porteurs": [
     [
      "DA_18_Morgana",
-     -0.1107
+     -0.1179
     ],
     [
      "DA_18_Zyra",
-     -0.0577
-    ],
-    [
-     "DA_KogMaw18_AD",
-     -0.0236
-    ],
-    [
-     "DA_18_LeBlanc",
-     -0.0234
+     -0.0587
     ],
     [
      "DA_18_Kennen",
-     -0.0203
+     -0.0308
+    ],
+    [
+     "DA_18_Alune",
+     -0.0297
+    ],
+    [
+     "DA_KogMaw18_AD",
+     -0.0264
     ]
    ]
   },
   "DA_GuinsoosRageblade": {
    "avg": 4.42,
-   "wr": 13.14,
-   "t4": 51.36,
-   "n": 28507,
+   "wr": 13.19,
+   "t4": 51.32,
+   "n": 31011,
    "porteurs": [
     [
      "DA_CrimsonRaptor18",
-     -0.0888
+     -0.0943
     ],
     [
      "DA_18_Azir",
-     -0.0883
+     -0.0897
     ],
     [
      "DA_18_Rengar",
-     -0.051
-    ],
-    [
-     "DA_18_Tristana",
-     -0.0464
+     -0.055
     ],
     [
      "DA_18_Ivern",
-     -0.0438
+     -0.0499
+    ],
+    [
+     "DA_18_Tristana",
+     -0.0453
     ]
    ]
   },
   "DA_InfinityEdge": {
    "avg": 4.38,
-   "wr": 13.56,
+   "wr": 13.57,
    "t4": 52.09,
-   "n": 21373,
+   "n": 23177,
    "porteurs": [
     [
      "DA_18_Sivir",
-     -0.0829
+     -0.0882
     ],
     [
      "DA_Nidalee18_AP",
-     -0.073
+     -0.0737
+    ],
+    [
+     "DA_18_Yunara",
+     -0.0598
     ],
     [
      "DA_18_Xayah",
-     -0.0539
+     -0.0546
     ],
     [
      "DA_18_Ezreal",
-     -0.0528
-    ],
-    [
-     "DA_18_Akali_AD",
-     -0.0482
+     -0.0535
     ]
    ]
   },
   "DA_ProtectorsVowRadiant": {
-   "avg": 4.14,
-   "wr": 17.12,
-   "t4": 55.86,
-   "n": 111,
+   "avg": 4.24,
+   "wr": 16.38,
+   "t4": 54.31,
+   "n": 116,
    "porteurs": []
   },
   "DA_EdgeOfNightRadiant": {
-   "avg": 4.23,
-   "wr": 15.94,
-   "t4": 56.52,
-   "n": 138,
+   "avg": 4.19,
+   "wr": 16.03,
+   "t4": 56.41,
+   "n": 156,
    "porteurs": []
   },
   "DA_WarmogsArmor": {
    "avg": 4.3,
-   "wr": 13.66,
-   "t4": 53.68,
-   "n": 27964,
+   "wr": 13.63,
+   "t4": 53.64,
+   "n": 30522,
    "porteurs": [
     [
      "DA_18_Maokai",
-     -0.0825
-    ],
-    [
-     "DA_18_Sejuani",
-     -0.0656
+     -0.0791
     ],
     [
      "DA_18_Hecarim",
-     -0.0653
+     -0.0704
+    ],
+    [
+     "DA_18_Sejuani",
+     -0.0636
     ],
     [
      "DA_18_Alistar",
-     -0.0601
+     -0.0599
     ],
     [
      "DA_18_Sett",
-     -0.0585
+     -0.0591
     ]
    ]
   },
   "DA_18_EmblemExecutioner": {
    "avg": 4.23,
-   "wr": 16.66,
-   "t4": 55.31,
-   "n": 3782,
+   "wr": 16.74,
+   "t4": 55.24,
+   "n": 4133,
    "porteurs": [
     [
      "DA_Karma18",
-     -0.1055
+     -0.1107
     ],
     [
      "DA_18_Zyra",
-     -0.0193
+     -0.0264
     ],
     [
      "DA_Lux18_Blackthorn",
-     -0.0018
+     -0.0035
     ],
     [
      "DA_18_Ahri",
-     0.0016
+     0.0006
     ],
     [
      "DA_18_Lux_Elderwood",
-     0.0185
+     0.0115
     ]
    ]
   },
   "DA_18_EmblemSprykin": {
-   "avg": 4.51,
-   "wr": 11.89,
-   "t4": 50.3,
-   "n": 1177,
+   "avg": 4.52,
+   "wr": 11.84,
+   "t4": 50.32,
+   "n": 1258,
    "porteurs": [
     [
      "DA_18_Rengar",
-     0.0999
+     0.1077
     ]
    ]
   },
   "DA_18_EmblemLunar": {
    "avg": 4.23,
-   "wr": 16.09,
-   "t4": 54.64,
-   "n": 1647,
+   "wr": 16.23,
+   "t4": 54.76,
+   "n": 1775,
    "porteurs": [
     [
      "DA_18_Morgana",
-     0.0625
+     0.0465
     ],
     [
      "DA_18_Kayle",
-     0.0707
+     0.0581
     ]
    ]
   },
   "DA_SteadfastHeartRadiant": {
-   "avg": 4.16,
-   "wr": 19.12,
-   "t4": 52.94,
-   "n": 68,
+   "avg": 4.49,
+   "wr": 16.05,
+   "t4": 48.15,
+   "n": 81,
    "porteurs": []
   },
   "DA_SunfireCape": {
-   "avg": 4.11,
-   "wr": 14.82,
-   "t4": 57.42,
-   "n": 12129,
+   "avg": 4.1,
+   "wr": 14.89,
+   "t4": 57.53,
+   "n": 13250,
    "porteurs": [
     [
-     "DA_Vi18",
-     -0.0919
+     "DA_Krug18",
+     -0.0981
     ],
     [
-     "DA_Krug18",
-     -0.0859
+     "DA_Vi18",
+     -0.0946
     ],
     [
      "DA_18_Maokai",
-     -0.0652
+     -0.0714
     ],
     [
      "DA_18_Yorick",
-     -0.057
+     -0.0671
     ],
     [
      "DA_Sentinel18",
-     -0.0494
+     -0.048
     ]
    ]
   },
   "DA_Artifact_AegisOfDawn": {
-   "avg": 4.53,
-   "wr": 11.72,
-   "t4": 47.36,
-   "n": 435,
+   "avg": 4.51,
+   "wr": 12.02,
+   "t4": 47.42,
+   "n": 466,
    "porteurs": []
   },
   "DA_VoidStaff": {
    "avg": 4.21,
-   "wr": 14.74,
-   "t4": 55.38,
-   "n": 18312,
+   "wr": 14.73,
+   "t4": 55.41,
+   "n": 20000,
    "porteurs": [
     [
      "DA_18_Morgana",
-     -0.1307
+     -0.1401
     ],
     [
      "DA_18_Kennen",
-     -0.0516
+     -0.0615
     ],
     [
      "DA_18_Alune",
-     -0.0477
+     -0.0547
     ],
     [
-     "DA_18_Soraka",
-     -0.0445
+     "DA_18_Zyra",
+     -0.045
     ],
     [
      "DA_18_LeBlanc",
-     -0.0429
+     -0.0387
     ]
    ]
   },
   "DA_Artifact_GamblersBlade": {
-   "avg": 4.86,
-   "wr": 9.82,
-   "t4": 42.11,
-   "n": 285,
+   "avg": 4.81,
+   "wr": 10.32,
+   "t4": 42.9,
+   "n": 310,
    "porteurs": []
   },
   "DA_Deathblade": {
-   "avg": 4.18,
-   "wr": 15.36,
-   "t4": 55.84,
-   "n": 12696,
+   "avg": 4.17,
+   "wr": 15.41,
+   "t4": 56.06,
+   "n": 13783,
    "porteurs": [
     [
      "DA_18_Yunara",
-     -0.101
+     -0.1062
     ],
     [
      "DA_18_Xayah",
-     -0.0874
+     -0.0921
     ],
     [
      "DA_18_Sivir",
-     -0.0709
+     -0.0776
     ],
     [
      "DA_18_Ezreal",
-     -0.0571
+     -0.0623
     ],
     [
      "DA_18_Tristana",
-     -0.0548
+     -0.0576
     ]
    ]
   },
   "DA_Artifact_Manazane": {
    "avg": 4.18,
-   "wr": 15.69,
-   "t4": 56.14,
-   "n": 969,
+   "wr": 15.72,
+   "t4": 56.06,
+   "n": 1056,
    "porteurs": [
     [
      "DA_18_Veigar",
-     -0.0613
+     -0.0567
     ],
     [
      "DA_18_Alune",
-     -0.0509
+     -0.0462
     ],
     [
      "DA_18_Akali_AD",
-     0.008
+     0.007
     ],
     [
      "DA_18_Teemo",
-     0.0992
+     0.1098
     ],
     [
      "DA_18_Ahri",
-     0.1515
+     0.1638
     ]
    ]
   },
   "DA_AdaptiveHelm_Radiant": {
-   "avg": 4.09,
-   "wr": 18.86,
-   "t4": 58.25,
-   "n": 297,
+   "avg": 4.1,
+   "wr": 18.26,
+   "t4": 57.49,
+   "n": 334,
    "porteurs": []
   },
   "DA_NashorsToothRadiant": {
    "avg": 4.18,
-   "wr": 21.05,
-   "t4": 55.64,
-   "n": 133,
+   "wr": 20.83,
+   "t4": 54.17,
+   "n": 144,
    "porteurs": []
   },
   "DA_StrikersFlail": {
    "avg": 4.2,
    "wr": 14.45,
-   "t4": 55.8,
-   "n": 12910,
+   "t4": 55.75,
+   "n": 14101,
    "porteurs": [
     [
      "DA_18_Yunara",
-     -0.1041
+     -0.109
     ],
     [
      "DA_18_Ahri",
-     -0.0945
-    ],
-    [
-     "DA_18_Ezreal",
-     -0.0657
+     -0.0995
     ],
     [
      "DA_18_Alune",
-     -0.0633
+     -0.0651
+    ],
+    [
+     "DA_18_Ezreal",
+     -0.0637
     ],
     [
      "DA_18_Teemo",
-     -0.0631
+     -0.0621
     ]
    ]
   },
   "DA_Artifact_TitanicHydra": {
-   "avg": 4.8,
-   "wr": 7.72,
-   "t4": 45.96,
-   "n": 285,
+   "avg": 4.81,
+   "wr": 7.42,
+   "t4": 45.16,
+   "n": 310,
    "porteurs": [
     [
      "DA_18_Camille",
-     -0.0422
+     -0.0433
     ],
     [
      "DA_18_MasterYi_AD",
-     0.0309
+     0.0231
     ]
    ]
   },
   "DA_18_EmblemFloraFatalis": {
-   "avg": 4.29,
-   "wr": 13.0,
-   "t4": 53.75,
-   "n": 1254,
+   "avg": 4.31,
+   "wr": 12.6,
+   "t4": 53.39,
+   "n": 1373,
    "porteurs": []
   },
   "DA_18_EmblemFae": {
-   "avg": 4.32,
-   "wr": 16.47,
-   "t4": 52.9,
-   "n": 2174,
+   "avg": 4.31,
+   "wr": 16.38,
+   "t4": 53.04,
+   "n": 2381,
    "porteurs": [
     [
      "DA_18_Aphelios",
-     -0.094
+     -0.0867
     ],
     [
      "DA_18_Sivir",
-     -0.0351
+     -0.0424
     ],
     [
      "DA_18_Kayle",
-     -0.0305
+     -0.0317
     ],
     [
      "DA_18_Rengar",
-     0.0282
+     0.0316
     ]
    ]
   },
   "DA_BrambleVestRadiant": {
-   "avg": 4.02,
-   "wr": 19.57,
-   "t4": 56.52,
-   "n": 46,
+   "avg": 4.15,
+   "wr": 18.52,
+   "t4": 55.56,
+   "n": 54,
    "porteurs": []
   },
   "DA_HandOfJustice": {
-   "avg": 4.18,
+   "avg": 4.19,
    "wr": 13.86,
-   "t4": 56.68,
-   "n": 7064,
+   "t4": 56.45,
+   "n": 7679,
    "porteurs": [
     [
      "DA_18_Yunara",
-     -0.0668
+     -0.0688
     ],
     [
      "DA_Nidalee18_AP",
-     -0.0639
-    ],
-    [
-     "DA_Brambleback18",
-     -0.0409
+     -0.0668
     ],
     [
      "DA_Murkwolf18",
-     -0.0365
+     -0.0388
     ],
     [
      "DA_18_KhaZix",
-     -0.0295
+     -0.0343
+    ],
+    [
+     "DA_18_Camille",
+     -0.0242
     ]
    ]
   },
   "DA_Artifact_AegisOfDusk": {
-   "avg": 4.44,
-   "wr": 15.17,
-   "t4": 49.05,
-   "n": 422,
+   "avg": 4.46,
+   "wr": 14.74,
+   "t4": 49.15,
+   "n": 468,
    "porteurs": []
   },
   "DA_AdaptiveHelm": {
    "avg": 4.1,
-   "wr": 15.64,
-   "t4": 57.85,
-   "n": 16245,
+   "wr": 15.61,
+   "t4": 57.7,
+   "n": 17637,
    "porteurs": [
     [
      "DA_18_Zyra",
-     -0.1069
+     -0.1116
     ],
     [
      "DA_18_Lillia",
-     -0.0981
+     -0.1015
     ],
     [
      "DA_18_Ivern",
-     -0.0726
+     -0.0841
     ],
     [
      "DA_Sentinel18",
-     -0.0559
+     -0.0572
     ],
     [
      "DA_18_Morgana",
-     -0.0386
+     -0.0374
     ]
    ]
   },
   "DA_Artifact_Hullcrusher": {
-   "avg": 4.49,
-   "wr": 12.89,
-   "t4": 48.97,
-   "n": 388,
+   "avg": 4.52,
+   "wr": 11.93,
+   "t4": 48.85,
+   "n": 436,
    "porteurs": []
   },
   "DA_NashorsTooth": {
-   "avg": 4.11,
-   "wr": 15.67,
-   "t4": 56.89,
-   "n": 6766,
+   "avg": 4.1,
+   "wr": 15.7,
+   "t4": 57.23,
+   "n": 7400,
    "porteurs": [
     [
-     "DA_18_Yunara",
-     -0.1015
-    ],
-    [
      "DA_18_Ahri",
-     -0.0555
+     -0.064
     ],
     [
      "DA_18_Soraka",
-     -0.0386
+     -0.049
     ],
     [
      "DA_18_Zyra",
-     -0.0365
+     -0.0423
+    ],
+    [
+     "DA_18_KhaZix",
+     -0.0361
     ],
     [
      "DA_18_Ivern",
-     -0.03
+     -0.0315
     ]
    ]
   },
   "DA_Artifact_GoldCollector": {
-   "avg": 4.46,
-   "wr": 14.72,
-   "t4": 50.51,
-   "n": 394,
+   "avg": 4.47,
+   "wr": 14.42,
+   "t4": 49.88,
+   "n": 423,
    "porteurs": [
     [
      "DA_18_Sivir",
-     -0.0082
+     -0.0049
     ]
    ]
   },
   "DA_JeweledGauntletRadiant": {
-   "avg": 3.88,
-   "wr": 21.56,
-   "t4": 60.55,
-   "n": 436,
+   "avg": 3.94,
+   "wr": 20.9,
+   "t4": 60.13,
+   "n": 469,
    "porteurs": []
   },
   "DA_VoidStaffRadiant": {
-   "avg": 4.21,
-   "wr": 21.05,
-   "t4": 54.14,
-   "n": 133,
+   "avg": 4.15,
+   "wr": 20.69,
+   "t4": 55.17,
+   "n": 145,
    "porteurs": []
   },
   "DA_RedBuffRadiant": {
    "avg": 4.05,
-   "wr": 18.7,
-   "t4": 56.91,
-   "n": 123,
+   "wr": 18.32,
+   "t4": 56.49,
+   "n": 131,
    "porteurs": []
   }
  },
  "traits": {
-  "DA_18_Brawler__2": {
-   "trait": "DA_18_Brawler",
-   "palier": 2,
-   "avg": 3.64,
-   "wr": 18.19,
-   "t4": 66.63,
-   "n": 929
+  "DA_FloraFatalis18__1": {
+   "trait": "DA_FloraFatalis18",
+   "palier": 1,
+   "avg": 4.55,
+   "wr": 13.18,
+   "t4": 48.8,
+   "n": 12163
   },
-  "DA_18_Blossom__3": {
-   "trait": "DA_18_Blossom",
+  "DA_18_Defender__3": {
+   "trait": "DA_18_Defender",
    "palier": 3,
-   "avg": 4.35,
-   "wr": 13.33,
-   "t4": 51.48,
-   "n": 270
+   "avg": 4.37,
+   "wr": 9.81,
+   "t4": 52.07,
+   "n": 724
+  },
+  "DA_18_Blossom__2": {
+   "trait": "DA_18_Blossom",
+   "palier": 2,
+   "avg": 4.0,
+   "wr": 16.25,
+   "t4": 60.33,
+   "n": 726
   },
   "DA_18_Sprykin__1": {
    "trait": "DA_18_Sprykin",
    "palier": 1,
-   "avg": 4.2,
-   "wr": 13.79,
-   "t4": 55.78,
-   "n": 4344
+   "avg": 4.18,
+   "wr": 13.95,
+   "t4": 56.03,
+   "n": 4783
   },
-  "DA_18_ZyraUniqueTrait__1": {
-   "trait": "DA_18_ZyraUniqueTrait",
+  "DA_18_Inferno__1": {
+   "trait": "DA_18_Inferno",
    "palier": 1,
-   "avg": 4.35,
-   "wr": 11.13,
-   "t4": 53.81,
-   "n": 9617
+   "avg": 4.4,
+   "wr": 14.15,
+   "t4": 51.67,
+   "n": 13522
+  },
+  "DA_18_Hunter__2": {
+   "trait": "DA_18_Hunter",
+   "palier": 2,
+   "avg": 4.15,
+   "wr": 15.33,
+   "t4": 56.05,
+   "n": 1429
+  },
+  "DA_18_Sprykin__2": {
+   "trait": "DA_18_Sprykin",
+   "palier": 2,
+   "avg": 3.96,
+   "wr": 14.71,
+   "t4": 62.13,
+   "n": 367
+  },
+  "DA_Riftbeast18__2": {
+   "trait": "DA_Riftbeast18",
+   "palier": 2,
+   "avg": 5.82,
+   "wr": 4.91,
+   "t4": 30.06,
+   "n": 163
+  },
+  "DA_18_Vanguard__2": {
+   "trait": "DA_18_Vanguard",
+   "palier": 2,
+   "avg": 4.31,
+   "wr": 19.69,
+   "t4": 52.38,
+   "n": 4717
+  },
+  "DA_18_Caustic__1": {
+   "trait": "DA_18_Caustic",
+   "palier": 1,
+   "avg": 4.47,
+   "wr": 8.61,
+   "t4": 51.8,
+   "n": 7099
+  },
+  "DA_18_Elderwood__4": {
+   "trait": "DA_18_Elderwood",
+   "palier": 4,
+   "avg": 3.22,
+   "wr": 25.96,
+   "t4": 74.23,
+   "n": 1013
+  },
+  "DA_18_Coven__2": {
+   "trait": "DA_18_Coven",
+   "palier": 2,
+   "avg": 6.12,
+   "wr": 5.98,
+   "t4": 23.91,
+   "n": 184
+  },
+  "DA_18_Lunar__3": {
+   "trait": "DA_18_Lunar",
+   "palier": 3,
+   "avg": 3.39,
+   "wr": 30.72,
+   "t4": 69.17,
+   "n": 892
+  },
+  "DA_18_Executioner__2": {
+   "trait": "DA_18_Executioner",
+   "palier": 2,
+   "avg": 4.0,
+   "wr": 17.39,
+   "t4": 59.89,
+   "n": 3618
+  },
+  "DA_18_Blossom__4": {
+   "trait": "DA_18_Blossom",
+   "palier": 4,
+   "avg": 3.12,
+   "wr": 36.59,
+   "t4": 68.29,
+   "n": 82
+  },
+  "DA_18_Rival__3": {
+   "trait": "DA_18_Rival",
+   "palier": 3,
+   "avg": 5.23,
+   "wr": 4.79,
+   "t4": 37.13,
+   "n": 167
+  },
+  "DA_18_Blossom__1": {
+   "trait": "DA_18_Blossom",
+   "palier": 1,
+   "avg": 4.42,
+   "wr": 11.25,
+   "t4": 52.09,
+   "n": 12491
+  },
+  "DA_Juggernaut18__2": {
+   "trait": "DA_Juggernaut18",
+   "palier": 2,
+   "avg": 4.65,
+   "wr": 12.09,
+   "t4": 46.28,
+   "n": 1720
+  },
+  "DA_18_Slayer__1": {
+   "trait": "DA_18_Slayer",
+   "palier": 1,
+   "avg": 4.58,
+   "wr": 8.9,
+   "t4": 49.38,
+   "n": 9731
   },
   "DA_18_Elderwood__1": {
    "trait": "DA_18_Elderwood",
    "palier": 1,
-   "avg": 4.37,
+   "avg": 4.36,
    "wr": 12.45,
-   "t4": 52.33,
-   "n": 9332
+   "t4": 52.32,
+   "n": 10236
+  },
+  "DA_18_Fae__1": {
+   "trait": "DA_18_Fae",
+   "palier": 1,
+   "avg": 4.57,
+   "wr": 12.16,
+   "t4": 48.61,
+   "n": 10482
+  },
+  "DA_18_Slayer__2": {
+   "trait": "DA_18_Slayer",
+   "palier": 2,
+   "avg": 4.29,
+   "wr": 8.64,
+   "t4": 56.48,
+   "n": 625
+  },
+  "DA_18_LuxUniqueTrait__1": {
+   "trait": "DA_18_LuxUniqueTrait",
+   "palier": 1,
+   "avg": 3.48,
+   "wr": 27.31,
+   "t4": 68.25,
+   "n": 8289
+  },
+  "DA_Emerald18__1": {
+   "trait": "DA_Emerald18",
+   "palier": 1,
+   "avg": 3.97,
+   "wr": 20.73,
+   "t4": 59.12,
+   "n": 18061
+  },
+  "DA_18_Brawler__1": {
+   "trait": "DA_18_Brawler",
+   "palier": 1,
+   "avg": 4.24,
+   "wr": 13.08,
+   "t4": 54.96,
+   "n": 26569
+  },
+  "DA_18_Inferno__4": {
+   "trait": "DA_18_Inferno",
+   "palier": 4,
+   "avg": 2.78,
+   "wr": 44.33,
+   "t4": 75.26,
+   "n": 97
+  },
+  "DA_18_Invoker__2": {
+   "trait": "DA_18_Invoker",
+   "palier": 2,
+   "avg": 4.37,
+   "wr": 11.14,
+   "t4": 53.36,
+   "n": 2764
   },
   "DA_Primal18__2": {
    "trait": "DA_Primal18",
    "palier": 2,
-   "avg": 3.95,
-   "wr": 15.77,
-   "t4": 61.56,
-   "n": 913
+   "avg": 3.93,
+   "wr": 15.82,
+   "t4": 61.76,
+   "n": 999
   },
-  "DA_18_Greenfather__1": {
-   "trait": "DA_18_Greenfather",
+  "DA_18_Executioner__3": {
+   "trait": "DA_18_Executioner",
+   "palier": 3,
+   "avg": 3.71,
+   "wr": 16.81,
+   "t4": 66.99,
+   "n": 1660
+  },
+  "DA_18_Elderwood__3": {
+   "trait": "DA_18_Elderwood",
+   "palier": 3,
+   "avg": 4.5,
+   "wr": 12.47,
+   "t4": 48.9,
+   "n": 2992
+  },
+  "DA_18_Maokai_UniqueTrait__1": {
+   "trait": "DA_18_Maokai_UniqueTrait",
    "palier": 1,
-   "avg": 3.95,
-   "wr": 23.03,
-   "t4": 58.65,
-   "n": 13399
+   "avg": 4.27,
+   "wr": 20.01,
+   "t4": 52.59,
+   "n": 10183
+  },
+  "DA_18_Brawler__3": {
+   "trait": "DA_18_Brawler",
+   "palier": 3,
+   "avg": 3.03,
+   "wr": 33.33,
+   "t4": 73.02,
+   "n": 63
+  },
+  "DA_18_Adaptor__3": {
+   "trait": "DA_18_Adaptor",
+   "palier": 3,
+   "avg": 2.75,
+   "wr": 26.19,
+   "t4": 82.74,
+   "n": 168
+  },
+  "DA_18_Coven__4": {
+   "trait": "DA_18_Coven",
+   "palier": 4,
+   "avg": 5.82,
+   "wr": 12.99,
+   "t4": 31.17,
+   "n": 77
+  },
+  "DA_18_Coven__1": {
+   "trait": "DA_18_Coven",
+   "palier": 1,
+   "avg": 5.46,
+   "wr": 10.53,
+   "t4": 33.51,
+   "n": 1149
+  },
+  "DA_18_Vanguard__1": {
+   "trait": "DA_18_Vanguard",
+   "palier": 1,
+   "avg": 4.31,
+   "wr": 13.85,
+   "t4": 53.97,
+   "n": 26007
+  },
+  "DA_18_Inferno__2": {
+   "trait": "DA_18_Inferno",
+   "palier": 2,
+   "avg": 4.47,
+   "wr": 14.14,
+   "t4": 50.85,
+   "n": 1351
+  },
+  "DA_FloraFatalis18__2": {
+   "trait": "DA_FloraFatalis18",
+   "palier": 2,
+   "avg": 4.36,
+   "wr": 11.22,
+   "t4": 53.45,
+   "n": 6052
+  },
+  "DA_18_Sprykin__3": {
+   "trait": "DA_18_Sprykin",
+   "palier": 3,
+   "avg": 4.2,
+   "wr": 8.05,
+   "t4": 58.62,
+   "n": 87
+  },
+  "DA_18_Blossom__3": {
+   "trait": "DA_18_Blossom",
+   "palier": 3,
+   "avg": 4.32,
+   "wr": 13.56,
+   "t4": 51.86,
+   "n": 295
+  },
+  "DA_18_Invoker__1": {
+   "trait": "DA_18_Invoker",
+   "palier": 1,
+   "avg": 4.5,
+   "wr": 11.34,
+   "t4": 50.24,
+   "n": 14560
+  },
+  "DA_18_Invoker__3": {
+   "trait": "DA_18_Invoker",
+   "palier": 3,
+   "avg": 4.15,
+   "wr": 12.89,
+   "t4": 56.12,
+   "n": 1094
+  },
+  "DA_18_Lunar__1": {
+   "trait": "DA_18_Lunar",
+   "palier": 1,
+   "avg": 4.49,
+   "wr": 13.67,
+   "t4": 49.71,
+   "n": 6651
+  },
+  "DA_18_Elderwood__5": {
+   "trait": "DA_18_Elderwood",
+   "palier": 5,
+   "avg": 1.09,
+   "wr": 93.68,
+   "t4": 100.0,
+   "n": 190
+  },
+  "DA_Riftbeast18__3": {
+   "trait": "DA_Riftbeast18",
+   "palier": 3,
+   "avg": 4.53,
+   "wr": 8.57,
+   "t4": 49.98,
+   "n": 6350
+  },
+  "DA_18_Brawler__2": {
+   "trait": "DA_18_Brawler",
+   "palier": 2,
+   "avg": 3.64,
+   "wr": 18.22,
+   "t4": 66.8,
+   "n": 1021
   },
   "DA_18_Defender__1": {
    "trait": "DA_18_Defender",
    "palier": 1,
    "avg": 4.42,
-   "wr": 13.02,
-   "t4": 51.4,
-   "n": 20691
+   "wr": 13.06,
+   "t4": 51.44,
+   "n": 22521
+  },
+  "DA_18_Blackthorn__2": {
+   "trait": "DA_18_Blackthorn",
+   "palier": 2,
+   "avg": 4.14,
+   "wr": 14.12,
+   "t4": 59.01,
+   "n": 1176
+  },
+  "DA_18_Rapidfire__4": {
+   "trait": "DA_18_Rapidfire",
+   "palier": 4,
+   "avg": 4.28,
+   "wr": 8.67,
+   "t4": 55.33,
+   "n": 150
+  },
+  "DA_18_ApexPredator__1": {
+   "trait": "DA_18_ApexPredator",
+   "palier": 1,
+   "avg": 4.23,
+   "wr": 16.62,
+   "t4": 54.71,
+   "n": 10335
+  },
+  "DA_18_Hunter__1": {
+   "trait": "DA_18_Hunter",
+   "palier": 1,
+   "avg": 4.52,
+   "wr": 12.25,
+   "t4": 49.79,
+   "n": 4196
   },
   "DA_18_Rival__2": {
    "trait": "DA_18_Rival",
@@ -3492,664 +3836,320 @@
    "t4": 0.0,
    "n": 1
   },
-  "DA_18_Adaptor__3": {
-   "trait": "DA_18_Adaptor",
-   "palier": 3,
-   "avg": 2.74,
-   "wr": 26.17,
-   "t4": 83.22,
-   "n": 149
+  "DA_Primal18__1": {
+   "trait": "DA_Primal18",
+   "palier": 1,
+   "avg": 4.45,
+   "wr": 11.13,
+   "t4": 51.07,
+   "n": 10760
   },
-  "DA_18_Rapidfire__2": {
-   "trait": "DA_18_Rapidfire",
+  "DA_Riftbeast18__1": {
+   "trait": "DA_Riftbeast18",
+   "palier": 1,
+   "avg": 4.37,
+   "wr": 14.9,
+   "t4": 51.83,
+   "n": 10938
+  },
+  "DA_18_Fae__2": {
+   "trait": "DA_18_Fae",
    "palier": 2,
-   "avg": 3.85,
-   "wr": 16.36,
-   "t4": 63.41,
-   "n": 1394
+   "avg": 4.15,
+   "wr": 17.74,
+   "t4": 56.37,
+   "n": 2537
   },
-  "DA_18_Vanguard__2": {
-   "trait": "DA_18_Vanguard",
+  "DA_18_Summoner__2": {
+   "trait": "DA_18_Summoner",
    "palier": 2,
    "avg": 4.29,
-   "wr": 19.63,
-   "t4": 52.81,
-   "n": 4319
+   "wr": 10.1,
+   "t4": 55.36,
+   "n": 5831
+  },
+  "DA_18_Hunter__3": {
+   "trait": "DA_18_Hunter",
+   "palier": 3,
+   "avg": 3.49,
+   "wr": 18.66,
+   "t4": 69.78,
+   "n": 268
+  },
+  "DA_AluneUniqueTrait18__1": {
+   "trait": "DA_AluneUniqueTrait18",
+   "palier": 1,
+   "avg": 3.88,
+   "wr": 21.93,
+   "t4": 60.65,
+   "n": 7979
   },
   "DA_18_Executioner__1": {
    "trait": "DA_18_Executioner",
    "palier": 1,
-   "avg": 4.47,
-   "wr": 14.07,
-   "t4": 49.92,
-   "n": 7179
+   "avg": 4.46,
+   "wr": 14.14,
+   "t4": 50.12,
+   "n": 7835
   },
   "DA_18_Spellweaver__1": {
    "trait": "DA_18_Spellweaver",
    "palier": 1,
    "avg": 4.43,
-   "wr": 13.01,
-   "t4": 51.39,
-   "n": 18486
+   "wr": 13.04,
+   "t4": 51.38,
+   "n": 20185
   },
-  "DA_18_Eclipse__1": {
-   "trait": "DA_18_Eclipse",
+  "DA_18_Solar__1": {
+   "trait": "DA_18_Solar",
    "palier": 1,
-   "avg": 3.44,
-   "wr": 21.42,
-   "t4": 70.87,
-   "n": 635
-  },
-  "DA_18_Defender__3": {
-   "trait": "DA_18_Defender",
-   "palier": 3,
-   "avg": 4.39,
-   "wr": 9.58,
-   "t4": 51.5,
-   "n": 668
-  },
-  "DA_18_Fae__1": {
-   "trait": "DA_18_Fae",
-   "palier": 1,
-   "avg": 4.56,
-   "wr": 12.16,
-   "t4": 48.62,
-   "n": 9592
-  },
-  "DA_AluneUniqueTrait18__1": {
-   "trait": "DA_AluneUniqueTrait18",
-   "palier": 1,
-   "avg": 3.87,
-   "wr": 22.02,
-   "t4": 61.02,
-   "n": 7304
-  },
-  "DA_18_Inferno__2": {
-   "trait": "DA_18_Inferno",
-   "palier": 2,
-   "avg": 4.47,
-   "wr": 14.34,
-   "t4": 50.69,
-   "n": 1227
-  },
-  "DA_18_Rapidfire__4": {
-   "trait": "DA_18_Rapidfire",
-   "palier": 4,
-   "avg": 4.26,
-   "wr": 9.22,
-   "t4": 55.32,
-   "n": 141
-  },
-  "DA_18_Caustic__1": {
-   "trait": "DA_18_Caustic",
-   "palier": 1,
-   "avg": 4.48,
-   "wr": 8.54,
-   "t4": 51.63,
-   "n": 6533
-  },
-  "DA_18_Vanguard__3": {
-   "trait": "DA_18_Vanguard",
-   "palier": 3,
-   "avg": 3.94,
-   "wr": 24.71,
-   "t4": 58.3,
-   "n": 259
-  },
-  "DA_18_Slayer__2": {
-   "trait": "DA_18_Slayer",
-   "palier": 2,
-   "avg": 4.26,
-   "wr": 8.68,
-   "t4": 57.12,
-   "n": 576
-  },
-  "DA_18_Blossom__1": {
-   "trait": "DA_18_Blossom",
-   "palier": 1,
-   "avg": 4.42,
-   "wr": 11.27,
-   "t4": 51.99,
-   "n": 11475
-  },
-  "DA_18_Blossom__2": {
-   "trait": "DA_18_Blossom",
-   "palier": 2,
-   "avg": 4.03,
-   "wr": 16.42,
-   "t4": 59.64,
-   "n": 664
-  },
-  "DA_FloraFatalis18__1": {
-   "trait": "DA_FloraFatalis18",
-   "palier": 1,
-   "avg": 4.55,
-   "wr": 13.14,
-   "t4": 48.81,
-   "n": 11158
-  },
-  "DA_18_Elderwood__3": {
-   "trait": "DA_18_Elderwood",
-   "palier": 3,
-   "avg": 4.51,
-   "wr": 12.03,
-   "t4": 48.66,
-   "n": 2760
-  },
-  "DA_18_Blackthorn__2": {
-   "trait": "DA_18_Blackthorn",
-   "palier": 2,
    "avg": 4.12,
-   "wr": 14.4,
-   "t4": 59.37,
-   "n": 1083
+   "wr": 13.36,
+   "t4": 57.64,
+   "n": 6647
+  },
+  "DA_18_Rapidfire__2": {
+   "trait": "DA_18_Rapidfire",
+   "palier": 2,
+   "avg": 3.85,
+   "wr": 16.48,
+   "t4": 63.23,
+   "n": 1523
+  },
+  "DA_18_Lunar__2": {
+   "trait": "DA_18_Lunar",
+   "palier": 2,
+   "avg": 4.0,
+   "wr": 18.35,
+   "t4": 59.1,
+   "n": 1406
+  },
+  "DA_18_Lunar__4": {
+   "trait": "DA_18_Lunar",
+   "palier": 4,
+   "avg": 2.85,
+   "wr": 32.77,
+   "t4": 79.15,
+   "n": 235
   },
   "DA_18_Blossom__5": {
    "trait": "DA_18_Blossom",
    "palier": 5,
-   "avg": 1.36,
-   "wr": 90.91,
-   "t4": 90.91,
-   "n": 22
+   "avg": 1.35,
+   "wr": 91.3,
+   "t4": 91.3,
+   "n": 23
   },
-  "DA_18_Rapidfire__1": {
-   "trait": "DA_18_Rapidfire",
-   "palier": 1,
-   "avg": 4.58,
-   "wr": 9.12,
-   "t4": 49.06,
-   "n": 7556
-  },
-  "DA_Juggernaut18__1": {
-   "trait": "DA_Juggernaut18",
-   "palier": 1,
-   "avg": 4.45,
-   "wr": 13.62,
-   "t4": 50.88,
-   "n": 25738
-  },
-  "DA_18_Rival__3": {
-   "trait": "DA_18_Rival",
+  "DA_18_Coven__3": {
+   "trait": "DA_18_Coven",
    "palier": 3,
-   "avg": 5.1,
-   "wr": 5.16,
-   "t4": 39.35,
-   "n": 155
+   "avg": 5.65,
+   "wr": 16.77,
+   "t4": 28.14,
+   "n": 167
   },
-  "DA_18_Hunter__3": {
-   "trait": "DA_18_Hunter",
-   "palier": 3,
+  "DA_18_Eclipse__1": {
+   "trait": "DA_18_Eclipse",
+   "palier": 1,
    "avg": 3.45,
-   "wr": 20.51,
-   "t4": 70.09,
-   "n": 234
+   "wr": 21.51,
+   "t4": 70.47,
+   "n": 674
+  },
+  "DA_18_Invoker__4": {
+   "trait": "DA_18_Invoker",
+   "palier": 4,
+   "avg": 3.82,
+   "wr": 17.75,
+   "t4": 63.66,
+   "n": 355
+  },
+  "DA_18_Spellweaver__3": {
+   "trait": "DA_18_Spellweaver",
+   "palier": 3,
+   "avg": 3.53,
+   "wr": 22.62,
+   "t4": 67.87,
+   "n": 442
   },
   "DA_18_Summoner__1": {
    "trait": "DA_18_Summoner",
    "palier": 1,
    "avg": 4.21,
-   "wr": 13.22,
-   "t4": 55.89,
-   "n": 9487
+   "wr": 13.21,
+   "t4": 56.09,
+   "n": 10370
   },
-  "DA_18_Battlemage__1": {
-   "trait": "DA_18_Battlemage",
-   "palier": 1,
-   "avg": 4.56,
-   "wr": 9.32,
-   "t4": 49.97,
-   "n": 3252
-  },
-  "DA_18_Sprykin__2": {
-   "trait": "DA_18_Sprykin",
-   "palier": 2,
-   "avg": 3.92,
-   "wr": 15.55,
-   "t4": 63.11,
-   "n": 328
-  },
-  "DA_18_Coven__4": {
-   "trait": "DA_18_Coven",
-   "palier": 4,
-   "avg": 5.83,
-   "wr": 12.68,
-   "t4": 30.99,
-   "n": 71
-  },
-  "DA_18_Inferno__1": {
-   "trait": "DA_18_Inferno",
-   "palier": 1,
-   "avg": 4.4,
-   "wr": 14.22,
-   "t4": 51.62,
-   "n": 12465
-  },
-  "DA_18_Coven__1": {
-   "trait": "DA_18_Coven",
-   "palier": 1,
-   "avg": 5.45,
-   "wr": 10.57,
-   "t4": 33.9,
-   "n": 1050
-  },
-  "DA_Primal18__1": {
-   "trait": "DA_Primal18",
-   "palier": 1,
-   "avg": 4.45,
-   "wr": 11.22,
-   "t4": 50.94,
-   "n": 9861
-  },
-  "DA_18_Invoker__4": {
-   "trait": "DA_18_Invoker",
-   "palier": 4,
-   "avg": 3.8,
-   "wr": 17.59,
-   "t4": 63.58,
-   "n": 324
-  },
-  "DA_18_Brawler__1": {
-   "trait": "DA_18_Brawler",
-   "palier": 1,
-   "avg": 4.25,
-   "wr": 13.06,
-   "t4": 54.88,
-   "n": 24335
-  },
-  "DA_18_LuxUniqueTrait__1": {
-   "trait": "DA_18_LuxUniqueTrait",
-   "palier": 1,
-   "avg": 3.48,
-   "wr": 27.29,
-   "t4": 68.14,
-   "n": 7621
-  },
-  "DA_18_Inferno__4": {
-   "trait": "DA_18_Inferno",
-   "palier": 4,
-   "avg": 2.81,
-   "wr": 44.32,
-   "t4": 73.86,
-   "n": 88
-  },
-  "DA_FloraFatalis18__2": {
-   "trait": "DA_FloraFatalis18",
-   "palier": 2,
-   "avg": 4.37,
-   "wr": 11.1,
-   "t4": 53.11,
-   "n": 5568
-  },
-  "DA_18_Sprykin__3": {
-   "trait": "DA_18_Sprykin",
+  "DA_Juggernaut18__3": {
+   "trait": "DA_Juggernaut18",
    "palier": 3,
-   "avg": 4.06,
-   "wr": 8.86,
-   "t4": 60.76,
-   "n": 79
+   "avg": 4.19,
+   "wr": 13.33,
+   "t4": 56.03,
+   "n": 1508
   },
-  "DA_18_Slayer__3": {
-   "trait": "DA_18_Slayer",
+  "DA_18_Vanguard__3": {
+   "trait": "DA_18_Vanguard",
    "palier": 3,
-   "avg": 4.18,
-   "wr": 10.0,
-   "t4": 55.0,
-   "n": 60
-  },
-  "DA_18_ApexPredator__1": {
-   "trait": "DA_18_ApexPredator",
-   "palier": 1,
-   "avg": 4.22,
-   "wr": 16.72,
-   "t4": 54.93,
-   "n": 9633
-  },
-  "DA_18_Elderwood__4": {
-   "trait": "DA_18_Elderwood",
-   "palier": 4,
-   "avg": 3.25,
-   "wr": 25.48,
-   "t4": 73.66,
-   "n": 930
-  },
-  "DA_18_Blackthorn__3": {
-   "trait": "DA_18_Blackthorn",
-   "palier": 3,
-   "avg": 3.76,
-   "wr": 19.77,
-   "t4": 65.12,
-   "n": 258
-  },
-  "DA_18_Elderwood__5": {
-   "trait": "DA_18_Elderwood",
-   "palier": 5,
-   "avg": 1.08,
-   "wr": 94.19,
-   "t4": 100.0,
-   "n": 172
-  },
-  "DA_18_Maokai_UniqueTrait__1": {
-   "trait": "DA_18_Maokai_UniqueTrait",
-   "palier": 1,
-   "avg": 4.27,
-   "wr": 20.07,
-   "t4": 52.52,
-   "n": 9371
-  },
-  "DA_Riftbeast18__2": {
-   "trait": "DA_Riftbeast18",
-   "palier": 2,
-   "avg": 5.88,
-   "wr": 4.0,
-   "t4": 29.33,
-   "n": 150
-  },
-  "DA_18_Invoker__2": {
-   "trait": "DA_18_Invoker",
-   "palier": 2,
-   "avg": 4.37,
-   "wr": 11.23,
-   "t4": 53.32,
-   "n": 2528
-  },
-  "DA_18_Fae__2": {
-   "trait": "DA_18_Fae",
-   "palier": 2,
-   "avg": 4.14,
-   "wr": 17.93,
-   "t4": 56.29,
-   "n": 2320
-  },
-  "DA_18_Solar__1": {
-   "trait": "DA_18_Solar",
-   "palier": 1,
-   "avg": 4.11,
-   "wr": 13.38,
-   "t4": 57.85,
-   "n": 6142
-  },
-  "DA_DravenUniqueTrait18__1": {
-   "trait": "DA_DravenUniqueTrait18",
-   "palier": 1,
-   "avg": 4.34,
-   "wr": 21.9,
-   "t4": 50.64,
-   "n": 6718
-  },
-  "DA_18_Executioner__3": {
-   "trait": "DA_18_Executioner",
-   "palier": 3,
-   "avg": 3.73,
-   "wr": 16.14,
-   "t4": 66.6,
-   "n": 1524
-  },
-  "DA_18_Lunar__1": {
-   "trait": "DA_18_Lunar",
-   "palier": 1,
-   "avg": 4.49,
-   "wr": 13.48,
-   "t4": 49.76,
-   "n": 6083
-  },
-  "DA_18_Hunter__2": {
-   "trait": "DA_18_Hunter",
-   "palier": 2,
-   "avg": 4.17,
-   "wr": 15.28,
-   "t4": 55.61,
-   "n": 1309
-  },
-  "DA_Riftbeast18__3": {
-   "trait": "DA_Riftbeast18",
-   "palier": 3,
-   "avg": 4.52,
-   "wr": 8.6,
-   "t4": 50.22,
-   "n": 5892
-  },
-  "DA_18_Spellweaver__3": {
-   "trait": "DA_18_Spellweaver",
-   "palier": 3,
-   "avg": 3.56,
-   "wr": 22.98,
-   "t4": 66.99,
-   "n": 409
-  },
-  "DA_Emerald18__1": {
-   "trait": "DA_Emerald18",
-   "palier": 1,
-   "avg": 3.97,
-   "wr": 20.75,
-   "t4": 59.26,
-   "n": 16651
-  },
-  "DA_18_Hunter__4": {
-   "trait": "DA_18_Hunter",
-   "palier": 4,
-   "avg": 4.27,
-   "wr": 7.27,
-   "t4": 60.0,
-   "n": 55
-  },
-  "DA_18_Summoner__2": {
-   "trait": "DA_18_Summoner",
-   "palier": 2,
-   "avg": 4.3,
-   "wr": 10.2,
-   "t4": 55.07,
-   "n": 5295
-  },
-  "DA_18_Lunar__2": {
-   "trait": "DA_18_Lunar",
-   "palier": 2,
-   "avg": 3.98,
-   "wr": 18.61,
-   "t4": 59.5,
-   "n": 1311
-  },
-  "DA_18_Invoker__1": {
-   "trait": "DA_18_Invoker",
-   "palier": 1,
-   "avg": 4.5,
-   "wr": 11.29,
-   "t4": 50.42,
-   "n": 13424
-  },
-  "DA_Riftbeast18__4": {
-   "trait": "DA_Riftbeast18",
-   "palier": 4,
-   "avg": 2.31,
-   "wr": 36.45,
-   "t4": 90.32,
-   "n": 310
-  },
-  "DA_18_Brawler__3": {
-   "trait": "DA_18_Brawler",
-   "palier": 3,
-   "avg": 3.09,
-   "wr": 32.76,
-   "t4": 72.41,
-   "n": 58
-  },
-  "DA_18_Lunar__4": {
-   "trait": "DA_18_Lunar",
-   "palier": 4,
-   "avg": 2.94,
-   "wr": 30.66,
-   "t4": 77.36,
-   "n": 212
-  },
-  "DA_18_Defender__2": {
-   "trait": "DA_18_Defender",
-   "palier": 2,
-   "avg": 4.52,
-   "wr": 9.97,
-   "t4": 51.66,
-   "n": 331
-  },
-  "DA_18_Blossom__4": {
-   "trait": "DA_18_Blossom",
-   "palier": 4,
-   "avg": 3.09,
-   "wr": 36.0,
-   "t4": 68.0,
-   "n": 75
-  },
-  "DA_18_Adaptor__1": {
-   "trait": "DA_18_Adaptor",
-   "palier": 1,
-   "avg": 4.62,
-   "wr": 6.67,
-   "t4": 49.4,
-   "n": 4931
-  },
-  "DA_18_Coven__2": {
-   "trait": "DA_18_Coven",
-   "palier": 2,
-   "avg": 6.07,
-   "wr": 6.43,
-   "t4": 24.56,
-   "n": 171
-  },
-  "DA_18_Coven__3": {
-   "trait": "DA_18_Coven",
-   "palier": 3,
-   "avg": 5.71,
-   "wr": 16.33,
-   "t4": 26.53,
-   "n": 147
-  },
-  "DA_18_Slayer__1": {
-   "trait": "DA_18_Slayer",
-   "palier": 1,
-   "avg": 4.57,
-   "wr": 8.97,
-   "t4": 49.64,
-   "n": 9001
-  },
-  "DA_18_Executioner__2": {
-   "trait": "DA_18_Executioner",
-   "palier": 2,
-   "avg": 4.0,
-   "wr": 17.52,
-   "t4": 59.71,
-   "n": 3328
+   "avg": 3.94,
+   "wr": 24.3,
+   "t4": 58.45,
+   "n": 284
   },
   "DA_18_Inferno__3": {
    "trait": "DA_18_Inferno",
    "palier": 3,
    "avg": 3.8,
    "wr": 25.07,
-   "t4": 60.64,
-   "n": 343
+   "t4": 60.65,
+   "n": 371
   },
-  "DA_Juggernaut18__3": {
-   "trait": "DA_Juggernaut18",
+  "DA_18_Blackthorn__3": {
+   "trait": "DA_18_Blackthorn",
    "palier": 3,
-   "avg": 4.21,
-   "wr": 13.12,
-   "t4": 55.36,
-   "n": 1380
+   "avg": 3.7,
+   "wr": 19.57,
+   "t4": 66.19,
+   "n": 281
   },
-  "DA_18_Invoker__3": {
-   "trait": "DA_18_Invoker",
-   "palier": 3,
-   "avg": 4.13,
-   "wr": 13.29,
-   "t4": 56.39,
-   "n": 993
+  "DA_18_Greenfather__1": {
+   "trait": "DA_18_Greenfather",
+   "palier": 1,
+   "avg": 3.95,
+   "wr": 23.13,
+   "t4": 58.68,
+   "n": 14610
   },
   "DA_18_Spellweaver__2": {
    "trait": "DA_18_Spellweaver",
    "palier": 2,
-   "avg": 4.21,
-   "wr": 13.63,
-   "t4": 54.59,
-   "n": 2539
-  },
-  "DA_18_Adaptor__2": {
-   "trait": "DA_18_Adaptor",
-   "palier": 2,
-   "avg": 3.98,
+   "avg": 4.22,
    "wr": 13.55,
-   "t4": 60.27,
-   "n": 1188
+   "t4": 54.18,
+   "n": 2774
   },
-  "DA_18_Lunar__3": {
-   "trait": "DA_18_Lunar",
-   "palier": 3,
-   "avg": 3.37,
-   "wr": 30.79,
-   "t4": 69.94,
-   "n": 825
-  },
-  "DA_18_Hunter__1": {
-   "trait": "DA_18_Hunter",
+  "DA_18_Adaptor__1": {
+   "trait": "DA_18_Adaptor",
    "palier": 1,
-   "avg": 4.51,
-   "wr": 12.38,
-   "t4": 49.94,
-   "n": 3869
-  },
-  "DA_18_Rapidfire__3": {
-   "trait": "DA_18_Rapidfire",
-   "palier": 3,
-   "avg": 3.85,
-   "wr": 10.3,
-   "t4": 64.38,
-   "n": 233
-  },
-  "DA_18_Rival__1": {
-   "trait": "DA_18_Rival",
-   "palier": 1,
-   "avg": 4.44,
-   "wr": 11.69,
-   "t4": 51.1,
-   "n": 2781
-  },
-  "DA_18_Vanguard__1": {
-   "trait": "DA_18_Vanguard",
-   "palier": 1,
-   "avg": 4.31,
-   "wr": 13.9,
-   "t4": 54.04,
-   "n": 23922
-  },
-  "DA_Juggernaut18__2": {
-   "trait": "DA_Juggernaut18",
-   "palier": 2,
-   "avg": 4.65,
-   "wr": 12.31,
-   "t4": 46.09,
-   "n": 1584
-  },
-  "DA_Riftbeast18__1": {
-   "trait": "DA_Riftbeast18",
-   "palier": 1,
-   "avg": 4.37,
-   "wr": 14.98,
-   "t4": 51.81,
-   "n": 10085
+   "avg": 4.61,
+   "wr": 6.8,
+   "t4": 49.47,
+   "n": 5367
   },
   "DA_18_Blackthorn__1": {
    "trait": "DA_18_Blackthorn",
    "palier": 1,
    "avg": 4.5,
-   "wr": 10.56,
-   "t4": 49.88,
-   "n": 5822
+   "wr": 10.53,
+   "t4": 49.98,
+   "n": 6383
+  },
+  "DA_18_Rapidfire__1": {
+   "trait": "DA_18_Rapidfire",
+   "palier": 1,
+   "avg": 4.57,
+   "wr": 9.31,
+   "t4": 49.08,
+   "n": 8224
+  },
+  "DA_18_ZyraUniqueTrait__1": {
+   "trait": "DA_18_ZyraUniqueTrait",
+   "palier": 1,
+   "avg": 4.34,
+   "wr": 11.06,
+   "t4": 54.08,
+   "n": 10530
+  },
+  "DA_18_Slayer__3": {
+   "trait": "DA_18_Slayer",
+   "palier": 3,
+   "avg": 4.14,
+   "wr": 9.38,
+   "t4": 56.25,
+   "n": 64
+  },
+  "DA_Juggernaut18__1": {
+   "trait": "DA_Juggernaut18",
+   "palier": 1,
+   "avg": 4.45,
+   "wr": 13.52,
+   "t4": 50.88,
+   "n": 28014
+  },
+  "DA_Riftbeast18__4": {
+   "trait": "DA_Riftbeast18",
+   "palier": 4,
+   "avg": 2.33,
+   "wr": 35.71,
+   "t4": 89.88,
+   "n": 336
   },
   "DA_18_Elderwood__2": {
    "trait": "DA_18_Elderwood",
    "palier": 2,
-   "avg": 4.61,
-   "wr": 15.35,
-   "t4": 46.4,
-   "n": 1778
+   "avg": 4.59,
+   "wr": 15.42,
+   "t4": 46.92,
+   "n": 1946
+  },
+  "DA_18_Rival__1": {
+   "trait": "DA_18_Rival",
+   "palier": 1,
+   "avg": 4.43,
+   "wr": 11.64,
+   "t4": 51.34,
+   "n": 3025
+  },
+  "DA_18_Adaptor__2": {
+   "trait": "DA_18_Adaptor",
+   "palier": 2,
+   "avg": 3.97,
+   "wr": 13.58,
+   "t4": 60.63,
+   "n": 1303
+  },
+  "DA_18_Hunter__4": {
+   "trait": "DA_18_Hunter",
+   "palier": 4,
+   "avg": 4.21,
+   "wr": 8.77,
+   "t4": 61.4,
+   "n": 57
+  },
+  "DA_DravenUniqueTrait18__1": {
+   "trait": "DA_DravenUniqueTrait18",
+   "palier": 1,
+   "avg": 4.34,
+   "wr": 21.9,
+   "t4": 50.65,
+   "n": 7289
+  },
+  "DA_18_Battlemage__1": {
+   "trait": "DA_18_Battlemage",
+   "palier": 1,
+   "avg": 4.56,
+   "wr": 9.09,
+   "t4": 50.13,
+   "n": 3553
+  },
+  "DA_18_Defender__2": {
+   "trait": "DA_18_Defender",
+   "palier": 2,
+   "avg": 4.5,
+   "wr": 10.92,
+   "t4": 52.38,
+   "n": 357
+  },
+  "DA_18_Rapidfire__3": {
+   "trait": "DA_18_Rapidfire",
+   "palier": 3,
+   "avg": 3.77,
+   "wr": 11.51,
+   "t4": 66.27,
+   "n": 252
   }
  },
  "premier_releve": "2026-11-19",
  "n_parties_premier": 33067,
- "n_mises_a_jour": 2
+ "n_mises_a_jour": 3
 }
