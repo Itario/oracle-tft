@@ -1,21 +1,21 @@
 {
  "schema_version": 1,
- "date": "2026-11-25",
+ "date": "2026-11-26",
  "set": 18,
  "etat": "ok",
  "etat_note": null,
  "patch_code": 16230,
  "patch": "18.7",
  "source": "tactics.tools/team-compositions",
- "n_parties": 216266,
- "place_lobby": 4.4907,
+ "n_parties": 221786,
+ "place_lobby": 4.4909,
  "population": {
-  "compos_count": 216266,
+  "compos_count": 221786,
   "rank_group": 1,
   "releve_unites": "2026-11-19_18.7_r0.json",
-  "unites_count": 219739,
+  "unites_count": 224531,
   "unites_rang": "Master+",
-  "ecart_relatif": 0.0158,
+  "ecart_relatif": 0.0122,
   "meme_population": true,
   "note": "Les deux relevés décrivent la même tranche : on peut croiser compos et unités."
  },
@@ -32,205 +32,205 @@
  "compos": [
   {
    "code": "024393eb40340f4223e93ed4283ef43cTFTSet18",
-   "n": 7818,
-   "place": 4.093,
-   "top4_pct": 58.8,
+   "n": 7999,
+   "place": 4.086,
+   "top4_pct": 59.0,
    "premieres_pct": 11.0,
-   "lp_par_partie": 5.45,
+   "lp_par_partie": 5.55,
    "unites": [
     [
      "DA_18_Xayah",
      2,
-     6539,
-     3.9786469848476935
+     6692,
+     3.969064421073637
     ],
     [
      "DA_CrimsonRaptor18",
      3,
-     6173,
-     3.605091839910857
+     6320,
+     3.596536683218295
     ],
     [
      "DA_18_Alistar",
      2,
-     5611,
-     4.237278029515347
+     5748,
+     4.229187344577164
     ],
     [
      "DA_Krug18",
      2,
-     4692,
-     4.488928903775478
+     4789,
+     4.485729621856128
     ],
     [
      "DA_18_Hecarim",
      3,
-     4599,
-     3.4569828692653344
+     4734,
+     3.451505860761004
     ],
     [
      "DA_18_Zyra",
      2,
-     4081,
-     3.3647778927695846
+     4175,
+     3.3559450963979613
     ],
     [
      "DA_Sentinel18",
      1,
-     4048,
-     4.527147358593178
+     4146,
+     4.5237004739072235
     ],
     [
      "DA_18_Hecarim",
      2,
-     3187,
-     4.987153714333876
+     3233,
+     4.989683043233855
     ],
     [
      "DA_18_Zyra",
      1,
-     3113,
-     4.829581429479893
+     3194,
+     4.828592599186487
     ],
     [
      "DA_Krug18",
      3,
-     3001,
-     3.38640308026558
+     3079,
+     3.3747335848148365
     ],
     [
      "DA_Sentinel18",
      2,
-     2797,
-     3.0897743044003545
+     2844,
+     3.06208009193013
     ],
     [
      "DA_CrimsonRaptor18",
      2,
-     1643,
-     5.910653137489899
+     1679,
+     5.913771820718379
     ],
     [
      "DA_18_Xayah",
      1,
-     1080,
-     4.799786625537791
+     1105,
+     4.81257650331981
     ],
     [
      "DA_18_Aphelios",
      1,
-     963,
-     3.2237403121851056
+     977,
+     3.228663039740162
     ],
     [
      "DA_18_Aphelios",
      2,
-     854,
-     2.682506493529284
+     885,
+     2.662067847453161
     ],
     [
      "DA_Scuttlecrab18",
      2,
-     462,
-     4.295142800717015
+     472,
+     4.304840142494052
     ],
     [
      "DA_18_Ivern",
      1,
-     455,
-     2.7584387671485215
+     466,
+     2.735259886416914
     ],
     [
      "DA_18_Alistar",
      3,
-     422,
-     3.2059154853259773
+     429,
+     3.229715155134382
     ],
     [
      "DA_18_Alistar",
      1,
-     382,
-     5.381261329521914
+     391,
+     5.375053980737941
     ],
     [
      "DA_18_Rakan",
      2,
-     320,
-     3.6620326094944184
+     326,
+     3.7059620887177833
     ],
     [
      "DA_Taric18",
      1,
-     294,
-     2.9244144321054493
+     307,
+     2.944252233850754
     ],
     [
      "DA_Scuttlecrab18",
      1,
-     247,
-     5.5101554203574965
+     259,
+     5.4565232752749635
     ],
     [
      "DA_18_Azir",
      2,
-     179,
-     4.7358052428384605
+     185,
+     4.734986260795424
     ],
     [
      "DA_Krug18",
      1,
-     176,
-     5.505125304707448
+     181,
+     5.524296811499112
     ]
    ],
    "traits": [
     {
      "trait": "DA_18_Brawler",
      "palier": 1,
-     "n": 7714,
-     "place": 4.094
+     "n": 7891,
+     "place": 4.087
     },
     {
      "trait": "DA_Riftbeast18",
      "palier": 1,
-     "n": 7678,
-     "place": 4.055
+     "n": 7850,
+     "place": 4.047
     },
     {
      "trait": "DA_18_Elderwood",
      "palier": 1,
-     "n": 7492,
-     "place": 4.126
+     "n": 7667,
+     "place": 4.118
     },
     {
      "trait": "DA_18_Summoner",
      "palier": 2,
-     "n": 7468,
-     "place": 4.046
+     "n": 7647,
+     "place": 4.041
     },
     {
      "trait": "DA_18_ZyraUniqueTrait",
      "palier": 1,
-     "n": 7177,
-     "place": 3.998
+     "n": 7351,
+     "place": 3.994
     },
     {
      "trait": "DA_18_Vanguard",
      "palier": 1,
-     "n": 7131,
-     "place": 3.992
+     "n": 7288,
+     "place": 3.983
     },
     {
      "trait": "DA_18_Rapidfire",
      "palier": 1,
-     "n": 5180,
-     "place": 4.467
+     "n": 5285,
+     "place": 4.465
     },
     {
      "trait": "DA_18_Rapidfire",
      "palier": 2,
-     "n": 2210,
-     "place": 3.395
+     "n": 2251,
+     "place": 3.38
     }
    ],
    "porteurs": [
@@ -240,19 +240,19 @@
     },
     {
      "unite": "DA_18_Hecarim",
-     "objets_moy": 2.58
-    },
-    {
-     "unite": "DA_18_Zyra",
-     "objets_moy": 1.96
+     "objets_moy": 2.6
     },
     {
      "unite": "DA_Krug18",
      "objets_moy": 1.95
     },
     {
+     "unite": "DA_18_Zyra",
+     "objets_moy": 1.95
+    },
+    {
      "unite": "DA_Sentinel18",
-     "objets_moy": 0.95
+     "objets_moy": 0.93
     }
    ],
    "conditions_de_victoire": [
@@ -260,47 +260,47 @@
      "unites": [
       "DA_CrimsonRaptor18-3"
      ],
-     "n": 8313,
-     "place": 2.82
+     "n": 8522,
+     "place": 2.809
     },
     {
      "unites": [
       "DA_Krug18-3"
      ],
-     "n": 7166,
-     "place": 2.982
+     "n": 7370,
+     "place": 2.971
     },
     {
      "unites": [
       "DA_18_Hecarim-3"
      ],
-     "n": 15478,
-     "place": 3.143
+     "n": 15954,
+     "place": 3.137
     },
     {
      "unites": [
       "DA_18_Alistar-3"
      ],
-     "n": 1866,
-     "place": 3.012
+     "n": 1892,
+     "place": 3.029
     }
    ],
    "niveaux": [
     {
      "niveau": 8,
-     "n": 3459
+     "n": 3561
     },
     {
      "niveau": 10,
-     "n": 26
+     "n": 27
     },
     {
      "niveau": 7,
-     "n": 3797
+     "n": 3864
     },
     {
      "niveau": 9,
-     "n": 533
+     "n": 545
     },
     {
      "niveau": 6,
@@ -308,14 +308,14 @@
     }
    ],
    "distribution": [
-    859,
-    1349,
-    1215,
-    1173,
-    1023,
-    915,
-    778,
-    507
+    879,
+    1389,
+    1245,
+    1207,
+    1036,
+    941,
+    787,
+    517
    ],
    "variantes": [
     {
@@ -330,7 +330,7 @@
       "DA_18_Zyra"
      ],
      "n": 1486,
-     "place": 4.287,
+     "place": 4.292,
      "traits_sup": [
       "DA_18_Summoner"
      ]
@@ -346,8 +346,8 @@
       "DA_18_Aphelios",
       "DA_18_Zyra"
      ],
-     "n": 297,
-     "place": 4.106,
+     "n": 326,
+     "place": 4.08,
      "traits_sup": [
       "DA_18_Summoner"
      ]
@@ -363,8 +363,8 @@
       "DA_18_Zyra",
       "DA_18_Ivern"
      ],
-     "n": 291,
-     "place": 4.153,
+     "n": 296,
+     "place": 4.13,
      "traits_sup": [
       "DA_18_Summoner"
      ]
@@ -380,8 +380,8 @@
       "DA_CrimsonRaptor18",
       "DA_18_Zyra"
      ],
-     "n": 251,
-     "place": 4.649,
+     "n": 257,
+     "place": 4.64,
      "traits_sup": [
       "DA_18_Summoner"
      ]
@@ -391,290 +391,290 @@
     {
      "unite": "DA_CrimsonRaptor18",
      "objet": "DA_GuinsoosRageblade",
-     "n": 6764,
-     "place": 4.187
+     "n": 6924,
+     "place": 4.181
     },
     {
      "unite": "DA_CrimsonRaptor18",
      "objet": "DA_HextechGunblade",
-     "n": 6714,
-     "place": 4.036
+     "n": 6879,
+     "place": 4.028
     },
     {
      "unite": "DA_CrimsonRaptor18",
      "objet": "DA_TitansResolve",
-     "n": 5511,
-     "place": 4.033
+     "n": 5651,
+     "place": 4.024
     },
     {
      "unite": "DA_18_Hecarim",
      "objet": "DA_GargoyleStoneplate",
-     "n": 3470,
-     "place": 3.982
+     "n": 3564,
+     "place": 3.976
     },
     {
      "unite": "DA_18_Hecarim",
      "objet": "DA_ProtectorsVow",
-     "n": 2573,
-     "place": 3.933
+     "n": 2633,
+     "place": 3.944
     },
     {
      "unite": "DA_18_Hecarim",
      "objet": "DA_SpiritVisage",
-     "n": 2518,
-     "place": 3.984
+     "n": 2572,
+     "place": 3.983
     },
     {
      "unite": "DA_18_Hecarim",
      "objet": "DA_WarmogsArmor",
-     "n": 2476,
-     "place": 3.899
+     "n": 2557,
+     "place": 3.902
     },
     {
      "unite": "DA_18_Zyra",
      "objet": "DA_SpearOfShojin",
-     "n": 2266,
-     "place": 3.883
+     "n": 2310,
+     "place": 3.869
     },
     {
      "unite": "DA_Krug18",
      "objet": "DA_Evenshroud",
-     "n": 2095,
-     "place": 3.988
+     "n": 2162,
+     "place": 3.985
     },
     {
      "unite": "DA_Krug18",
      "objet": "DA_GargoyleStoneplate",
-     "n": 1757,
-     "place": 3.971
+     "n": 1807,
+     "place": 3.954
     },
     {
      "unite": "DA_18_Zyra",
      "objet": "DA_RedBuff",
-     "n": 1633,
-     "place": 3.845
+     "n": 1665,
+     "place": 3.831
     },
     {
      "unite": "DA_18_Zyra",
      "objet": "DA_Morellonomicon",
-     "n": 1619,
-     "place": 3.782
+     "n": 1665,
+     "place": 3.783
     },
     {
      "unite": "DA_Krug18",
      "objet": "DA_SpiritVisage",
-     "n": 1596,
-     "place": 3.945
+     "n": 1632,
+     "place": 3.937
     },
     {
      "unite": "DA_Krug18",
      "objet": "DA_WarmogsArmor",
-     "n": 1526,
-     "place": 3.843
+     "n": 1564,
+     "place": 3.842
     }
    ]
   },
   {
    "code": "0243a40e40f4164244373e942841b42aTFTSet18",
-   "n": 6523,
-   "place": 4.191,
-   "top4_pct": 55.9,
+   "n": 6701,
+   "place": 4.195,
+   "top4_pct": 55.8,
    "premieres_pct": 12.0,
-   "lp_par_partie": 4.04,
+   "lp_par_partie": 3.99,
    "unites": [
     [
      "DA_18_Yorick",
      2,
-     5325,
-     4.020620621840926
+     5464,
+     4.018345336824065
     ],
     [
      "DA_18_MasterYi_AD",
      3,
-     5280,
-     3.676117467239226
+     5422,
+     3.6800346325460738
     ],
     [
      "DA_Krug18",
      2,
-     4107,
-     4.367759414881453
+     4218,
+     4.380250916913632
     ],
     [
      "DA_Vi18",
      3,
-     4043,
-     3.501952697279612
+     4153,
+     3.499303136242254
     ],
     [
      "DA_18_Rengar",
      3,
-     3447,
-     3.736907966663478
+     3518,
+     3.738259204716769
     ],
     [
      "DA_18_Sett",
      1,
-     3188,
-     4.876508589372578
+     3267,
+     4.8820063948315
     ],
     [
      "DA_Nidalee18_AP",
      2,
-     3046,
-     3.1886872167416533
+     3136,
+     3.1936428845597247
     ],
     [
      "DA_18_Sett",
      2,
-     2876,
-     3.0900955613585275
+     2960,
+     3.0943900969313525
     ],
     [
      "DA_Nidalee18_AP",
      1,
-     2494,
-     4.847674153071304
+     2568,
+     4.859039648084229
     ],
     [
      "DA_KogMaw18_AD",
      2,
-     2491,
-     4.48513103794822
+     2560,
+     4.494229741875333
     ],
     [
      "DA_Vi18",
      2,
-     2413,
-     5.311291394481761
+     2480,
+     5.324746781114992
     ],
     [
      "DA_KogMaw18_AD",
      3,
-     2052,
-     3.3856624399880713
+     2119,
+     3.380440479857076
     ],
     [
      "DA_18_MasterYi_AD",
      2,
-     1237,
-     6.368178586167532
+     1272,
+     6.369992871439228
     ],
     [
      "DA_Krug18",
      3,
-     1234,
-     3.2687571103812503
+     1271,
+     3.255394524870765
     ],
     [
      "DA_18_Yorick",
      1,
-     1131,
-     4.980449170766641
+     1166,
+     5.003698028844795
     ],
     [
      "DA_18_Rengar",
      2,
-     985,
-     5.9877489341372465
+     1009,
+     5.983852219074577
     ],
     [
      "DA_KogMaw18_AD",
      1,
-     452,
-     4.182454250443344
+     462,
+     4.199064101427486
     ],
     [
      "DA_Krug18",
      1,
-     377,
-     4.83696742905815
+     389,
+     4.845977346969789
     ],
     [
      "DA_Gromp18_AP",
      1,
-     347,
-     2.9434060485133307
+     355,
+     2.92948700302559
     ],
     [
      "DA_18_Alistar",
      1,
-     197,
-     3.786188800134472
+     205,
+     3.77406973845716
     ],
     [
      "DA_18_Zyra",
      1,
-     192,
-     2.602381708190457
+     193,
+     2.6087615085252445
     ],
     [
      "DA_18_Ivern",
      1,
-     156,
-     2.733052838714619
+     160,
+     2.74143895512185
     ],
     [
      "DA_Gromp18_AP",
      2,
      142,
-     3.423720873597248
+     3.4626196291336795
     ],
     [
      "DA_18_Akali_AD",
      1,
-     114,
-     2.6097585855545
+     118,
+     2.6869905541067505
     ]
    ],
    "traits": [
     {
      "trait": "DA_Juggernaut18",
      "palier": 1,
-     "n": 6415,
-     "place": 4.185
+     "n": 6593,
+     "place": 4.188
     },
     {
      "trait": "DA_18_Blossom",
      "palier": 1,
-     "n": 6210,
-     "place": 4.152
+     "n": 6379,
+     "place": 4.156
     },
     {
      "trait": "DA_Primal18",
      "palier": 1,
-     "n": 5448,
-     "place": 3.969
+     "n": 5615,
+     "place": 3.975
     },
     {
      "trait": "DA_18_Summoner",
      "palier": 1,
-     "n": 5320,
-     "place": 4.211
+     "n": 5477,
+     "place": 4.214
     },
     {
      "trait": "DA_18_Caustic",
      "palier": 1,
-     "n": 4984,
-     "place": 4.005
+     "n": 5129,
+     "place": 4.007
     },
     {
      "trait": "DA_18_Brawler",
      "palier": 1,
-     "n": 4973,
-     "place": 4.197
+     "n": 5108,
+     "place": 4.202
     },
     {
      "trait": "DA_18_Rival",
      "palier": 1,
-     "n": 4441,
-     "place": 4.241
+     "n": 4538,
+     "place": 4.243
     },
     {
      "trait": "DA_18_Adaptor",
      "palier": 2,
-     "n": 3651,
-     "place": 3.799
+     "n": 3762,
+     "place": 3.813
     }
    ],
    "porteurs": [
@@ -688,7 +688,7 @@
     },
     {
      "unite": "DA_18_Rengar",
-     "objets_moy": 1.92
+     "objets_moy": 1.9
     },
     {
      "unite": "DA_Nidalee18_AP",
@@ -696,7 +696,7 @@
     },
     {
      "unite": "DA_KogMaw18_AD",
-     "objets_moy": 1.31
+     "objets_moy": 1.32
     }
    ],
    "conditions_de_victoire": [
@@ -704,47 +704,47 @@
      "unites": [
       "DA_Vi18-3"
      ],
-     "n": 4958,
-     "place": 2.761
+     "n": 5114,
+     "place": 2.762
     },
     {
      "unites": [
       "DA_Krug18-3"
      ],
-     "n": 4731,
-     "place": 3.05
+     "n": 4874,
+     "place": 3.037
     },
     {
      "unites": [
       "DA_KogMaw18_AD-3"
      ],
-     "n": 9030,
-     "place": 3.16
+     "n": 9340,
+     "place": 3.155
     },
     {
      "unites": [
       "DA_18_Rengar-3"
      ],
-     "n": 7283,
+     "n": 7434,
      "place": 3.239
     }
    ],
    "niveaux": [
     {
      "niveau": 8,
-     "n": 2734
+     "n": 2803
     },
     {
      "niveau": 10,
-     "n": 19
+     "n": 18
     },
     {
      "niveau": 7,
-     "n": 3283
+     "n": 3380
     },
     {
      "niveau": 9,
-     "n": 485
+     "n": 498
     },
     {
      "niveau": 6,
@@ -752,14 +752,14 @@
     }
    ],
    "distribution": [
-    785,
-    1089,
-    920,
-    851,
-    847,
-    790,
-    690,
-    551
+    806,
+    1118,
+    941,
+    874,
+    875,
+    805,
+    710,
+    572
    ],
    "variantes": [
     {
@@ -773,8 +773,8 @@
       "DA_Nidalee18_AP",
       "DA_18_Sett"
      ],
-     "n": 1491,
-     "place": 4.303,
+     "n": 1538,
+     "place": 4.301,
      "traits_sup": [
       "DA_18_Summoner"
      ]
@@ -790,8 +790,8 @@
       "DA_Nidalee18_AP",
       "DA_18_Sett"
      ],
-     "n": 340,
-     "place": 4.117,
+     "n": 347,
+     "place": 4.104,
      "traits_sup": [
       "DA_18_Summoner"
      ]
@@ -807,8 +807,8 @@
       "DA_Nidalee18_AP",
       "DA_18_Sett"
      ],
-     "n": 198,
-     "place": 4.693,
+     "n": 212,
+     "place": 4.667,
      "traits_sup": [
       "DA_18_Summoner"
      ]
@@ -824,8 +824,8 @@
       "DA_Nidalee18_AP",
       "DA_18_Sett"
      ],
-     "n": 148,
-     "place": 4.525,
+     "n": 156,
+     "place": 4.602,
      "traits_sup": [
       "DA_18_Summoner"
      ]
@@ -835,304 +835,304 @@
     {
      "unite": "DA_18_MasterYi_AD",
      "objet": "DA_EdgeOfNight",
-     "n": 4400,
-     "place": 4.199
+     "n": 4528,
+     "place": 4.206
     },
     {
      "unite": "DA_18_MasterYi_AD",
      "objet": "DA_GuinsoosRageblade",
-     "n": 4368,
-     "place": 4.229
+     "n": 4504,
+     "place": 4.241
     },
     {
      "unite": "DA_Vi18",
      "objet": "DA_GargoyleStoneplate",
-     "n": 3191,
-     "place": 4.029
+     "n": 3302,
+     "place": 4.031
     },
     {
      "unite": "DA_18_Rengar",
      "objet": "DA_GuinsoosRageblade",
-     "n": 2911,
-     "place": 4.167
+     "n": 2977,
+     "place": 4.174
     },
     {
      "unite": "DA_18_Rengar",
      "objet": "DA_EdgeOfNight",
-     "n": 2529,
-     "place": 4.143
+     "n": 2582,
+     "place": 4.146
     },
     {
      "unite": "DA_Vi18",
      "objet": "DA_SpiritVisage",
-     "n": 2482,
-     "place": 4.11
+     "n": 2554,
+     "place": 4.107
     },
     {
      "unite": "DA_18_MasterYi_AD",
      "objet": "DA_Quicksilver",
-     "n": 2335,
-     "place": 4.206
+     "n": 2386,
+     "place": 4.196
     },
     {
      "unite": "DA_Vi18",
      "objet": "DA_WarmogsArmor",
-     "n": 2257,
-     "place": 4.006
+     "n": 2336,
+     "place": 4.012
     },
     {
      "unite": "DA_18_MasterYi_AD",
      "objet": "DA_18_EmblemBrawler",
-     "n": 1974,
-     "place": 4.077
+     "n": 2045,
+     "place": 4.099
     },
     {
      "unite": "DA_KogMaw18_AD",
      "objet": "DA_RedBuff",
-     "n": 1441,
-     "place": 3.744
+     "n": 1479,
+     "place": 3.748
     },
     {
      "unite": "DA_18_Rengar",
      "objet": "DA_Quicksilver",
-     "n": 1284,
-     "place": 4.11
+     "n": 1303,
+     "place": 4.129
     },
     {
      "unite": "DA_18_Rengar",
      "objet": "DA_TitansResolve",
-     "n": 1255,
-     "place": 3.932
+     "n": 1274,
+     "place": 3.933
     },
     {
      "unite": "DA_KogMaw18_AD",
      "objet": "DA_SpearOfShojin",
-     "n": 1231,
+     "n": 1271,
      "place": 3.852
     },
     {
      "unite": "DA_18_MasterYi_AD",
      "objet": "DA_TitansResolve",
-     "n": 1217,
-     "place": 4.165
+     "n": 1259,
+     "place": 4.183
     }
    ]
   },
   {
    "code": "0241f4393eb4104004033ed3ff42e404TFTSet18",
-   "n": 8053,
-   "place": 4.208,
+   "n": 8420,
+   "place": 4.205,
    "top4_pct": 53.2,
-   "premieres_pct": 21.0,
-   "lp_par_partie": 3.57,
+   "premieres_pct": 21.2,
+   "lp_par_partie": 3.59,
    "unites": [
     [
      "DA_18_Ezreal",
      2,
-     6764,
-     3.87133835424945
+     7076,
+     3.8699616898121088
     ],
     [
      "DA_18_Alistar",
      2,
-     4821,
-     3.970184663739975
+     4999,
+     3.9759740700567736
     ],
     [
      "DA_18_Hecarim",
      2,
-     4633,
-     4.125354708305946
+     4811,
+     4.125968154774404
     ],
     [
      "DA_18_Ivern",
      1,
-     3433,
-     4.818686436821837
+     3602,
+     4.836228903762202
     ],
     [
      "DA_18_Ornn",
      2,
-     3398,
-     4.2103715765469705
+     3485,
+     4.212067512604863
     ],
     [
      "DA_18_Ivern",
      2,
-     2753,
-     2.605508629054434
+     2904,
+     2.5918304246303134
     ],
     [
      "DA_Draven18",
      2,
-     2672,
-     2.9202409977785275
+     2853,
+     2.917726463124568
     ],
     [
      "DA_18_Kennen",
      2,
-     2591,
-     3.0474974379662614
+     2729,
+     3.032807017602994
     ],
     [
      "DA_Taric18",
      2,
-     2322,
-     2.8695199237974585
+     2439,
+     2.87543095923454
+    ],
+    [
+     "DA_18_Kennen",
+     1,
+     2432,
+     4.956512660448543
+    ],
+    [
+     "DA_Amumu18",
+     2,
+     2368,
+     3.3814757203918138
+    ],
+    [
+     "DA_Taric18",
+     1,
+     2364,
+     4.8245359937420575
     ],
     [
      "DA_18_Soraka",
      2,
-     2314,
-     4.438250515432028
-    ],
-    [
-     "DA_18_Kennen",
-     1,
-     2309,
-     4.940358770719546
-    ],
-    [
-     "DA_Taric18",
-     1,
-     2251,
-     4.823365107003167
-    ],
-    [
-     "DA_Amumu18",
-     2,
-     2203,
-     3.376534395174205
+     2325,
+     4.439475942635225
     ],
     [
      "DA_18_LeBlanc",
      2,
-     2165,
-     4.221745517415801
+     2227,
+     4.207383402611243
     ],
     [
      "DA_18_Maokai",
      2,
-     2013,
-     3.150203824067554
+     2153,
+     3.1365702750825952
     ],
     [
      "DA_18_Alistar",
      1,
-     1554,
-     5.089863244926014
-    ],
-    [
-     "DA_18_Xayah",
-     2,
-     1412,
-     4.336827889181941
+     1621,
+     5.097005850867226
     ],
     [
      "DA_Draven18",
      1,
-     1381,
-     5.628382364778854
+     1472,
+     5.6523596915762395
     ],
     [
-     "DA_Fiddlesticks18",
+     "DA_18_Xayah",
      2,
-     1308,
-     4.539992583516268
+     1462,
+     4.320563998996658
     ],
     [
      "DA_18_Ezreal",
      1,
-     1275,
-     6.125490712729792
+     1327,
+     6.131337234912765
+    ],
+    [
+     "DA_Fiddlesticks18",
+     2,
+     1321,
+     4.531243044818589
     ],
     [
      "DA_18_Maokai",
      1,
-     1212,
-     5.4507949990235876
+     1301,
+     5.4866357421723695
     ],
     [
      "DA_Amumu18",
      1,
-     1019,
-     5.342109593711751
+     1092,
+     5.345866163272543
     ],
     [
      "DA_18_Hecarim",
      1,
-     1000,
-     4.966519426728979
+     1056,
+     4.953434623529943
     ],
     [
      "DA_18_LeBlanc",
      1,
-     834,
-     4.938871994449695
+     858,
+     4.912718173029454
     ]
    ],
    "traits": [
     {
      "trait": "DA_18_Greenfather",
      "palier": 1,
-     "n": 6159,
-     "place": 3.834
+     "n": 6479,
+     "place": 3.835
     },
     {
      "trait": "DA_18_Brawler",
      "palier": 1,
-     "n": 6149,
-     "place": 3.819
+     "n": 6415,
+     "place": 3.817
     },
     {
      "trait": "DA_18_Executioner",
      "palier": 1,
-     "n": 5284,
-     "place": 4.313
+     "n": 5511,
+     "place": 4.306
     },
     {
      "trait": "DA_Emerald18",
      "palier": 1,
-     "n": 4549,
-     "place": 3.827
+     "n": 4776,
+     "place": 3.832
     },
     {
      "trait": "DA_DravenUniqueTrait18",
      "palier": 1,
-     "n": 4039,
-     "place": 3.838
+     "n": 4309,
+     "place": 3.842
     },
     {
      "trait": "DA_18_Vanguard",
      "palier": 1,
-     "n": 3468,
-     "place": 3.944
+     "n": 3666,
+     "place": 3.957
     },
     {
      "trait": "DA_18_Maokai_UniqueTrait",
      "palier": 1,
-     "n": 3204,
-     "place": 4.001
+     "n": 3429,
+     "place": 4.005
     },
     {
      "trait": "DA_Juggernaut18",
      "palier": 1,
-     "n": 3063,
+     "n": 3275,
      "place": 3.947
     }
    ],
    "porteurs": [
     {
      "unite": "DA_18_Ezreal",
-     "objets_moy": 2.64
+     "objets_moy": 2.63
     },
     {
      "unite": "DA_Draven18",
-     "objets_moy": 1.44
+     "objets_moy": 1.47
     },
     {
      "unite": "DA_18_Hecarim",
-     "objets_moy": 1.01
+     "objets_moy": 1.0
     },
     {
      "unite": "DA_18_Kennen",
@@ -1140,7 +1140,7 @@
     },
     {
      "unite": "DA_18_Soraka",
-     "objets_moy": 0.89
+     "objets_moy": 0.85
     }
    ],
    "conditions_de_victoire": [
@@ -1148,39 +1148,39 @@
      "unites": [
       "DA_18_Ivern-2"
      ],
-     "n": 6347,
-     "place": 2.559
+     "n": 6708,
+     "place": 2.54
     },
     {
      "unites": [
       "DA_18_Alistar-2"
      ],
-     "n": 26431,
-     "place": 3.691
-    },
-    {
-     "unites": [
-      "DA_18_Hecarim-2"
-     ],
-     "n": 18165,
-     "place": 3.746
+     "n": 27443,
+     "place": 3.699
     },
     {
      "unites": [
       "DA_18_Kobuko-2"
      ],
-     "n": 1745,
-     "place": 3.613
+     "n": 1864,
+     "place": 3.543
+    },
+    {
+     "unites": [
+      "DA_18_Hecarim-2"
+     ],
+     "n": 19017,
+     "place": 3.755
     }
    ],
    "niveaux": [
     {
      "niveau": 8,
-     "n": 1543
+     "n": 1562
     },
     {
      "niveau": 10,
-     "n": 1315
+     "n": 1403
     },
     {
      "niveau": 7,
@@ -1188,18 +1188,18 @@
     },
     {
      "niveau": 9,
-     "n": 5191
+     "n": 5450
     }
    ],
    "distribution": [
-    1689,
-    871,
-    831,
-    893,
-    903,
-    1025,
-    1010,
-    832
+    1781,
+    917,
+    858,
+    921,
+    938,
+    1063,
+    1072,
+    871
    ],
    "variantes": [
     {
@@ -1213,8 +1213,8 @@
       "DA_18_Maokai",
       "DA_Taric18"
      ],
-     "n": 410,
-     "place": 4.226,
+     "n": 420,
+     "place": 4.225,
      "traits_sup": [
       "DA_18_Brawler",
       "DA_18_Elderwood"
@@ -1231,8 +1231,8 @@
       "DA_18_Maokai",
       "DA_Taric18"
      ],
-     "n": 314,
-     "place": 3.769,
+     "n": 325,
+     "place": 3.732,
      "traits_sup": [
       "DA_18_Brawler",
       "DA_18_Elderwood",
@@ -1250,8 +1250,8 @@
       "DA_18_Maokai",
       "DA_Taric18"
      ],
-     "n": 183,
-     "place": 4.226,
+     "n": 200,
+     "place": 4.189,
      "traits_sup": [
       "DA_18_Elderwood"
      ]
@@ -1267,8 +1267,8 @@
       "DA_Draven18",
       "DA_18_Ivern"
      ],
-     "n": 93,
-     "place": 2.733,
+     "n": 98,
+     "place": 2.681,
      "traits_sup": [
       "DA_18_Brawler",
       "DA_18_Elderwood"
@@ -1279,290 +1279,290 @@
     {
      "unite": "DA_18_Ezreal",
      "objet": "DA_SpearOfShojin",
-     "n": 4301,
-     "place": 4.145
+     "n": 4471,
+     "place": 4.14
     },
     {
      "unite": "DA_18_Ezreal",
      "objet": "DA_LastWhisper",
-     "n": 3689,
-     "place": 4.093
+     "n": 3839,
+     "place": 4.092
     },
     {
      "unite": "DA_Draven18",
      "objet": "DA_GuinsoosRageblade",
-     "n": 3573,
-     "place": 3.768
+     "n": 3823,
+     "place": 3.776
     },
     {
      "unite": "DA_18_Ezreal",
      "objet": "DA_InfinityEdge",
-     "n": 2988,
-     "place": 4.097
+     "n": 3119,
+     "place": 4.109
     },
     {
      "unite": "DA_18_Ezreal",
      "objet": "DA_Deathblade",
-     "n": 2576,
-     "place": 4.053
+     "n": 2701,
+     "place": 4.043
     },
     {
      "unite": "DA_Draven18",
      "objet": "DA_KrakensFury",
-     "n": 2145,
-     "place": 3.671
+     "n": 2291,
+     "place": 3.684
     },
     {
      "unite": "DA_18_Ezreal",
      "objet": "DA_StrikersFlail",
-     "n": 1425,
-     "place": 3.986
+     "n": 1497,
+     "place": 3.978
     },
     {
      "unite": "DA_Draven18",
      "objet": "DA_InfinityEdge",
-     "n": 1299,
-     "place": 3.924
-    },
-    {
-     "unite": "DA_18_Soraka",
-     "objet": "DA_18_EmblemElderwood",
-     "n": 1275,
-     "place": 4.54
+     "n": 1397,
+     "place": 3.931
     },
     {
      "unite": "DA_18_Maokai",
      "objet": "DA_GargoyleStoneplate",
-     "n": 1271,
-     "place": 3.417
+     "n": 1359,
+     "place": 3.411
     },
     {
      "unite": "DA_Draven18",
      "objet": "DA_Deathblade",
-     "n": 1210,
-     "place": 3.6
+     "n": 1302,
+     "place": 3.621
+    },
+    {
+     "unite": "DA_18_Soraka",
+     "objet": "DA_18_EmblemElderwood",
+     "n": 1274,
+     "place": 4.54
     },
     {
      "unite": "DA_18_Ezreal",
      "objet": "DA_RedBuff",
-     "n": 1153,
-     "place": 4.279
+     "n": 1194,
+     "place": 4.275
     },
     {
      "unite": "DA_18_Maokai",
      "objet": "DA_WarmogsArmor",
-     "n": 1083,
-     "place": 3.443
+     "n": 1158,
+     "place": 3.436
     },
     {
      "unite": "DA_18_Hecarim",
      "objet": "DA_GargoyleStoneplate",
-     "n": 1053,
-     "place": 4.888
+     "n": 1086,
+     "place": 4.894
     }
    ]
   },
   {
-   "code": "024364313f14004214283ff42e43c40bTFTSet18",
-   "n": 3169,
-   "place": 4.27,
-   "top4_pct": 54.9,
-   "premieres_pct": 12.0,
-   "lp_par_partie": 3.07,
+   "code": "024364313f14004213ed4283ff42e43cTFTSet18",
+   "n": 3251,
+   "place": 4.281,
+   "top4_pct": 54.7,
+   "premieres_pct": 11.9,
+   "lp_par_partie": 2.93,
    "unites": [
     [
      "DA_18_Veigar",
      2,
-     2537,
-     4.137962806765739
+     2601,
+     4.14354601058607
     ],
     [
      "DA_18_Azir",
      3,
-     2404,
-     3.627856396346932
+     2464,
+     3.637957755768822
     ],
     [
      "DA_18_Rammus",
      3,
-     2346,
-     3.6447445234857785
+     2409,
+     3.658590782170542
     ],
     [
      "DA_Fiddlesticks18",
      2,
-     2225,
-     4.6217748303200725
+     2278,
+     4.625770391853398
     ],
     [
      "DA_18_Soraka",
      2,
-     1695,
-     3.4080544692149757
+     1732,
+     3.410753861597441
     ],
     [
      "DA_18_Teemo",
      2,
-     1596,
-     4.618296847598
+     1634,
+     4.645181442090609
     ],
     [
      "DA_18_Zyra",
      2,
-     1558,
-     3.282759497637227
+     1594,
+     3.2937124523236183
     ],
     [
      "DA_18_Zyra",
      1,
-     1376,
-     5.11178986661631
+     1420,
+     5.122411738501256
     ],
     [
      "DA_18_Soraka",
      1,
-     1279,
-     5.190356327921894
+     1318,
+     5.207197691037769
     ],
     [
      "DA_Fiddlesticks18",
      3,
-     878,
-     3.2708514443556957
+     903,
+     3.3010859785826523
     ],
     [
      "DA_18_Rammus",
      2,
-     816,
-     6.04647778102947
+     835,
+     6.057232547144888
     ],
     [
      "DA_18_Kennen",
      1,
-     804,
-     3.3481905764949205
+     823,
+     3.353840507372662
     ],
     [
      "DA_18_Azir",
      2,
-     764,
-     6.288619586435301
+     786,
+     6.294856838145831
     ],
     [
      "DA_18_Teemo",
      3,
-     581,
-     3.589218401178772
+     596,
+     3.5981047025247457
     ],
     [
      "DA_18_Veigar",
      1,
-     574,
-     4.822575597283712
+     589,
+     4.8511451804783485
     ],
     [
      "DA_18_Ezreal",
      1,
-     295,
-     3.2198121378052513
+     302,
+     3.2274445411096835
     ],
     [
      "DA_Krug18",
      2,
-     210,
-     3.6419294102455537
+     219,
+     3.6179286429642055
     ],
     [
      "DA_18_Yunara",
      1,
-     163,
-     3.626548586971787
+     171,
+     3.675927464990012
     ],
     [
      "DA_18_Yorick",
      2,
-     156,
-     4.384702972236595
+     157,
+     4.415875227656748
     ],
     [
      "DA_Krug18",
      1,
-     147,
-     3.1174862527834604
+     156,
+     3.096605268533546
     ],
     [
      "DA_18_Ezreal",
      2,
-     124,
-     2.6664957025093265
+     127,
+     2.6609683896049185
     ],
     [
      "DA_18_Teemo",
      1,
-     115,
-     5.737422734741062
+     118,
+     5.699690794770457
     ],
     [
      "DA_18_Yorick",
      1,
      97,
-     3.8039926011299303
+     3.793642031362348
     ],
     [
      "DA_Lux18_Blackthorn",
      1,
-     96,
-     3.250305219782724
+     97,
+     3.269242264627384
     ]
    ],
    "traits": [
     {
      "trait": "DA_18_Defender",
      "palier": 1,
-     "n": 3155,
-     "place": 4.266
+     "n": 3237,
+     "place": 4.277
     },
     {
      "trait": "DA_18_Spellweaver",
      "palier": 1,
-     "n": 3127,
-     "place": 4.265
+     "n": 3207,
+     "place": 4.275
     },
     {
      "trait": "DA_18_Sprykin",
      "palier": 1,
-     "n": 3045,
-     "place": 4.289
+     "n": 3125,
+     "place": 4.301
     },
     {
      "trait": "DA_18_Blackthorn",
      "palier": 1,
-     "n": 2984,
-     "place": 4.324
+     "n": 3062,
+     "place": 4.336
     },
     {
      "trait": "DA_FloraFatalis18",
      "palier": 2,
-     "n": 2973,
-     "place": 4.163
+     "n": 3051,
+     "place": 4.175
     },
     {
      "trait": "DA_18_ZyraUniqueTrait",
      "palier": 1,
-     "n": 2938,
-     "place": 4.134
+     "n": 3018,
+     "place": 4.149
     },
     {
      "trait": "DA_18_Summoner",
      "palier": 1,
-     "n": 2509,
-     "place": 4.459
+     "n": 2573,
+     "place": 4.479
     },
     {
      "trait": "DA_18_Executioner",
      "palier": 1,
-     "n": 1573,
-     "place": 5.068
+     "n": 1614,
+     "place": 5.072
     }
    ],
    "porteurs": [
@@ -1572,7 +1572,7 @@
     },
     {
      "unite": "DA_18_Rammus",
-     "objets_moy": 2.94
+     "objets_moy": 2.93
     },
     {
      "unite": "DA_18_Zyra",
@@ -1590,37 +1590,37 @@
    "conditions_de_victoire": [
     {
      "unites": [
-      "DA_Fiddlesticks18-3"
+      "DA_18_Rammus-3"
      ],
-     "n": 2434,
-     "place": 2.815
+     "n": 3951,
+     "place": 2.886
     },
     {
      "unites": [
-      "DA_18_Rammus-3"
+      "DA_Fiddlesticks18-3"
      ],
-     "n": 3864,
-     "place": 2.878
+     "n": 2497,
+     "place": 2.833
     },
     {
      "unites": [
       "DA_18_Azir-3"
      ],
-     "n": 8951,
-     "place": 3.283
+     "n": 9164,
+     "place": 3.29
     },
     {
      "unites": [
       "DA_18_Teemo-3"
      ],
-     "n": 2597,
-     "place": 3.349
+     "n": 2661,
+     "place": 3.358
     }
    ],
    "niveaux": [
     {
      "niveau": 8,
-     "n": 1316
+     "n": 1353
     },
     {
      "niveau": 10,
@@ -1628,7 +1628,7 @@
     },
     {
      "niveau": 7,
-     "n": 1644
+     "n": 1689
     },
     {
      "niveau": 9,
@@ -1636,14 +1636,14 @@
     }
    ],
    "distribution": [
-    379,
-    510,
-    427,
-    423,
-    392,
-    376,
-    356,
-    307
+    386,
+    521,
+    439,
+    432,
+    397,
+    389,
+    371,
+    316
    ],
    "variantes": [
     {
@@ -1657,8 +1657,8 @@
       "DA_18_Soraka",
       "DA_18_Zyra"
      ],
-     "n": 290,
-     "place": 4.586,
+     "n": 305,
+     "place": 4.622,
      "traits_sup": []
     },
     {
@@ -1672,8 +1672,8 @@
       "DA_18_Zyra",
       "DA_18_Kennen"
      ],
-     "n": 233,
-     "place": 4.415,
+     "n": 235,
+     "place": 4.437,
      "traits_sup": []
     },
     {
@@ -1687,8 +1687,8 @@
       "DA_18_Soraka",
       "DA_18_Zyra"
      ],
-     "n": 134,
-     "place": 4.516,
+     "n": 136,
+     "place": 4.535,
      "traits_sup": []
     },
     {
@@ -1702,8 +1702,8 @@
       "DA_18_Soraka",
       "DA_18_Kennen"
      ],
-     "n": 112,
-     "place": 5.594,
+     "n": 113,
+     "place": 5.612,
      "traits_sup": []
     }
    ],
@@ -1711,522 +1711,522 @@
     {
      "unite": "DA_18_Rammus",
      "objet": "DA_GargoyleStoneplate",
-     "n": 2895,
-     "place": 4.157
+     "n": 2971,
+     "place": 4.174
     },
     {
      "unite": "DA_18_Azir",
      "objet": "DA_GuinsoosRageblade",
-     "n": 2785,
-     "place": 4.218
+     "n": 2855,
+     "place": 4.227
     },
     {
      "unite": "DA_18_Azir",
      "objet": "DA_HextechGunblade",
-     "n": 2699,
-     "place": 4.186
+     "n": 2766,
+     "place": 4.201
     },
     {
      "unite": "DA_18_Azir",
      "objet": "DA_RabadonsDeathcap",
-     "n": 1950,
-     "place": 4.034
+     "n": 1990,
+     "place": 4.044
     },
     {
      "unite": "DA_18_Zyra",
      "objet": "DA_VoidStaff",
-     "n": 1708,
-     "place": 3.894
+     "n": 1753,
+     "place": 3.914
     },
     {
      "unite": "DA_18_Rammus",
      "objet": "DA_WarmogsArmor",
-     "n": 1180,
+     "n": 1207,
      "place": 4.37
     },
     {
      "unite": "DA_18_Rammus",
      "objet": "DA_SpiritVisage",
-     "n": 1022,
-     "place": 4.251
+     "n": 1045,
+     "place": 4.262
     },
     {
      "unite": "DA_18_Zyra",
      "objet": "DA_Morellonomicon",
-     "n": 1002,
-     "place": 3.843
+     "n": 1027,
+     "place": 3.87
     },
     {
      "unite": "DA_18_Rammus",
      "objet": "DA_Crownguard",
-     "n": 970,
-     "place": 4.067
+     "n": 988,
+     "place": 4.092
     },
     {
      "unite": "DA_18_Zyra",
      "objet": "DA_SpearOfShojin",
-     "n": 832,
-     "place": 3.878
+     "n": 847,
+     "place": 3.916
     },
     {
      "unite": "DA_18_Zyra",
      "objet": "DA_RedBuff",
-     "n": 572,
-     "place": 3.965
+     "n": 592,
+     "place": 3.966
     },
     {
      "unite": "DA_18_Zyra",
      "objet": "DA_18_EmblemExecutioner",
-     "n": 527,
-     "place": 3.891
+     "n": 546,
+     "place": 3.911
     },
     {
      "unite": "DA_Fiddlesticks18",
      "objet": "DA_SunfireCape",
-     "n": 446,
-     "place": 3.807
+     "n": 455,
+     "place": 3.832
     },
     {
      "unite": "DA_Fiddlesticks18",
      "objet": "DA_ThiefsGloves",
-     "n": 434,
-     "place": 4.323
+     "n": 444,
+     "place": 4.345
     }
    ]
   },
   {
-   "code": "0240741143a40a41042743b3f13e93edTFTSet18",
-   "n": 14598,
-   "place": 4.281,
-   "top4_pct": 55.0,
-   "premieres_pct": 13.5,
-   "lp_par_partie": 2.96,
+   "code": "024203fd3fa4004033e94284124183ecTFTSet18",
+   "n": 10635,
+   "place": 4.271,
+   "top4_pct": 52.5,
+   "premieres_pct": 20.6,
+   "lp_par_partie": 2.8,
    "unites": [
     [
-     "DA_Karma18",
-     3,
-     14277,
-     4.229409870291944
-    ],
-    [
-     "DA_18_Yorick",
-     3,
-     13682,
-     4.139665087547666
-    ],
-    [
-     "DA_18_Yunara",
-     3,
-     12579,
-     3.946810139435141
-    ],
-    [
-     "DA_18_Sejuani",
-     3,
-     12185,
-     3.913732755426148
-    ],
-    [
-     "DA_18_Leona",
-     3,
-     9225,
-     3.966132884505847
-    ],
-    [
-     "DA_18_LeBlanc",
-     3,
-     9109,
-     3.6892442367244658
-    ],
-    [
-     "DA_18_Kayle",
+     "DA_18_Morgana",
      2,
-     8193,
-     3.8620217337263583
+     8469,
+     3.880152657800408
     ],
     [
-     "DA_18_Leona",
+     "DA_18_Diana",
      2,
-     4206,
-     4.477418794049636
+     7769,
+     3.962129309453693
     ],
     [
-     "DA_18_Azir",
+     "DA_Sentinel18",
      2,
-     3269,
-     2.645028004076609
-    ],
-    [
-     "DA_18_LeBlanc",
-     2,
-     3045,
-     5.790869640011575
-    ],
-    [
-     "DA_18_Azir",
-     1,
-     2963,
-     3.549527559147863
-    ],
-    [
-     "DA_18_Kayle",
-     1,
-     2606,
-     5.524549454686849
-    ],
-    [
-     "DA_18_Sejuani",
-     2,
-     2414,
-     6.146218974317669
-    ],
-    [
-     "DA_18_Kayle",
-     3,
-     2352,
-     2.9236302156674427
-    ],
-    [
-     "DA_18_Yunara",
-     2,
-     1980,
-     6.378361534970404
-    ],
-    [
-     "DA_18_Yorick",
-     2,
-     892,
-     6.4507660833942895
+     6737,
+     3.543128275734484
     ],
     [
      "DA_Fiddlesticks18",
      2,
-     722,
-     3.015784976463718
+     6001,
+     3.8777780697051263
+    ],
+    [
+     "DA_18_Alune",
+     2,
+     5789,
+     3.011734132042895
+    ],
+    [
+     "DA_18_Lillia",
+     2,
+     5708,
+     3.633326152955905
+    ],
+    [
+     "DA_Taric18",
+     1,
+     4682,
+     5.13092344253028
+    ],
+    [
+     "DA_Taric18",
+     2,
+     4415,
+     2.695534425156424
+    ],
+    [
+     "DA_18_Alune",
+     1,
+     4043,
+     5.60828261913426
+    ],
+    [
+     "DA_Sentinel18",
+     1,
+     3687,
+     5.462805187888292
+    ],
+    [
+     "DA_18_Rakan",
+     2,
+     3572,
+     3.989406149023868
+    ],
+    [
+     "DA_18_Ivern",
+     1,
+     3013,
+     4.950741417901343
+    ],
+    [
+     "DA_18_Ivern",
+     2,
+     2878,
+     2.8255975287790114
+    ],
+    [
+     "DA_18_Rakan",
+     1,
+     2510,
+     4.571498725995093
+    ],
+    [
+     "DA_18_Hecarim",
+     2,
+     2338,
+     4.152734129822051
+    ],
+    [
+     "DA_18_Diana",
+     1,
+     2222,
+     5.226355433421295
     ],
     [
      "DA_Fiddlesticks18",
      1,
-     648,
-     3.674434376677189
+     2205,
+     5.153826202303492
     ],
     [
-     "DA_18_Leona",
+     "DA_18_Lillia",
      1,
-     574,
-     5.7991078376395135
+     2122,
+     5.700030647843076
     ],
     [
-     "DA_18_Kennen",
+     "DA_18_Morgana",
      1,
-     544,
-     2.101456741803073
+     1770,
+     6.399147266268441
     ],
     [
-     "DA_18_Soraka",
-     1,
-     540,
-     2.6345487541703965
-    ],
-    [
-     "DA_18_Azir",
-     3,
-     318,
-     1.5160009484714856
-    ],
-    [
-     "DA_18_Soraka",
+     "DA_18_Elise",
      2,
-     282,
-     2.109435596651742
+     1616,
+     5.115076738589808
     ],
     [
-     "DA_Karma18",
+     "DA_18_Cassiopeia",
      2,
-     272,
-     7.271836849570114
+     1116,
+     4.922745026972146
+    ],
+    [
+     "DA_18_Hecarim",
+     1,
+     903,
+     5.2540537699405085
+    ],
+    [
+     "DA_18_Lux_Moonbeam",
+     2,
+     842,
+     2.222110600969875
+    ],
+    [
+     "DA_18_Lux_Moonbeam",
+     1,
+     759,
+     3.8183036964705255
     ]
    ],
    "traits": [
     {
-     "trait": "DA_Juggernaut18",
+     "trait": "DA_AluneUniqueTrait18",
      "palier": 1,
-     "n": 14556,
-     "place": 4.281
-    },
-    {
-     "trait": "DA_18_Blossom",
-     "palier": 1,
-     "n": 14406,
-     "place": 4.293
+     "n": 9709,
+     "place": 4.086
     },
     {
      "trait": "DA_18_Spellweaver",
      "palier": 1,
-     "n": 13545,
-     "place": 4.163
+     "n": 9504,
+     "place": 4.161
     },
     {
-     "trait": "DA_18_Solar",
-     "palier": 1,
-     "n": 13258,
-     "place": 3.975
-    },
-    {
-     "trait": "DA_18_Summoner",
-     "palier": 1,
-     "n": 6566,
-     "place": 3.017
-    },
-    {
-     "trait": "DA_18_Executioner",
-     "palier": 1,
-     "n": 6539,
-     "place": 3.962
-    },
-    {
-     "trait": "DA_18_Executioner",
+     "trait": "DA_18_Vanguard",
      "palier": 2,
-     "n": 2345,
-     "place": 2.81
+     "n": 9122,
+     "place": 4.153
+    },
+    {
+     "trait": "DA_Emerald18",
+     "palier": 1,
+     "n": 9022,
+     "place": 3.938
+    },
+    {
+     "trait": "DA_18_Invoker",
+     "palier": 1,
+     "n": 8470,
+     "place": 4.195
+    },
+    {
+     "trait": "DA_FloraFatalis18",
+     "palier": 1,
+     "n": 8038,
+     "place": 4.217
     },
     {
      "trait": "DA_18_Defender",
      "palier": 1,
-     "n": 1967,
-     "place": 3.147
+     "n": 7653,
+     "place": 4.149
+    },
+    {
+     "trait": "DA_18_Lunar",
+     "palier": 1,
+     "n": 7529,
+     "place": 4.331
     }
    ],
    "porteurs": [
     {
-     "unite": "DA_Karma18",
-     "objets_moy": 2.93
+     "unite": "DA_18_Alune",
+     "objets_moy": 2.56
     },
     {
-     "unite": "DA_18_Sejuani",
-     "objets_moy": 2.61
+     "unite": "DA_18_Morgana",
+     "objets_moy": 2.44
     },
     {
-     "unite": "DA_18_Yunara",
-     "objets_moy": 2.54
+     "unite": "DA_Sentinel18",
+     "objets_moy": 1.85
     },
     {
-     "unite": "DA_18_Yorick",
-     "objets_moy": 1.38
+     "unite": "DA_Taric18",
+     "objets_moy": 1.42
     },
     {
-     "unite": "DA_18_LeBlanc",
-     "objets_moy": 1.22
+     "unite": "DA_18_Lillia",
+     "objets_moy": 1.0
     }
    ],
    "conditions_de_victoire": [
     {
      "unites": [
-      "DA_18_Azir-2"
-     ],
-     "n": 872,
-     "place": 2.063
-    },
-    {
-     "unites": [
-      "DA_18_Yunara-3"
-     ],
-     "n": 6265,
-     "place": 2.432
-    },
-    {
-     "unites": [
       "DA_Fiddlesticks18-2"
      ],
-     "n": 230,
-     "place": 1.92
+     "n": 32317,
+     "place": 3.482
     },
     {
      "unites": [
-      "DA_18_Kayle-3"
+      "DA_18_Lux_Moonbeam-2"
      ],
-     "n": 8315,
-     "place": 2.705
+     "n": 910,
+     "place": 2.128
+    },
+    {
+     "unites": [
+      "DA_18_Diana-2"
+     ],
+     "n": 46341,
+     "place": 3.587
+    },
+    {
+     "unites": [
+      "DA_18_Rakan-2"
+     ],
+     "n": 24265,
+     "place": 3.649
     }
    ],
    "niveaux": [
     {
      "niveau": 8,
-     "n": 5646
-    },
-    {
-     "niveau": 5,
-     "n": 4
+     "n": 1392
     },
     {
      "niveau": 10,
-     "n": 68
+     "n": 1568
     },
     {
      "niveau": 7,
-     "n": 5746
+     "n": 29
     },
     {
      "niveau": 9,
-     "n": 1223
+     "n": 7642
+    },
+    {
+     "niveau": 6,
+     "n": 4
     }
    ],
    "distribution": [
-    1977,
-    2332,
-    1983,
-    1739,
-    1559,
-    1622,
-    1675,
-    1712
+    2191,
+    1247,
+    1095,
+    1055,
+    1100,
+    1215,
+    1421,
+    1312
    ],
    "variantes": [
     {
      "unites": [
-      "DA_Karma18",
-      "DA_18_Leona",
-      "DA_18_Yorick",
-      "DA_18_Kayle",
-      "DA_18_LeBlanc",
-      "DA_18_Sejuani",
-      "DA_18_Yunara",
-      "DA_18_Azir"
+      "DA_18_Rakan",
+      "DA_18_Diana",
+      "DA_Fiddlesticks18",
+      "DA_Sentinel18",
+      "DA_18_Lillia",
+      "DA_18_Morgana",
+      "DA_18_Alune",
+      "DA_Taric18"
      ],
-     "n": 5708,
-     "place": 4.489,
+     "n": 1611,
+     "place": 3.571,
      "traits_sup": []
     },
     {
      "unites": [
-      "DA_Karma18",
-      "DA_18_Leona",
-      "DA_18_Yorick",
-      "DA_18_Kayle",
-      "DA_18_LeBlanc",
-      "DA_18_Sejuani",
-      "DA_18_Yunara",
-      "DA_18_Azir"
+      "DA_18_Diana",
+      "DA_Fiddlesticks18",
+      "DA_18_Hecarim",
+      "DA_Sentinel18",
+      "DA_18_Lillia",
+      "DA_18_Morgana",
+      "DA_18_Alune",
+      "DA_Taric18"
      ],
-     "n": 2100,
-     "place": 4.387,
+     "n": 653,
+     "place": 3.589,
      "traits_sup": []
     },
     {
      "unites": [
-      "DA_Karma18",
-      "DA_18_Leona",
-      "DA_18_Yorick",
-      "DA_18_Kayle",
-      "DA_18_LeBlanc",
-      "DA_18_Sejuani",
-      "DA_18_Yunara",
-      "DA_18_Azir"
+      "DA_18_Rakan",
+      "DA_18_Diana",
+      "DA_Fiddlesticks18",
+      "DA_Sentinel18",
+      "DA_18_Lillia",
+      "DA_18_Morgana",
+      "DA_18_Ashe",
+      "DA_Taric18"
      ],
-     "n": 2100,
-     "place": 4.387,
+     "n": 261,
+     "place": 4.161,
      "traits_sup": []
     },
     {
      "unites": [
-      "DA_Karma18",
-      "DA_18_Leona",
-      "DA_18_Yorick",
-      "DA_18_Kayle",
-      "DA_18_Sejuani",
-      "DA_18_Yunara",
-      "DA_18_Azir",
-      "DA_Fiddlesticks18"
+      "DA_18_Rakan",
+      "DA_18_Diana",
+      "DA_Fiddlesticks18",
+      "DA_Sentinel18",
+      "DA_18_Lillia",
+      "DA_Nidalee18_AP",
+      "DA_18_Alune",
+      "DA_Taric18"
      ],
-     "n": 448,
-     "place": 4.234,
+     "n": 257,
+     "place": 4.141,
      "traits_sup": []
     }
    ],
    "objets_par_unite": [
     {
-     "unite": "DA_18_Sejuani",
-     "objet": "DA_GargoyleStoneplate",
-     "n": 11069,
-     "place": 3.996
-    },
-    {
-     "unite": "DA_Karma18",
-     "objet": "DA_JeweledGauntlet",
-     "n": 9254,
-     "place": 4.282
-    },
-    {
-     "unite": "DA_Karma18",
-     "objet": "DA_BlueBuff",
-     "n": 9217,
-     "place": 4.162
-    },
-    {
-     "unite": "DA_Karma18",
-     "objet": "DA_RabadonsDeathcap",
-     "n": 7442,
-     "place": 4.056
-    },
-    {
-     "unite": "DA_18_Sejuani",
-     "objet": "DA_WarmogsArmor",
-     "n": 6969,
-     "place": 3.983
-    },
-    {
-     "unite": "DA_18_Yunara",
-     "objet": "DA_SpearOfShojin",
-     "n": 6954,
-     "place": 3.931
-    },
-    {
-     "unite": "DA_18_Yunara",
-     "objet": "DA_LastWhisper",
-     "n": 5680,
-     "place": 4.007
-    },
-    {
-     "unite": "DA_18_Yunara",
-     "objet": "DA_Deathblade",
-     "n": 5173,
-     "place": 3.888
-    },
-    {
-     "unite": "DA_18_LeBlanc",
+     "unite": "DA_18_Morgana",
      "objet": "DA_VoidStaff",
-     "n": 4261,
-     "place": 3.646
+     "n": 7147,
+     "place": 4.113
     },
     {
-     "unite": "DA_Karma18",
-     "objet": "DA_18_EmblemExecutioner",
-     "n": 4194,
+     "unite": "DA_18_Alune",
+     "objet": "DA_JeweledGauntlet",
+     "n": 6632,
      "place": 4.069
     },
     {
-     "unite": "DA_18_Yunara",
-     "objet": "DA_InfinityEdge",
-     "n": 3801,
-     "place": 3.996
+     "unite": "DA_18_Morgana",
+     "objet": "DA_Morellonomicon",
+     "n": 5587,
+     "place": 4.113
     },
     {
-     "unite": "DA_18_Sejuani",
-     "objet": "DA_SpiritVisage",
-     "n": 3579,
-     "place": 3.878
+     "unite": "DA_18_Alune",
+     "objet": "DA_SpearOfShojin",
+     "n": 4806,
+     "place": 4.126
     },
     {
-     "unite": "DA_18_Yorick",
+     "unite": "DA_Sentinel18",
      "objet": "DA_GargoyleStoneplate",
-     "n": 2896,
-     "place": 4.733
+     "n": 3388,
+     "place": 4.403
     },
     {
-     "unite": "DA_18_Yunara",
+     "unite": "DA_Sentinel18",
+     "objet": "DA_ProtectorsVow",
+     "n": 2981,
+     "place": 4.007
+    },
+    {
+     "unite": "DA_Taric18",
+     "objet": "DA_GargoyleStoneplate",
+     "n": 2939,
+     "place": 3.29
+    },
+    {
+     "unite": "DA_Sentinel18",
+     "objet": "DA_WarmogsArmor",
+     "n": 2468,
+     "place": 4.233
+    },
+    {
+     "unite": "DA_18_Alune",
+     "objet": "DA_ArchangelsStaff",
+     "n": 2339,
+     "place": 3.778
+    },
+    {
+     "unite": "DA_18_Alune",
+     "objet": "DA_BlueBuff",
+     "n": 2258,
+     "place": 3.894
+    },
+    {
+     "unite": "DA_18_Morgana",
      "objet": "DA_RedBuff",
-     "n": 2825,
-     "place": 4.225
+     "n": 2234,
+     "place": 4.146
+    },
+    {
+     "unite": "DA_Taric18",
+     "objet": "DA_WarmogsArmor",
+     "n": 2222,
+     "place": 3.251
+    },
+    {
+     "unite": "DA_18_Morgana",
+     "objet": "DA_HextechGunblade",
+     "n": 1969,
+     "place": 3.985
+    },
+    {
+     "unite": "DA_18_Alune",
+     "objet": "DA_StrikersFlail",
+     "n": 1770,
+     "place": 3.912
     }
    ]
   }
