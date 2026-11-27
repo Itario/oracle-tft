@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "genere_le": "2026-11-26",
+ "genere_le": "2026-11-27",
  "source": "tactics.tools",
  "set": 18,
  "etat": "classe",
@@ -83,9 +83,9 @@
   "note_assiette": "Pas encore assez de parties en Master+ pour un barème propre : ajusté sur tous les paliers. Les gains y sont plus généreux qu'en haut de l'échelle, donc la projection est optimiste."
  },
  "ecart_a_la_barre": {
-  "seuil_challenger_lp": 631,
-  "source_seuil": "data/barre.json du 2026-11-26",
-  "lp_manquants": 631,
+  "seuil_challenger_lp": 613,
+  "source_seuil": "data/barre.json du 2026-11-27",
+  "lp_manquants": 613,
   "dont_jusqu_a_master": null,
   "raison_si_absent": null,
   "note": null
@@ -104,11 +104,11 @@
    "note": "Le terme dominant est le placement, pas le barème. Il décroît en 1/racine(n) : c'est le volume de parties qui resserre la fourchette."
   },
   "solide": true,
-  "lp_manquants": 631,
-  "parties_estimees": 48,
+  "lp_manquants": 613,
+  "parties_estimees": 46,
   "parties_fourchette": [
-   33,
-   88
+   32,
+   85
   ],
   "avertissement": "OPTIMISTE PAR CONSTRUCTION. Deux effets non modélisés poussent dans le même sens : les gains de LP se compriment quand le MMR rejoint le rang, et le placement moyen remonte vers 4.50 dans des lobbies plus durs. À lire comme une vitesse maximale, pas comme un calendrier."
  },
